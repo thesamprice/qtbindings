@@ -2410,9 +2410,11 @@ DEF_VALUELIST_MARSHALLER( QVariantList, QList<QVariant>, QVariant )
 DEF_VALUELIST_MARSHALLER( QVariantVector, QVector<QVariant>, QVariant )
 
 #if QT_VERSION >= 0x40300
+#if !defined(QT_NO_OPENSSL)
 DEF_VALUELIST_MARSHALLER( QSslCertificateList, QList<QSslCertificate>, QSslCertificate )
 DEF_VALUELIST_MARSHALLER( QSslCipherList, QList<QSslCipher>, QSslCipher )
 DEF_VALUELIST_MARSHALLER( QSslErrorList, QList<QSslError>, QSslError )
+#endif
 DEF_VALUELIST_MARSHALLER( QXmlStreamEntityDeclarations, QVector<QXmlStreamEntityDeclaration>, QXmlStreamEntityDeclaration )
 DEF_VALUELIST_MARSHALLER( QXmlStreamNamespaceDeclarations, QVector<QXmlStreamNamespaceDeclaration>, QXmlStreamNamespaceDeclaration )
 DEF_VALUELIST_MARSHALLER( QXmlStreamNotationDeclarations, QVector<QXmlStreamNotationDeclaration>, QXmlStreamNotationDeclaration )
@@ -2615,12 +2617,14 @@ Q_DECL_EXPORT TypeHandler Qt_handlers[] = {
 #endif
 #if QT_VERSION >= 0x40300
     { "QList<QMdiSubWindow*>", marshall_QMdiSubWindowList },
+	#if !defined(QT_NO_OPENSSL)
     { "QList<QSslCertificate>", marshall_QSslCertificateList },
     { "QList<QSslCertificate>&", marshall_QSslCertificateList },
     { "QList<QSslCipher>", marshall_QSslCipherList },
     { "QList<QSslCipher>&", marshall_QSslCipherList },
     { "QList<QSslError>", marshall_QSslErrorList },
     { "QList<QSslError>&", marshall_QSslErrorList },
+	#endif
     { "QXmlStreamEntityDeclarations", marshall_QXmlStreamEntityDeclarations },
     { "QXmlStreamNamespaceDeclarations", marshall_QXmlStreamNamespaceDeclarations },
     { "QXmlStreamNotationDeclarations", marshall_QXmlStreamNotationDeclarations },
