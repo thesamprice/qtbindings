@@ -1,4 +1,4 @@
-require './lib/qtbindings_version'
+require_relative '../lib/qtbindings_version'
 
 spec = Gem::Specification.new do |s|
   s.authors = ['Ryan Melton', 'Jason Thomas', 'Richard Dale', 'Arno Rehn']
