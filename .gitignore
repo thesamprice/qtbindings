@@ -1,3 +1,6 @@
 Makefile
 ext/build/*
 generator-venv/
+ext/qt6/*.o
+ext/qt6/*.bundle
+ext/qt6/Makefile
