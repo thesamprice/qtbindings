@@ -6,6 +6,8 @@
 #include <ruby.h>
 #include <QString>
 #include <QByteArray>
+#include <QStringList>
+#include <QVariant>
 #include <QObject>
 #include <QCoreApplication>
 
@@ -15,8 +17,10 @@ namespace qt6rb {
 struct ClassInfo {
   const char* cxx_name;
   VALUE rb_class;
-  // Deletes the C++ object with the correct static type
+  // Deletes the C++ object with the correct static type (nullptr: never owned)
   void (*deleter)(void*);
+  // True for QObject-derived classes (parent-managed lifetime)
+  bool is_qobject;
 };
 
 // One wrapped C++ object
@@ -41,8 +45,12 @@ VALUE wrap(void* ptr, ClassInfo* cls, bool owned);
 // (or raise). Returns nullptr for nil.
 void* unwrap(VALUE obj, ClassInfo* cls);
 
-// Wrap a QObject*, transferring ownership to Qt parentage rules:
-// owned by Ruby only when it has no parent.
+// Like unwrap but raises on nil (for by-value/reference parameters)
+void* unwrap_ref(VALUE obj, ClassInfo* cls);
+
+// Wrap a QObject*. Qt parentage manages QObject lifetimes, so these
+// wrappers never delete on GC (top-level objects live for the app;
+// proper destroyed()-tracking is future work).
 VALUE wrap_qobject(QObject* obj, ClassInfo* cls);
 
 // Marshalling
@@ -50,14 +58,19 @@ QString to_qstring(VALUE v);
 VALUE from_qstring(const QString& s);
 QByteArray to_qbytearray(VALUE v);
 VALUE from_qbytearray(const QByteArray& b);
+QStringList to_qstringlist(VALUE v);
+VALUE from_qstringlist(const QStringList& list);
+QVariant to_qvariant(VALUE v);
+VALUE from_qvariant(const QVariant& v);
 
 // Keep a Ruby proc alive for the lifetime of the process (signal handlers)
 void retain_proc(VALUE proc);
 // Invoke a proc with argc/argv, reporting (not swallowing) exceptions
 VALUE call_proc(VALUE proc, int argc, const VALUE* argv);
 
-// Hand-written QCoreApplication wrapper (its argc&/argv ctor needs
-// stable storage) plus Init registration for the core hand-written classes.
+// Hand-written application classes (their argc&/argv ctors need stable
+// storage): Qt::CoreApplication always; Qt::Application when built with
+// QtWidgets.
 void init_core(VALUE mQt);
 
 } // namespace qt6rb

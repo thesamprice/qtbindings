@@ -19,5 +19,8 @@ $VPATH << runtime_dir
 unless pkg_config('Qt6Core')
   abort 'Qt6Core.pc not found - install Qt 6 (brew install qt) or set QT_PREFIX'
 end
+# Optional GUI modules (their -DQT_*_LIB defines gate the widget classes)
+pkg_config('Qt6Gui')
+pkg_config('Qt6Widgets')
 
 create_makefile('qt6')

@@ -14,11 +14,51 @@ Qt headers --(1) parse_qt.py/libclang--> qt_ir.json --(2) codegen--> C++ Ruby gl
    `QT_ANNOTATE_ACCESS_SPECIFIER` so `Q_SIGNALS:`/`Q_SLOTS:` sections tag
    their members with clang `annotate` attributes.
 
-2. **codegen** (next stage, not yet implemented) consumes the IR and emits
-   C++ files that register each class with Ruby: method dispatch with
-   overload resolution, constructor/ownership tracking, virtual-method
-   override hooks so Ruby subclasses work, and marshalling for core types
-   (QString ⇄ String, containers ⇄ Array/Hash, QVariant ⇄ Object).
+2. **`codegen.py`** walks the clang AST directly (the JSON IR is a debug
+   aid only) and emits C++ that registers each class with Ruby:
+   - constructors and snake_cased methods, overloads dispatched by arity
+     plus runtime type guards
+   - signals as `on_<signal> { }` block methods using compile-time
+     member-pointer `QObject::connect` functors — no moc in the pipeline
+   - base classes pulled in automatically so inheritance chains
+     (`Qt::PushButton < Qt::AbstractButton < Qt::Widget < Qt::Object`)
+     stay intact
+   - enums as class constants, plus `--namespace-enums` for the ~1200
+     `Qt::` namespace values (`Qt::AlignCenter`, ...); class names win
+     collisions (`Qt::Widget` stays a class, not `Qt::WindowType::Widget`)
+   - marshalling: bool/ints/floats/enums, `QFlags<>` as Integer,
+     QString/QByteArray ⇄ String, QStringList ⇄ Array, QVariant ⇄ native
+     Ruby values (recursing through Array/Hash), pointers to generated
+     QObject classes, and by-value/const& use of generated value classes
+     (QSize, QPoint, QRect)
+
+   The hand-written runtime (`runtime/`) provides TypedData wrapping,
+   the marshalling helpers, GC-safe proc retention with `rb_protect`
+   around signal callbacks, and `Qt::CoreApplication`/`Qt::Application`
+   (their `argc&`/`argv` constructors need stable storage).
+
+## Building and trying it
+
+```sh
+generator-venv/bin/python generator/codegen.py \
+    --qt-prefix /opt/homebrew/opt/qt \
+    --modules QtCore QtGui QtWidgets --namespace-enums \
+    --classes QObject QTimer QWidget QLabel QPushButton QCheckBox \
+              QComboBox QLineEdit QTextEdit QMainWindow QLayout QBoxLayout \
+              QVBoxLayout QHBoxLayout QGridLayout QSize QPoint QRect \
+    -o ext/qt6/qt6_generated.cpp
+cd ext/qt6 && ruby extconf.rb && make
+ruby examples/qt6_widgets_demo.rb   # headless (offscreen platform)
+```
+
+## Known limitations (next steps)
+
+- Ruby subclasses cannot override C++ virtuals yet (no override hooks)
+- QObject wrappers never delete on GC (Qt parentage or app teardown owns
+  them; proper `destroyed()` tracking is future work)
+- Multiple-inheritance pointer casts assume the QObject branch is the
+  first base (true across Qt)
+- Overloaded signals are skipped (member pointer would be ambiguous)
 
 ## Setup
 

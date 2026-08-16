@@ -1,6 +1,12 @@
 #include "qt6_runtime.hpp"
 #include <vector>
+#include <string>
 #include <cstring>
+
+#if defined(QT_WIDGETS_LIB) && __has_include(<QApplication>)
+#include <QApplication>
+#define QT6RB_HAVE_WIDGETS 1
+#endif
 
 namespace qt6rb {
 
@@ -59,9 +65,18 @@ void* unwrap(VALUE obj, ClassInfo* cls) {
   return w->ptr;
 }
 
+void* unwrap_ref(VALUE obj, ClassInfo* cls) {
+  if (NIL_P(obj)) {
+    rb_raise(rb_eTypeError, "expected %s but got nil", cls ? cls->cxx_name : "Qt object");
+  }
+  return unwrap(obj, cls);
+}
+
 VALUE wrap_qobject(QObject* obj, ClassInfo* cls) {
   if (!obj) return Qnil;
-  return wrap(obj, cls, obj->parent() == nullptr);
+  // Never owned: Qt's parent/child system (or the app teardown) deletes
+  // QObjects; deleting from GC would double-free reparented objects.
+  return wrap(obj, cls, false);
 }
 
 QString to_qstring(VALUE v) {
@@ -81,6 +96,95 @@ QByteArray to_qbytearray(VALUE v) {
 
 VALUE from_qbytearray(const QByteArray& b) {
   return rb_str_new(b.constData(), b.size());
+}
+
+QStringList to_qstringlist(VALUE v) {
+  Check_Type(v, T_ARRAY);
+  QStringList list;
+  for (long i = 0; i < RARRAY_LEN(v); i++) {
+    list << to_qstring(rb_ary_entry(v, i));
+  }
+  return list;
+}
+
+VALUE from_qstringlist(const QStringList& list) {
+  VALUE ary = rb_ary_new_capa(list.size());
+  for (const QString& s : list) rb_ary_push(ary, from_qstring(s));
+  return ary;
+}
+
+static int hash_to_qvariantmap_i(VALUE key, VALUE val, VALUE arg) {
+  QVariantMap* map = reinterpret_cast<QVariantMap*>(arg);
+  map->insert(to_qstring(rb_obj_as_string(key)), to_qvariant(val));
+  return ST_CONTINUE;
+}
+
+QVariant to_qvariant(VALUE v) {
+  switch (TYPE(v)) {
+    case T_NIL:    return QVariant();
+    case T_TRUE:   return QVariant(true);
+    case T_FALSE:  return QVariant(false);
+    case T_FIXNUM:
+    case T_BIGNUM: return QVariant(static_cast<qlonglong>(NUM2LL(v)));
+    case T_FLOAT:  return QVariant(NUM2DBL(v));
+    case T_STRING: return QVariant(to_qstring(v));
+    case T_SYMBOL: return QVariant(to_qstring(rb_sym2str(v)));
+    case T_ARRAY: {
+      QVariantList list;
+      for (long i = 0; i < RARRAY_LEN(v); i++) {
+        list << to_qvariant(rb_ary_entry(v, i));
+      }
+      return QVariant(list);
+    }
+    case T_HASH: {
+      QVariantMap map;
+      rb_hash_foreach(v, hash_to_qvariantmap_i, reinterpret_cast<VALUE>(&map));
+      return QVariant(map);
+    }
+    default:
+      if (rb_typeddata_is_kind_of(v, &wrapper_type)) {
+        Wrapper* w;
+        TypedData_Get_Struct(v, Wrapper, &wrapper_type, w);
+        if (w->cls && w->cls->is_qobject) {
+          return QVariant::fromValue(static_cast<QObject*>(w->ptr));
+        }
+      }
+      rb_raise(rb_eTypeError, "cannot convert %s to QVariant", rb_obj_classname(v));
+  }
+}
+
+VALUE from_qvariant(const QVariant& v) {
+  if (!v.isValid() || v.isNull()) return Qnil;
+  switch (v.metaType().id()) {
+    case QMetaType::Bool:      return v.toBool() ? Qtrue : Qfalse;
+    case QMetaType::Int:       return INT2NUM(v.toInt());
+    case QMetaType::UInt:      return UINT2NUM(v.toUInt());
+    case QMetaType::Long:
+    case QMetaType::LongLong:  return LL2NUM(v.toLongLong());
+    case QMetaType::ULong:
+    case QMetaType::ULongLong: return ULL2NUM(v.toULongLong());
+    case QMetaType::Float:
+    case QMetaType::Double:    return DBL2NUM(v.toDouble());
+    case QMetaType::QString:   return from_qstring(v.toString());
+    case QMetaType::QByteArray: return from_qbytearray(v.toByteArray());
+    case QMetaType::QStringList: return from_qstringlist(v.toStringList());
+    case QMetaType::QVariantList: {
+      VALUE ary = rb_ary_new();
+      for (const QVariant& e : v.toList()) rb_ary_push(ary, from_qvariant(e));
+      return ary;
+    }
+    case QMetaType::QVariantMap: {
+      VALUE hash = rb_hash_new();
+      QVariantMap map = v.toMap();
+      for (auto it = map.constBegin(); it != map.constEnd(); ++it) {
+        rb_hash_aset(hash, from_qstring(it.key()), from_qvariant(it.value()));
+      }
+      return hash;
+    }
+    default:
+      if (v.canConvert<QString>()) return from_qstring(v.toString());
+      return Qnil;
+  }
 }
 
 void retain_proc(VALUE proc) {
@@ -114,10 +218,13 @@ VALUE call_proc(VALUE proc, int argc, const VALUE* argv) {
 }
 
 // ---------------------------------------------------------------------------
-// Hand-written QCoreApplication
+// Hand-written application classes
 // ---------------------------------------------------------------------------
 
-static ClassInfo coreapp_class = { "QCoreApplication", Qnil, nullptr };
+static ClassInfo coreapp_class = { "QCoreApplication", Qnil, nullptr, true };
+#ifdef QT6RB_HAVE_WIDGETS
+static ClassInfo app_class = { "QApplication", Qnil, nullptr, true };
+#endif
 
 // QCoreApplication requires argc/argv that outlive it
 struct AppArgs {
@@ -127,10 +234,7 @@ struct AppArgs {
 };
 static AppArgs s_app_args;
 
-static VALUE coreapp_new(int argc, VALUE* argv, VALUE klass) {
-  VALUE rb_args = Qnil;
-  rb_scan_args(argc, argv, "01", &rb_args);
-
+static void build_app_args(VALUE rb_args) {
   s_app_args.storage.clear();
   s_app_args.argv.clear();
   s_app_args.storage.push_back("ruby");
@@ -143,7 +247,13 @@ static VALUE coreapp_new(int argc, VALUE* argv, VALUE klass) {
   }
   for (auto& s : s_app_args.storage) s_app_args.argv.push_back(s.data());
   s_app_args.argc = (int)s_app_args.argv.size();
+}
 
+static VALUE coreapp_new(int argc, VALUE* argv, VALUE klass) {
+  (void)klass;
+  VALUE rb_args = Qnil;
+  rb_scan_args(argc, argv, "01", &rb_args);
+  build_app_args(rb_args);
   QCoreApplication* app = new QCoreApplication(s_app_args.argc, s_app_args.argv.data());
   return wrap(app, &coreapp_class, true);
 }
@@ -176,6 +286,17 @@ static VALUE coreapp_set_application_name(VALUE self, VALUE name) {
   return name;
 }
 
+#ifdef QT6RB_HAVE_WIDGETS
+static VALUE app_new(int argc, VALUE* argv, VALUE klass) {
+  (void)klass;
+  VALUE rb_args = Qnil;
+  rb_scan_args(argc, argv, "01", &rb_args);
+  build_app_args(rb_args);
+  QApplication* app = new QApplication(s_app_args.argc, s_app_args.argv.data());
+  return wrap(app, &app_class, true);
+}
+#endif
+
 void init_core(VALUE mQt) {
   (void)mQt;
   VALUE cls = define_class(&coreapp_class, "CoreApplication", Qnil);
@@ -186,6 +307,11 @@ void init_core(VALUE mQt) {
   rb_define_method(cls, "process_events", RUBY_METHOD_FUNC(coreapp_process_events), 0);
   rb_define_method(cls, "application_name", RUBY_METHOD_FUNC(coreapp_application_name), 0);
   rb_define_method(cls, "application_name=", RUBY_METHOD_FUNC(coreapp_set_application_name), 1);
+#ifdef QT6RB_HAVE_WIDGETS
+  VALUE acls = define_class(&app_class, "Application", cls);
+  rb_undef_alloc_func(acls);
+  rb_define_singleton_method(acls, "new", RUBY_METHOD_FUNC(app_new), -1);
+#endif
 }
 
 } // namespace qt6rb
