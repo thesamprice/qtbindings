@@ -321,6 +321,15 @@ module Qt
 end
 
 module Qt
+  # Qt::ItemIsTristate was the Qt 4 name for the item flag that Qt 5.6
+  # renamed to Qt::ItemIsAutoTristate; the old spelling stayed on as a
+  # deprecated alias for the same value (64) until Qt 6 dropped it. Note it is
+  # NOT Qt::ItemIsUserTristate, which is a different flag (256) that Qt 5.6
+  # added at the same time -- resolving the old name to that one would change
+  # behaviour rather than preserve it. qtbindings-era code (Cosmos
+  # TableManager) uses the Qt 4 spelling.
+  ItemIsTristate = ItemIsAutoTristate
+
   # qtbindings wrapped values in Qt::Variant; the new bindings marshal
   # QVariant natively, so Variant.new is a passthrough
   class Variant
@@ -506,8 +515,9 @@ end
 # scheduled. That deadlocks any dialog whose completion depends on a Ruby
 # thread -- Cosmos::ProgressDialog runs its work on one and closes itself from
 # there, and every Qt.execute_in_main_thread(blocking) caller sleeps on one.
-# Driving the loop from Ruby is equivalent (modality is a window property set
-# by setModal, not something exec confers) and releases the GVL each pass.
+# Driving the loop from Ruby is equivalent (modality is a window property, not
+# something exec confers) and releases the GVL each pass. See the body for how
+# that property has to be set for the dialog to really become modal.
 # The alias is deliberately NOT called qt6_exec: that name belongs to app code
 # reopening Qt::Dialog (Cosmos does exactly that in
 # gui/utilities/script_module_gui.rb), and squatting it would make that
@@ -518,7 +528,21 @@ class Qt::Dialog
     alias_method :qt6rb_native_exec, :exec if method_defined?(:exec)
 
     def exec
-      setModal(true)
+      # C++ QDialog::exec() makes the dialog modal by setting Qt::WA_ShowModal,
+      # which is exactly what #setModal does -- but setting that attribute on
+      # its own is not enough to make a dialog that HAS A PARENT actually
+      # modal. QWidget only pushes window_modality down to the underlying
+      # QWindow when Qt::WA_SetWindowModality is also set, and that attribute
+      # is set by setWindowModality, never by setModal. A parented dialog
+      # shown after only setModal(true) therefore reports isModal == true and
+      # windowModality == ApplicationModal while never entering Qt's modal
+      # window list: it does not block its parent, and
+      # QApplication::activeModalWidget cannot see it. Going through
+      # setWindowModality sets both, so honour any modality the dialog already
+      # asked for and default to ApplicationModal as QDialog::exec does.
+      requested = windowModality
+      requested = Qt::ApplicationModal if requested == Qt::NonModal
+      setWindowModality(requested)
       show
       # done()/accept()/reject() all hide the dialog and set its result
       while isVisible
