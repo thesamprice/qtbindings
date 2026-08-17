@@ -52,6 +52,10 @@ VALUE module_qt();
 // Register a class named `name` under module Qt with the given superclass
 // (Qnil for rb_cObject)
 VALUE define_class(ClassInfo* info, const char* name, VALUE superclass);
+// Same, but nested under an existing class rather than under module Qt
+// (QTextEdit::ExtraSelection -> Qt::TextEdit::ExtraSelection)
+VALUE define_class_under(ClassInfo* info, VALUE outer, const char* name,
+                         VALUE superclass);
 
 // Wrap a C++ object. If owned, the wrapper deletes it on GC.
 VALUE wrap(void* ptr, ClassInfo* cls, bool owned);
@@ -99,6 +103,60 @@ QStringList to_qstringlist(VALUE v);
 VALUE from_qstringlist(const QStringList& list);
 QVariant to_qvariant(VALUE v);
 VALUE from_qvariant(const QVariant& v);
+
+// QList of a generated value class <-> Ruby Array. Elements are copied in
+// both directions, matching Qt's by-value container semantics: mutating an
+// element after handing the list to Qt has no effect, exactly as in C++.
+template <typename T>
+QList<T> to_objlist(VALUE v, ClassInfo* cls) {
+  QList<T> list;
+  if (NIL_P(v)) return list;
+  Check_Type(v, T_ARRAY);
+  long n = RARRAY_LEN(v);
+  list.reserve(n);
+  for (long i = 0; i < n; ++i)
+    list.append(*static_cast<T*>(unwrap_ref(rb_ary_entry(v, i), cls)));
+  return list;
+}
+
+template <typename T>
+VALUE from_objlist(const QList<T>& list, ClassInfo* cls) {
+  VALUE ary = rb_ary_new_capa(list.size());
+  for (const T& item : list)
+    rb_ary_push(ary, wrap(new T(item), cls, true));
+  return ary;
+}
+
+// QList of pointers to a generated class (QWidget::actions,
+// QMenu::addActions). Ownership follows the same rule as a bare pointer:
+// whoever the object is parented to keeps it alive.
+template <typename T>
+QList<T*> to_objptrlist(VALUE v, ClassInfo* cls) {
+  QList<T*> list;
+  if (NIL_P(v)) return list;
+  Check_Type(v, T_ARRAY);
+  long n = RARRAY_LEN(v);
+  list.reserve(n);
+  for (long i = 0; i < n; ++i)
+    list.append(static_cast<T*>(unwrap_release(rb_ary_entry(v, i), cls)));
+  return list;
+}
+
+template <typename T>
+VALUE from_qobjptrlist(const QList<T*>& list, ClassInfo* cls) {
+  VALUE ary = rb_ary_new_capa(list.size());
+  for (T* item : list)
+    rb_ary_push(ary, wrap_qobject(static_cast<QObject*>(item), cls));
+  return ary;
+}
+
+template <typename T>
+VALUE from_objptrlist(const QList<T*>& list, ClassInfo* cls) {
+  VALUE ary = rb_ary_new_capa(list.size());
+  for (T* item : list)
+    rb_ary_push(ary, wrap(static_cast<void*>(item), cls, false));
+  return ary;
+}
 
 // Out-parameter helper for Qt's `bool *ok` idiom (QInputDialog::getText and
 // friends). Constructed as a temporary in the argument list; it converts to

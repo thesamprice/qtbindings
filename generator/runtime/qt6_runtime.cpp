@@ -59,15 +59,20 @@ VALUE module_qt() {
 #include <map>
 static std::map<std::string, ClassInfo*>* s_qobject_classes = nullptr;
 
-VALUE define_class(ClassInfo* info, const char* name, VALUE superclass) {
+VALUE define_class_under(ClassInfo* info, VALUE outer, const char* name,
+                         VALUE superclass) {
   VALUE super = NIL_P(superclass) ? rb_cObject : superclass;
-  info->rb_class = rb_define_class_under(module_qt(), name, super);
+  info->rb_class = rb_define_class_under(outer, name, super);
   rb_gc_register_address(&info->rb_class);
   if (info->is_qobject) {
     if (!s_qobject_classes) s_qobject_classes = new std::map<std::string, ClassInfo*>();
     (*s_qobject_classes)[info->cxx_name] = info;
   }
   return info->rb_class;
+}
+
+VALUE define_class(ClassInfo* info, const char* name, VALUE superclass) {
+  return define_class_under(info, module_qt(), name, superclass);
 }
 
 VALUE wrap(void* ptr, ClassInfo* cls, bool owned) {

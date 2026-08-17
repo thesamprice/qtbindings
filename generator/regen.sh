@@ -8,15 +8,16 @@ CLASSES=(
   QObject QTimer QCoreApplication QGuiApplication QApplication QScreen
   QWidget QLabel QPushButton QCheckBox QComboBox QLineEdit QTextEdit QPlainTextEdit QMainWindow
   QLayout QBoxLayout QVBoxLayout QHBoxLayout QGridLayout QFormLayout QStackedLayout QSpacerItem
-  QSize QPoint QRect QPointF QSizeF QRectF QDate QUrl
+  QSize QPoint QRect QPointF QSizeF QRectF QDate QUrl QChar
   QEvent QTimerEvent QChildEvent QCloseEvent QShowEvent QHideEvent QMoveEvent QResizeEvent
   QPaintEvent QKeyEvent QFocusEvent QEnterEvent QMouseEvent QWheelEvent
   QColor QPen QBrush QPalette QFont QFontMetrics QCursor QIcon QPixmap QImage QPainter
   QLinearGradient QRadialGradient QPolygon
   QMessageBox QDialog QFileDialog QInputDialog QProgressBar QSlider QSpinBox QDoubleSpinBox
   QRadioButton QButtonGroup QDialogButtonBox QCalendarWidget
-  QTableWidget QTableWidgetItem QTreeWidget QTreeWidgetItem QTabWidget QListWidget QListWidgetItem
+  QTableWidget QTableWidgetItem QTreeWidget QTreeWidgetItem QTabWidget QTabBar QListWidget QListWidgetItem
   QTextCursor QTextDocument QTextDocumentFragment QTextCharFormat QSyntaxHighlighter QTextOption
+  QTextEdit::ExtraSelection QTextBlock
   QScrollBar QAbstractItemView QHeaderView QGroupBox QSplitter QScrollArea QStatusBar
   QMenuBar QMenu QAction QActionGroup QToolBar QDesktopServices
   QValidator QIntValidator QDoubleValidator QKeySequence QSizePolicy QSettings QModelIndex

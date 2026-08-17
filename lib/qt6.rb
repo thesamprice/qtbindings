@@ -474,6 +474,67 @@ class Qt::Polygon
   end
 end
 
+# Qt 6.9 removed every integral QChar constructor (QT_CORE_REMOVED_SINCE) in
+# favour of template ones, which libclang reports as templates rather than
+# concrete overloads, so the generator cannot bind them. qtbindings-era code
+# says Qt::Char.new(57), so rebuild that on the one integral constructor that
+# survived: QChar(uchar cell, uchar row), composing (row << 8) | cell. QChar's
+# copy constructor is implicit, so libclang emits no cursor for it either --
+# copy by code point instead.
+class Qt::Char
+  def initialize(arg = nil, row = nil)
+    return super(arg, row) if row
+
+    code =
+      case arg
+      when nil then return super()
+      when Integer then arg
+      when Qt::Char then arg.unicode
+      when String
+        raise ArgumentError, "Qt::Char.new expects a single character" if arg.length != 1
+        arg.ord
+      else raise TypeError, "cannot make a Qt::Char from #{arg.class}"
+      end
+    raise RangeError, "#{code} is outside the basic multilingual plane" unless (0..0xFFFF).cover?(code)
+    super(code & 0xFF, (code >> 8) & 0xFF)
+  end
+end
+
+# QDialog::exec() runs Qt's nested event loop inside a single C call, and that
+# call holds the Ruby GVL for the entire lifetime of the dialog: the poll it
+# blocks in never returns to the Ruby VM, so no other Ruby thread is ever
+# scheduled. That deadlocks any dialog whose completion depends on a Ruby
+# thread -- Cosmos::ProgressDialog runs its work on one and closes itself from
+# there, and every Qt.execute_in_main_thread(blocking) caller sleeps on one.
+# Driving the loop from Ruby is equivalent (modality is a window property set
+# by setModal, not something exec confers) and releases the GVL each pass.
+# The alias is deliberately NOT called qt6_exec: that name belongs to app code
+# reopening Qt::Dialog (Cosmos does exactly that in
+# gui/utilities/script_module_gui.rb), and squatting it would make that
+# reopen's `unless method_defined?(:qt6_exec)` guard skip its own alias, so it
+# would call straight past this replacement into the blocking C++ exec.
+class Qt::Dialog
+  unless method_defined?(:qt6rb_native_exec)
+    alias_method :qt6rb_native_exec, :exec if method_defined?(:exec)
+
+    def exec
+      setModal(true)
+      show
+      # done()/accept()/reject() all hide the dialog and set its result
+      while isVisible
+        Qt::CoreApplication.process_events
+        # Drain directly rather than relying on the init_thread_fix timer:
+        # that timer's handler is already on the stack (a queued block is what
+        # usually opens a dialog), and a nested event loop must not depend on
+        # it being re-entered.
+        Qt.main_thread_queue.pop.call until Qt.main_thread_queue.empty?
+        sleep 0.001
+      end
+      result
+    end
+  end
+end
+
 # QFontMetrics::width() was deprecated in Qt 5.11 and removed in Qt 6 in
 # favour of horizontalAdvance().
 class Qt::FontMetrics

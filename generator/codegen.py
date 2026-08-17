@@ -49,6 +49,20 @@ from parse_qt import (cindex, CursorKind, AccessSpecifier, TypeKind,
                       parse_translation_unit, find_libclang, in_qt_headers,
                       collect_annotations)
 
+
+# Inheritance depth per generated class, filled in by harvest(). Used to order
+# overload guards most-derived-first (see param_specificity).
+CLASS_DEPTH = {}
+
+
+def mangle(cxx_name):
+    """Nested types (QTextEdit::ExtraSelection) are keyed and emitted under a
+    flattened name. The generated file aliases it back to the real type
+    (`using QTextEdit__ExtraSelection = QTextEdit::ExtraSelection;`) so the
+    same string is valid both as a C++ type and as a C identifier suffix,
+    which is what every cls_/rb_ symbol below is built from."""
+    return cxx_name.replace("::", "__")
+
 INT_TYPES = {
     "int": ("NUM2INT", "INT2NUM"),
     "unsigned int": ("NUM2UINT", "UINT2NUM"),
@@ -59,6 +73,23 @@ INT_TYPES = {
     "long long": ("NUM2LL", "LL2NUM"),
     "unsigned long long": ("NUM2ULL", "ULL2NUM"),
     "char": ("NUM2CHR", "INT2NUM"),
+}
+
+# Narrow character types need an explicit narrowing cast rather than a bare
+# NUM2* macro, so they carry full conversion expressions instead of the
+# macro-name pairs in INT_TYPES. QChar is the motivating case: as of Qt 6.9
+# every integral QChar constructor is compiled out (QT_CORE_REMOVED_SINCE)
+# and the only remaining entry points -- QChar::fromUcs2/fromUcs4 and the
+# QChar(uchar, uchar) constructor -- are spelled in these types.
+CHAR_TYPES = {
+    "char16_t": ("static_cast<char16_t>(NUM2UINT({}))",
+                 "UINT2NUM(static_cast<unsigned int>({}))"),
+    "char32_t": ("static_cast<char32_t>(NUM2UINT({}))",
+                 "UINT2NUM(static_cast<unsigned int>({}))"),
+    "unsigned char": ("static_cast<unsigned char>(NUM2UINT({}))",
+                      "UINT2NUM(static_cast<unsigned int>({}))"),
+    "signed char": ("static_cast<signed char>(NUM2INT({}))",
+                    "INT2NUM(static_cast<int>({}))"),
 }
 
 # Guard expressions per type kind for overload dispatch ({0} = VALUE expr).
@@ -73,6 +104,8 @@ GUARDS = {
     "qbytearray": "RB_TYPE_P({0}, T_STRING)",
     "cstr": "RB_TYPE_P({0}, T_STRING)",
     "qstringlist": "RB_TYPE_P({0}, T_ARRAY)",
+    "objvallist": "RB_TYPE_P({0}, T_ARRAY)",
+    "objptrlist": "RB_TYPE_P({0}, T_ARRAY)",
     "variant": "1",
     # `bool *ok` out-params take nil or a Qt::Boolean; anything goes
     "boolout": "1",
@@ -115,6 +148,9 @@ def classify(t, generated):
     if spelling in INT_TYPES:
         n2, i2 = INT_TYPES[spelling]
         return Type("int", spelling, n2 + "({})", i2 + "({})")
+    if spelling in CHAR_TYPES:
+        n2, i2 = CHAR_TYPES[spelling]
+        return Type("int", spelling, n2, i2)
     if canon.kind in (TypeKind.DOUBLE, TypeKind.FLOAT):
         return Type("float", spelling, "NUM2DBL({})", "DBL2NUM({})")
     if canon.kind == TypeKind.ENUM:
@@ -124,7 +160,7 @@ def classify(t, generated):
 
     if canon.kind == TypeKind.POINTER:
         pointee = canon.get_pointee()
-        pspell = pointee.spelling.replace("const ", "").strip()
+        pspell = mangle(pointee.spelling.replace("const ", "").strip())
         if pspell == "char" and pointee.is_const_qualified():
             # The static_cast matters: StringValueCStr yields char*, and an
             # unqualified char* makes C++ prefer Qt's functor template
@@ -184,7 +220,29 @@ def classify(t, generated):
         return Type("flags", vspell,
                     "%s::fromInt(NUM2INT({}))" % vspell,
                     "INT2NUM(({}).toInt())")
+    # QList of a generated class <-> Ruby Array. A list of values
+    # (QTextEdit::setExtraSelections) copies each element, matching Qt's
+    # by-value container semantics; a list of pointers (QWidget::actions,
+    # QMenu::addActions) wraps them the same way a bare pointer would.
+    if vspell.startswith("QList<") and vspell.endswith(">"):
+        inner = vspell[len("QList<"):-1].strip()
+        if inner.endswith("*"):
+            elem = mangle(inner[:-1].strip())
+            if elem in generated:
+                from_fn = "from_qobjptrlist" if generated[elem] else "from_objptrlist"
+                return Type("objptrlist", f"QList<{elem}*>",
+                            "qt6rb::to_objptrlist<%s>({}, &cls_%s)" % (elem, elem),
+                            "qt6rb::%s<%s>({}, &cls_%s)" % (from_fn, elem, elem),
+                            cls=elem)
+        else:
+            elem = mangle(inner)
+            if elem in generated and not generated[elem]:
+                return Type("objvallist", f"QList<{elem}>",
+                            "qt6rb::to_objlist<%s>({}, &cls_%s)" % (elem, elem),
+                            "qt6rb::from_objlist<%s>({}, &cls_%s)" % (elem, elem),
+                            cls=elem)
     # By-value / const& use of a generated value class (QSize, QPoint, ...)
+    vspell = mangle(vspell)
     if vspell in generated and not generated[vspell]:
         return Type("objval", vspell,
                     "*static_cast<%s*>(qt6rb::unwrap_ref({}, &cls_%s))" % (vspell, vspell),
@@ -206,6 +264,7 @@ class Method:
         self.owner = parent.spelling if parent is not None else None
         self.static = cursor.is_static_method() if is_cxx else False
         self.virtual = cursor.is_virtual_method() if is_cxx else False
+        self.pure = cursor.is_pure_virtual_method() if is_cxx else False
         self.const = cursor.is_const_method() if is_cxx else False
         self.access = cursor.access_specifier
         self.result = classify(cursor.result_type, generated) if is_cxx else None
@@ -237,17 +296,26 @@ class Method:
 
 
 class Klass:
-    def __init__(self, cursor):
+    def __init__(self, cursor, cxx=None):
         self.cursor = cursor
-        self.name = cursor.spelling
+        # cxx is the real C++ spelling; name is the flattened symbol-safe key
+        # (identical for top-level classes)
+        self.cxx = cxx or cursor.spelling
+        self.name = mangle(self.cxx)
+        # Enclosing class for a nested type, so the Ruby class can be defined
+        # under it (Qt::TextEdit::ExtraSelection) rather than under Qt
+        self.outer = mangle(self.cxx.rsplit("::", 1)[0]) if "::" in self.cxx else None
         self.bases = []
         self.methods = []
+        self.prot_methods = []  # protected non-virtual, own + inherited
         self.signals = []
         self.ctors = []
         self.fields = []        # public data members (name, Type, writable)
         self.enums = []
         self.virtuals = []      # hookable virtuals (own + inherited)
         self.shim = False
+        self.saw_ctor = False      # any constructor cursor at all, even non-public
+        self.implicit_ctor = False # plain struct relying on the implicit default ctor
         self.skipped = 0
         self.dtor_public = True
         self.abstract = False
@@ -280,8 +348,15 @@ def publicly_typed(cursor):
 
 def collect_virtuals(klass, classes, generated):
     """Hookable virtuals for klass: own + inherited, nearest declaration
-    wins; a nearest-but-unhookable declaration blocks the signature."""
+    wins; a nearest-but-unhookable declaration blocks the signature.
+
+    Pure virtuals are hookable too: the shim implements them by dispatching to
+    Ruby, which is what lets a Ruby subclass of an abstract Qt class
+    (QSyntaxHighlighter, QValidator) be instantiated at all. Returns
+    (methods, all_pure_hooked); when a pure virtual could not be hooked the
+    shim would still be abstract, so the class stays unconstructible."""
     sigs = {}
+    pure_keys = set()
 
     def visit(name):
         k = classes.get(name)
@@ -303,8 +378,12 @@ def collect_virtuals(klass, classes, generated):
                 # A private redeclaration hides the inherited virtual
                 sigs[key] = None
                 continue
-            if child.is_pure_virtual_method() or is_final(child) \
-                    or collect_annotations(child) or not publicly_typed(child):
+            if child.is_pure_virtual_method():
+                pure_keys.add(key)
+            elif is_final(child):
+                sigs[key] = None
+                continue
+            if collect_annotations(child) or not publicly_typed(child):
                 sigs[key] = None
                 continue
             m = Method(child, generated)
@@ -317,7 +396,54 @@ def collect_virtuals(klass, classes, generated):
             visit(b)
 
     visit(klass.name)
-    return [m for m in sigs.values() if m]
+    all_pure_hooked = all(sigs.get(key) for key in pure_keys)
+    return [m for m in sigs.values() if m], all_pure_hooked
+
+
+def collect_protected(klass, classes, generated):
+    """Protected non-virtual methods, own + inherited. These are part of the
+    subclassing API (QPlainTextEdit::firstVisibleBlock,
+    QAbstractScrollArea::setViewportMargins) and qtbindings-era code calls
+    them from Ruby subclasses. The shim re-exposes them with a `using`
+    declaration, so they are reachable only on Ruby-created instances --
+    which is exactly the C++ rule. Protected virtuals are excluded: those go
+    through collect_virtuals/qt6rb_base_ so `super` reaches the base
+    implementation instead of recursing into the Ruby override."""
+    found, public_names = {}, set()
+
+    def visit(name):
+        k = classes.get(name)
+        if k is None:
+            return
+        for child in k.cursor.get_children():
+            if child.kind != CursorKind.CXX_METHOD:
+                continue
+            if child.spelling.startswith("operator") or child.is_deleted_method():
+                continue
+            if child.access_specifier == AccessSpecifier.PUBLIC:
+                public_names.add(child.spelling)
+                continue
+            if child.access_specifier != AccessSpecifier.PROTECTED:
+                continue
+            if child.is_virtual_method() or child.is_static_method():
+                continue
+            if collect_annotations(child):  # signals/slots
+                continue
+            # e.g. QAbstractItemView::state() returns the protected enum
+            # State, which a free binding function cannot name
+            if not publicly_typed(child):
+                continue
+            m = Method(child, generated)
+            if m.supported and not m.truncated:
+                found.setdefault(child.spelling, []).append(m)
+
+        for b in k.bases:
+            visit(b)
+
+    visit(klass.name)
+    # A public overload of the same name wins; Ruby has one method per name
+    return [m for name, ms in found.items() if name not in public_names
+            for m in ms]
 
 
 APP_CLASSES = ("QCoreApplication", "QGuiApplication", "QApplication")
@@ -327,36 +453,48 @@ def harvest(tu, qt_prefix, wanted):
     # Index definitions of all Qt classes (top level or in namespaces)
     index = {}
 
-    def visit(cursor):
+    def visit(cursor, prefix=""):
         for child in cursor.get_children():
             if child.kind == CursorKind.NAMESPACE:
                 visit(child)
             elif child.kind in (CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL):
-                if child.is_definition() and in_qt_headers(child, qt_prefix) \
-                        and child.spelling not in index:
-                    index[child.spelling] = child
+                if not (child.is_definition() and in_qt_headers(child, qt_prefix)):
+                    continue
+                qname = prefix + child.spelling
+                if qname not in index:
+                    index[qname] = child
+                # Public nested types (QTextEdit::ExtraSelection) are reachable
+                # only by their qualified name, which is how they are requested
+                if child.spelling.startswith("Q"):
+                    visit(child, qname + "::")
 
     visit(tu.cursor)
 
+    # classes is keyed by the flattened symbol-safe name throughout; the queue
+    # carries real C++ spellings because that is what the index and the
+    # --classes arguments use
     classes = {}
     queue = list(wanted)
     missing = []
     while queue:
-        name = queue.pop(0)
-        if name in classes:
+        cxx = queue.pop(0)
+        if mangle(cxx) in classes:
             continue
-        cursor = index.get(name)
+        cursor = index.get(cxx)
         if cursor is None:
-            missing.append(name)
+            missing.append(cxx)
             continue
-        k = Klass(cursor)
+        k = Klass(cursor, cxx)
         k.abstract = bool(cursor.is_abstract_record())
-        classes[name] = k
+        classes[k.name] = k
         # Pull in base classes so the inheritance chain is complete
         for base in base_cursors(cursor):
             if in_qt_headers(base, qt_prefix):
-                k.bases.append(base.spelling)
+                k.bases.append(mangle(base.spelling))
                 queue.append(base.spelling)
+        # A nested type's enclosing class must exist to define it under
+        if k.outer:
+            queue.append(cxx.rsplit("::", 1)[0])
 
     # Drop bases that didn't resolve to a generated class (e.g. template
     # bases like QList<QPoint> under QPolygon)
@@ -377,6 +515,20 @@ def harvest(tu, qt_prefix, wanted):
     for name, k in classes.items():
         k.is_qobject = qobjectish(name)
         generated[name] = k.is_qobject
+
+    def depth(name, seen=None):
+        k = classes.get(name)
+        if k is None or not k.bases:
+            return 0
+        seen = seen or set()
+        if name in seen:
+            return 0
+        seen.add(name)
+        return 1 + max(depth(b, seen) for b in k.bases)
+
+    CLASS_DEPTH.clear()
+    for name in classes:
+        CLASS_DEPTH[name] = depth(name)
 
     for k in classes.values():
         for child in k.cursor.get_children():
@@ -413,6 +565,7 @@ def harvest(tu, qt_prefix, wanted):
                 else:
                     k.methods.append(m)
             elif child.kind == CursorKind.CONSTRUCTOR:
+                k.saw_ctor = True
                 if child.access_specifier != AccessSpecifier.PUBLIC:
                     continue
                 if child.is_deleted_method() or child.is_move_constructor():
@@ -434,12 +587,24 @@ def harvest(tu, qt_prefix, wanted):
                     k.enums.append(child)
 
     for k in classes.values():
+        # A struct that declares no constructor at all (QTextEdit::ExtraSelection)
+        # still has an implicit default one, but libclang emits no cursor for
+        # it, so synthesize the zero-argument form.
+        if not k.saw_ctor and not k.abstract and not k.is_qobject:
+            k.implicit_ctor = True
         if k.name in APP_CLASSES:
             k.shim = False
             continue
-        if k.ctors and not k.abstract:
-            k.virtuals = collect_virtuals(k, classes, generated)
-            k.shim = bool(k.virtuals)
+        if k.ctors or k.implicit_ctor:
+            k.virtuals, all_pure_hooked = collect_virtuals(k, classes, generated)
+            k.prot_methods = collect_protected(k, classes, generated)
+            k.shim = bool(k.virtuals) or bool(k.prot_methods)
+            # An abstract class becomes constructible once the shim supplies a
+            # Ruby-dispatching body for every pure virtual it inherits
+            if k.abstract and k.virtuals and all_pure_hooked:
+                k.abstract = False
+            elif k.abstract:
+                k.virtuals, k.prot_methods, k.shim = [], [], False
     return classes, missing
 
 
@@ -466,6 +631,16 @@ def const_name(name):
     return name[0].upper() + name[1:] if name else name
 
 
+def param_specificity(m, n):
+    """How derived an overload's object parameters are. Guards are plain
+    is_kind_of checks, so an overload taking a base class matches arguments
+    meant for a more derived sibling -- QSyntaxHighlighter(QObject*) would
+    swallow the QTextDocument* call and leave the highlighter attached to no
+    document. Testing the deepest class first restores C++ overload
+    resolution."""
+    return sum(CLASS_DEPTH.get(p.cls, 0) for p in m.params[:n] if p.cls)
+
+
 def emit_dispatch(out, overloads, error_name, body, fallback=None):
     """Shared arity + type-guard dispatcher. body(m, n, indent) emits the
     per-overload code. fallback replaces the final arity error."""
@@ -474,9 +649,11 @@ def emit_dispatch(out, overloads, error_name, body, fallback=None):
     for n in arities:
         candidates = [m for m in overloads
                       if m.dispatch_min <= n <= len(m.params)]
-        # Most-specific first: overloads with catch-all variant params last
-        candidates.sort(key=lambda m: sum(1 for p in m.params[:n]
-                                          if p.kind == "variant"))
+        # Most-specific first: overloads with catch-all variant params last,
+        # and among the rest the most derived object parameters first
+        candidates.sort(key=lambda m: (sum(1 for p in m.params[:n]
+                                           if p.kind == "variant"),
+                                       -param_specificity(m, n)))
         out.append(f"  if (argc == {n}) {{")
         if len(candidates) == 1:
             body(candidates[0], n, "    ")
@@ -566,6 +743,12 @@ def emit_ctor(out, klass):
                 out.append(f"{indent}p->qt6rb_set_self(self);")
             out.append(f"{indent}return self;")
 
+        if klass.implicit_ctor:
+            out.append("  if (argc == 0) {")
+            out.append(f"    {cxx}* p = new {cxx}();")
+            out.append(f"    qt6rb::attach(self, p, {owned});")
+            out.append("    return self;")
+            out.append("  }")
         emit_dispatch(out, klass.ctors, f"{klass.name}#initialize", body)
     out.append("}")
     out.append(f"static VALUE rb_{klass.name}_alloc(VALUE klass) {{ return qt6rb::alloc_wrapper(klass, &cls_{klass.name}); }}")
@@ -586,9 +769,15 @@ def emit_shim(out, klass):
     # so forward it explicitly when the class exposes one
     if any(m.cursor.is_copy_constructor() for m in klass.ctors):
         out.append(f"  {shim}(const {klass.name}& other) : {klass.name}(other) {{}}")
+    # Re-expose inherited protected non-virtuals as public on the shim, so the
+    # Ruby wrappers below can call them (one `using` covers all overloads)
+    for owner in dict.fromkeys(m.owner for m in klass.prot_methods):
+        names = sorted({m.name for m in klass.prot_methods if m.owner == owner})
+        for name in names:
+            out.append(f"  using {mangle(owner)}::{name};")
     # Public forwarders so protected base implementations are callable
     for m in klass.virtuals:
-        if m.access != AccessSpecifier.PROTECTED:
+        if m.access != AccessSpecifier.PROTECTED or m.pure:
             continue
         params = ", ".join(f"{d} a{i}" for i, d in enumerate(m.param_decls))
         args = ", ".join(f"a{i}" for i in range(len(m.params)))
@@ -617,7 +806,17 @@ def emit_shim(out, klass):
             out.append(f"      if (ok) return {m.result.to_cxx.format('r')};")
         out.append("    }")
         ret = "" if m.result.kind == "void" else "return "
-        out.append(f"    {ret}{klass.name}::{m.name}({args});")
+        if m.pure:
+            # No base implementation exists; a subclass that doesn't provide
+            # one is a Ruby-level error, not undefined behaviour
+            out.append(f'    rb_raise(rb_eNotImpError, "{klass.cxx}#{rname} is abstract '
+                       f'and must be overridden");')
+            # rb_raise does not return; this only satisfies the compiler, and
+            # braced init spells "zero of this type" for pointers alike
+            if m.result.kind != "void":
+                out.append("    return {};")
+        else:
+            out.append(f"    {ret}{klass.name}::{m.name}({args});")
         out.append("  }")
     out.append("};")
     out.append("")
@@ -629,7 +828,8 @@ def emit_protected_callers(out, klass):
     existing = {snake(m.name) for m in klass.methods}
     groups = {}
     for m in klass.virtuals:
-        if m.access != AccessSpecifier.PROTECTED:
+        # Pure virtuals have no base implementation for super() to reach
+        if m.access != AccessSpecifier.PROTECTED or m.pure:
             continue
         rname = snake(m.name)
         if rname in existing:
@@ -637,6 +837,16 @@ def emit_protected_callers(out, klass):
         # Base forwarders take the full parameter list (no default args)
         m = copy.copy(m)
         m.dispatch_min = len(m.params)
+        m.prot_direct = False
+        groups.setdefault(rname, []).append(m)
+    # Protected non-virtuals are called directly on the shim, which made them
+    # public with a `using`; their default arguments still apply
+    for m in klass.prot_methods:
+        rname = snake(m.name)
+        if rname in existing:
+            continue
+        m = copy.copy(m)
+        m.prot_direct = True
         groups.setdefault(rname, []).append(m)
     result = []
     for rname, overloads in groups.items():
@@ -647,7 +857,8 @@ def emit_protected_callers(out, klass):
         out.append(f'  if (!shim) rb_raise(rb_eTypeError, "{rname} is protected; only callable on Ruby-created instances");')
 
         def body(m, n, indent):
-            call = f"shim->qt6rb_base_{m.name}({conv_args(m, n)})"
+            target = m.name if m.prot_direct else f"qt6rb_base_{m.name}"
+            call = f"shim->{target}({conv_args(m, n)})"
             if m.result.kind == "void":
                 out.append(f"{indent}{call};")
                 out.append(f"{indent}return Qnil;")
@@ -755,13 +966,19 @@ def generate(classes, modules, ns_constants):
     for m in modules:
         out.append(f"#include <{m}/{m}>")
     out.append("")
+    # Alias nested types to their flattened name so every cls_/rb_ symbol
+    # built from it below is a valid C identifier and a valid C++ type
+    for k in classes.values():
+        if k.outer:
+            out.append(f"using {k.name} = {k.cxx};")
+    out.append("")
     for k in classes.values():
         if k.dtor_public and not k.abstract:
             deleter = f"[](void* p) {{ delete static_cast<{k.name}*>(p); }}"
         else:
             deleter = "nullptr"
         qobj = "true" if k.is_qobject else "false"
-        out.append(f'static qt6rb::ClassInfo cls_{k.name} = {{ "{k.name}", Qnil, {deleter}, {qobj} }};')
+        out.append(f'static qt6rb::ClassInfo cls_{k.name} = {{ "{k.cxx}", Qnil, {deleter}, {qobj} }};')
     out.append("")
 
     # Upcast thunks for every direct base, so a wrapped pointer can be walked
@@ -795,7 +1012,7 @@ def generate(classes, modules, ns_constants):
 
     registrations = []
     for k in classes.values():
-        if (k.ctors or k.name in APP_CLASSES) and not k.abstract:
+        if (k.ctors or k.implicit_ctor or k.name in APP_CLASSES) and not k.abstract:
             cname = emit_ctor(out, k)
             registrations.append(
                 f"  rb_define_alloc_func(cls_{k.name}.rb_class, rb_{k.name}_alloc);")
@@ -915,9 +1132,17 @@ def generate(classes, modules, ns_constants):
             return
         for b in k.bases:
             register(classes[b])
-        rb_name = k.name[1:] if k.name.startswith("Q") else k.name
         super_expr = f"cls_{k.bases[0]}.rb_class" if k.bases else "Qnil"
-        out.append(f'  qt6rb::define_class(&cls_{k.name}, "{rb_name}", {super_expr});')
+        if k.outer:
+            # Nested types keep their Qt nesting in Ruby too
+            # (QTextEdit::ExtraSelection -> Qt::TextEdit::ExtraSelection)
+            register(classes[k.outer])
+            leaf = k.cxx.rsplit("::", 1)[1]
+            out.append(f'  qt6rb::define_class_under(&cls_{k.name}, '
+                       f'cls_{k.outer}.rb_class, "{leaf}", {super_expr});')
+        else:
+            rb_name = k.cxx[1:] if k.cxx.startswith("Q") else k.cxx
+            out.append(f'  qt6rb::define_class(&cls_{k.name}, "{rb_name}", {super_expr});')
         emitted.add(k.name)
 
     for k in classes.values():
