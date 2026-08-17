@@ -690,7 +690,7 @@ def signal_param_key(decls):
     the same overload."""
     parts = []
     for d in decls:
-        d = d.replace("const", " ").replace("&", " ").replace("*", " ")
+        d = re.sub(r"\bconst\b", " ", d).replace("&", " ").replace("*", " ")
         parts.append("".join(d.split()))
     return ",".join(parts)
 
