@@ -242,12 +242,9 @@ static void* upcast_QAbstractListModel_QAbstractItemModel(void* p) { return stat
 static void* upcast_QAbstractItemDelegate_QObject(void* p) { return static_cast<QObject*>(static_cast<QAbstractItemDelegate*>(p)); }
 static void* upcast_QPointerEvent_QInputEvent(void* p) { return static_cast<QInputEvent*>(static_cast<QPointerEvent*>(p)); }
 
-class Rb_QObject : public QObject {
+class Rb_QObject : public QObject, public qt6rb::RubyPeer {
 public:
   using QObject::QObject;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QObject() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QObject::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QObject::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QObject::customEvent(a0); }
@@ -298,12 +295,9 @@ public:
   }
 };
 
-class Rb_QTimer : public QTimer {
+class Rb_QTimer : public QTimer, public qt6rb::RubyPeer {
 public:
   using QTimer::QTimer;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTimer() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QTimer::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QTimer::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QTimer::customEvent(a0); }
@@ -354,12 +348,9 @@ public:
   }
 };
 
-class Rb_QWidget : public QWidget {
+class Rb_QWidget : public QWidget, public qt6rb::RubyPeer {
 public:
   using QWidget::QWidget;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QWidget::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QWidget::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QWidget::mouseReleaseEvent(a0); }
@@ -698,12 +689,9 @@ public:
   }
 };
 
-class Rb_QLabel : public QLabel {
+class Rb_QLabel : public QLabel, public qt6rb::RubyPeer {
 public:
   using QLabel::QLabel;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QLabel() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QLabel::event(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QLabel::keyPressEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QLabel::paintEvent(a0); }
@@ -1042,12 +1030,9 @@ public:
   }
 };
 
-class Rb_QPushButton : public QPushButton {
+class Rb_QPushButton : public QPushButton, public qt6rb::RubyPeer {
 public:
   using QPushButton::QPushButton;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPushButton() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QPushButton::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QPushButton::paintEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QPushButton::keyPressEvent(a0); }
@@ -1424,12 +1409,9 @@ public:
   }
 };
 
-class Rb_QCheckBox : public QCheckBox {
+class Rb_QCheckBox : public QCheckBox, public qt6rb::RubyPeer {
 public:
   using QCheckBox::QCheckBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCheckBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QCheckBox::event(a0); }
   bool qt6rb_base_hitButton(const QPoint & a0) { return QCheckBox::hitButton(a0); }
   void qt6rb_base_checkStateSet() { QCheckBox::checkStateSet(); }
@@ -1806,12 +1788,9 @@ public:
   }
 };
 
-class Rb_QComboBox : public QComboBox {
+class Rb_QComboBox : public QComboBox, public qt6rb::RubyPeer {
 public:
   using QComboBox::QComboBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QComboBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_focusInEvent(QFocusEvent * a0) { QComboBox::focusInEvent(a0); }
   void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QComboBox::focusOutEvent(a0); }
   void qt6rb_base_changeEvent(QEvent * a0) { QComboBox::changeEvent(a0); }
@@ -2174,12 +2153,9 @@ public:
   }
 };
 
-class Rb_QLineEdit : public QLineEdit {
+class Rb_QLineEdit : public QLineEdit, public qt6rb::RubyPeer {
 public:
   using QLineEdit::QLineEdit;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QLineEdit() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QLineEdit::mousePressEvent(a0); }
   void qt6rb_base_mouseMoveEvent(QMouseEvent * a0) { QLineEdit::mouseMoveEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QLineEdit::mouseReleaseEvent(a0); }
@@ -2516,12 +2492,9 @@ public:
   }
 };
 
-class Rb_QTextEdit : public QTextEdit {
+class Rb_QTextEdit : public QTextEdit, public qt6rb::RubyPeer {
 public:
   using QTextEdit::QTextEdit;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTextEdit() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QTextEdit::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QTextEdit::timerEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QTextEdit::keyPressEvent(a0); }
@@ -2947,12 +2920,9 @@ public:
   }
 };
 
-class Rb_QPlainTextEdit : public QPlainTextEdit {
+class Rb_QPlainTextEdit : public QPlainTextEdit, public qt6rb::RubyPeer {
 public:
   using QPlainTextEdit::QPlainTextEdit;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPlainTextEdit() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QPlainTextEdit::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QPlainTextEdit::timerEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QPlainTextEdit::keyPressEvent(a0); }
@@ -3378,12 +3348,9 @@ public:
   }
 };
 
-class Rb_QMainWindow : public QMainWindow {
+class Rb_QMainWindow : public QMainWindow, public qt6rb::RubyPeer {
 public:
   using QMainWindow::QMainWindow;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMainWindow() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QMainWindow::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QMainWindow::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMainWindow::mouseReleaseEvent(a0); }
@@ -3730,12 +3697,9 @@ public:
   }
 };
 
-class Rb_QBoxLayout : public QBoxLayout {
+class Rb_QBoxLayout : public QBoxLayout, public qt6rb::RubyPeer {
 public:
   using QBoxLayout::QBoxLayout;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QBoxLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QBoxLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QBoxLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QBoxLayout::customEvent(a0); }
@@ -3988,12 +3952,9 @@ public:
   }
 };
 
-class Rb_QVBoxLayout : public QVBoxLayout {
+class Rb_QVBoxLayout : public QVBoxLayout, public qt6rb::RubyPeer {
 public:
   using QVBoxLayout::QVBoxLayout;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QVBoxLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QVBoxLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QVBoxLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QVBoxLayout::customEvent(a0); }
@@ -4246,12 +4207,9 @@ public:
   }
 };
 
-class Rb_QHBoxLayout : public QHBoxLayout {
+class Rb_QHBoxLayout : public QHBoxLayout, public qt6rb::RubyPeer {
 public:
   using QHBoxLayout::QHBoxLayout;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QHBoxLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QHBoxLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QHBoxLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QHBoxLayout::customEvent(a0); }
@@ -4504,12 +4462,9 @@ public:
   }
 };
 
-class Rb_QGridLayout : public QGridLayout {
+class Rb_QGridLayout : public QGridLayout, public qt6rb::RubyPeer {
 public:
   using QGridLayout::QGridLayout;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QGridLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_addItem(QLayoutItem * a0) { QGridLayout::addItem(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QGridLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QGridLayout::timerEvent(a0); }
@@ -4763,12 +4718,9 @@ public:
   }
 };
 
-class Rb_QFormLayout : public QFormLayout {
+class Rb_QFormLayout : public QFormLayout, public qt6rb::RubyPeer {
 public:
   using QFormLayout::QFormLayout;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFormLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QFormLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QFormLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QFormLayout::customEvent(a0); }
@@ -5021,12 +4973,9 @@ public:
   }
 };
 
-class Rb_QStackedLayout : public QStackedLayout {
+class Rb_QStackedLayout : public QStackedLayout, public qt6rb::RubyPeer {
 public:
   using QStackedLayout::QStackedLayout;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStackedLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QStackedLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QStackedLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QStackedLayout::customEvent(a0); }
@@ -5279,12 +5228,9 @@ public:
   }
 };
 
-class Rb_QSpacerItem : public QSpacerItem {
+class Rb_QSpacerItem : public QSpacerItem, public qt6rb::RubyPeer {
 public:
   using QSpacerItem::QSpacerItem;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSpacerItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QSize sizeHint() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSpacerItem, "size_hint", "sizeHint")) {
       bool ok = true;
@@ -5410,12 +5356,9 @@ public:
   }
 };
 
-class Rb_QEvent : public QEvent {
+class Rb_QEvent : public QEvent, public qt6rb::RubyPeer {
 public:
   using QEvent::QEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void setAccepted(bool a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEvent, "set_accepted", "setAccepted")) {
       VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
@@ -5435,12 +5378,9 @@ public:
   }
 };
 
-class Rb_QTimerEvent : public QTimerEvent {
+class Rb_QTimerEvent : public QTimerEvent, public qt6rb::RubyPeer {
 public:
   using QTimerEvent::QTimerEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTimerEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QTimerEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTimerEvent, "clone", "clone")) {
       bool ok = true;
@@ -5460,12 +5400,9 @@ public:
   }
 };
 
-class Rb_QChildEvent : public QChildEvent {
+class Rb_QChildEvent : public QChildEvent, public qt6rb::RubyPeer {
 public:
   using QChildEvent::QChildEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QChildEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QChildEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QChildEvent, "clone", "clone")) {
       bool ok = true;
@@ -5485,12 +5422,9 @@ public:
   }
 };
 
-class Rb_QCloseEvent : public QCloseEvent {
+class Rb_QCloseEvent : public QCloseEvent, public qt6rb::RubyPeer {
 public:
   using QCloseEvent::QCloseEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCloseEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QCloseEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QCloseEvent, "clone", "clone")) {
       bool ok = true;
@@ -5510,12 +5444,9 @@ public:
   }
 };
 
-class Rb_QShowEvent : public QShowEvent {
+class Rb_QShowEvent : public QShowEvent, public qt6rb::RubyPeer {
 public:
   using QShowEvent::QShowEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QShowEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QShowEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QShowEvent, "clone", "clone")) {
       bool ok = true;
@@ -5535,12 +5466,9 @@ public:
   }
 };
 
-class Rb_QHideEvent : public QHideEvent {
+class Rb_QHideEvent : public QHideEvent, public qt6rb::RubyPeer {
 public:
   using QHideEvent::QHideEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QHideEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QHideEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QHideEvent, "clone", "clone")) {
       bool ok = true;
@@ -5560,12 +5488,9 @@ public:
   }
 };
 
-class Rb_QMoveEvent : public QMoveEvent {
+class Rb_QMoveEvent : public QMoveEvent, public qt6rb::RubyPeer {
 public:
   using QMoveEvent::QMoveEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMoveEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QMoveEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMoveEvent, "clone", "clone")) {
       bool ok = true;
@@ -5585,12 +5510,9 @@ public:
   }
 };
 
-class Rb_QResizeEvent : public QResizeEvent {
+class Rb_QResizeEvent : public QResizeEvent, public qt6rb::RubyPeer {
 public:
   using QResizeEvent::QResizeEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QResizeEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QResizeEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QResizeEvent, "clone", "clone")) {
       bool ok = true;
@@ -5610,12 +5532,9 @@ public:
   }
 };
 
-class Rb_QPaintEvent : public QPaintEvent {
+class Rb_QPaintEvent : public QPaintEvent, public qt6rb::RubyPeer {
 public:
   using QPaintEvent::QPaintEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPaintEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QPaintEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPaintEvent, "clone", "clone")) {
       bool ok = true;
@@ -5635,12 +5554,9 @@ public:
   }
 };
 
-class Rb_QKeyEvent : public QKeyEvent {
+class Rb_QKeyEvent : public QKeyEvent, public qt6rb::RubyPeer {
 public:
   using QKeyEvent::QKeyEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QKeyEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QKeyEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QKeyEvent, "clone", "clone")) {
       bool ok = true;
@@ -5669,12 +5585,9 @@ public:
   }
 };
 
-class Rb_QFocusEvent : public QFocusEvent {
+class Rb_QFocusEvent : public QFocusEvent, public qt6rb::RubyPeer {
 public:
   using QFocusEvent::QFocusEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFocusEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QFocusEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QFocusEvent, "clone", "clone")) {
       bool ok = true;
@@ -5694,12 +5607,9 @@ public:
   }
 };
 
-class Rb_QEnterEvent : public QEnterEvent {
+class Rb_QEnterEvent : public QEnterEvent, public qt6rb::RubyPeer {
 public:
   using QEnterEvent::QEnterEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QEnterEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QEnterEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEnterEvent, "clone", "clone")) {
       bool ok = true;
@@ -5752,12 +5662,9 @@ public:
   }
 };
 
-class Rb_QMouseEvent : public QMouseEvent {
+class Rb_QMouseEvent : public QMouseEvent, public qt6rb::RubyPeer {
 public:
   using QMouseEvent::QMouseEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMouseEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QMouseEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMouseEvent, "clone", "clone")) {
       bool ok = true;
@@ -5810,12 +5717,9 @@ public:
   }
 };
 
-class Rb_QWheelEvent : public QWheelEvent {
+class Rb_QWheelEvent : public QWheelEvent, public qt6rb::RubyPeer {
 public:
   using QWheelEvent::QWheelEvent;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QWheelEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QWheelEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWheelEvent, "clone", "clone")) {
       bool ok = true;
@@ -5868,13 +5772,10 @@ public:
   }
 };
 
-class Rb_QPixmap : public QPixmap {
+class Rb_QPixmap : public QPixmap, public qt6rb::RubyPeer {
 public:
   using QPixmap::QPixmap;
   Rb_QPixmap(const QPixmap& other) : QPixmap(other) {}
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPixmap() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   int qt6rb_base_metric(PaintDeviceMetric a0) { return QPixmap::metric(a0); }
   void qt6rb_base_initPainter(QPainter * a0) { QPixmap::initPainter(a0); }
   QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QPixmap::redirected(a0); }
@@ -5932,13 +5833,10 @@ public:
   }
 };
 
-class Rb_QImage : public QImage {
+class Rb_QImage : public QImage, public qt6rb::RubyPeer {
 public:
   using QImage::QImage;
   Rb_QImage(const QImage& other) : QImage(other) {}
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QImage() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   int qt6rb_base_metric(PaintDeviceMetric a0) { return QImage::metric(a0); }
   void qt6rb_base_initPainter(QPainter * a0) { QImage::initPainter(a0); }
   QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QImage::redirected(a0); }
@@ -5996,12 +5894,9 @@ public:
   }
 };
 
-class Rb_QMessageBox : public QMessageBox {
+class Rb_QMessageBox : public QMessageBox, public qt6rb::RubyPeer {
 public:
   using QMessageBox::QMessageBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMessageBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QMessageBox::event(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QMessageBox::resizeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QMessageBox::showEvent(a0); }
@@ -6350,12 +6245,9 @@ public:
   }
 };
 
-class Rb_QDialog : public QDialog {
+class Rb_QDialog : public QDialog, public qt6rb::RubyPeer {
 public:
   using QDialog::QDialog;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDialog() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QDialog::keyPressEvent(a0); }
   void qt6rb_base_closeEvent(QCloseEvent * a0) { QDialog::closeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QDialog::showEvent(a0); }
@@ -6704,12 +6596,9 @@ public:
   }
 };
 
-class Rb_QFileDialog : public QFileDialog {
+class Rb_QFileDialog : public QFileDialog, public qt6rb::RubyPeer {
 public:
   using QFileDialog::QFileDialog;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFileDialog() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_done(int a0) { QFileDialog::done(a0); }
   void qt6rb_base_accept() { QFileDialog::accept(); }
   void qt6rb_base_changeEvent(QEvent * a0) { QFileDialog::changeEvent(a0); }
@@ -7077,12 +6966,9 @@ public:
   }
 };
 
-class Rb_QInputDialog : public QInputDialog {
+class Rb_QInputDialog : public QInputDialog, public qt6rb::RubyPeer {
 public:
   using QInputDialog::QInputDialog;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QInputDialog() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QInputDialog::keyPressEvent(a0); }
   void qt6rb_base_closeEvent(QCloseEvent * a0) { QInputDialog::closeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QInputDialog::showEvent(a0); }
@@ -7440,12 +7326,9 @@ public:
   }
 };
 
-class Rb_QProgressBar : public QProgressBar {
+class Rb_QProgressBar : public QProgressBar, public qt6rb::RubyPeer {
 public:
   using QProgressBar::QProgressBar;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QProgressBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QProgressBar::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QProgressBar::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QProgressBar::mousePressEvent(a0); }
@@ -7792,12 +7675,9 @@ public:
   }
 };
 
-class Rb_QSlider : public QSlider {
+class Rb_QSlider : public QSlider, public qt6rb::RubyPeer {
 public:
   using QSlider::QSlider;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSlider() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QSlider::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QSlider::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QSlider::mouseReleaseEvent(a0); }
@@ -8135,12 +8015,9 @@ public:
   }
 };
 
-class Rb_QSpinBox : public QSpinBox {
+class Rb_QSpinBox : public QSpinBox, public qt6rb::RubyPeer {
 public:
   using QSpinBox::QSpinBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSpinBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QSpinBox::event(a0); }
   int qt6rb_base_valueFromText(const QString & a0) { return QSpinBox::valueFromText(a0); }
   QString qt6rb_base_textFromValue(int a0) { return QSpinBox::textFromValue(a0); }
@@ -8517,12 +8394,9 @@ public:
   }
 };
 
-class Rb_QDoubleSpinBox : public QDoubleSpinBox {
+class Rb_QDoubleSpinBox : public QDoubleSpinBox, public qt6rb::RubyPeer {
 public:
   using QDoubleSpinBox::QDoubleSpinBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDoubleSpinBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QDoubleSpinBox::resizeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QDoubleSpinBox::keyPressEvent(a0); }
   void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QDoubleSpinBox::keyReleaseEvent(a0); }
@@ -8896,12 +8770,9 @@ public:
   }
 };
 
-class Rb_QRadioButton : public QRadioButton {
+class Rb_QRadioButton : public QRadioButton, public qt6rb::RubyPeer {
 public:
   using QRadioButton::QRadioButton;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QRadioButton() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QRadioButton::event(a0); }
   bool qt6rb_base_hitButton(const QPoint & a0) { return QRadioButton::hitButton(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QRadioButton::paintEvent(a0); }
@@ -9278,12 +9149,9 @@ public:
   }
 };
 
-class Rb_QButtonGroup : public QButtonGroup {
+class Rb_QButtonGroup : public QButtonGroup, public qt6rb::RubyPeer {
 public:
   using QButtonGroup::QButtonGroup;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QButtonGroup() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QButtonGroup::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QButtonGroup::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QButtonGroup::customEvent(a0); }
@@ -9334,12 +9202,9 @@ public:
   }
 };
 
-class Rb_QDialogButtonBox : public QDialogButtonBox {
+class Rb_QDialogButtonBox : public QDialogButtonBox, public qt6rb::RubyPeer {
 public:
   using QDialogButtonBox::QDialogButtonBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDialogButtonBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QDialogButtonBox::changeEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QDialogButtonBox::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QDialogButtonBox::mousePressEvent(a0); }
@@ -9678,12 +9543,9 @@ public:
   }
 };
 
-class Rb_QCalendarWidget : public QCalendarWidget {
+class Rb_QCalendarWidget : public QCalendarWidget, public qt6rb::RubyPeer {
 public:
   using QCalendarWidget::QCalendarWidget;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCalendarWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QCalendarWidget::event(a0); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QCalendarWidget::eventFilter(a0, a1); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QCalendarWidget::mousePressEvent(a0); }
@@ -10033,12 +9895,9 @@ public:
   }
 };
 
-class Rb_QTableWidget : public QTableWidget {
+class Rb_QTableWidget : public QTableWidget, public qt6rb::RubyPeer {
 public:
   using QTableWidget::QTableWidget;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTableWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QTableWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QTableWidget::mimeTypes(); }
   bool qt6rb_base_dropMimeData(int a0, int a1, const QMimeData * a2, Qt::DropAction a3) { return QTableWidget::dropMimeData(a0, a1, a2, a3); }
@@ -10643,13 +10502,10 @@ public:
   }
 };
 
-class Rb_QTableWidgetItem : public QTableWidgetItem {
+class Rb_QTableWidgetItem : public QTableWidgetItem, public qt6rb::RubyPeer {
 public:
   using QTableWidgetItem::QTableWidgetItem;
   Rb_QTableWidgetItem(const QTableWidgetItem& other) : QTableWidgetItem(other) {}
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTableWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QTableWidgetItem * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTableWidgetItem, "clone", "clone")) {
       bool ok = true;
@@ -10678,12 +10534,9 @@ public:
   }
 };
 
-class Rb_QTreeWidget : public QTreeWidget {
+class Rb_QTreeWidget : public QTreeWidget, public qt6rb::RubyPeer {
 public:
   using QTreeWidget::QTreeWidget;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTreeWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QTreeWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QTreeWidget::mimeTypes(); }
   bool qt6rb_base_dropMimeData(QTreeWidgetItem * a0, int a1, const QMimeData * a2, Qt::DropAction a3) { return QTreeWidget::dropMimeData(a0, a1, a2, a3); }
@@ -11333,13 +11186,10 @@ public:
   }
 };
 
-class Rb_QTreeWidgetItem : public QTreeWidgetItem {
+class Rb_QTreeWidgetItem : public QTreeWidgetItem, public qt6rb::RubyPeer {
 public:
   using QTreeWidgetItem::QTreeWidgetItem;
   Rb_QTreeWidgetItem(const QTreeWidgetItem& other) : QTreeWidgetItem(other) {}
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTreeWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QTreeWidgetItem * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeWidgetItem, "clone", "clone")) {
       bool ok = true;
@@ -11368,12 +11218,9 @@ public:
   }
 };
 
-class Rb_QTabWidget : public QTabWidget {
+class Rb_QTabWidget : public QTabWidget, public qt6rb::RubyPeer {
 public:
   using QTabWidget::QTabWidget;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTabWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_tabInserted(int a0) { QTabWidget::tabInserted(a0); }
   void qt6rb_base_tabRemoved(int a0) { QTabWidget::tabRemoved(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QTabWidget::showEvent(a0); }
@@ -11732,12 +11579,9 @@ public:
   }
 };
 
-class Rb_QListWidget : public QListWidget {
+class Rb_QListWidget : public QListWidget, public qt6rb::RubyPeer {
 public:
   using QListWidget::QListWidget;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QListWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QListWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QListWidget::mimeTypes(); }
   bool qt6rb_base_dropMimeData(int a0, const QMimeData * a1, Qt::DropAction a2) { return QListWidget::dropMimeData(a0, a1, a2); }
@@ -12348,13 +12192,10 @@ public:
   }
 };
 
-class Rb_QListWidgetItem : public QListWidgetItem {
+class Rb_QListWidgetItem : public QListWidgetItem, public qt6rb::RubyPeer {
 public:
   using QListWidgetItem::QListWidgetItem;
   Rb_QListWidgetItem(const QListWidgetItem& other) : QListWidgetItem(other) {}
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QListWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QListWidgetItem * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListWidgetItem, "clone", "clone")) {
       bool ok = true;
@@ -12383,12 +12224,9 @@ public:
   }
 };
 
-class Rb_QTextDocument : public QTextDocument {
+class Rb_QTextDocument : public QTextDocument, public qt6rb::RubyPeer {
 public:
   using QTextDocument::QTextDocument;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTextDocument() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QVariant qt6rb_base_loadResource(int a0, const QUrl & a1) { return QTextDocument::loadResource(a0, a1); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QTextDocument::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QTextDocument::childEvent(a0); }
@@ -12457,12 +12295,9 @@ public:
   }
 };
 
-class Rb_QScrollBar : public QScrollBar {
+class Rb_QScrollBar : public QScrollBar, public qt6rb::RubyPeer {
 public:
   using QScrollBar::QScrollBar;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QScrollBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_wheelEvent(QWheelEvent * a0) { QScrollBar::wheelEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QScrollBar::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QScrollBar::mousePressEvent(a0); }
@@ -12800,12 +12635,9 @@ public:
   }
 };
 
-class Rb_QHeaderView : public QHeaderView {
+class Rb_QHeaderView : public QHeaderView, public qt6rb::RubyPeer {
 public:
   using QHeaderView::QHeaderView;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QHeaderView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_currentChanged(const QModelIndex & a0, const QModelIndex & a1) { QHeaderView::currentChanged(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QHeaderView::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QHeaderView::paintEvent(a0); }
@@ -13410,12 +13242,9 @@ public:
   }
 };
 
-class Rb_QGroupBox : public QGroupBox {
+class Rb_QGroupBox : public QGroupBox, public qt6rb::RubyPeer {
 public:
   using QGroupBox::QGroupBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QGroupBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QGroupBox::event(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QGroupBox::childEvent(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QGroupBox::resizeEvent(a0); }
@@ -13754,12 +13583,9 @@ public:
   }
 };
 
-class Rb_QSplitter : public QSplitter {
+class Rb_QSplitter : public QSplitter, public qt6rb::RubyPeer {
 public:
   using QSplitter::QSplitter;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSplitter() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QSplitter::childEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QSplitter::event(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QSplitter::resizeEvent(a0); }
@@ -14098,12 +13924,9 @@ public:
   }
 };
 
-class Rb_QScrollArea : public QScrollArea {
+class Rb_QScrollArea : public QScrollArea, public qt6rb::RubyPeer {
 public:
   using QScrollArea::QScrollArea;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QScrollArea() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QScrollArea::event(a0); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QScrollArea::eventFilter(a0, a1); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QScrollArea::resizeEvent(a0); }
@@ -14480,12 +14303,9 @@ public:
   }
 };
 
-class Rb_QStatusBar : public QStatusBar {
+class Rb_QStatusBar : public QStatusBar, public qt6rb::RubyPeer {
 public:
   using QStatusBar::QStatusBar;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStatusBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QStatusBar::showEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QStatusBar::paintEvent(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QStatusBar::resizeEvent(a0); }
@@ -14824,12 +14644,9 @@ public:
   }
 };
 
-class Rb_QMenuBar : public QMenuBar {
+class Rb_QMenuBar : public QMenuBar, public qt6rb::RubyPeer {
 public:
   using QMenuBar::QMenuBar;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMenuBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QMenuBar::changeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QMenuBar::keyPressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMenuBar::mouseReleaseEvent(a0); }
@@ -15169,12 +14986,9 @@ public:
   }
 };
 
-class Rb_QMenu : public QMenu {
+class Rb_QMenu : public QMenu, public qt6rb::RubyPeer {
 public:
   using QMenu::QMenu;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMenu() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QMenu::changeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QMenu::keyPressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMenu::mouseReleaseEvent(a0); }
@@ -15513,12 +15327,9 @@ public:
   }
 };
 
-class Rb_QAction : public QAction {
+class Rb_QAction : public QAction, public qt6rb::RubyPeer {
 public:
   using QAction::QAction;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAction() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QAction::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QAction::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QAction::childEvent(a0); }
@@ -15570,12 +15381,9 @@ public:
   }
 };
 
-class Rb_QActionGroup : public QActionGroup {
+class Rb_QActionGroup : public QActionGroup, public qt6rb::RubyPeer {
 public:
   using QActionGroup::QActionGroup;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QActionGroup() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QActionGroup::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QActionGroup::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QActionGroup::customEvent(a0); }
@@ -15626,12 +15434,9 @@ public:
   }
 };
 
-class Rb_QToolBar : public QToolBar {
+class Rb_QToolBar : public QToolBar, public qt6rb::RubyPeer {
 public:
   using QToolBar::QToolBar;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QToolBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QToolBar::changeEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QToolBar::paintEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QToolBar::event(a0); }
@@ -15970,12 +15775,9 @@ public:
   }
 };
 
-class Rb_QIntValidator : public QIntValidator {
+class Rb_QIntValidator : public QIntValidator, public qt6rb::RubyPeer {
 public:
   using QIntValidator::QIntValidator;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QIntValidator() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QIntValidator::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QIntValidator::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QIntValidator::customEvent(a0); }
@@ -16026,12 +15828,9 @@ public:
   }
 };
 
-class Rb_QDoubleValidator : public QDoubleValidator {
+class Rb_QDoubleValidator : public QDoubleValidator, public qt6rb::RubyPeer {
 public:
   using QDoubleValidator::QDoubleValidator;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDoubleValidator() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QDoubleValidator::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QDoubleValidator::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QDoubleValidator::customEvent(a0); }
@@ -16082,12 +15881,9 @@ public:
   }
 };
 
-class Rb_QSettings : public QSettings {
+class Rb_QSettings : public QSettings, public qt6rb::RubyPeer {
 public:
   using QSettings::QSettings;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSettings() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QSettings::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QSettings::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QSettings::childEvent(a0); }
@@ -16139,12 +15935,9 @@ public:
   }
 };
 
-class Rb_QStringListModel : public QStringListModel {
+class Rb_QStringListModel : public QStringListModel, public qt6rb::RubyPeer {
 public:
   using QStringListModel::QStringListModel;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStringListModel() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QStringListModel::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QStringListModel::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QStringListModel::customEvent(a0); }
@@ -16417,12 +16210,9 @@ public:
   }
 };
 
-class Rb_QFileSystemModel : public QFileSystemModel {
+class Rb_QFileSystemModel : public QFileSystemModel, public qt6rb::RubyPeer {
 public:
   using QFileSystemModel::QFileSystemModel;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFileSystemModel() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QFileSystemModel::timerEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QFileSystemModel::event(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QFileSystemModel::childEvent(a0); }
@@ -16723,12 +16513,9 @@ public:
   }
 };
 
-class Rb_QListView : public QListView {
+class Rb_QListView : public QListView, public qt6rb::RubyPeer {
 public:
   using QListView::QListView;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QListView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QListView::event(a0); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QListView::scrollContentsBy(a0, a1); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QListView::rowsInserted(a0, a1, a2); }
@@ -17320,12 +17107,9 @@ public:
   }
 };
 
-class Rb_QTreeView : public QTreeView {
+class Rb_QTreeView : public QTreeView, public qt6rb::RubyPeer {
 public:
   using QTreeView::QTreeView;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTreeView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QTreeView::scrollContentsBy(a0, a1); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QTreeView::rowsInserted(a0, a1, a2); }
   void qt6rb_base_rowsAboutToBeRemoved(const QModelIndex & a0, int a1, int a2) { QTreeView::rowsAboutToBeRemoved(a0, a1, a2); }
@@ -17956,12 +17740,9 @@ public:
   }
 };
 
-class Rb_QCompleter : public QCompleter {
+class Rb_QCompleter : public QCompleter, public qt6rb::RubyPeer {
 public:
   using QCompleter::QCompleter;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCompleter() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QCompleter::eventFilter(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QCompleter::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QCompleter::timerEvent(a0); }
@@ -18032,12 +17813,9 @@ public:
   }
 };
 
-class Rb_QEventLoop : public QEventLoop {
+class Rb_QEventLoop : public QEventLoop, public qt6rb::RubyPeer {
 public:
   using QEventLoop::QEventLoop;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QEventLoop() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QEventLoop::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QEventLoop::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QEventLoop::customEvent(a0); }
@@ -18088,12 +17866,9 @@ public:
   }
 };
 
-class Rb_QMimeData : public QMimeData {
+class Rb_QMimeData : public QMimeData, public qt6rb::RubyPeer {
 public:
   using QMimeData::QMimeData;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMimeData() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QMimeData::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QMimeData::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QMimeData::customEvent(a0); }
@@ -18161,12 +17936,9 @@ public:
   }
 };
 
-class Rb_QMovie : public QMovie {
+class Rb_QMovie : public QMovie, public qt6rb::RubyPeer {
 public:
   using QMovie::QMovie;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMovie() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QMovie::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QMovie::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QMovie::customEvent(a0); }
@@ -18217,12 +17989,9 @@ public:
   }
 };
 
-class Rb_QStyledItemDelegate : public QStyledItemDelegate {
+class Rb_QStyledItemDelegate : public QStyledItemDelegate, public qt6rb::RubyPeer {
 public:
   using QStyledItemDelegate::QStyledItemDelegate;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStyledItemDelegate() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_initStyleOption(QStyleOptionViewItem * a0, const QModelIndex & a1) { QStyledItemDelegate::initStyleOption(a0, a1); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QStyledItemDelegate::eventFilter(a0, a1); }
   bool qt6rb_base_editorEvent(QEvent * a0, QAbstractItemModel * a1, const QStyleOptionViewItem & a2, const QModelIndex & a3) { return QStyledItemDelegate::editorEvent(a0, a1, a2, a3); }
@@ -18357,12 +18126,9 @@ public:
   }
 };
 
-class Rb_QFrame : public QFrame {
+class Rb_QFrame : public QFrame, public qt6rb::RubyPeer {
 public:
   using QFrame::QFrame;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFrame() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QFrame::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QFrame::paintEvent(a0); }
   void qt6rb_base_changeEvent(QEvent * a0) { QFrame::changeEvent(a0); }
@@ -18701,12 +18467,9 @@ public:
   }
 };
 
-class Rb_QShortcut : public QShortcut {
+class Rb_QShortcut : public QShortcut, public qt6rb::RubyPeer {
 public:
   using QShortcut::QShortcut;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QShortcut() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QShortcut::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QShortcut::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QShortcut::childEvent(a0); }
@@ -18758,12 +18521,9 @@ public:
   }
 };
 
-class Rb_QAbstractScrollArea : public QAbstractScrollArea {
+class Rb_QAbstractScrollArea : public QAbstractScrollArea, public qt6rb::RubyPeer {
 public:
   using QAbstractScrollArea::QAbstractScrollArea;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAbstractScrollArea() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QAbstractScrollArea::eventFilter(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QAbstractScrollArea::event(a0); }
   bool qt6rb_base_viewportEvent(QEvent * a0) { return QAbstractScrollArea::viewportEvent(a0); }
@@ -19141,12 +18901,9 @@ public:
   }
 };
 
-class Rb_QAbstractSlider : public QAbstractSlider {
+class Rb_QAbstractSlider : public QAbstractSlider, public qt6rb::RubyPeer {
 public:
   using QAbstractSlider::QAbstractSlider;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAbstractSlider() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QAbstractSlider::event(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QAbstractSlider::keyPressEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QAbstractSlider::timerEvent(a0); }
@@ -19485,12 +19242,9 @@ public:
   }
 };
 
-class Rb_QAbstractSpinBox : public QAbstractSpinBox {
+class Rb_QAbstractSpinBox : public QAbstractSpinBox, public qt6rb::RubyPeer {
 public:
   using QAbstractSpinBox::QAbstractSpinBox;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAbstractSpinBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QAbstractSpinBox::resizeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QAbstractSpinBox::keyPressEvent(a0); }
   void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QAbstractSpinBox::keyReleaseEvent(a0); }
@@ -19846,12 +19600,9 @@ public:
   }
 };
 
-class Rb_QTableView : public QTableView {
+class Rb_QTableView : public QTableView, public qt6rb::RubyPeer {
 public:
   using QTableView::QTableView;
-  VALUE qt6rb_self = Qnil;
-  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTableView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QTableView::scrollContentsBy(a0, a1); }
   void qt6rb_base_initViewItemOption(QStyleOptionViewItem * a0) { QTableView::initViewItemOption(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QTableView::paintEvent(a0); }
@@ -89066,25 +88817,25 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QStyleOptionViewItem.rb_class, rb_QStyleOptionViewItem_alloc);
   qt6rb::register_ctor(cls_QStyleOptionViewItem.rb_class, rb_QStyleOptionViewItem_ctor);
   rb_include_module(cls_QStyleOptionViewItem.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_display_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationAlignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationAlignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_alignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_decoration_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "textElideMode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "textElideMode=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "text_elide_mode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "text_elide_mode=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "textElideMode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "textElideMode=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_text_elide_mode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_decoration_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
@@ -89094,10 +88845,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "font", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "font=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "showDecorationSelected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "showDecorationSelected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "features", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_features), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "features=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_features_set), 1);
@@ -89108,10 +88859,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "index", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "index=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_index", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "icon", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_icon), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "icon=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_icon_set), 1);
@@ -90319,10 +90070,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOption.rb_class, "rect", RUBY_METHOD_FUNC(rb_QStyleOption_field_rect), 0);
   rb_define_method(cls_QStyleOption.rb_class, "rect=", RUBY_METHOD_FUNC(rb_QStyleOption_field_rect_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "set_rect", RUBY_METHOD_FUNC(rb_QStyleOption_field_rect_set), 1);
-  rb_define_method(cls_QStyleOption.rb_class, "fontMetrics", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics), 0);
-  rb_define_method(cls_QStyleOption.rb_class, "fontMetrics=", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "font_metrics", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics), 0);
   rb_define_method(cls_QStyleOption.rb_class, "font_metrics=", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "fontMetrics", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "fontMetrics=", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "set_font_metrics", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "palette", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette), 0);
   rb_define_method(cls_QStyleOption.rb_class, "palette=", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette_set), 1);

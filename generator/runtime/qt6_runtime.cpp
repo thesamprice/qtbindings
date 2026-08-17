@@ -231,8 +231,20 @@ void* unwrap_ref(VALUE obj, ClassInfo* cls) {
   return unwrap(obj, cls);
 }
 
+RubyPeer::~RubyPeer() {
+  if (ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self);
+}
+
 VALUE wrap_qobject(QObject* obj, ClassInfo* cls) {
   if (!obj) return Qnil;
+  // If this object was constructed from Ruby it already has a Ruby peer;
+  // return that object so identity (and any Ruby subclass, its methods and
+  // its instance variables) survives a round trip through Qt. The cross-cast
+  // is safe: QObject is polymorphic and every generated shim derives from
+  // both the Qt class and RubyPeer.
+  if (RubyPeer* peer = dynamic_cast<RubyPeer*>(obj)) {
+    if (!NIL_P(peer->qt6rb_self)) return peer->qt6rb_self;
+  }
   // Downcast to the most-derived generated class via the meta-object, so
   // e.g. activeModalWidget returns a Qt::MessageBox, not a Qt::Widget
   if (s_qobject_classes) {

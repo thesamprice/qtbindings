@@ -575,16 +575,17 @@ def emit_ctor(out, klass):
 
 def emit_shim(out, klass):
     shim = f"Rb_{klass.name}"
-    out.append(f"class {shim} : public {klass.name} {{")
+    # qt6rb::RubyPeer supplies qt6rb_self / qt6rb_set_self and unregisters the
+    # GC root in its destructor. Deriving from it (rather than redeclaring the
+    # members here) lets the runtime recover the Ruby object from a bare
+    # QObject* via dynamic_cast, which is how wrap_qobject preserves identity.
+    out.append(f"class {shim} : public {klass.name}, public qt6rb::RubyPeer {{")
     out.append("public:")
     out.append(f"  using {klass.name}::{klass.name};")
     # Inherited-constructor declarations never include the copy constructor,
     # so forward it explicitly when the class exposes one
     if any(m.cursor.is_copy_constructor() for m in klass.ctors):
         out.append(f"  {shim}(const {klass.name}& other) : {klass.name}(other) {{}}")
-    out.append("  VALUE qt6rb_self = Qnil;")
-    out.append("  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }")
-    out.append(f"  ~{shim}() override {{ if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }}")
     # Public forwarders so protected base implementations are callable
     for m in klass.virtuals:
         if m.access != AccessSpecifier.PROTECTED:

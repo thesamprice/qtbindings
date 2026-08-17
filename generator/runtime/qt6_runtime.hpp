@@ -33,6 +33,20 @@ struct Wrapper {
 
 extern const rb_data_type_t wrapper_type;
 
+// Common base of every generated Rb_* shim class. It carries the Ruby object
+// that constructed (and owns the behaviour of) this C++ instance, which serves
+// two purposes: the shim's virtual overrides dispatch back into it, and
+// wrap_qobject() uses it to hand back the *original* Ruby object rather than
+// minting a fresh wrapper. Without that, a Ruby subclass handed to Qt and
+// returned by some accessor (QApplication::activeModalWidget, sender(),
+// parentWidget(), QTabWidget::widget(), ...) came back as a plain generated
+// class, losing the subclass identity and its instance variables.
+struct RubyPeer {
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  virtual ~RubyPeer();
+};
+
 VALUE module_qt();
 
 // Register a class named `name` under module Qt with the given superclass

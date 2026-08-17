@@ -350,6 +350,22 @@ module Qt
     def height; screenGeometry.height; end
   end
 
+  # QSound was removed in Qt 6 (Qt 5 deprecated it in favour of
+  # QtMultimedia's QSoundEffect, which these bindings do not wrap -- we
+  # generate against QtCore/QtGui/QtWidgets only). COSMOS calls
+  # Cosmos.play_wav_file for dialog chimes, which is guarded by
+  # `Qt::Sound.isAvailable`; report "no audio device" so the guard short
+  # circuits and the chime is silently skipped rather than raising NameError.
+  class Sound
+    def self.isAvailable; false; end
+    class << self; alias_method :is_available, :isAvailable; end
+    def self.available?; false; end
+
+    # Never reached while isAvailable is false, but keep the surface complete
+    # so a caller that skips the guard degrades to a no-op instead of raising.
+    def self.play(_filename = nil); nil; end
+  end
+
   def self.qVersion
     "6.0.0"
   end
