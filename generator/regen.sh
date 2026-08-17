@@ -22,6 +22,7 @@ CLASSES=(
   QValidator QIntValidator QDoubleValidator QKeySequence QSizePolicy QSettings QModelIndex
   QStringListModel QAbstractItemModel QFileSystemModel QListView QTreeView QCompleter QEventLoop
   QMimeData QMovie QStyledItemDelegate QStyleOptionViewItem QStyleOptionButton QFrame
+  QShortcut QStyle QPaintEngine
 )
 
 exec generator-venv/bin/python generator/codegen.py \

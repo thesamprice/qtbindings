@@ -48,6 +48,43 @@ module Qt
     module ClassMethods
       def slots(*_signatures); end
 
+      # qtbindings constructor blocks. A block that takes no argument is
+      # instance_eval'd against the new object:
+      #   Qt::PushButton.new('Ok') { connect(SIGNAL('clicked()')) { ... } }
+      # one that takes an argument is called with it:
+      #   Qt::Dialog.new(self) { |dialog| ... dialog.exec }
+      def new(*args, &block)
+        obj = super(*args, &nil)
+        if block
+          block.arity <= 0 ? obj.instance_eval(&block) : block.call(obj)
+        end
+        obj
+      end
+
+      # qtbindings exposed scoped enums as class *methods* as well as
+      # constants, so both Qt::Style::CE_PushButton and
+      # Qt::Style.CE_ItemViewItem worked. Constants declared on this class or
+      # a Qt ancestor (never Object's globals) answer the method form too.
+      def method_missing(name, *args, &block)
+        if args.empty? && !block && name.to_s.match?(/\A[A-Z]/)
+          ancestors.each do |mod|
+            break if mod == Object
+            return mod.const_get(name, false) if mod.const_defined?(name, false)
+          end
+        end
+        super
+      end
+
+      def respond_to_missing?(name, include_private = false)
+        if name.to_s.match?(/\A[A-Z]/)
+          ancestors.each do |mod|
+            break if mod == Object
+            return true if mod.const_defined?(name, false)
+          end
+        end
+        super
+      end
+
       # Ruby-defined signals: `signals 'modified(int)'` defines a method
       # `modified` which invokes every connected handler (the qtruby
       # convention: `emit modified(5)` calls the signal method, and emit
@@ -97,10 +134,26 @@ module Qt
     # like ordinary dispatch (and still raises NoMethodError for real typos).
     def method_missing(name, *args, &block)
       # Only reachable explicitly when the method exists (implicit dispatch
-      # never lands here for a defined method), so this is not a loop.
-      return __send__(name, *args, &block) if respond_to?(name)
-      snake = Qt.underscore(name)
-      return __send__(snake, *args, &block) if snake != name.to_s && respond_to?(snake)
+      # never lands here for a defined method) -- except for a `super` call
+      # in a reopened class over a method the bindings define directly, which
+      # Ruby also routes here. Re-sending would loop forever, so detect the
+      # re-entry and report the real problem.
+      active = (Thread.current[:qt6rb_method_missing] ||= {})
+      key = [object_id, name]
+      if active[key]
+        Kernel.raise NoMethodError,
+          "no superclass method '#{name}' for #{self.class}: the Qt 6 bindings " \
+          "define it on this class, so a reopened `def #{name}; super; end` has " \
+          "nothing to call -- alias the original method instead"
+      end
+      active[key] = true
+      begin
+        return __send__(name, *args, &block) if respond_to?(name)
+        snake = Qt.underscore(name)
+        return __send__(snake, *args, &block) if snake != name.to_s && respond_to?(snake)
+      ensure
+        active.delete(key)
+      end
       super
     end
     public :method_missing
@@ -152,7 +205,14 @@ module Qt
       unless sender.respond_to?(meth)
         Kernel.raise NoMethodError, "no signal #{name} (#{meth}) on #{sender.class}"
       end
-      sender.send(meth, &block)
+      # Generated registrations take the full signature so overloaded signals
+      # (QCompleter#activated) pick the right overload. Ruby-defined signals
+      # (WrapperExtensions::ClassMethods#signals) take the block only.
+      if sender.method(meth).arity == 0
+        sender.send(meth, &block)
+      else
+        sender.send(meth, signal, &block)
+      end
     end
   end
 
@@ -293,7 +353,54 @@ module Qt
   def self.qVersion
     "6.0.0"
   end
+
+  # Qt 5 folded QStyleOptionViewItemV2/V3/V4 (and the ...ButtonV2 variants)
+  # back into their base classes; the versioned names live on in
+  # qtbindings-era item delegates.
+  StyleOptionViewItemV2 = StyleOptionViewItem
+  StyleOptionViewItemV3 = StyleOptionViewItem
+  StyleOptionViewItemV4 = StyleOptionViewItem
+
+  # qtbindings returned every QVariant as a Qt::Variant with toXxx accessors.
+  # QVariant is now marshalled to plain Ruby values (Qt::Variant.new is a
+  # passthrough), so give those values the same accessors. Scoped to the
+  # classes from_qvariant can produce rather than added to Object, where
+  # #value in particular would shadow application methods.
+  module VariantValue
+    def toString; to_s; end
+    def toInt; to_i; end
+    def toFloat; to_f; end
+    def toDouble; to_f; end
+    def toBool; self ? true : false; end
+    def toStringList; Array(self).map(&:to_s); end
+    def toVariant; self; end
+    # Qt::Variant#value returned the wrapped Ruby object
+    def value; self; end
+    def isValid; !nil?; end
+    def isNull; nil?; end
+    # Ruby's implicit conversion protocol (to_int, to_str, to_ary, ...) must
+    # not be touched: a String answering #to_int with an Integer would make
+    # File.open(path, "w+") read the mode as an integer flag.
+    IMPLICIT_CONVERSIONS = %w(to_int to_str to_ary to_hash to_a to_io to_proc)
+    %w(toString toInt toFloat toDouble toBool toStringList toVariant
+       isValid isNull).each do |m|
+      snake = Qt.underscore(m)
+      next if IMPLICIT_CONVERSIONS.include?(snake)
+      alias_method(snake, m)
+    end
+  end
+  # qtbindings rooted every wrapper at Qt::Base, so Qt::Widget's superclass
+  # was Qt::Base. COSMOS's line_graph C extension hard-codes that hierarchy
+  # (rb_define_class_under(mQt, "Base", rb_cObject) then
+  # rb_define_class_under(mQt, "Widget", cQtBase)) before subclassing
+  # Qt::Widget, which raises "superclass mismatch" unless Qt::Base resolves
+  # to the real parent of Qt::Widget. Qt::Object is that parent and it
+  # descends directly from Object, so both re-declarations line up.
+  Base = Object
 end
+
+[String, Integer, Float, Symbol, Array, Hash, TrueClass, FalseClass, NilClass]
+  .each { |k| k.include(Qt::VariantValue) }
 
 # qtbindings-era code calls Variant#toSize/toPoint/etc on values read from
 # QSettings; those now come back as the actual value classes
@@ -302,6 +409,44 @@ end
   Qt.const_get(klass).class_eval do
     define_method(meth) { self }
     define_method(Qt.underscore(meth)) { self }
+  end
+end
+
+# QPolygon(int size) came from QVector in Qt 4/5. In Qt 6 QPolygon inherits
+# QList<QPoint>'s constructors, and the generator cannot see through that
+# template base, so the sized constructor is missing. putPoints() grows the
+# polygon, which is all the sized constructor was ever used for.
+class Qt::Polygon
+  def initialize(arg = nil)
+    if arg.is_a?(Integer)
+      super()
+      arg.times { |i| putPoints(i, 1, 0, 0) }
+    elsif arg.nil?
+      super()
+    else
+      super(arg)
+    end
+  end
+end
+
+# QFontMetrics::width() was deprecated in Qt 5.11 and removed in Qt 6 in
+# favour of horizontalAdvance().
+class Qt::FontMetrics
+  alias_method :width, :horizontalAdvance if method_defined?(:horizontalAdvance)
+end
+
+# Qt 5 renamed QHeaderView's per-section accessors; qtbindings-era code uses
+# the Qt 4 spellings.
+class Qt::HeaderView
+  { 'setResizeMode' => 'setSectionResizeMode',
+    'resizeMode' => 'sectionResizeMode',
+    'setMovable' => 'setSectionsMovable',
+    'isMovable' => 'sectionsMovable',
+    'setClickable' => 'setSectionsClickable',
+    'isClickable' => 'sectionsClickable' }.each do |old, new|
+    next unless method_defined?(new)
+    alias_method(old, new)
+    alias_method(Qt.underscore(old), new)
   end
 end
 

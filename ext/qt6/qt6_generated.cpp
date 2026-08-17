@@ -121,6 +121,9 @@ static qt6rb::ClassInfo cls_QStyledItemDelegate = { "QStyledItemDelegate", Qnil,
 static qt6rb::ClassInfo cls_QStyleOptionViewItem = { "QStyleOptionViewItem", Qnil, [](void* p) { delete static_cast<QStyleOptionViewItem*>(p); }, false };
 static qt6rb::ClassInfo cls_QStyleOptionButton = { "QStyleOptionButton", Qnil, [](void* p) { delete static_cast<QStyleOptionButton*>(p); }, false };
 static qt6rb::ClassInfo cls_QFrame = { "QFrame", Qnil, [](void* p) { delete static_cast<QFrame*>(p); }, true };
+static qt6rb::ClassInfo cls_QShortcut = { "QShortcut", Qnil, [](void* p) { delete static_cast<QShortcut*>(p); }, true };
+static qt6rb::ClassInfo cls_QStyle = { "QStyle", Qnil, nullptr, true };
+static qt6rb::ClassInfo cls_QPaintEngine = { "QPaintEngine", Qnil, nullptr, false };
 static qt6rb::ClassInfo cls_QPaintDevice = { "QPaintDevice", Qnil, nullptr, false };
 static qt6rb::ClassInfo cls_QAbstractButton = { "QAbstractButton", Qnil, nullptr, true };
 static qt6rb::ClassInfo cls_QAbstractScrollArea = { "QAbstractScrollArea", Qnil, [](void* p) { delete static_cast<QAbstractScrollArea*>(p); }, true };
@@ -136,6 +139,108 @@ static qt6rb::ClassInfo cls_QAbstractListModel = { "QAbstractListModel", Qnil, n
 static qt6rb::ClassInfo cls_QAbstractItemDelegate = { "QAbstractItemDelegate", Qnil, nullptr, true };
 static qt6rb::ClassInfo cls_QStyleOption = { "QStyleOption", Qnil, [](void* p) { delete static_cast<QStyleOption*>(p); }, false };
 static qt6rb::ClassInfo cls_QPointerEvent = { "QPointerEvent", Qnil, [](void* p) { delete static_cast<QPointerEvent*>(p); }, false };
+
+static void* upcast_QTimer_QObject(void* p) { return static_cast<QObject*>(static_cast<QTimer*>(p)); }
+static void* upcast_QCoreApplication_QObject(void* p) { return static_cast<QObject*>(static_cast<QCoreApplication*>(p)); }
+static void* upcast_QGuiApplication_QCoreApplication(void* p) { return static_cast<QCoreApplication*>(static_cast<QGuiApplication*>(p)); }
+static void* upcast_QApplication_QGuiApplication(void* p) { return static_cast<QGuiApplication*>(static_cast<QApplication*>(p)); }
+static void* upcast_QScreen_QObject(void* p) { return static_cast<QObject*>(static_cast<QScreen*>(p)); }
+static void* upcast_QWidget_QObject(void* p) { return static_cast<QObject*>(static_cast<QWidget*>(p)); }
+static void* upcast_QWidget_QPaintDevice(void* p) { return static_cast<QPaintDevice*>(static_cast<QWidget*>(p)); }
+static void* upcast_QLabel_QFrame(void* p) { return static_cast<QFrame*>(static_cast<QLabel*>(p)); }
+static void* upcast_QPushButton_QAbstractButton(void* p) { return static_cast<QAbstractButton*>(static_cast<QPushButton*>(p)); }
+static void* upcast_QCheckBox_QAbstractButton(void* p) { return static_cast<QAbstractButton*>(static_cast<QCheckBox*>(p)); }
+static void* upcast_QComboBox_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QComboBox*>(p)); }
+static void* upcast_QLineEdit_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QLineEdit*>(p)); }
+static void* upcast_QTextEdit_QAbstractScrollArea(void* p) { return static_cast<QAbstractScrollArea*>(static_cast<QTextEdit*>(p)); }
+static void* upcast_QPlainTextEdit_QAbstractScrollArea(void* p) { return static_cast<QAbstractScrollArea*>(static_cast<QPlainTextEdit*>(p)); }
+static void* upcast_QMainWindow_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QMainWindow*>(p)); }
+static void* upcast_QLayout_QObject(void* p) { return static_cast<QObject*>(static_cast<QLayout*>(p)); }
+static void* upcast_QLayout_QLayoutItem(void* p) { return static_cast<QLayoutItem*>(static_cast<QLayout*>(p)); }
+static void* upcast_QBoxLayout_QLayout(void* p) { return static_cast<QLayout*>(static_cast<QBoxLayout*>(p)); }
+static void* upcast_QVBoxLayout_QBoxLayout(void* p) { return static_cast<QBoxLayout*>(static_cast<QVBoxLayout*>(p)); }
+static void* upcast_QHBoxLayout_QBoxLayout(void* p) { return static_cast<QBoxLayout*>(static_cast<QHBoxLayout*>(p)); }
+static void* upcast_QGridLayout_QLayout(void* p) { return static_cast<QLayout*>(static_cast<QGridLayout*>(p)); }
+static void* upcast_QFormLayout_QLayout(void* p) { return static_cast<QLayout*>(static_cast<QFormLayout*>(p)); }
+static void* upcast_QStackedLayout_QLayout(void* p) { return static_cast<QLayout*>(static_cast<QStackedLayout*>(p)); }
+static void* upcast_QSpacerItem_QLayoutItem(void* p) { return static_cast<QLayoutItem*>(static_cast<QSpacerItem*>(p)); }
+static void* upcast_QTimerEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QTimerEvent*>(p)); }
+static void* upcast_QChildEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QChildEvent*>(p)); }
+static void* upcast_QCloseEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QCloseEvent*>(p)); }
+static void* upcast_QShowEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QShowEvent*>(p)); }
+static void* upcast_QHideEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QHideEvent*>(p)); }
+static void* upcast_QMoveEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QMoveEvent*>(p)); }
+static void* upcast_QResizeEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QResizeEvent*>(p)); }
+static void* upcast_QPaintEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QPaintEvent*>(p)); }
+static void* upcast_QKeyEvent_QInputEvent(void* p) { return static_cast<QInputEvent*>(static_cast<QKeyEvent*>(p)); }
+static void* upcast_QFocusEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QFocusEvent*>(p)); }
+static void* upcast_QEnterEvent_QSinglePointEvent(void* p) { return static_cast<QSinglePointEvent*>(static_cast<QEnterEvent*>(p)); }
+static void* upcast_QMouseEvent_QSinglePointEvent(void* p) { return static_cast<QSinglePointEvent*>(static_cast<QMouseEvent*>(p)); }
+static void* upcast_QWheelEvent_QSinglePointEvent(void* p) { return static_cast<QSinglePointEvent*>(static_cast<QWheelEvent*>(p)); }
+static void* upcast_QPixmap_QPaintDevice(void* p) { return static_cast<QPaintDevice*>(static_cast<QPixmap*>(p)); }
+static void* upcast_QImage_QPaintDevice(void* p) { return static_cast<QPaintDevice*>(static_cast<QImage*>(p)); }
+static void* upcast_QLinearGradient_QGradient(void* p) { return static_cast<QGradient*>(static_cast<QLinearGradient*>(p)); }
+static void* upcast_QRadialGradient_QGradient(void* p) { return static_cast<QGradient*>(static_cast<QRadialGradient*>(p)); }
+static void* upcast_QMessageBox_QDialog(void* p) { return static_cast<QDialog*>(static_cast<QMessageBox*>(p)); }
+static void* upcast_QDialog_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QDialog*>(p)); }
+static void* upcast_QFileDialog_QDialog(void* p) { return static_cast<QDialog*>(static_cast<QFileDialog*>(p)); }
+static void* upcast_QInputDialog_QDialog(void* p) { return static_cast<QDialog*>(static_cast<QInputDialog*>(p)); }
+static void* upcast_QProgressBar_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QProgressBar*>(p)); }
+static void* upcast_QSlider_QAbstractSlider(void* p) { return static_cast<QAbstractSlider*>(static_cast<QSlider*>(p)); }
+static void* upcast_QSpinBox_QAbstractSpinBox(void* p) { return static_cast<QAbstractSpinBox*>(static_cast<QSpinBox*>(p)); }
+static void* upcast_QDoubleSpinBox_QAbstractSpinBox(void* p) { return static_cast<QAbstractSpinBox*>(static_cast<QDoubleSpinBox*>(p)); }
+static void* upcast_QRadioButton_QAbstractButton(void* p) { return static_cast<QAbstractButton*>(static_cast<QRadioButton*>(p)); }
+static void* upcast_QButtonGroup_QObject(void* p) { return static_cast<QObject*>(static_cast<QButtonGroup*>(p)); }
+static void* upcast_QDialogButtonBox_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QDialogButtonBox*>(p)); }
+static void* upcast_QCalendarWidget_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QCalendarWidget*>(p)); }
+static void* upcast_QTableWidget_QTableView(void* p) { return static_cast<QTableView*>(static_cast<QTableWidget*>(p)); }
+static void* upcast_QTreeWidget_QTreeView(void* p) { return static_cast<QTreeView*>(static_cast<QTreeWidget*>(p)); }
+static void* upcast_QTabWidget_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QTabWidget*>(p)); }
+static void* upcast_QListWidget_QListView(void* p) { return static_cast<QListView*>(static_cast<QListWidget*>(p)); }
+static void* upcast_QTextDocument_QObject(void* p) { return static_cast<QObject*>(static_cast<QTextDocument*>(p)); }
+static void* upcast_QTextCharFormat_QTextFormat(void* p) { return static_cast<QTextFormat*>(static_cast<QTextCharFormat*>(p)); }
+static void* upcast_QSyntaxHighlighter_QObject(void* p) { return static_cast<QObject*>(static_cast<QSyntaxHighlighter*>(p)); }
+static void* upcast_QScrollBar_QAbstractSlider(void* p) { return static_cast<QAbstractSlider*>(static_cast<QScrollBar*>(p)); }
+static void* upcast_QAbstractItemView_QAbstractScrollArea(void* p) { return static_cast<QAbstractScrollArea*>(static_cast<QAbstractItemView*>(p)); }
+static void* upcast_QHeaderView_QAbstractItemView(void* p) { return static_cast<QAbstractItemView*>(static_cast<QHeaderView*>(p)); }
+static void* upcast_QGroupBox_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QGroupBox*>(p)); }
+static void* upcast_QSplitter_QFrame(void* p) { return static_cast<QFrame*>(static_cast<QSplitter*>(p)); }
+static void* upcast_QScrollArea_QAbstractScrollArea(void* p) { return static_cast<QAbstractScrollArea*>(static_cast<QScrollArea*>(p)); }
+static void* upcast_QStatusBar_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QStatusBar*>(p)); }
+static void* upcast_QMenuBar_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QMenuBar*>(p)); }
+static void* upcast_QMenu_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QMenu*>(p)); }
+static void* upcast_QAction_QObject(void* p) { return static_cast<QObject*>(static_cast<QAction*>(p)); }
+static void* upcast_QActionGroup_QObject(void* p) { return static_cast<QObject*>(static_cast<QActionGroup*>(p)); }
+static void* upcast_QToolBar_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QToolBar*>(p)); }
+static void* upcast_QValidator_QObject(void* p) { return static_cast<QObject*>(static_cast<QValidator*>(p)); }
+static void* upcast_QIntValidator_QValidator(void* p) { return static_cast<QValidator*>(static_cast<QIntValidator*>(p)); }
+static void* upcast_QDoubleValidator_QValidator(void* p) { return static_cast<QValidator*>(static_cast<QDoubleValidator*>(p)); }
+static void* upcast_QSettings_QObject(void* p) { return static_cast<QObject*>(static_cast<QSettings*>(p)); }
+static void* upcast_QStringListModel_QAbstractListModel(void* p) { return static_cast<QAbstractListModel*>(static_cast<QStringListModel*>(p)); }
+static void* upcast_QAbstractItemModel_QObject(void* p) { return static_cast<QObject*>(static_cast<QAbstractItemModel*>(p)); }
+static void* upcast_QFileSystemModel_QAbstractItemModel(void* p) { return static_cast<QAbstractItemModel*>(static_cast<QFileSystemModel*>(p)); }
+static void* upcast_QListView_QAbstractItemView(void* p) { return static_cast<QAbstractItemView*>(static_cast<QListView*>(p)); }
+static void* upcast_QTreeView_QAbstractItemView(void* p) { return static_cast<QAbstractItemView*>(static_cast<QTreeView*>(p)); }
+static void* upcast_QCompleter_QObject(void* p) { return static_cast<QObject*>(static_cast<QCompleter*>(p)); }
+static void* upcast_QEventLoop_QObject(void* p) { return static_cast<QObject*>(static_cast<QEventLoop*>(p)); }
+static void* upcast_QMimeData_QObject(void* p) { return static_cast<QObject*>(static_cast<QMimeData*>(p)); }
+static void* upcast_QMovie_QObject(void* p) { return static_cast<QObject*>(static_cast<QMovie*>(p)); }
+static void* upcast_QStyledItemDelegate_QAbstractItemDelegate(void* p) { return static_cast<QAbstractItemDelegate*>(static_cast<QStyledItemDelegate*>(p)); }
+static void* upcast_QStyleOptionViewItem_QStyleOption(void* p) { return static_cast<QStyleOption*>(static_cast<QStyleOptionViewItem*>(p)); }
+static void* upcast_QStyleOptionButton_QStyleOption(void* p) { return static_cast<QStyleOption*>(static_cast<QStyleOptionButton*>(p)); }
+static void* upcast_QFrame_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QFrame*>(p)); }
+static void* upcast_QShortcut_QObject(void* p) { return static_cast<QObject*>(static_cast<QShortcut*>(p)); }
+static void* upcast_QStyle_QObject(void* p) { return static_cast<QObject*>(static_cast<QStyle*>(p)); }
+static void* upcast_QAbstractButton_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QAbstractButton*>(p)); }
+static void* upcast_QAbstractScrollArea_QFrame(void* p) { return static_cast<QFrame*>(static_cast<QAbstractScrollArea*>(p)); }
+static void* upcast_QInputEvent_QEvent(void* p) { return static_cast<QEvent*>(static_cast<QInputEvent*>(p)); }
+static void* upcast_QSinglePointEvent_QPointerEvent(void* p) { return static_cast<QPointerEvent*>(static_cast<QSinglePointEvent*>(p)); }
+static void* upcast_QAbstractSlider_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QAbstractSlider*>(p)); }
+static void* upcast_QAbstractSpinBox_QWidget(void* p) { return static_cast<QWidget*>(static_cast<QAbstractSpinBox*>(p)); }
+static void* upcast_QTableView_QAbstractItemView(void* p) { return static_cast<QAbstractItemView*>(static_cast<QTableView*>(p)); }
+static void* upcast_QAbstractListModel_QAbstractItemModel(void* p) { return static_cast<QAbstractItemModel*>(static_cast<QAbstractListModel*>(p)); }
+static void* upcast_QAbstractItemDelegate_QObject(void* p) { return static_cast<QObject*>(static_cast<QAbstractItemDelegate*>(p)); }
+static void* upcast_QPointerEvent_QInputEvent(void* p) { return static_cast<QInputEvent*>(static_cast<QPointerEvent*>(p)); }
 
 class Rb_QObject : public QObject {
 public:
@@ -322,6 +427,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QWidget::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWidget, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QWidget::paintEngine();
   }
   bool event(QEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWidget, "event", "event")) {
@@ -749,6 +862,14 @@ public:
     }
     return QLabel::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QLabel, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QLabel::paintEngine();
+  }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QLabel, "mouse_double_click_event", "mouseDoubleClickEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -1132,6 +1253,14 @@ public:
     }
     return QPushButton::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPushButton, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QPushButton::paintEngine();
+  }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPushButton, "mouse_double_click_event", "mouseDoubleClickEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -1505,6 +1634,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QCheckBox::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QCheckBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QCheckBox::paintEngine();
   }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QCheckBox, "mouse_double_click_event", "mouseDoubleClickEvent")) {
@@ -1893,6 +2030,14 @@ public:
     }
     return QComboBox::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QComboBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QComboBox::paintEngine();
+  }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QComboBox, "mouse_double_click_event", "mouseDoubleClickEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -2217,6 +2362,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QLineEdit::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QLineEdit, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QLineEdit::paintEngine();
   }
   void wheelEvent(QWheelEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QLineEdit, "wheel_event", "wheelEvent")) {
@@ -2686,6 +2839,14 @@ public:
     }
     return QTextEdit::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTextEdit, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QTextEdit::paintEngine();
+  }
   void enterEvent(QEnterEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTextEdit, "enter_event", "enterEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
@@ -3109,6 +3270,14 @@ public:
     }
     return QPlainTextEdit::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPlainTextEdit, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QPlainTextEdit::paintEngine();
+  }
   void enterEvent(QEnterEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPlainTextEdit, "enter_event", "enterEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
@@ -3299,6 +3468,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QMainWindow::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMainWindow, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QMainWindow::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMainWindow, "mouse_press_event", "mousePressEvent")) {
@@ -5694,6 +5871,7 @@ public:
 class Rb_QPixmap : public QPixmap {
 public:
   using QPixmap::QPixmap;
+  Rb_QPixmap(const QPixmap& other) : QPixmap(other) {}
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
   ~Rb_QPixmap() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
@@ -5708,6 +5886,14 @@ public:
       if (ok) return NUM2INT(r);
     }
     return QPixmap::devType();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPixmap, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QPixmap::paintEngine();
   }
   int metric(PaintDeviceMetric a0) const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPixmap, "metric", "metric")) {
@@ -5749,6 +5935,7 @@ public:
 class Rb_QImage : public QImage {
 public:
   using QImage::QImage;
+  Rb_QImage(const QImage& other) : QImage(other) {}
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
   ~Rb_QImage() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
@@ -5763,6 +5950,14 @@ public:
       if (ok) return NUM2INT(r);
     }
     return QImage::devType();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QImage, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QImage::paintEngine();
   }
   int metric(PaintDeviceMetric a0) const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QImage, "metric", "metric")) {
@@ -5947,6 +6142,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QMessageBox::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMessageBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QMessageBox::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMessageBox, "mouse_press_event", "mousePressEvent")) {
@@ -6275,6 +6478,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QDialog::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QDialog, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QDialog::paintEngine();
   }
   bool event(QEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QDialog, "event", "event")) {
@@ -6650,6 +6861,14 @@ public:
     }
     return QFileDialog::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QFileDialog, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QFileDialog::paintEngine();
+  }
   bool event(QEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QFileDialog, "event", "event")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
@@ -6996,6 +7215,14 @@ public:
     }
     return QInputDialog::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QInputDialog, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QInputDialog::paintEngine();
+  }
   bool event(QEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QInputDialog, "event", "event")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
@@ -7312,6 +7539,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QProgressBar::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QProgressBar, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QProgressBar::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QProgressBar, "mouse_press_event", "mousePressEvent")) {
@@ -7710,6 +7945,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QSlider::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSlider, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QSlider::paintEngine();
   }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSlider, "mouse_double_click_event", "mouseDoubleClickEvent")) {
@@ -8157,6 +8400,14 @@ public:
     }
     return QSpinBox::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSpinBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QSpinBox::paintEngine();
+  }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSpinBox, "mouse_double_click_event", "mouseDoubleClickEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -8528,6 +8779,14 @@ public:
     }
     return QDoubleSpinBox::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QDoubleSpinBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QDoubleSpinBox::paintEngine();
+  }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QDoubleSpinBox, "mouse_double_click_event", "mouseDoubleClickEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -8848,6 +9107,14 @@ public:
     }
     return QRadioButton::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QRadioButton, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QRadioButton::paintEngine();
+  }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QRadioButton, "mouse_double_click_event", "mouseDoubleClickEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -9158,6 +9425,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QDialogButtonBox::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QDialogButtonBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QDialogButtonBox::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QDialogButtonBox, "mouse_press_event", "mousePressEvent")) {
@@ -9532,6 +9807,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QCalendarWidget::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QCalendarWidget, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QCalendarWidget::paintEngine();
   }
   void mouseReleaseEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QCalendarWidget, "mouse_release_event", "mouseReleaseEvent")) {
@@ -10234,6 +10517,14 @@ public:
     }
     return QTableWidget::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTableWidget, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QTableWidget::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTableWidget, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -10355,6 +10646,7 @@ public:
 class Rb_QTableWidgetItem : public QTableWidgetItem {
 public:
   using QTableWidgetItem::QTableWidgetItem;
+  Rb_QTableWidgetItem(const QTableWidgetItem& other) : QTableWidgetItem(other) {}
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
   ~Rb_QTableWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
@@ -10915,6 +11207,14 @@ public:
     }
     return QTreeWidget::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeWidget, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QTreeWidget::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeWidget, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -11036,6 +11336,7 @@ public:
 class Rb_QTreeWidgetItem : public QTreeWidgetItem {
 public:
   using QTreeWidgetItem::QTreeWidgetItem;
+  Rb_QTreeWidgetItem(const QTreeWidgetItem& other) : QTreeWidgetItem(other) {}
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
   ~Rb_QTreeWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
@@ -11214,6 +11515,14 @@ public:
       if (ok) return NUM2INT(r);
     }
     return QTabWidget::devType();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTabWidget, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QTabWidget::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTabWidget, "mouse_press_event", "mousePressEvent")) {
@@ -11913,6 +12222,14 @@ public:
     }
     return QListWidget::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListWidget, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QListWidget::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListWidget, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -12034,6 +12351,7 @@ public:
 class Rb_QListWidgetItem : public QListWidgetItem {
 public:
   using QListWidgetItem::QListWidgetItem;
+  Rb_QListWidgetItem(const QListWidgetItem& other) : QListWidgetItem(other) {}
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
   ~Rb_QListWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
@@ -12301,6 +12619,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QScrollBar::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QScrollBar, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QScrollBar::paintEngine();
   }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QScrollBar, "mouse_double_click_event", "mouseDoubleClickEvent")) {
@@ -12958,6 +13284,14 @@ public:
     }
     return QHeaderView::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QHeaderView, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QHeaderView::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QHeaderView, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -13230,6 +13564,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QGroupBox::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QGroupBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QGroupBox::paintEngine();
   }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QGroupBox, "mouse_double_click_event", "mouseDoubleClickEvent")) {
@@ -13530,6 +13872,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QSplitter::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSplitter, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QSplitter::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSplitter, "mouse_press_event", "mousePressEvent")) {
@@ -13968,6 +14318,14 @@ public:
     }
     return QScrollArea::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QScrollArea, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QScrollArea::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QScrollArea, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -14231,6 +14589,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QStatusBar::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QStatusBar, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QStatusBar::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QStatusBar, "mouse_press_event", "mousePressEvent")) {
@@ -14650,6 +15016,14 @@ public:
     }
     return QMenuBar::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMenuBar, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QMenuBar::paintEngine();
+  }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMenuBar, "mouse_double_click_event", "mouseDoubleClickEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -14985,6 +15359,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QMenu::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMenu, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QMenu::paintEngine();
   }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMenu, "mouse_double_click_event", "mouseDoubleClickEvent")) {
@@ -15344,6 +15726,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QToolBar::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QToolBar, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QToolBar::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QToolBar, "mouse_press_event", "mousePressEvent")) {
@@ -16804,6 +17194,14 @@ public:
     }
     return QListView::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListView, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QListView::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListView, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -17432,6 +17830,14 @@ public:
     }
     return QTreeView::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeView, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QTreeView::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeView, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -18052,6 +18458,14 @@ public:
     }
     return QFrame::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QFrame, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QFrame::paintEngine();
+  }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QFrame, "mouse_press_event", "mousePressEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMouseEvent, false) };
@@ -18287,6 +18701,63 @@ public:
   }
 };
 
+class Rb_QShortcut : public QShortcut {
+public:
+  using QShortcut::QShortcut;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QShortcut() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QShortcut::event(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QShortcut::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QShortcut::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QShortcut::customEvent(a0); }
+  bool event(QEvent * a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QShortcut, "event", "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QShortcut::event(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QShortcut, "event_filter", "eventFilter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QShortcut::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QShortcut, "timer_event", "timerEvent")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QShortcut::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QShortcut, "child_event", "childEvent")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QShortcut::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QShortcut, "custom_event", "customEvent")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QShortcut::customEvent(a0);
+  }
+};
+
 class Rb_QAbstractScrollArea : public QAbstractScrollArea {
 public:
   using QAbstractScrollArea::QAbstractScrollArea;
@@ -18498,6 +18969,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QAbstractScrollArea::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractScrollArea, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QAbstractScrollArea::paintEngine();
   }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractScrollArea, "key_release_event", "keyReleaseEvent")) {
@@ -18780,6 +19259,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QAbstractSlider::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractSlider, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QAbstractSlider::paintEngine();
   }
   void mousePressEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractSlider, "mouse_press_event", "mousePressEvent")) {
@@ -19241,6 +19728,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QAbstractSpinBox::hasHeightForWidth();
+  }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractSpinBox, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QAbstractSpinBox::paintEngine();
   }
   void mouseDoubleClickEvent(QMouseEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractSpinBox, "mouse_double_click_event", "mouseDoubleClickEvent")) {
@@ -19816,6 +20311,14 @@ public:
     }
     return QTableView::hasHeightForWidth();
   }
+  QPaintEngine * paintEngine() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTableView, "paint_engine", "paintEngine")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEngine*>(qt6rb::unwrap_release(r, &cls_QPaintEngine));
+    }
+    return QTableView::paintEngine();
+  }
   void keyReleaseEvent(QKeyEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTableView, "key_release_event", "keyReleaseEvent")) {
       VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
@@ -20110,24 +20613,24 @@ static VALUE rb_QObject_disconnect(int argc, VALUE* argv, VALUE self) {
   }
   if (argc == 1) {
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return (o->disconnect(StringValueCStr(argv[0]))) ? Qtrue : Qfalse;
+      return (o->disconnect(static_cast<const char*>(StringValueCStr(argv[0])))) ? Qtrue : Qfalse;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       return (o->disconnect(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QObject#disconnect for given argument types");
   }
   if (argc == 2) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class))) {
-      return (o->disconnect(StringValueCStr(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)))) ? Qtrue : Qfalse;
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject))) {
+      return (o->disconnect(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)))) ? Qtrue : Qfalse;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class)) && RB_TYPE_P(argv[1], T_STRING)) {
-      return (o->disconnect(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]))) ? Qtrue : Qfalse;
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject)) && RB_TYPE_P(argv[1], T_STRING)) {
+      return (o->disconnect(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[1])))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QObject#disconnect for given argument types");
   }
   if (argc == 3) {
-    return (o->disconnect(StringValueCStr(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]))) ? Qtrue : Qfalse;
+    return (o->disconnect(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#disconnect (%d)", argc);
 }
@@ -20156,7 +20659,7 @@ static VALUE rb_QObject_set_property(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   (void)argv; (void)self;
   if (argc == 2) {
-    return (o->setProperty(StringValueCStr(argv[0]), qt6rb::to_qvariant(argv[1]))) ? Qtrue : Qfalse;
+    return (o->setProperty(static_cast<const char*>(StringValueCStr(argv[0])), qt6rb::to_qvariant(argv[1]))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#set_property (%d)", argc);
 }
@@ -20165,7 +20668,7 @@ static VALUE rb_QObject_property(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::from_qvariant(o->property(StringValueCStr(argv[0])));
+    return qt6rb::from_qvariant(o->property(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#property (%d)", argc);
 }
@@ -20183,7 +20686,7 @@ static VALUE rb_QObject_inherits(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   (void)argv; (void)self;
   if (argc == 1) {
-    return (o->inherits(StringValueCStr(argv[0]))) ? Qtrue : Qfalse;
+    return (o->inherits(static_cast<const char*>(StringValueCStr(argv[0])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#inherits (%d)", argc);
 }
@@ -20201,7 +20704,7 @@ static VALUE rb_QObject_delete_later(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QObject_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QObject::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QObject::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#tr (%d)", argc);
 }
@@ -20209,7 +20712,7 @@ static VALUE rb_QObject_s_tr(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QObject_s_disconnect(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 4) {
-    return (QObject::disconnect(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))) ? Qtrue : Qfalse;
+    return (QObject::disconnect(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[1])), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#disconnect (%d)", argc);
 }
@@ -20247,10 +20750,11 @@ static VALUE rb_QObject_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#custom_event (%d)", argc);
 }
 
-static VALUE rb_QObject_on_destroyed(VALUE self) {
+static VALUE rb_QObject_on_destroyed(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QObject::destroyed, o, [proc](QObject* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject) };
     qt6rb::call_proc(proc, 1, args);
@@ -20258,10 +20762,11 @@ static VALUE rb_QObject_on_destroyed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QObject_on_object_name_changed(VALUE self) {
+static VALUE rb_QObject_on_object_name_changed(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QObject::objectNameChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -20407,7 +20912,7 @@ static VALUE rb_QTimer_stop(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTimer_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTimer::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTimer::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTimer#tr (%d)", argc);
 }
@@ -20415,11 +20920,11 @@ static VALUE rb_QTimer_s_tr(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTimer_s_single_shot(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    QTimer::singleShot(NUM2INT(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]));
+    QTimer::singleShot(NUM2INT(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])));
     return Qnil;
   }
   if (argc == 4) {
-    QTimer::singleShot(NUM2INT(argv[0]), static_cast<Qt::TimerType>(NUM2INT(argv[1])), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]));
+    QTimer::singleShot(NUM2INT(argv[0]), static_cast<Qt::TimerType>(NUM2INT(argv[1])), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTimer#single_shot (%d)", argc);
@@ -20458,10 +20963,11 @@ static VALUE rb_QTimer_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTimer#custom_event (%d)", argc);
 }
 
-static VALUE rb_QTimer_on_timeout(VALUE self) {
+static VALUE rb_QTimer_on_timeout(int argc, VALUE* argv, VALUE self) {
   QTimer* o = static_cast<QTimer*>(qt6rb::unwrap(self, &cls_QTimer));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTimer::timeout, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -20492,7 +20998,7 @@ static VALUE rb_QCoreApplication_notify(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QCoreApplication_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QCoreApplication::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QCoreApplication::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCoreApplication#tr (%d)", argc);
 }
@@ -20781,13 +21287,13 @@ static VALUE rb_QCoreApplication_s_remove_library_path(int argc, VALUE* argv, VA
 static VALUE rb_QCoreApplication_s_translate(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 2) {
-    return qt6rb::from_qstring(QCoreApplication::translate(StringValueCStr(argv[0]), StringValueCStr(argv[1])));
+    return qt6rb::from_qstring(QCoreApplication::translate(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1]))));
   }
   if (argc == 3) {
-    return qt6rb::from_qstring(QCoreApplication::translate(StringValueCStr(argv[0]), StringValueCStr(argv[1]), StringValueCStr(argv[2])));
+    return qt6rb::from_qstring(QCoreApplication::translate(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), static_cast<const char*>(StringValueCStr(argv[2]))));
   }
   if (argc == 4) {
-    return qt6rb::from_qstring(QCoreApplication::translate(StringValueCStr(argv[0]), StringValueCStr(argv[1]), StringValueCStr(argv[2]), NUM2INT(argv[3])));
+    return qt6rb::from_qstring(QCoreApplication::translate(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), static_cast<const char*>(StringValueCStr(argv[2])), NUM2INT(argv[3])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCoreApplication#translate (%d)", argc);
 }
@@ -20831,50 +21337,55 @@ static VALUE rb_QCoreApplication_s_exit(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QCoreApplication#exit (%d)", argc);
 }
 
-static VALUE rb_QCoreApplication_on_about_to_quit(VALUE self) {
+static VALUE rb_QCoreApplication_on_about_to_quit(int argc, VALUE* argv, VALUE self) {
   QCoreApplication* o = static_cast<QCoreApplication*>(qt6rb::unwrap(self, &cls_QCoreApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCoreApplication::aboutToQuit, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QCoreApplication_on_organization_name_changed(VALUE self) {
+static VALUE rb_QCoreApplication_on_organization_name_changed(int argc, VALUE* argv, VALUE self) {
   QCoreApplication* o = static_cast<QCoreApplication*>(qt6rb::unwrap(self, &cls_QCoreApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCoreApplication::organizationNameChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QCoreApplication_on_organization_domain_changed(VALUE self) {
+static VALUE rb_QCoreApplication_on_organization_domain_changed(int argc, VALUE* argv, VALUE self) {
   QCoreApplication* o = static_cast<QCoreApplication*>(qt6rb::unwrap(self, &cls_QCoreApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCoreApplication::organizationDomainChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QCoreApplication_on_application_name_changed(VALUE self) {
+static VALUE rb_QCoreApplication_on_application_name_changed(int argc, VALUE* argv, VALUE self) {
   QCoreApplication* o = static_cast<QCoreApplication*>(qt6rb::unwrap(self, &cls_QCoreApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCoreApplication::applicationNameChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QCoreApplication_on_application_version_changed(VALUE self) {
+static VALUE rb_QCoreApplication_on_application_version_changed(int argc, VALUE* argv, VALUE self) {
   QCoreApplication* o = static_cast<QCoreApplication*>(qt6rb::unwrap(self, &cls_QCoreApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCoreApplication::applicationVersionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -20960,7 +21471,7 @@ static VALUE rb_QGuiApplication_is_saving_session(int argc, VALUE* argv, VALUE s
 static VALUE rb_QGuiApplication_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QGuiApplication::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QGuiApplication::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGuiApplication#tr (%d)", argc);
 }
@@ -21250,20 +21761,22 @@ static VALUE rb_QGuiApplication_s_sync(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QGuiApplication#sync (%d)", argc);
 }
 
-static VALUE rb_QGuiApplication_on_font_database_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_font_database_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::fontDatabaseChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_screen_added(VALUE self) {
+static VALUE rb_QGuiApplication_on_screen_added(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::screenAdded, o, [proc](QScreen* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QScreen) };
     qt6rb::call_proc(proc, 1, args);
@@ -21271,10 +21784,11 @@ static VALUE rb_QGuiApplication_on_screen_added(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_screen_removed(VALUE self) {
+static VALUE rb_QGuiApplication_on_screen_removed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::screenRemoved, o, [proc](QScreen* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QScreen) };
     qt6rb::call_proc(proc, 1, args);
@@ -21282,10 +21796,11 @@ static VALUE rb_QGuiApplication_on_screen_removed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_primary_screen_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_primary_screen_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::primaryScreenChanged, o, [proc](QScreen* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QScreen) };
     qt6rb::call_proc(proc, 1, args);
@@ -21293,20 +21808,22 @@ static VALUE rb_QGuiApplication_on_primary_screen_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_last_window_closed(VALUE self) {
+static VALUE rb_QGuiApplication_on_last_window_closed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::lastWindowClosed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_focus_object_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_focus_object_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::focusObjectChanged, o, [proc](QObject* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject) };
     qt6rb::call_proc(proc, 1, args);
@@ -21314,10 +21831,11 @@ static VALUE rb_QGuiApplication_on_focus_object_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_application_state_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_application_state_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::applicationStateChanged, o, [proc](Qt::ApplicationState a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -21325,10 +21843,11 @@ static VALUE rb_QGuiApplication_on_application_state_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_layout_direction_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_layout_direction_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::layoutDirectionChanged, o, [proc](Qt::LayoutDirection a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -21336,20 +21855,22 @@ static VALUE rb_QGuiApplication_on_layout_direction_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_application_display_name_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_application_display_name_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::applicationDisplayNameChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_palette_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_palette_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::paletteChanged, o, [proc](QPalette a0) {
     VALUE args[] = { qt6rb::wrap(new QPalette(a0), &cls_QPalette, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -21357,10 +21878,11 @@ static VALUE rb_QGuiApplication_on_palette_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGuiApplication_on_font_changed(VALUE self) {
+static VALUE rb_QGuiApplication_on_font_changed(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGuiApplication::fontChanged, o, [proc](QFont a0) {
     VALUE args[] = { qt6rb::wrap(new QFont(a0), &cls_QFont, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -21430,9 +21952,32 @@ static VALUE rb_QApplication_set_auto_sip_enabled(int argc, VALUE* argv, VALUE s
 static VALUE rb_QApplication_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QApplication::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QApplication::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QApplication#tr (%d)", argc);
+}
+
+static VALUE rb_QApplication_s_style(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(QApplication::style()), &cls_QStyle);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QApplication#style (%d)", argc);
+}
+
+static VALUE rb_QApplication_s_set_style(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 1) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QStyle))) {
+      QApplication::setStyle(static_cast<QStyle*>(qt6rb::unwrap_release(argv[0], &cls_QStyle)));
+      return Qnil;
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(QApplication::setStyle(qt6rb::to_qstring(argv[0]))), &cls_QStyle);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QApplication#set_style for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QApplication#set_style (%d)", argc);
 }
 
 static VALUE rb_QApplication_s_palette(int argc, VALUE* argv, VALUE self) {
@@ -21441,11 +21986,11 @@ static VALUE rb_QApplication_s_palette(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QPalette(QGuiApplication::palette()), &cls_QPalette, true);
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       return qt6rb::wrap(new QPalette(QApplication::palette(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)))), &cls_QPalette, true);
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap(new QPalette(QApplication::palette(StringValueCStr(argv[0]))), &cls_QPalette, true);
+      return qt6rb::wrap(new QPalette(QApplication::palette(static_cast<const char*>(StringValueCStr(argv[0])))), &cls_QPalette, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QApplication#palette for given argument types");
   }
@@ -21455,18 +22000,18 @@ static VALUE rb_QApplication_s_palette(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QApplication_s_set_palette(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPalette.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPalette)) {
       QApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPalette.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPalette)) {
       QGuiApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QApplication#set_palette for given argument types");
   }
   if (argc == 2) {
-    QApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)), StringValueCStr(argv[1]));
+    QApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)), static_cast<const char*>(StringValueCStr(argv[1])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QApplication#set_palette (%d)", argc);
@@ -21478,11 +22023,11 @@ static VALUE rb_QApplication_s_font(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QFont(QApplication::font()), &cls_QFont, true);
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       return qt6rb::wrap(new QFont(QApplication::font(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)))), &cls_QFont, true);
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap(new QFont(QApplication::font(StringValueCStr(argv[0]))), &cls_QFont, true);
+      return qt6rb::wrap(new QFont(QApplication::font(static_cast<const char*>(StringValueCStr(argv[0])))), &cls_QFont, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QApplication#font for given argument types");
   }
@@ -21492,18 +22037,18 @@ static VALUE rb_QApplication_s_font(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QApplication_s_set_font(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QFont.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QFont)) {
       QApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QFont.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QFont)) {
       QGuiApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QApplication#set_font for given argument types");
   }
   if (argc == 2) {
-    QApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)), StringValueCStr(argv[1]));
+    QApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)), static_cast<const char*>(StringValueCStr(argv[1])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QApplication#set_font (%d)", argc);
@@ -21751,10 +22296,11 @@ static VALUE rb_QApplication_s_about_qt(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QApplication#about_qt (%d)", argc);
 }
 
-static VALUE rb_QApplication_on_focus_changed(VALUE self) {
+static VALUE rb_QApplication_on_focus_changed(int argc, VALUE* argv, VALUE self) {
   QApplication* o = static_cast<QApplication*>(qt6rb::unwrap(self, &cls_QApplication));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QApplication::focusChanged, o, [proc](QWidget* a0, QWidget* a1) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget), qt6rb::wrap_qobject((QObject*)(a1), &cls_QWidget) };
     qt6rb::call_proc(proc, 2, args);
@@ -22059,15 +22605,16 @@ static VALUE rb_QScreen_refresh_rate(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QScreen_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QScreen::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QScreen::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QScreen#tr (%d)", argc);
 }
 
-static VALUE rb_QScreen_on_geometry_changed(VALUE self) {
+static VALUE rb_QScreen_on_geometry_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::geometryChanged, o, [proc](QRect a0) {
     VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -22075,10 +22622,11 @@ static VALUE rb_QScreen_on_geometry_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_available_geometry_changed(VALUE self) {
+static VALUE rb_QScreen_on_available_geometry_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::availableGeometryChanged, o, [proc](QRect a0) {
     VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -22086,10 +22634,11 @@ static VALUE rb_QScreen_on_available_geometry_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_physical_size_changed(VALUE self) {
+static VALUE rb_QScreen_on_physical_size_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::physicalSizeChanged, o, [proc](QSizeF a0) {
     VALUE args[] = { qt6rb::wrap(new QSizeF(a0), &cls_QSizeF, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -22097,10 +22646,11 @@ static VALUE rb_QScreen_on_physical_size_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_physical_dots_per_inch_changed(VALUE self) {
+static VALUE rb_QScreen_on_physical_dots_per_inch_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::physicalDotsPerInchChanged, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -22108,10 +22658,11 @@ static VALUE rb_QScreen_on_physical_dots_per_inch_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_logical_dots_per_inch_changed(VALUE self) {
+static VALUE rb_QScreen_on_logical_dots_per_inch_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::logicalDotsPerInchChanged, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -22119,10 +22670,11 @@ static VALUE rb_QScreen_on_logical_dots_per_inch_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_virtual_geometry_changed(VALUE self) {
+static VALUE rb_QScreen_on_virtual_geometry_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::virtualGeometryChanged, o, [proc](QRect a0) {
     VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -22130,10 +22682,11 @@ static VALUE rb_QScreen_on_virtual_geometry_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_primary_orientation_changed(VALUE self) {
+static VALUE rb_QScreen_on_primary_orientation_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::primaryOrientationChanged, o, [proc](Qt::ScreenOrientation a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -22141,10 +22694,11 @@ static VALUE rb_QScreen_on_primary_orientation_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_orientation_changed(VALUE self) {
+static VALUE rb_QScreen_on_orientation_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::orientationChanged, o, [proc](Qt::ScreenOrientation a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -22152,10 +22706,11 @@ static VALUE rb_QScreen_on_orientation_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QScreen_on_refresh_rate_changed(VALUE self) {
+static VALUE rb_QScreen_on_refresh_rate_changed(int argc, VALUE* argv, VALUE self) {
   QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QScreen::refreshRateChanged, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -22231,6 +22786,25 @@ static VALUE rb_QWidget_effective_win_id(int argc, VALUE* argv, VALUE self) {
     return ULL2NUM(o->effectiveWinId());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#effective_win_id (%d)", argc);
+}
+
+static VALUE rb_QWidget_style(int argc, VALUE* argv, VALUE self) {
+  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->style()), &cls_QStyle);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#style (%d)", argc);
+}
+
+static VALUE rb_QWidget_set_style(int argc, VALUE* argv, VALUE self) {
+  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setStyle(static_cast<QStyle*>(qt6rb::unwrap_release(argv[0], &cls_QStyle)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#set_style (%d)", argc);
 }
 
 static VALUE rb_QWidget_is_top_level(int argc, VALUE* argv, VALUE self) {
@@ -22641,10 +23215,10 @@ static VALUE rb_QWidget_map_to_global(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       return qt6rb::wrap(new QPointF(o->mapToGlobal(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       return qt6rb::wrap(new QPoint(o->mapToGlobal(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#map_to_global for given argument types");
@@ -22656,10 +23230,10 @@ static VALUE rb_QWidget_map_from_global(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       return qt6rb::wrap(new QPointF(o->mapFromGlobal(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       return qt6rb::wrap(new QPoint(o->mapFromGlobal(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#map_from_global for given argument types");
@@ -22671,10 +23245,10 @@ static VALUE rb_QWidget_map_to_parent(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       return qt6rb::wrap(new QPointF(o->mapToParent(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       return qt6rb::wrap(new QPoint(o->mapToParent(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#map_to_parent for given argument types");
@@ -22686,10 +23260,10 @@ static VALUE rb_QWidget_map_from_parent(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       return qt6rb::wrap(new QPointF(o->mapFromParent(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       return qt6rb::wrap(new QPoint(o->mapFromParent(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#map_from_parent for given argument types");
@@ -22701,10 +23275,10 @@ static VALUE rb_QWidget_map_to(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPointF.rb_class)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && qt6rb::is_kind_of(argv[1], &cls_QPointF)) {
       return qt6rb::wrap(new QPointF(o->mapTo(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)))), &cls_QPointF, true);
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && qt6rb::is_kind_of(argv[1], &cls_QPoint)) {
       return qt6rb::wrap(new QPoint(o->mapTo(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)))), &cls_QPoint, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#map_to for given argument types");
@@ -22716,10 +23290,10 @@ static VALUE rb_QWidget_map_from(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPointF.rb_class)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && qt6rb::is_kind_of(argv[1], &cls_QPointF)) {
       return qt6rb::wrap(new QPointF(o->mapFrom(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)))), &cls_QPointF, true);
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && qt6rb::is_kind_of(argv[1], &cls_QPoint)) {
       return qt6rb::wrap(new QPoint(o->mapFrom(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)))), &cls_QPoint, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#map_from for given argument types");
@@ -22929,22 +23503,22 @@ static VALUE rb_QWidget_render(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPaintDevice.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPaintDevice))) {
       o->render(static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[0], &cls_QPaintDevice)));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPainter.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPainter))) {
       o->render(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#render for given argument types");
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPaintDevice.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPaintDevice)) && qt6rb::is_kind_of(argv[1], &cls_QPoint)) {
       o->render(static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[0], &cls_QPaintDevice)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPainter.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPainter)) && qt6rb::is_kind_of(argv[1], &cls_QPoint)) {
       o->render(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
       return Qnil;
     }
@@ -23962,11 +24536,11 @@ static VALUE rb_QWidget_set_parent(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       o->setParent(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       o->QObject::setParent(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
       return Qnil;
     }
@@ -24043,7 +24617,7 @@ static VALUE rb_QWidget_add_action(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAction))) {
       o->addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)));
       return Qnil;
     }
@@ -24053,49 +24627,49 @@ static VALUE rb_QWidget_add_action(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QWidget#add_action for given argument types");
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class)) {
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence)) {
       return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#add_action for given argument types");
   }
   if (argc == 3) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QKeySequence)) {
       return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#add_action for given argument types");
   }
   if (argc == 4) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#add_action for given argument types");
   }
   if (argc == 5) {
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QObject.rb_class)) && RB_TYPE_P(argv[4], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QKeySequence) && (NIL_P(argv[3]) || qt6rb::is_kind_of(argv[3], &cls_QObject)) && RB_TYPE_P(argv[4], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[4])))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#add_action for given argument types");
   }
   if (argc == 6) {
-    return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
+    return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[4])), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#add_action (%d)", argc);
 }
@@ -24185,10 +24759,10 @@ static VALUE rb_QWidget_child_at(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       return qt6rb::wrap_qobject((QObject*)(o->childAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QWidget);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       return qt6rb::wrap_qobject((QObject*)(o->childAt(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QWidget);
     }
     rb_raise(rb_eTypeError, "no matching overload of QWidget#child_at for given argument types");
@@ -24220,6 +24794,15 @@ static VALUE rb_QWidget_test_attribute(int argc, VALUE* argv, VALUE self) {
     return (o->testAttribute(static_cast<Qt::WidgetAttribute>(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#test_attribute (%d)", argc);
+}
+
+static VALUE rb_QWidget_paint_engine(int argc, VALUE* argv, VALUE self) {
+  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::paintEngine() : o->paintEngine())), &cls_QPaintEngine, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#paint_engine (%d)", argc);
 }
 
 static VALUE rb_QWidget_ensure_polished(int argc, VALUE* argv, VALUE self) {
@@ -24310,7 +24893,7 @@ static VALUE rb_QWidget_set_input_method_hints(int argc, VALUE* argv, VALUE self
 static VALUE rb_QWidget_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QWidget::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QWidget::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#tr (%d)", argc);
 }
@@ -24640,10 +25223,11 @@ static VALUE rb_QWidget_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#custom_event (%d)", argc);
 }
 
-static VALUE rb_QWidget_on_window_title_changed(VALUE self) {
+static VALUE rb_QWidget_on_window_title_changed(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QWidget::windowTitleChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -24651,10 +25235,11 @@ static VALUE rb_QWidget_on_window_title_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QWidget_on_window_icon_changed(VALUE self) {
+static VALUE rb_QWidget_on_window_icon_changed(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QWidget::windowIconChanged, o, [proc](QIcon a0) {
     VALUE args[] = { qt6rb::wrap(new QIcon(a0), &cls_QIcon, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -24662,10 +25247,11 @@ static VALUE rb_QWidget_on_window_icon_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QWidget_on_window_icon_text_changed(VALUE self) {
+static VALUE rb_QWidget_on_window_icon_text_changed(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QWidget::windowIconTextChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -24673,10 +25259,11 @@ static VALUE rb_QWidget_on_window_icon_text_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QWidget_on_custom_context_menu_requested(VALUE self) {
+static VALUE rb_QWidget_on_custom_context_menu_requested(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QWidget::customContextMenuRequested, o, [proc](QPoint a0) {
     VALUE args[] = { qt6rb::wrap(new QPoint(a0), &cls_QPoint, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -24693,7 +25280,7 @@ static VALUE rb_QLabel_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QLabel* p = new Rb_QLabel(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -24708,13 +25295,13 @@ static VALUE rb_QLabel_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QLabel#initialize for given argument types");
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_INTEGER_TYPE_P(argv[1])) {
       Rb_QLabel* p = new Rb_QLabel(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1])));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget))) {
       Rb_QLabel* p = new Rb_QLabel(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -25057,7 +25644,7 @@ static VALUE rb_QLabel_clear(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QLabel_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QLabel::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QLabel::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#tr (%d)", argc);
 }
@@ -25354,10 +25941,11 @@ static VALUE rb_QLabel_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#custom_event (%d)", argc);
 }
 
-static VALUE rb_QLabel_on_link_activated(VALUE self) {
+static VALUE rb_QLabel_on_link_activated(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLabel::linkActivated, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -25365,10 +25953,11 @@ static VALUE rb_QLabel_on_link_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QLabel_on_link_hovered(VALUE self) {
+static VALUE rb_QLabel_on_link_hovered(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLabel::linkHovered, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -25385,7 +25974,7 @@ static VALUE rb_QPushButton_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QPushButton* p = new Rb_QPushButton(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -25400,13 +25989,13 @@ static VALUE rb_QPushButton_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QPushButton#initialize for given argument types");
   }
   if (argc == 2) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget))) {
       Rb_QPushButton* p = new Rb_QPushButton(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       Rb_QPushButton* p = new Rb_QPushButton(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -25531,7 +26120,7 @@ static VALUE rb_QPushButton_show_menu(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QPushButton_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QPushButton::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QPushButton::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#tr (%d)", argc);
 }
@@ -25880,7 +26469,7 @@ static VALUE rb_QCheckBox_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QCheckBox* p = new Rb_QCheckBox(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -25967,7 +26556,7 @@ static VALUE rb_QCheckBox_set_check_state(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QCheckBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QCheckBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QCheckBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#tr (%d)", argc);
 }
@@ -26307,10 +26896,11 @@ static VALUE rb_QCheckBox_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QCheckBox_on_state_changed(VALUE self) {
+static VALUE rb_QCheckBox_on_state_changed(int argc, VALUE* argv, VALUE self) {
   QCheckBox* o = static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCheckBox::stateChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -26318,10 +26908,11 @@ static VALUE rb_QCheckBox_on_state_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QCheckBox_on_check_state_changed(VALUE self) {
+static VALUE rb_QCheckBox_on_check_state_changed(int argc, VALUE* argv, VALUE self) {
   QCheckBox* o = static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCheckBox::checkStateChanged, o, [proc](Qt::CheckState a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -26793,7 +27384,7 @@ static VALUE rb_QComboBox_add_item(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       o->addItem(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]));
       return Qnil;
     }
@@ -26828,7 +27419,7 @@ static VALUE rb_QComboBox_insert_item(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 3) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && rb_obj_is_kind_of(argv[1], cls_QIcon.rb_class) && RB_TYPE_P(argv[2], T_STRING)) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && qt6rb::is_kind_of(argv[1], &cls_QIcon) && RB_TYPE_P(argv[2], T_STRING)) {
       o->insertItem(NUM2INT(argv[0]), *static_cast<QIcon*>(qt6rb::unwrap_ref(argv[1], &cls_QIcon)), qt6rb::to_qstring(argv[2]));
       return Qnil;
     }
@@ -27040,7 +27631,7 @@ static VALUE rb_QComboBox_set_current_text(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QComboBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QComboBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QComboBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#tr (%d)", argc);
 }
@@ -27327,10 +27918,11 @@ static VALUE rb_QComboBox_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QComboBox_on_edit_text_changed(VALUE self) {
+static VALUE rb_QComboBox_on_edit_text_changed(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QComboBox::editTextChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -27338,10 +27930,11 @@ static VALUE rb_QComboBox_on_edit_text_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QComboBox_on_activated(VALUE self) {
+static VALUE rb_QComboBox_on_activated(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QComboBox::activated, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -27349,10 +27942,11 @@ static VALUE rb_QComboBox_on_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QComboBox_on_text_activated(VALUE self) {
+static VALUE rb_QComboBox_on_text_activated(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QComboBox::textActivated, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -27360,10 +27954,11 @@ static VALUE rb_QComboBox_on_text_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QComboBox_on_highlighted(VALUE self) {
+static VALUE rb_QComboBox_on_highlighted(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QComboBox::highlighted, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -27371,10 +27966,11 @@ static VALUE rb_QComboBox_on_highlighted(VALUE self) {
   return self;
 }
 
-static VALUE rb_QComboBox_on_text_highlighted(VALUE self) {
+static VALUE rb_QComboBox_on_text_highlighted(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QComboBox::textHighlighted, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -27382,10 +27978,11 @@ static VALUE rb_QComboBox_on_text_highlighted(VALUE self) {
   return self;
 }
 
-static VALUE rb_QComboBox_on_current_index_changed(VALUE self) {
+static VALUE rb_QComboBox_on_current_index_changed(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QComboBox::currentIndexChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -27393,10 +27990,11 @@ static VALUE rb_QComboBox_on_current_index_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QComboBox_on_current_text_changed(VALUE self) {
+static VALUE rb_QComboBox_on_current_text_changed(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QComboBox::currentTextChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -27413,7 +28011,7 @@ static VALUE rb_QLineEdit_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QLineEdit* p = new Rb_QLineEdit(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -27932,7 +28530,7 @@ static VALUE rb_QLineEdit_add_action(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAction))) {
       o->QWidget::addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)));
       return Qnil;
     }
@@ -27942,56 +28540,56 @@ static VALUE rb_QLineEdit_add_action(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAction)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)), static_cast<QLineEdit::ActionPosition>(NUM2INT(argv[1])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), static_cast<QLineEdit::ActionPosition>(NUM2INT(argv[1])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class)) {
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence)) {
       return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
   }
   if (argc == 3) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QKeySequence)) {
       return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
   }
   if (argc == 4) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
   }
   if (argc == 5) {
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QObject.rb_class)) && RB_TYPE_P(argv[4], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QKeySequence) && (NIL_P(argv[3]) || qt6rb::is_kind_of(argv[3], &cls_QObject)) && RB_TYPE_P(argv[4], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[4])))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
   }
   if (argc == 6) {
-    return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
+    return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[4])), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#add_action (%d)", argc);
 }
@@ -28139,7 +28737,7 @@ static VALUE rb_QLineEdit_event(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QLineEdit_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QLineEdit::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QLineEdit::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#tr (%d)", argc);
 }
@@ -28415,10 +29013,11 @@ static VALUE rb_QLineEdit_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#custom_event (%d)", argc);
 }
 
-static VALUE rb_QLineEdit_on_text_changed(VALUE self) {
+static VALUE rb_QLineEdit_on_text_changed(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLineEdit::textChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -28426,10 +29025,11 @@ static VALUE rb_QLineEdit_on_text_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QLineEdit_on_text_edited(VALUE self) {
+static VALUE rb_QLineEdit_on_text_edited(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLineEdit::textEdited, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -28437,10 +29037,11 @@ static VALUE rb_QLineEdit_on_text_edited(VALUE self) {
   return self;
 }
 
-static VALUE rb_QLineEdit_on_cursor_position_changed(VALUE self) {
+static VALUE rb_QLineEdit_on_cursor_position_changed(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLineEdit::cursorPositionChanged, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -28448,40 +29049,44 @@ static VALUE rb_QLineEdit_on_cursor_position_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QLineEdit_on_return_pressed(VALUE self) {
+static VALUE rb_QLineEdit_on_return_pressed(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLineEdit::returnPressed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QLineEdit_on_editing_finished(VALUE self) {
+static VALUE rb_QLineEdit_on_editing_finished(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLineEdit::editingFinished, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QLineEdit_on_selection_changed(VALUE self) {
+static VALUE rb_QLineEdit_on_selection_changed(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLineEdit::selectionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QLineEdit_on_input_rejected(VALUE self) {
+static VALUE rb_QLineEdit_on_input_rejected(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QLineEdit::inputRejected, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -28497,7 +29102,7 @@ static VALUE rb_QTextEdit_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QTextEdit* p = new Rb_QTextEdit(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -29344,7 +29949,7 @@ static VALUE rb_QTextEdit_zoom_out(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTextEdit_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTextEdit::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTextEdit::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#tr (%d)", argc);
 }
@@ -29724,20 +30329,22 @@ static VALUE rb_QTextEdit_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#custom_event (%d)", argc);
 }
 
-static VALUE rb_QTextEdit_on_text_changed(VALUE self) {
+static VALUE rb_QTextEdit_on_text_changed(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextEdit::textChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QTextEdit_on_undo_available(VALUE self) {
+static VALUE rb_QTextEdit_on_undo_available(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextEdit::undoAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -29745,10 +30352,11 @@ static VALUE rb_QTextEdit_on_undo_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextEdit_on_redo_available(VALUE self) {
+static VALUE rb_QTextEdit_on_redo_available(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextEdit::redoAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -29756,10 +30364,11 @@ static VALUE rb_QTextEdit_on_redo_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextEdit_on_current_char_format_changed(VALUE self) {
+static VALUE rb_QTextEdit_on_current_char_format_changed(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextEdit::currentCharFormatChanged, o, [proc](QTextCharFormat a0) {
     VALUE args[] = { qt6rb::wrap(new QTextCharFormat(a0), &cls_QTextCharFormat, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -29767,10 +30376,11 @@ static VALUE rb_QTextEdit_on_current_char_format_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextEdit_on_copy_available(VALUE self) {
+static VALUE rb_QTextEdit_on_copy_available(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextEdit::copyAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -29778,20 +30388,22 @@ static VALUE rb_QTextEdit_on_copy_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextEdit_on_selection_changed(VALUE self) {
+static VALUE rb_QTextEdit_on_selection_changed(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextEdit::selectionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QTextEdit_on_cursor_position_changed(VALUE self) {
+static VALUE rb_QTextEdit_on_cursor_position_changed(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextEdit::cursorPositionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -29807,7 +30419,7 @@ static VALUE rb_QPlainTextEdit_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QPlainTextEdit* p = new Rb_QPlainTextEdit(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -30441,7 +31053,7 @@ static VALUE rb_QPlainTextEdit_zoom_out(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QPlainTextEdit_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QPlainTextEdit::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QPlainTextEdit::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPlainTextEdit#tr (%d)", argc);
 }
@@ -30821,20 +31433,22 @@ static VALUE rb_QPlainTextEdit_prot_custom_event(int argc, VALUE* argv, VALUE se
   rb_raise(rb_eArgError, "wrong number of arguments for QPlainTextEdit#custom_event (%d)", argc);
 }
 
-static VALUE rb_QPlainTextEdit_on_text_changed(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_text_changed(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::textChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_undo_available(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_undo_available(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::undoAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -30842,10 +31456,11 @@ static VALUE rb_QPlainTextEdit_on_undo_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_redo_available(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_redo_available(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::redoAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -30853,10 +31468,11 @@ static VALUE rb_QPlainTextEdit_on_redo_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_copy_available(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_copy_available(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::copyAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -30864,30 +31480,33 @@ static VALUE rb_QPlainTextEdit_on_copy_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_selection_changed(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_selection_changed(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::selectionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_cursor_position_changed(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_cursor_position_changed(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::cursorPositionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_update_request(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_update_request(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::updateRequest, o, [proc](QRect a0, int a1) {
     VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -30895,10 +31514,11 @@ static VALUE rb_QPlainTextEdit_on_update_request(VALUE self) {
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_block_count_changed(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_block_count_changed(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::blockCountChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -30906,10 +31526,11 @@ static VALUE rb_QPlainTextEdit_on_block_count_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QPlainTextEdit_on_modification_changed(VALUE self) {
+static VALUE rb_QPlainTextEdit_on_modification_changed(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QPlainTextEdit::modificationChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -31214,7 +31835,7 @@ static VALUE rb_QMainWindow_add_tool_bar(int argc, VALUE* argv, VALUE self) {
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QToolBar.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QToolBar))) {
       o->addToolBar(static_cast<QToolBar*>(qt6rb::unwrap_release(argv[0], &cls_QToolBar)));
       return Qnil;
     }
@@ -31353,7 +31974,7 @@ static VALUE rb_QMainWindow_set_unified_title_and_tool_bar_on_mac(int argc, VALU
 static VALUE rb_QMainWindow_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QMainWindow::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QMainWindow::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#tr (%d)", argc);
 }
@@ -31650,10 +32271,11 @@ static VALUE rb_QMainWindow_prot_custom_event(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#custom_event (%d)", argc);
 }
 
-static VALUE rb_QMainWindow_on_icon_size_changed(VALUE self) {
+static VALUE rb_QMainWindow_on_icon_size_changed(int argc, VALUE* argv, VALUE self) {
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMainWindow::iconSizeChanged, o, [proc](QSize a0) {
     VALUE args[] = { qt6rb::wrap(new QSize(a0), &cls_QSize, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -31661,10 +32283,11 @@ static VALUE rb_QMainWindow_on_icon_size_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMainWindow_on_tool_button_style_changed(VALUE self) {
+static VALUE rb_QMainWindow_on_tool_button_style_changed(int argc, VALUE* argv, VALUE self) {
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMainWindow::toolButtonStyleChanged, o, [proc](Qt::ToolButtonStyle a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -31728,10 +32351,10 @@ static VALUE rb_QLayout_set_alignment(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_INTEGER_TYPE_P(argv[1])) {
       return (o->setAlignment(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[1])))) ? Qtrue : Qfalse;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout)) && RB_INTEGER_TYPE_P(argv[1])) {
       return (o->setAlignment(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)), QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[1])))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QLayout#set_alignment for given argument types");
@@ -31882,6 +32505,16 @@ static VALUE rb_QLayout_add_widget(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#add_widget (%d)", argc);
 }
 
+static VALUE rb_QLayout_add_item(int argc, VALUE* argv, VALUE self) {
+  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#add_item (%d)", argc);
+}
+
 static VALUE rb_QLayout_remove_widget(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
@@ -31939,19 +32572,46 @@ static VALUE rb_QLayout_set_geometry(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#set_geometry (%d)", argc);
 }
 
+static VALUE rb_QLayout_item_at(int argc, VALUE* argv, VALUE self) {
+  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(o->itemAt(NUM2INT(argv[0]))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#item_at (%d)", argc);
+}
+
+static VALUE rb_QLayout_take_at(int argc, VALUE* argv, VALUE self) {
+  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(o->takeAt(NUM2INT(argv[0]))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#take_at (%d)", argc);
+}
+
 static VALUE rb_QLayout_index_of(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       return INT2NUM(o->indexOf(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayoutItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayoutItem))) {
       return INT2NUM(o->indexOf(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem))));
     }
     rb_raise(rb_eTypeError, "no matching overload of QLayout#index_of for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#index_of (%d)", argc);
+}
+
+static VALUE rb_QLayout_count(int argc, VALUE* argv, VALUE self) {
+  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->count());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#count (%d)", argc);
 }
 
 static VALUE rb_QLayout_is_empty(int argc, VALUE* argv, VALUE self) {
@@ -32060,7 +32720,7 @@ static VALUE rb_QLayout_is_enabled(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QLayout::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QLayout::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#tr (%d)", argc);
 }
@@ -32148,11 +32808,11 @@ static VALUE rb_QBoxLayout_add_widget(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       o->addWidget(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       o->QLayout::addWidget(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       return Qnil;
     }
@@ -32302,10 +32962,10 @@ static VALUE rb_QBoxLayout_set_stretch_factor(int argc, VALUE* argv, VALUE self)
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_INTEGER_TYPE_P(argv[1])) {
       return (o->setStretchFactor(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), NUM2INT(argv[1]))) ? Qtrue : Qfalse;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout)) && RB_INTEGER_TYPE_P(argv[1])) {
       return (o->setStretchFactor(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)), NUM2INT(argv[1]))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QBoxLayout#set_stretch_factor for given argument types");
@@ -32445,7 +33105,7 @@ static VALUE rb_QBoxLayout_set_geometry(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QBoxLayout::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QBoxLayout::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#tr (%d)", argc);
 }
@@ -32504,7 +33164,7 @@ static VALUE rb_QVBoxLayout_alloc(VALUE klass) { return qt6rb::alloc_wrapper(kla
 static VALUE rb_QVBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QVBoxLayout::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QVBoxLayout::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QVBoxLayout#tr (%d)", argc);
 }
@@ -32563,7 +33223,7 @@ static VALUE rb_QHBoxLayout_alloc(VALUE klass) { return qt6rb::alloc_wrapper(kla
 static VALUE rb_QHBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QHBoxLayout::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QHBoxLayout::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QHBoxLayout#tr (%d)", argc);
 }
@@ -32968,6 +33628,10 @@ static VALUE rb_QGridLayout_set_geometry(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QGridLayout_add_item(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
+  if (argc == 1) {
+    o->QLayout::addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem)));
+    return Qnil;
+  }
   if (argc == 3) {
     o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem)), NUM2INT(argv[1]), NUM2INT(argv[2]));
     return Qnil;
@@ -33000,7 +33664,7 @@ static VALUE rb_QGridLayout_set_default_positioning(int argc, VALUE* argv, VALUE
 static VALUE rb_QGridLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QGridLayout::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QGridLayout::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#tr (%d)", argc);
 }
@@ -33193,30 +33857,30 @@ static VALUE rb_QFormLayout_add_row(int argc, VALUE* argv, VALUE self) {
   QFormLayout* o = static_cast<QFormLayout*>(qt6rb::unwrap(self, &cls_QFormLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       o->addRow(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout))) {
       o->addRow(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QFormLayout#add_row for given argument types");
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget))) {
       o->addRow(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QLayout.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QLayout))) {
       o->addRow(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), static_cast<QLayout*>(qt6rb::unwrap_release(argv[1], &cls_QLayout)));
       return Qnil;
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget))) {
       o->addRow(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)));
       return Qnil;
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QLayout.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QLayout))) {
       o->addRow(qt6rb::to_qstring(argv[0]), static_cast<QLayout*>(qt6rb::unwrap_release(argv[1], &cls_QLayout)));
       return Qnil;
     }
@@ -33229,30 +33893,30 @@ static VALUE rb_QFormLayout_insert_row(int argc, VALUE* argv, VALUE self) {
   QFormLayout* o = static_cast<QFormLayout*>(qt6rb::unwrap(self, &cls_QFormLayout));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget))) {
       o->insertRow(NUM2INT(argv[0]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QLayout.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QLayout))) {
       o->insertRow(NUM2INT(argv[0]), static_cast<QLayout*>(qt6rb::unwrap_release(argv[1], &cls_QLayout)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QFormLayout#insert_row for given argument types");
   }
   if (argc == 3) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class)) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QWidget.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget)) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QWidget))) {
       o->insertRow(NUM2INT(argv[0]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget)));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class)) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QLayout.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget)) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QLayout))) {
       o->insertRow(NUM2INT(argv[0]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)), static_cast<QLayout*>(qt6rb::unwrap_release(argv[2], &cls_QLayout)));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QWidget.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QWidget))) {
       o->insertRow(NUM2INT(argv[0]), qt6rb::to_qstring(argv[1]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget)));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QLayout.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QLayout))) {
       o->insertRow(NUM2INT(argv[0]), qt6rb::to_qstring(argv[1]), static_cast<QLayout*>(qt6rb::unwrap_release(argv[2], &cls_QLayout)));
       return Qnil;
     }
@@ -33269,11 +33933,11 @@ static VALUE rb_QFormLayout_remove_row(int argc, VALUE* argv, VALUE self) {
       o->removeRow(NUM2INT(argv[0]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       o->removeRow(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout))) {
       o->removeRow(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)));
       return Qnil;
     }
@@ -33320,11 +33984,11 @@ static VALUE rb_QFormLayout_set_row_visible(int argc, VALUE* argv, VALUE self) {
       o->setRowVisible(NUM2INT(argv[0]), RTEST(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
       o->setRowVisible(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), RTEST(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class)) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout)) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
       o->setRowVisible(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)), RTEST(argv[1]));
       return Qnil;
     }
@@ -33340,10 +34004,10 @@ static VALUE rb_QFormLayout_is_row_visible(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0])) {
       return (o->isRowVisible(NUM2INT(argv[0]))) ? Qtrue : Qfalse;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       return (o->isRowVisible(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)))) ? Qtrue : Qfalse;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout))) {
       return (o->isRowVisible(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QFormLayout#is_row_visible for given argument types");
@@ -33367,10 +34031,10 @@ static VALUE rb_QFormLayout_label_for_field(int argc, VALUE* argv, VALUE self) {
   QFormLayout* o = static_cast<QFormLayout*>(qt6rb::unwrap(self, &cls_QFormLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       return qt6rb::wrap_qobject((QObject*)(o->labelForField(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)))), &cls_QWidget);
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout))) {
       return qt6rb::wrap_qobject((QObject*)(o->labelForField(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)))), &cls_QWidget);
     }
     rb_raise(rb_eTypeError, "no matching overload of QFormLayout#label_for_field for given argument types");
@@ -33483,7 +34147,7 @@ static VALUE rb_QFormLayout_row_count(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QFormLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QFormLayout::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QFormLayout::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFormLayout#tr (%d)", argc);
 }
@@ -33530,13 +34194,13 @@ static VALUE rb_QStackedLayout_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QStackedLayout* p = new Rb_QStackedLayout(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayout.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QLayout))) {
       Rb_QStackedLayout* p = new Rb_QStackedLayout(static_cast<QLayout*>(qt6rb::unwrap_release(argv[0], &cls_QLayout)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -33721,7 +34385,7 @@ static VALUE rb_QStackedLayout_set_current_widget(int argc, VALUE* argv, VALUE s
 static VALUE rb_QStackedLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QStackedLayout::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QStackedLayout::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QStackedLayout#tr (%d)", argc);
 }
@@ -33759,10 +34423,11 @@ static VALUE rb_QStackedLayout_prot_custom_event(int argc, VALUE* argv, VALUE se
   rb_raise(rb_eArgError, "wrong number of arguments for QStackedLayout#custom_event (%d)", argc);
 }
 
-static VALUE rb_QStackedLayout_on_widget_removed(VALUE self) {
+static VALUE rb_QStackedLayout_on_widget_removed(int argc, VALUE* argv, VALUE self) {
   QStackedLayout* o = static_cast<QStackedLayout*>(qt6rb::unwrap(self, &cls_QStackedLayout));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QStackedLayout::widgetRemoved, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -33770,10 +34435,11 @@ static VALUE rb_QStackedLayout_on_widget_removed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QStackedLayout_on_current_changed(VALUE self) {
+static VALUE rb_QStackedLayout_on_current_changed(int argc, VALUE* argv, VALUE self) {
   QStackedLayout* o = static_cast<QStackedLayout*>(qt6rb::unwrap(self, &cls_QStackedLayout));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QStackedLayout::currentChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -33781,10 +34447,11 @@ static VALUE rb_QStackedLayout_on_current_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QStackedLayout_on_widget_added(VALUE self) {
+static VALUE rb_QStackedLayout_on_widget_added(int argc, VALUE* argv, VALUE self) {
   QStackedLayout* o = static_cast<QStackedLayout*>(qt6rb::unwrap(self, &cls_QStackedLayout));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QStackedLayout::widgetAdded, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -34175,12 +34842,12 @@ static VALUE rb_QRect_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QPoint)) {
       QRect* p = new QRect(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QSize.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QSize)) {
       QRect* p = new QRect(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QSize*>(qt6rb::unwrap_ref(argv[1], &cls_QSize)));
       qt6rb::attach(self, p, true);
       return self;
@@ -34670,19 +35337,19 @@ static VALUE rb_QRect_contains(int argc, VALUE* argv, VALUE self) {
   QRect* o = static_cast<QRect*>(qt6rb::unwrap(self, &cls_QRect));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect)) {
       return (o->contains(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)))) ? Qtrue : Qfalse;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       return (o->contains(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QRect#contains for given argument types");
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
       return (o->contains(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), RTEST(argv[1]))) ? Qtrue : Qfalse;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && ((argv[1]) == Qtrue || (argv[1]) == Qfalse)) {
       return (o->contains(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), RTEST(argv[1]))) ? Qtrue : Qfalse;
     }
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1])) {
@@ -35014,12 +35681,12 @@ static VALUE rb_QRectF_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QSizeF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QSizeF)) {
       QRectF* p = new QRectF(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QSizeF*>(qt6rb::unwrap_ref(argv[1], &cls_QSizeF)));
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QPointF)) {
       QRectF* p = new QRectF(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)));
       qt6rb::attach(self, p, true);
       return self;
@@ -35509,10 +36176,10 @@ static VALUE rb_QRectF_contains(int argc, VALUE* argv, VALUE self) {
   QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF)) {
       return (o->contains(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)))) ? Qtrue : Qfalse;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       return (o->contains(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QRectF#contains for given argument types");
@@ -35833,9 +36500,17 @@ static VALUE rb_QUrl_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    QUrl* p = new QUrl(qt6rb::to_qstring(argv[0]));
-    qt6rb::attach(self, p, true);
-    return self;
+    if (qt6rb::is_kind_of(argv[0], &cls_QUrl)) {
+      QUrl* p = new QUrl(*static_cast<QUrl*>(qt6rb::unwrap_ref(argv[0], &cls_QUrl)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      QUrl* p = new QUrl(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QUrl#initialize for given argument types");
   }
   if (argc == 2) {
     QUrl* p = new QUrl(qt6rb::to_qstring(argv[0]), static_cast<QUrl::ParsingMode>(NUM2INT(argv[1])));
@@ -37358,7 +38033,7 @@ static VALUE rb_QColor_ctor(int argc, VALUE* argv, VALUE self) {
       return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      QColor* p = new QColor(StringValueCStr(argv[0]));
+      QColor* p = new QColor(static_cast<const char*>(StringValueCStr(argv[0])));
       qt6rb::attach(self, p, true);
       return self;
     }
@@ -38191,8 +38866,13 @@ static VALUE rb_QPen_ctor(int argc, VALUE* argv, VALUE self) {
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
       QPen* p = new QPen(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QPen)) {
+      QPen* p = new QPen(*static_cast<QPen*>(qt6rb::unwrap_ref(argv[0], &cls_QPen)));
       qt6rb::attach(self, p, true);
       return self;
     }
@@ -38443,7 +39123,7 @@ static VALUE rb_QBrush_ctor(int argc, VALUE* argv, VALUE self) {
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
       QBrush* p = new QBrush(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
       qt6rb::attach(self, p, true);
       return self;
@@ -38453,17 +39133,22 @@ static VALUE rb_QBrush_ctor(int argc, VALUE* argv, VALUE self) {
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPixmap)) {
       QBrush* p = new QBrush(*static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[0], &cls_QPixmap)));
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QImage.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QImage)) {
       QBrush* p = new QBrush(*static_cast<QImage*>(qt6rb::unwrap_ref(argv[0], &cls_QImage)));
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QGradient.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QBrush)) {
+      QBrush* p = new QBrush(*static_cast<QBrush*>(qt6rb::unwrap_ref(argv[0], &cls_QBrush)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QGradient)) {
       QBrush* p = new QBrush(*static_cast<QGradient*>(qt6rb::unwrap_ref(argv[0], &cls_QGradient)));
       qt6rb::attach(self, p, true);
       return self;
@@ -38471,7 +39156,7 @@ static VALUE rb_QBrush_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QBrush#initialize for given argument types");
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor) && RB_INTEGER_TYPE_P(argv[1])) {
       QBrush* p = new QBrush(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)), static_cast<Qt::BrushStyle>(NUM2INT(argv[1])));
       qt6rb::attach(self, p, true);
       return self;
@@ -38481,12 +39166,12 @@ static VALUE rb_QBrush_ctor(int argc, VALUE* argv, VALUE self) {
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor) && qt6rb::is_kind_of(argv[1], &cls_QPixmap)) {
       QBrush* p = new QBrush(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)));
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class)) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && qt6rb::is_kind_of(argv[1], &cls_QPixmap)) {
       QBrush* p = new QBrush(static_cast<Qt::GlobalColor>(NUM2INT(argv[0])), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)));
       qt6rb::attach(self, p, true);
       return self;
@@ -38567,7 +39252,7 @@ static VALUE rb_QBrush_set_color(int argc, VALUE* argv, VALUE self) {
   QBrush* o = static_cast<QBrush*>(qt6rb::unwrap(self, &cls_QBrush));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
       o->setColor(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
       return Qnil;
     }
@@ -38615,13 +39300,18 @@ static VALUE rb_QPalette_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
       QPalette* p = new QPalette(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
       qt6rb::attach(self, p, true);
       return self;
     }
     if (RB_INTEGER_TYPE_P(argv[0])) {
       QPalette* p = new QPalette(static_cast<Qt::GlobalColor>(NUM2INT(argv[0])));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QPalette)) {
+      QPalette* p = new QPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)));
       qt6rb::attach(self, p, true);
       return self;
     }
@@ -39008,6 +39698,11 @@ static VALUE rb_QFont_ctor(int argc, VALUE* argv, VALUE self) {
       qt6rb::attach(self, p, true);
       return self;
     }
+    if (qt6rb::is_kind_of(argv[0], &cls_QFont)) {
+      QFont* p = new QFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
     rb_raise(rb_eTypeError, "no matching overload of QFont#initialize for given argument types");
   }
   if (argc == 2) {
@@ -39021,7 +39716,7 @@ static VALUE rb_QFont_ctor(int argc, VALUE* argv, VALUE self) {
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QFont.rb_class) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QPaintDevice.rb_class))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QFont) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QPaintDevice))) {
       QFont* p = new QFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)), static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[1], &cls_QPaintDevice)));
       qt6rb::attach(self, p, true);
       return self;
@@ -39701,9 +40396,17 @@ static VALUE rb_QFont_s_cache_statistics(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QFontMetrics_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 1) {
-    QFontMetrics* p = new QFontMetrics(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
-    qt6rb::attach(self, p, true);
-    return self;
+    if (qt6rb::is_kind_of(argv[0], &cls_QFont)) {
+      QFontMetrics* p = new QFontMetrics(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QFontMetrics)) {
+      QFontMetrics* p = new QFontMetrics(*static_cast<QFontMetrics*>(qt6rb::unwrap_ref(argv[0], &cls_QFontMetrics)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QFontMetrics#initialize for given argument types");
   }
   if (argc == 2) {
     QFontMetrics* p = new QFontMetrics(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)), static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[1], &cls_QPaintDevice)));
@@ -39832,7 +40535,7 @@ static VALUE rb_QFontMetrics_horizontal_advance(int argc, VALUE* argv, VALUE sel
     if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1])) {
       return INT2NUM(o->horizontalAdvance(qt6rb::to_qstring(argv[0]), NUM2INT(argv[1])));
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QTextOption.rb_class)) {
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QTextOption)) {
       return INT2NUM(o->horizontalAdvance(qt6rb::to_qstring(argv[0]), *static_cast<QTextOption*>(qt6rb::unwrap_ref(argv[1], &cls_QTextOption))));
     }
     rb_raise(rb_eTypeError, "no matching overload of QFontMetrics#horizontal_advance for given argument types");
@@ -39958,8 +40661,13 @@ static VALUE rb_QCursor_ctor(int argc, VALUE* argv, VALUE self) {
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPixmap)) {
       QCursor* p = new QCursor(*static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[0], &cls_QPixmap)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QCursor)) {
+      QCursor* p = new QCursor(*static_cast<QCursor*>(qt6rb::unwrap_ref(argv[0], &cls_QCursor)));
       qt6rb::attach(self, p, true);
       return self;
     }
@@ -40038,7 +40746,7 @@ static VALUE rb_QCursor_s_set_pos(int argc, VALUE* argv, VALUE self) {
       QCursor::setPos(NUM2INT(argv[0]), NUM2INT(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QScreen.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QScreen)) && qt6rb::is_kind_of(argv[1], &cls_QPoint)) {
       QCursor::setPos(static_cast<QScreen*>(qt6rb::unwrap_release(argv[0], &cls_QScreen)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
       return Qnil;
     }
@@ -40059,8 +40767,13 @@ static VALUE rb_QIcon_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPixmap)) {
       QIcon* p = new QIcon(*static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[0], &cls_QPixmap)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon)) {
+      QIcon* p = new QIcon(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)));
       qt6rb::attach(self, p, true);
       return self;
     }
@@ -40089,7 +40802,7 @@ static VALUE rb_QIcon_pixmap(int argc, VALUE* argv, VALUE self) {
   QIcon* o = static_cast<QIcon*>(qt6rb::unwrap(self, &cls_QIcon));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize)) {
       return qt6rb::wrap(new QPixmap(o->pixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)))), &cls_QPixmap, true);
     }
     if (RB_INTEGER_TYPE_P(argv[0])) {
@@ -40098,7 +40811,7 @@ static VALUE rb_QIcon_pixmap(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QIcon#pixmap for given argument types");
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QPixmap(o->pixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), static_cast<QIcon::Mode>(NUM2INT(argv[1])))), &cls_QPixmap, true);
     }
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1])) {
@@ -40107,13 +40820,13 @@ static VALUE rb_QIcon_pixmap(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QPixmap(o->pixmap(NUM2INT(argv[0]), static_cast<QIcon::Mode>(NUM2INT(argv[1])))), &cls_QPixmap, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1]))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1]))) {
       return qt6rb::wrap(new QPixmap(o->pixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), NUM2DBL(argv[1]))), &cls_QPixmap, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QIcon#pixmap for given argument types");
   }
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QPixmap(o->pixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), static_cast<QIcon::Mode>(NUM2INT(argv[1])), static_cast<QIcon::State>(NUM2INT(argv[2])))), &cls_QPixmap, true);
     }
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
@@ -40122,7 +40835,7 @@ static VALUE rb_QIcon_pixmap(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QPixmap(o->pixmap(NUM2INT(argv[0]), static_cast<QIcon::Mode>(NUM2INT(argv[1])), static_cast<QIcon::State>(NUM2INT(argv[2])))), &cls_QPixmap, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QPixmap(o->pixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), NUM2DBL(argv[1]), static_cast<QIcon::Mode>(NUM2INT(argv[2])))), &cls_QPixmap, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QIcon#pixmap for given argument types");
@@ -40131,7 +40844,7 @@ static VALUE rb_QIcon_pixmap(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3])) {
       return qt6rb::wrap(new QPixmap(o->pixmap(NUM2INT(argv[0]), NUM2INT(argv[1]), static_cast<QIcon::Mode>(NUM2INT(argv[2])), static_cast<QIcon::State>(NUM2INT(argv[3])))), &cls_QPixmap, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3])) {
       return qt6rb::wrap(new QPixmap(o->pixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), NUM2DBL(argv[1]), static_cast<QIcon::Mode>(NUM2INT(argv[2])), static_cast<QIcon::State>(NUM2INT(argv[3])))), &cls_QPixmap, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QIcon#pixmap for given argument types");
@@ -40179,11 +40892,11 @@ static VALUE rb_QIcon_paint(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 5) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPainter.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPainter)) && qt6rb::is_kind_of(argv[1], &cls_QRect) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       o->paint(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[1], &cls_QRect)), QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[2])), static_cast<QIcon::Mode>(NUM2INT(argv[3])), static_cast<QIcon::State>(NUM2INT(argv[4])));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPainter.rb_class)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPainter)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       o->paint(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]));
       return Qnil;
     }
@@ -40312,10 +41025,10 @@ static VALUE rb_QIcon_s_from_theme(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QIcon#from_theme for given argument types");
   }
   if (argc == 2) {
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QIcon.rb_class)) {
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QIcon)) {
       return qt6rb::wrap(new QIcon(QIcon::fromTheme(qt6rb::to_qstring(argv[0]), *static_cast<QIcon*>(qt6rb::unwrap_ref(argv[1], &cls_QIcon)))), &cls_QIcon, true);
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && rb_obj_is_kind_of(argv[1], cls_QIcon.rb_class)) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && qt6rb::is_kind_of(argv[1], &cls_QIcon)) {
       return qt6rb::wrap(new QIcon(QIcon::fromTheme(static_cast<QIcon::ThemeIcon>(NUM2INT(argv[0])), *static_cast<QIcon*>(qt6rb::unwrap_ref(argv[1], &cls_QIcon)))), &cls_QIcon, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QIcon#from_theme for given argument types");
@@ -40414,7 +41127,7 @@ static VALUE rb_QPixmap_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize)) {
       Rb_QPixmap* p = new Rb_QPixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
@@ -40422,6 +41135,12 @@ static VALUE rb_QPixmap_ctor(int argc, VALUE* argv, VALUE self) {
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
       Rb_QPixmap* p = new Rb_QPixmap(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QPixmap)) {
+      Rb_QPixmap* p = new Rb_QPixmap(*static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[0], &cls_QPixmap)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
@@ -40436,7 +41155,7 @@ static VALUE rb_QPixmap_ctor(int argc, VALUE* argv, VALUE self) {
       return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
-      Rb_QPixmap* p = new Rb_QPixmap(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]));
+      Rb_QPixmap* p = new Rb_QPixmap(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
@@ -40444,7 +41163,7 @@ static VALUE rb_QPixmap_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QPixmap#initialize for given argument types");
   }
   if (argc == 3) {
-    Rb_QPixmap* p = new Rb_QPixmap(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[2])));
+    Rb_QPixmap* p = new Rb_QPixmap(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[2])));
     qt6rb::attach(self, p, true);
     p->qt6rb_set_self(self);
     return self;
@@ -40586,7 +41305,7 @@ static VALUE rb_QPixmap_scaled(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QPixmap(o->scaled(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QPixmap, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QPixmap(o->scaled(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[1])))), &cls_QPixmap, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QPixmap#scaled for given argument types");
@@ -40595,7 +41314,7 @@ static VALUE rb_QPixmap_scaled(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QPixmap(o->scaled(NUM2INT(argv[0]), NUM2INT(argv[1]), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[2])))), &cls_QPixmap, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QPixmap(o->scaled(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[1])), static_cast<Qt::TransformationMode>(NUM2INT(argv[2])))), &cls_QPixmap, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QPixmap#scaled for given argument types");
@@ -40646,10 +41365,10 @@ static VALUE rb_QPixmap_load(int argc, VALUE* argv, VALUE self) {
     return (o->load(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
   }
   if (argc == 2) {
-    return (o->load(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]))) ? Qtrue : Qfalse;
+    return (o->load(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])))) ? Qtrue : Qfalse;
   }
   if (argc == 3) {
-    return (o->load(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[2])))) ? Qtrue : Qfalse;
+    return (o->load(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[2])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#load (%d)", argc);
 }
@@ -40661,10 +41380,10 @@ static VALUE rb_QPixmap_load_from_data(int argc, VALUE* argv, VALUE self) {
     return (o->loadFromData(qt6rb::to_qbytearray(argv[0]))) ? Qtrue : Qfalse;
   }
   if (argc == 2) {
-    return (o->loadFromData(qt6rb::to_qbytearray(argv[0]), StringValueCStr(argv[1]))) ? Qtrue : Qfalse;
+    return (o->loadFromData(qt6rb::to_qbytearray(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])))) ? Qtrue : Qfalse;
   }
   if (argc == 3) {
-    return (o->loadFromData(qt6rb::to_qbytearray(argv[0]), StringValueCStr(argv[1]), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[2])))) ? Qtrue : Qfalse;
+    return (o->loadFromData(qt6rb::to_qbytearray(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[2])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#load_from_data (%d)", argc);
 }
@@ -40676,10 +41395,10 @@ static VALUE rb_QPixmap_save(int argc, VALUE* argv, VALUE self) {
     return (o->save(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
   }
   if (argc == 2) {
-    return (o->save(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]))) ? Qtrue : Qfalse;
+    return (o->save(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])))) ? Qtrue : Qfalse;
   }
   if (argc == 3) {
-    return (o->save(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2]))) ? Qtrue : Qfalse;
+    return (o->save(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2]))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#save (%d)", argc);
 }
@@ -40762,6 +41481,15 @@ static VALUE rb_QPixmap_is_q_bitmap(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#is_q_bitmap (%d)", argc);
 }
 
+static VALUE rb_QPixmap_paint_engine(int argc, VALUE* argv, VALUE self) {
+  QPixmap* o = static_cast<QPixmap*>(qt6rb::unwrap(self, &cls_QPixmap));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QPixmap*>(o) ? o->QPixmap::paintEngine() : o->paintEngine())), &cls_QPaintEngine, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#paint_engine (%d)", argc);
+}
+
 static VALUE rb_QPixmap_s_default_depth(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 0) {
@@ -40831,20 +41559,29 @@ static VALUE rb_QImage_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    Rb_QImage* p = new Rb_QImage(qt6rb::to_qstring(argv[0]));
-    qt6rb::attach(self, p, true);
-    p->qt6rb_set_self(self);
-    return self;
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      Rb_QImage* p = new Rb_QImage(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QImage)) {
+      Rb_QImage* p = new Rb_QImage(*static_cast<QImage*>(qt6rb::unwrap_ref(argv[0], &cls_QImage)));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QImage#initialize for given argument types");
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && RB_INTEGER_TYPE_P(argv[1])) {
       Rb_QImage* p = new Rb_QImage(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), static_cast<QImage::Format>(NUM2INT(argv[1])));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
-      Rb_QImage* p = new Rb_QImage(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]));
+      Rb_QImage* p = new Rb_QImage(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
@@ -41243,7 +41980,7 @@ static VALUE rb_QImage_fill(int argc, VALUE* argv, VALUE self) {
       o->fill(NUM2UINT(argv[0]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
       o->fill(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
       return Qnil;
     }
@@ -41321,7 +42058,7 @@ static VALUE rb_QImage_scaled(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QImage(o->scaled(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QImage, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QImage(o->scaled(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[1])))), &cls_QImage, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QImage#scaled for given argument types");
@@ -41330,7 +42067,7 @@ static VALUE rb_QImage_scaled(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QImage(o->scaled(NUM2INT(argv[0]), NUM2INT(argv[1]), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[2])))), &cls_QImage, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QSize.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QSize) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QImage(o->scaled(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[1])), static_cast<Qt::TransformationMode>(NUM2INT(argv[2])))), &cls_QImage, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QImage#scaled for given argument types");
@@ -41500,7 +42237,7 @@ static VALUE rb_QImage_load(int argc, VALUE* argv, VALUE self) {
     return (o->load(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
   }
   if (argc == 2) {
-    return (o->load(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]))) ? Qtrue : Qfalse;
+    return (o->load(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#load (%d)", argc);
 }
@@ -41512,7 +42249,7 @@ static VALUE rb_QImage_load_from_data(int argc, VALUE* argv, VALUE self) {
     return (o->loadFromData(qt6rb::to_qbytearray(argv[0]))) ? Qtrue : Qfalse;
   }
   if (argc == 2) {
-    return (o->loadFromData(qt6rb::to_qbytearray(argv[0]), StringValueCStr(argv[1]))) ? Qtrue : Qfalse;
+    return (o->loadFromData(qt6rb::to_qbytearray(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#load_from_data (%d)", argc);
 }
@@ -41524,10 +42261,10 @@ static VALUE rb_QImage_save(int argc, VALUE* argv, VALUE self) {
     return (o->save(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
   }
   if (argc == 2) {
-    return (o->save(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]))) ? Qtrue : Qfalse;
+    return (o->save(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])))) ? Qtrue : Qfalse;
   }
   if (argc == 3) {
-    return (o->save(qt6rb::to_qstring(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2]))) ? Qtrue : Qfalse;
+    return (o->save(qt6rb::to_qstring(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2]))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#save (%d)", argc);
 }
@@ -41539,6 +42276,15 @@ static VALUE rb_QImage_cache_key(int argc, VALUE* argv, VALUE self) {
     return LL2NUM(o->cacheKey());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#cache_key (%d)", argc);
+}
+
+static VALUE rb_QImage_paint_engine(int argc, VALUE* argv, VALUE self) {
+  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QImage*>(o) ? o->QImage::paintEngine() : o->paintEngine())), &cls_QPaintEngine, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QImage#paint_engine (%d)", argc);
 }
 
 static VALUE rb_QImage_dots_per_meter_x(int argc, VALUE* argv, VALUE self) {
@@ -41635,7 +42381,7 @@ static VALUE rb_QImage_s_from_data(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QImage(QImage::fromData(qt6rb::to_qbytearray(argv[0]))), &cls_QImage, true);
   }
   if (argc == 2) {
-    return qt6rb::wrap(new QImage(QImage::fromData(qt6rb::to_qbytearray(argv[0]), StringValueCStr(argv[1]))), &cls_QImage, true);
+    return qt6rb::wrap(new QImage(QImage::fromData(qt6rb::to_qbytearray(argv[0]), static_cast<const char*>(StringValueCStr(argv[1])))), &cls_QImage, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#from_data (%d)", argc);
 }
@@ -41794,11 +42540,11 @@ static VALUE rb_QPainter_set_pen(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
       o->setPen(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPen.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPen)) {
       o->setPen(*static_cast<QPen*>(qt6rb::unwrap_ref(argv[0], &cls_QPen)));
       return Qnil;
     }
@@ -41824,7 +42570,7 @@ static VALUE rb_QPainter_set_brush(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QBrush.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QBrush)) {
       o->setBrush(*static_cast<QBrush*>(qt6rb::unwrap_ref(argv[0], &cls_QBrush)));
       return Qnil;
     }
@@ -41832,7 +42578,7 @@ static VALUE rb_QPainter_set_brush(int argc, VALUE* argv, VALUE self) {
       o->setBrush(static_cast<Qt::BrushStyle>(NUM2INT(argv[0])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
       o->setBrush(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
       return Qnil;
     }
@@ -41895,11 +42641,11 @@ static VALUE rb_QPainter_set_brush_origin(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       o->setBrushOrigin(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       o->setBrushOrigin(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
       return Qnil;
     }
@@ -41954,22 +42700,22 @@ static VALUE rb_QPainter_set_clip_rect(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF)) {
       o->setClipRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect)) {
       o->setClipRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#set_clip_rect for given argument types");
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1])) {
       o->setClipRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), static_cast<Qt::ClipOperation>(NUM2INT(argv[1])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1])) {
       o->setClipRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), static_cast<Qt::ClipOperation>(NUM2INT(argv[1])));
       return Qnil;
     }
@@ -42097,11 +42843,11 @@ static VALUE rb_QPainter_translate(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       o->translate(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       o->translate(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)));
       return Qnil;
     }
@@ -42183,11 +42929,11 @@ static VALUE rb_QPainter_draw_point(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
       o->drawPoint(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       o->drawPoint(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)));
       return Qnil;
     }
@@ -42208,11 +42954,11 @@ static VALUE rb_QPainter_draw_points(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawPoints(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawPoints(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]));
       return Qnil;
     }
@@ -42225,11 +42971,11 @@ static VALUE rb_QPainter_draw_line(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QPoint)) {
       o->drawLine(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QPointF)) {
       o->drawLine(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)));
       return Qnil;
     }
@@ -42246,11 +42992,11 @@ static VALUE rb_QPainter_draw_lines(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawLines(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawLines(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]));
       return Qnil;
     }
@@ -42263,11 +43009,11 @@ static VALUE rb_QPainter_draw_rect(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF)) {
       o->drawRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect)) {
       o->drawRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
       return Qnil;
     }
@@ -42284,11 +43030,11 @@ static VALUE rb_QPainter_draw_rects(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QRectF)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawRects(static_cast<QRectF*>(qt6rb::unwrap_release(argv[0], &cls_QRectF)), NUM2INT(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QRect)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawRects(static_cast<QRect*>(qt6rb::unwrap_release(argv[0], &cls_QRect)), NUM2INT(argv[1]));
       return Qnil;
     }
@@ -42301,22 +43047,22 @@ static VALUE rb_QPainter_draw_ellipse(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF)) {
       o->drawEllipse(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect)) {
       o->drawEllipse(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_ellipse for given argument types");
   }
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2]))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2]))) {
       o->drawEllipse(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), NUM2DBL(argv[1]), NUM2DBL(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawEllipse(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), NUM2INT(argv[1]), NUM2INT(argv[2]));
       return Qnil;
     }
@@ -42337,11 +43083,11 @@ static VALUE rb_QPainter_draw_polyline(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawPolyline(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawPolyline(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]));
       return Qnil;
     }
@@ -42358,26 +43104,26 @@ static VALUE rb_QPainter_draw_polygon(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawPolygon(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawPolygon(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPolygon.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPolygon) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawPolygon(*static_cast<QPolygon*>(qt6rb::unwrap_ref(argv[0], &cls_QPolygon)), static_cast<Qt::FillRule>(NUM2INT(argv[1])));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_polygon for given argument types");
   }
   if (argc == 3) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawPolygon(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]), static_cast<Qt::FillRule>(NUM2INT(argv[2])));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawPolygon(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]), static_cast<Qt::FillRule>(NUM2INT(argv[2])));
       return Qnil;
     }
@@ -42394,11 +43140,11 @@ static VALUE rb_QPainter_draw_convex_polygon(int argc, VALUE* argv, VALUE self) 
     return Qnil;
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawConvexPolygon(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->drawConvexPolygon(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]));
       return Qnil;
     }
@@ -42411,11 +43157,11 @@ static VALUE rb_QPainter_draw_arc(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawArc(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2INT(argv[1]), NUM2INT(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawArc(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), NUM2INT(argv[2]));
       return Qnil;
     }
@@ -42432,11 +43178,11 @@ static VALUE rb_QPainter_draw_pie(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawPie(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2INT(argv[1]), NUM2INT(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawPie(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), NUM2INT(argv[2]));
       return Qnil;
     }
@@ -42453,11 +43199,11 @@ static VALUE rb_QPainter_draw_chord(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawChord(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2INT(argv[1]), NUM2INT(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       o->drawChord(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), NUM2INT(argv[2]));
       return Qnil;
     }
@@ -42474,22 +43220,22 @@ static VALUE rb_QPainter_draw_rounded_rect(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2]))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2]))) {
       o->drawRoundedRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2DBL(argv[1]), NUM2DBL(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2]))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2]))) {
       o->drawRoundedRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2DBL(argv[1]), NUM2DBL(argv[2]));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_rounded_rect for given argument types");
   }
   if (argc == 4) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2])) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2])) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawRoundedRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2DBL(argv[1]), NUM2DBL(argv[2]), static_cast<Qt::SizeMode>(NUM2INT(argv[3])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2])) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && (RB_FLOAT_TYPE_P(argv[2]) || RB_INTEGER_TYPE_P(argv[2])) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawRoundedRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2DBL(argv[1]), NUM2DBL(argv[2]), static_cast<Qt::SizeMode>(NUM2INT(argv[3])));
       return Qnil;
     }
@@ -42510,22 +43256,22 @@ static VALUE rb_QPainter_draw_tiled_pixmap(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QPixmap)) {
       o->drawTiledPixmap(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QPixmap)) {
       o->drawTiledPixmap(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_tiled_pixmap for given argument types");
   }
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class) && rb_obj_is_kind_of(argv[2], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QPixmap) && qt6rb::is_kind_of(argv[2], &cls_QPointF)) {
       o->drawTiledPixmap(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[2], &cls_QPointF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class) && rb_obj_is_kind_of(argv[2], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QPixmap) && qt6rb::is_kind_of(argv[2], &cls_QPoint)) {
       o->drawTiledPixmap(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[2], &cls_QPoint)));
       return Qnil;
     }
@@ -42550,38 +43296,38 @@ static VALUE rb_QPainter_draw_pixmap(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QPixmap)) {
       o->drawPixmap(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QPixmap)) {
       o->drawPixmap(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QPixmap)) {
       o->drawPixmap(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_pixmap for given argument types");
   }
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QPixmap) && qt6rb::is_kind_of(argv[2], &cls_QRectF)) {
       o->drawPixmap(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QPixmap) && qt6rb::is_kind_of(argv[2], &cls_QRect)) {
       o->drawPixmap(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QPixmap) && qt6rb::is_kind_of(argv[2], &cls_QRectF)) {
       o->drawPixmap(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPixmap.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QPixmap) && qt6rb::is_kind_of(argv[2], &cls_QRect)) {
       o->drawPixmap(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && rb_obj_is_kind_of(argv[2], cls_QPixmap.rb_class)) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && qt6rb::is_kind_of(argv[2], &cls_QPixmap)) {
       o->drawPixmap(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[2], &cls_QPixmap)));
       return Qnil;
     }
@@ -42606,65 +43352,65 @@ static VALUE rb_QPainter_draw_image(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QImage)) {
       o->drawImage(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QImage)) {
       o->drawImage(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QImage)) {
       o->drawImage(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QImage)) {
       o->drawImage(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_image for given argument types");
   }
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRectF)) {
       o->drawImage(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRect)) {
       o->drawImage(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRectF)) {
       o->drawImage(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRect)) {
       o->drawImage(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && rb_obj_is_kind_of(argv[2], cls_QImage.rb_class)) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && qt6rb::is_kind_of(argv[2], &cls_QImage)) {
       o->drawImage(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[2], &cls_QImage)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_image for given argument types");
   }
   if (argc == 4) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawImage(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[3])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRect) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawImage(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[3])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawImage(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[3])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QImage.rb_class) && rb_obj_is_kind_of(argv[2], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && qt6rb::is_kind_of(argv[1], &cls_QImage) && qt6rb::is_kind_of(argv[2], &cls_QRect) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawImage(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[3])));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && rb_obj_is_kind_of(argv[2], cls_QImage.rb_class) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && qt6rb::is_kind_of(argv[2], &cls_QImage) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawImage(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[2], &cls_QImage)), NUM2INT(argv[3]));
       return Qnil;
     }
@@ -42712,15 +43458,15 @@ static VALUE rb_QPainter_draw_text(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && RB_TYPE_P(argv[1], T_STRING)) {
       o->drawText(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), qt6rb::to_qstring(argv[1]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint) && RB_TYPE_P(argv[1], T_STRING)) {
       o->drawText(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), qt6rb::to_qstring(argv[1]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_TYPE_P(argv[1], T_STRING)) {
       o->drawText(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), qt6rb::to_qstring(argv[1]));
       return Qnil;
     }
@@ -42731,30 +43477,30 @@ static VALUE rb_QPainter_draw_text(int argc, VALUE* argv, VALUE self) {
       o->drawText(NUM2INT(argv[0]), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
       o->drawText(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
       o->drawText(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QTextOption.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QTextOption)) {
       o->drawText(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), qt6rb::to_qstring(argv[1]), *static_cast<QTextOption*>(qt6rb::unwrap_ref(argv[2], &cls_QTextOption)));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#draw_text for given argument types");
   }
   if (argc == 4) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3])) {
       o->drawText(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), qt6rb::to_qstring(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QRectF.rb_class))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING) && (NIL_P(argv[3]) || qt6rb::is_kind_of(argv[3], &cls_QRectF))) {
       o->drawText(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QRectF*>(qt6rb::unwrap_release(argv[3], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QRect.rb_class))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING) && (NIL_P(argv[3]) || qt6rb::is_kind_of(argv[3], &cls_QRect))) {
       o->drawText(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QRect*>(qt6rb::unwrap_release(argv[3], &cls_QRect)));
       return Qnil;
     }
@@ -42778,13 +43524,13 @@ static VALUE rb_QPainter_bounding_rect(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QRectF(o->boundingRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), qt6rb::to_qstring(argv[1]))), &cls_QRectF, true);
   }
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
       return qt6rb::wrap(new QRectF(o->boundingRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]))), &cls_QRectF, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1]) && RB_TYPE_P(argv[2], T_STRING)) {
       return qt6rb::wrap(new QRect(o->boundingRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]))), &cls_QRect, true);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QTextOption.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QTextOption)) {
       return qt6rb::wrap(new QRectF(o->boundingRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), qt6rb::to_qstring(argv[1]), *static_cast<QTextOption*>(qt6rb::unwrap_ref(argv[2], &cls_QTextOption)))), &cls_QRectF, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#bounding_rect for given argument types");
@@ -42799,54 +43545,54 @@ static VALUE rb_QPainter_fill_rect(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QBrush.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QBrush)) {
       o->fillRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QBrush*>(qt6rb::unwrap_ref(argv[1], &cls_QBrush)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QBrush.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QBrush)) {
       o->fillRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QBrush*>(qt6rb::unwrap_ref(argv[1], &cls_QBrush)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && qt6rb::is_kind_of(argv[1], &cls_QColor)) {
       o->fillRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QColor*>(qt6rb::unwrap_ref(argv[1], &cls_QColor)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && rb_obj_is_kind_of(argv[1], cls_QColor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && qt6rb::is_kind_of(argv[1], &cls_QColor)) {
       o->fillRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), *static_cast<QColor*>(qt6rb::unwrap_ref(argv[1], &cls_QColor)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1])) {
       o->fillRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), static_cast<Qt::GlobalColor>(NUM2INT(argv[1])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1])) {
       o->fillRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), static_cast<Qt::GlobalColor>(NUM2INT(argv[1])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1])) {
       o->fillRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), static_cast<Qt::BrushStyle>(NUM2INT(argv[1])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1])) {
       o->fillRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), static_cast<Qt::BrushStyle>(NUM2INT(argv[1])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect) && RB_INTEGER_TYPE_P(argv[1])) {
       o->fillRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), static_cast<QGradient::Preset>(NUM2INT(argv[1])));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF) && RB_INTEGER_TYPE_P(argv[1])) {
       o->fillRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), static_cast<QGradient::Preset>(NUM2INT(argv[1])));
       return Qnil;
     }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#fill_rect for given argument types");
   }
   if (argc == 5) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && rb_obj_is_kind_of(argv[4], cls_QBrush.rb_class)) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && qt6rb::is_kind_of(argv[4], &cls_QBrush)) {
       o->fillRect(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), *static_cast<QBrush*>(qt6rb::unwrap_ref(argv[4], &cls_QBrush)));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && rb_obj_is_kind_of(argv[4], cls_QColor.rb_class)) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && qt6rb::is_kind_of(argv[4], &cls_QColor)) {
       o->fillRect(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), *static_cast<QColor*>(qt6rb::unwrap_ref(argv[4], &cls_QColor)));
       return Qnil;
     }
@@ -42871,11 +43617,11 @@ static VALUE rb_QPainter_erase_rect(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF)) {
       o->eraseRect(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect)) {
       o->eraseRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
       return Qnil;
     }
@@ -42932,6 +43678,15 @@ static VALUE rb_QPainter_test_render_hint(int argc, VALUE* argv, VALUE self) {
     return (o->testRenderHint(static_cast<QPainter::RenderHint>(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPainter#test_render_hint (%d)", argc);
+}
+
+static VALUE rb_QPainter_paint_engine(int argc, VALUE* argv, VALUE self) {
+  QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->paintEngine()), &cls_QPaintEngine, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPainter#paint_engine (%d)", argc);
 }
 
 static VALUE rb_QPainter_begin_native_painting(int argc, VALUE* argv, VALUE self) {
@@ -43034,7 +43789,7 @@ static VALUE rb_QRadialGradient_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 3) {
-    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && rb_obj_is_kind_of(argv[2], cls_QPointF.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPointF) && (RB_FLOAT_TYPE_P(argv[1]) || RB_INTEGER_TYPE_P(argv[1])) && qt6rb::is_kind_of(argv[2], &cls_QPointF)) {
       QRadialGradient* p = new QRadialGradient(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), NUM2DBL(argv[1]), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[2], &cls_QPointF)));
       qt6rb::attach(self, p, true);
       return self;
@@ -43269,7 +44024,7 @@ static VALUE rb_QPolygon_put_points(int argc, VALUE* argv, VALUE self) {
       o->putPoints(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]));
       return Qnil;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && rb_obj_is_kind_of(argv[2], cls_QPolygon.rb_class) && RB_INTEGER_TYPE_P(argv[3])) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && qt6rb::is_kind_of(argv[2], &cls_QPolygon) && RB_INTEGER_TYPE_P(argv[3])) {
       o->putPoints(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QPolygon*>(qt6rb::unwrap_ref(argv[2], &cls_QPolygon)), NUM2INT(argv[3]));
       return Qnil;
     }
@@ -43356,7 +44111,7 @@ static VALUE rb_QMessageBox_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 6) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && (NIL_P(argv[4]) || rb_obj_is_kind_of(argv[4], cls_QWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[5])) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && (NIL_P(argv[4]) || qt6rb::is_kind_of(argv[4], &cls_QWidget)) && RB_INTEGER_TYPE_P(argv[5])) {
       Rb_QMessageBox* p = new Rb_QMessageBox(static_cast<QMessageBox::Icon>(NUM2INT(argv[0])), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])), static_cast<QWidget*>(qt6rb::unwrap_release(argv[4], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[5])));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -43393,7 +44148,7 @@ static VALUE rb_QMessageBox_add_button(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap_qobject((QObject*)(o->addButton(static_cast<QMessageBox::StandardButton>(NUM2INT(argv[0])))), &cls_QPushButton);
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAbstractButton.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAbstractButton)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->addButton(static_cast<QAbstractButton*>(qt6rb::unwrap_release(argv[0], &cls_QAbstractButton)), static_cast<QMessageBox::ButtonRole>(NUM2INT(argv[1])));
       return Qnil;
     }
@@ -43423,7 +44178,7 @@ static VALUE rb_QMessageBox_open(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]));
+    o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[1])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#open (%d)", argc);
@@ -43488,7 +44243,7 @@ static VALUE rb_QMessageBox_set_default_button(int argc, VALUE* argv, VALUE self
   QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPushButton.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPushButton))) {
       o->setDefaultButton(static_cast<QPushButton*>(qt6rb::unwrap_release(argv[0], &cls_QPushButton)));
       return Qnil;
     }
@@ -43514,7 +44269,7 @@ static VALUE rb_QMessageBox_set_escape_button(int argc, VALUE* argv, VALUE self)
   QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAbstractButton.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAbstractButton))) {
       o->setEscapeButton(static_cast<QAbstractButton*>(qt6rb::unwrap_release(argv[0], &cls_QAbstractButton)));
       return Qnil;
     }
@@ -43772,7 +44527,7 @@ static VALUE rb_QMessageBox_set_window_modality(int argc, VALUE* argv, VALUE sel
 static VALUE rb_QMessageBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QMessageBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QMessageBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#tr (%d)", argc);
 }
@@ -43783,40 +44538,40 @@ static VALUE rb_QMessageBox_s_information(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(static_cast<int>(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]))));
   }
   if (argc == 4) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
       return INT2NUM(static_cast<int>(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
       return INT2NUM(static_cast<int>(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[3])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
       return INT2NUM(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
       return INT2NUM(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#information for given argument types");
   }
   if (argc == 5) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(static_cast<int>(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(static_cast<int>(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
       return INT2NUM(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#information for given argument types");
   }
   if (argc == 6) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
       return INT2NUM(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
       return INT2NUM(QMessageBox::information(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4]), qt6rb::to_qstring(argv[5])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#information for given argument types");
@@ -43836,37 +44591,37 @@ static VALUE rb_QMessageBox_s_question(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(static_cast<int>(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]))));
   }
   if (argc == 4) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
       return INT2NUM(static_cast<int>(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
       return INT2NUM(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
       return INT2NUM(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#question for given argument types");
   }
   if (argc == 5) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(static_cast<int>(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4]))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
       return INT2NUM(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#question for given argument types");
   }
   if (argc == 6) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
       return INT2NUM(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
       return INT2NUM(QMessageBox::question(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4]), qt6rb::to_qstring(argv[5])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#question for given argument types");
@@ -43886,34 +44641,34 @@ static VALUE rb_QMessageBox_s_warning(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(static_cast<int>(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]))));
   }
   if (argc == 4) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
       return INT2NUM(static_cast<int>(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
       return INT2NUM(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#warning for given argument types");
   }
   if (argc == 5) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(static_cast<int>(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4]))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
       return INT2NUM(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#warning for given argument types");
   }
   if (argc == 6) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
       return INT2NUM(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
       return INT2NUM(QMessageBox::warning(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4]), qt6rb::to_qstring(argv[5])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#warning for given argument types");
@@ -43933,34 +44688,34 @@ static VALUE rb_QMessageBox_s_critical(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(static_cast<int>(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]))));
   }
   if (argc == 4) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
       return INT2NUM(static_cast<int>(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
       return INT2NUM(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#critical for given argument types");
   }
   if (argc == 5) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(static_cast<int>(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), QFlags<QMessageBox::StandardButton>::fromInt(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4])))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[3])), static_cast<QMessageBox::StandardButton>(NUM2INT(argv[4]))));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4])) {
       return INT2NUM(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING)) {
       return INT2NUM(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#critical for given argument types");
   }
   if (argc == 6) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
       return INT2NUM(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5])));
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_TYPE_P(argv[4], T_STRING) && RB_TYPE_P(argv[5], T_STRING)) {
       return INT2NUM(QMessageBox::critical(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::to_qstring(argv[4]), qt6rb::to_qstring(argv[5])));
     }
     rb_raise(rb_eTypeError, "no matching overload of QMessageBox#critical for given argument types");
@@ -44306,10 +45061,11 @@ static VALUE rb_QMessageBox_prot_custom_event(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QMessageBox_on_button_clicked(VALUE self) {
+static VALUE rb_QMessageBox_on_button_clicked(int argc, VALUE* argv, VALUE self) {
   QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMessageBox::buttonClicked, o, [proc](QAbstractButton* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAbstractButton) };
     qt6rb::call_proc(proc, 1, args);
@@ -44469,7 +45225,7 @@ static VALUE rb_QDialog_reject(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QDialog_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QDialog::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QDialog::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDialog#tr (%d)", argc);
 }
@@ -44776,10 +45532,11 @@ static VALUE rb_QDialog_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QDialog#custom_event (%d)", argc);
 }
 
-static VALUE rb_QDialog_on_finished(VALUE self) {
+static VALUE rb_QDialog_on_finished(int argc, VALUE* argv, VALUE self) {
   QDialog* o = static_cast<QDialog*>(qt6rb::unwrap(self, &cls_QDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDialog::finished, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -44787,20 +45544,22 @@ static VALUE rb_QDialog_on_finished(VALUE self) {
   return self;
 }
 
-static VALUE rb_QDialog_on_accepted(VALUE self) {
+static VALUE rb_QDialog_on_accepted(int argc, VALUE* argv, VALUE self) {
   QDialog* o = static_cast<QDialog*>(qt6rb::unwrap(self, &cls_QDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDialog::accepted, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QDialog_on_rejected(VALUE self) {
+static VALUE rb_QDialog_on_rejected(int argc, VALUE* argv, VALUE self) {
   QDialog* o = static_cast<QDialog*>(qt6rb::unwrap(self, &cls_QDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDialog::rejected, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -44822,13 +45581,13 @@ static VALUE rb_QFileDialog_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_INTEGER_TYPE_P(argv[1])) {
       Rb_QFileDialog* p = new Rb_QFileDialog(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1])));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_TYPE_P(argv[1], T_STRING)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget)) && RB_TYPE_P(argv[1], T_STRING)) {
       Rb_QFileDialog* p = new Rb_QFileDialog(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -45235,7 +45994,7 @@ static VALUE rb_QFileDialog_open(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]));
+    o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[1])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#open (%d)", argc);
@@ -45254,7 +46013,7 @@ static VALUE rb_QFileDialog_set_visible(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QFileDialog_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QFileDialog::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QFileDialog::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#tr (%d)", argc);
 }
@@ -45739,10 +46498,11 @@ static VALUE rb_QFileDialog_prot_custom_event(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#custom_event (%d)", argc);
 }
 
-static VALUE rb_QFileDialog_on_file_selected(VALUE self) {
+static VALUE rb_QFileDialog_on_file_selected(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::fileSelected, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -45750,10 +46510,11 @@ static VALUE rb_QFileDialog_on_file_selected(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileDialog_on_files_selected(VALUE self) {
+static VALUE rb_QFileDialog_on_files_selected(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::filesSelected, o, [proc](QStringList a0) {
     VALUE args[] = { qt6rb::from_qstringlist(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -45761,10 +46522,11 @@ static VALUE rb_QFileDialog_on_files_selected(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileDialog_on_current_changed(VALUE self) {
+static VALUE rb_QFileDialog_on_current_changed(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::currentChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -45772,10 +46534,11 @@ static VALUE rb_QFileDialog_on_current_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileDialog_on_directory_entered(VALUE self) {
+static VALUE rb_QFileDialog_on_directory_entered(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::directoryEntered, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -45783,10 +46546,11 @@ static VALUE rb_QFileDialog_on_directory_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileDialog_on_url_selected(VALUE self) {
+static VALUE rb_QFileDialog_on_url_selected(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::urlSelected, o, [proc](QUrl a0) {
     VALUE args[] = { qt6rb::wrap(new QUrl(a0), &cls_QUrl, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -45794,10 +46558,11 @@ static VALUE rb_QFileDialog_on_url_selected(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileDialog_on_current_url_changed(VALUE self) {
+static VALUE rb_QFileDialog_on_current_url_changed(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::currentUrlChanged, o, [proc](QUrl a0) {
     VALUE args[] = { qt6rb::wrap(new QUrl(a0), &cls_QUrl, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -45805,10 +46570,11 @@ static VALUE rb_QFileDialog_on_current_url_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileDialog_on_directory_url_entered(VALUE self) {
+static VALUE rb_QFileDialog_on_directory_url_entered(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::directoryUrlEntered, o, [proc](QUrl a0) {
     VALUE args[] = { qt6rb::wrap(new QUrl(a0), &cls_QUrl, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -45816,10 +46582,11 @@ static VALUE rb_QFileDialog_on_directory_url_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileDialog_on_filter_selected(VALUE self) {
+static VALUE rb_QFileDialog_on_filter_selected(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileDialog::filterSelected, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -46225,7 +46992,7 @@ static VALUE rb_QInputDialog_open(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]));
+    o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[1])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#open (%d)", argc);
@@ -46291,7 +47058,7 @@ static VALUE rb_QInputDialog_done(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QInputDialog_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QInputDialog::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QInputDialog::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#tr (%d)", argc);
 }
@@ -46719,10 +47486,11 @@ static VALUE rb_QInputDialog_prot_custom_event(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#custom_event (%d)", argc);
 }
 
-static VALUE rb_QInputDialog_on_text_value_changed(VALUE self) {
+static VALUE rb_QInputDialog_on_text_value_changed(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QInputDialog::textValueChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -46730,10 +47498,11 @@ static VALUE rb_QInputDialog_on_text_value_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QInputDialog_on_text_value_selected(VALUE self) {
+static VALUE rb_QInputDialog_on_text_value_selected(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QInputDialog::textValueSelected, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -46741,10 +47510,11 @@ static VALUE rb_QInputDialog_on_text_value_selected(VALUE self) {
   return self;
 }
 
-static VALUE rb_QInputDialog_on_int_value_changed(VALUE self) {
+static VALUE rb_QInputDialog_on_int_value_changed(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QInputDialog::intValueChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -46752,10 +47522,11 @@ static VALUE rb_QInputDialog_on_int_value_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QInputDialog_on_int_value_selected(VALUE self) {
+static VALUE rb_QInputDialog_on_int_value_selected(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QInputDialog::intValueSelected, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -46763,10 +47534,11 @@ static VALUE rb_QInputDialog_on_int_value_selected(VALUE self) {
   return self;
 }
 
-static VALUE rb_QInputDialog_on_double_value_changed(VALUE self) {
+static VALUE rb_QInputDialog_on_double_value_changed(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QInputDialog::doubleValueChanged, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -46774,10 +47546,11 @@ static VALUE rb_QInputDialog_on_double_value_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QInputDialog_on_double_value_selected(VALUE self) {
+static VALUE rb_QInputDialog_on_double_value_selected(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QInputDialog::doubleValueSelected, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -47034,7 +47807,7 @@ static VALUE rb_QProgressBar_set_orientation(int argc, VALUE* argv, VALUE self) 
 static VALUE rb_QProgressBar_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QProgressBar::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QProgressBar::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QProgressBar#tr (%d)", argc);
 }
@@ -47331,10 +48104,11 @@ static VALUE rb_QProgressBar_prot_custom_event(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QProgressBar#custom_event (%d)", argc);
 }
 
-static VALUE rb_QProgressBar_on_value_changed(VALUE self) {
+static VALUE rb_QProgressBar_on_value_changed(int argc, VALUE* argv, VALUE self) {
   QProgressBar* o = static_cast<QProgressBar*>(qt6rb::unwrap(self, &cls_QProgressBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QProgressBar::valueChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -47351,7 +48125,7 @@ static VALUE rb_QSlider_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QSlider* p = new Rb_QSlider(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -47443,7 +48217,7 @@ static VALUE rb_QSlider_event(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QSlider_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QSlider::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QSlider::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSlider#tr (%d)", argc);
 }
@@ -47922,7 +48696,7 @@ static VALUE rb_QSpinBox_set_value(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QSpinBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QSpinBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QSpinBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSpinBox#tr (%d)", argc);
 }
@@ -48249,10 +49023,11 @@ static VALUE rb_QSpinBox_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QSpinBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QSpinBox_on_value_changed(VALUE self) {
+static VALUE rb_QSpinBox_on_value_changed(int argc, VALUE* argv, VALUE self) {
   QSpinBox* o = static_cast<QSpinBox*>(qt6rb::unwrap(self, &cls_QSpinBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QSpinBox::valueChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -48260,10 +49035,11 @@ static VALUE rb_QSpinBox_on_value_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QSpinBox_on_text_changed(VALUE self) {
+static VALUE rb_QSpinBox_on_text_changed(int argc, VALUE* argv, VALUE self) {
   QSpinBox* o = static_cast<QSpinBox*>(qt6rb::unwrap(self, &cls_QSpinBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QSpinBox::textChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -48481,7 +49257,7 @@ static VALUE rb_QDoubleSpinBox_set_value(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QDoubleSpinBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QDoubleSpinBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QDoubleSpinBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDoubleSpinBox#tr (%d)", argc);
 }
@@ -48778,10 +49554,11 @@ static VALUE rb_QDoubleSpinBox_prot_custom_event(int argc, VALUE* argv, VALUE se
   rb_raise(rb_eArgError, "wrong number of arguments for QDoubleSpinBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QDoubleSpinBox_on_value_changed(VALUE self) {
+static VALUE rb_QDoubleSpinBox_on_value_changed(int argc, VALUE* argv, VALUE self) {
   QDoubleSpinBox* o = static_cast<QDoubleSpinBox*>(qt6rb::unwrap(self, &cls_QDoubleSpinBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDoubleSpinBox::valueChanged, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -48789,10 +49566,11 @@ static VALUE rb_QDoubleSpinBox_on_value_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QDoubleSpinBox_on_text_changed(VALUE self) {
+static VALUE rb_QDoubleSpinBox_on_text_changed(int argc, VALUE* argv, VALUE self) {
   QDoubleSpinBox* o = static_cast<QDoubleSpinBox*>(qt6rb::unwrap(self, &cls_QDoubleSpinBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDoubleSpinBox::textChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -48809,7 +49587,7 @@ static VALUE rb_QRadioButton_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QRadioButton* p = new Rb_QRadioButton(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -48854,7 +49632,7 @@ static VALUE rb_QRadioButton_minimum_size_hint(int argc, VALUE* argv, VALUE self
 static VALUE rb_QRadioButton_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QRadioButton::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QRadioButton::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QRadioButton#tr (%d)", argc);
 }
@@ -49304,7 +50082,7 @@ static VALUE rb_QButtonGroup_checked_id(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QButtonGroup_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QButtonGroup::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QButtonGroup::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QButtonGroup#tr (%d)", argc);
 }
@@ -49342,10 +50120,11 @@ static VALUE rb_QButtonGroup_prot_custom_event(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QButtonGroup#custom_event (%d)", argc);
 }
 
-static VALUE rb_QButtonGroup_on_button_clicked(VALUE self) {
+static VALUE rb_QButtonGroup_on_button_clicked(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::buttonClicked, o, [proc](QAbstractButton* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAbstractButton) };
     qt6rb::call_proc(proc, 1, args);
@@ -49353,10 +50132,11 @@ static VALUE rb_QButtonGroup_on_button_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QButtonGroup_on_button_pressed(VALUE self) {
+static VALUE rb_QButtonGroup_on_button_pressed(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::buttonPressed, o, [proc](QAbstractButton* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAbstractButton) };
     qt6rb::call_proc(proc, 1, args);
@@ -49364,10 +50144,11 @@ static VALUE rb_QButtonGroup_on_button_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QButtonGroup_on_button_released(VALUE self) {
+static VALUE rb_QButtonGroup_on_button_released(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::buttonReleased, o, [proc](QAbstractButton* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAbstractButton) };
     qt6rb::call_proc(proc, 1, args);
@@ -49375,10 +50156,11 @@ static VALUE rb_QButtonGroup_on_button_released(VALUE self) {
   return self;
 }
 
-static VALUE rb_QButtonGroup_on_button_toggled(VALUE self) {
+static VALUE rb_QButtonGroup_on_button_toggled(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::buttonToggled, o, [proc](QAbstractButton* a0, bool a1) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAbstractButton), (a1) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 2, args);
@@ -49386,10 +50168,11 @@ static VALUE rb_QButtonGroup_on_button_toggled(VALUE self) {
   return self;
 }
 
-static VALUE rb_QButtonGroup_on_id_clicked(VALUE self) {
+static VALUE rb_QButtonGroup_on_id_clicked(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::idClicked, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -49397,10 +50180,11 @@ static VALUE rb_QButtonGroup_on_id_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QButtonGroup_on_id_pressed(VALUE self) {
+static VALUE rb_QButtonGroup_on_id_pressed(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::idPressed, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -49408,10 +50192,11 @@ static VALUE rb_QButtonGroup_on_id_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QButtonGroup_on_id_released(VALUE self) {
+static VALUE rb_QButtonGroup_on_id_released(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::idReleased, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -49419,10 +50204,11 @@ static VALUE rb_QButtonGroup_on_id_released(VALUE self) {
   return self;
 }
 
-static VALUE rb_QButtonGroup_on_id_toggled(VALUE self) {
+static VALUE rb_QButtonGroup_on_id_toggled(int argc, VALUE* argv, VALUE self) {
   QButtonGroup* o = static_cast<QButtonGroup*>(qt6rb::unwrap(self, &cls_QButtonGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QButtonGroup::idToggled, o, [proc](int a0, bool a1) {
     VALUE args[] = { INT2NUM(a0), (a1) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 2, args);
@@ -49439,7 +50225,7 @@ static VALUE rb_QDialogButtonBox_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QDialogButtonBox* p = new Rb_QDialogButtonBox(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -49460,13 +50246,13 @@ static VALUE rb_QDialogButtonBox_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QDialogButtonBox#initialize for given argument types");
   }
   if (argc == 2) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget))) {
       Rb_QDialogButtonBox* p = new Rb_QDialogButtonBox(static_cast<Qt::Orientation>(NUM2INT(argv[0])), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QWidget))) {
       Rb_QDialogButtonBox* p = new Rb_QDialogButtonBox(QFlags<QDialogButtonBox::StandardButton>::fromInt(NUM2INT(argv[0])), static_cast<QWidget*>(qt6rb::unwrap_release(argv[1], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -49516,7 +50302,7 @@ static VALUE rb_QDialogButtonBox_add_button(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap_qobject((QObject*)(o->addButton(static_cast<QDialogButtonBox::StandardButton>(NUM2INT(argv[0])))), &cls_QPushButton);
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAbstractButton.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAbstractButton)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->addButton(static_cast<QAbstractButton*>(qt6rb::unwrap_release(argv[0], &cls_QAbstractButton)), static_cast<QDialogButtonBox::ButtonRole>(NUM2INT(argv[1])));
       return Qnil;
     }
@@ -49616,7 +50402,7 @@ static VALUE rb_QDialogButtonBox_center_buttons(int argc, VALUE* argv, VALUE sel
 static VALUE rb_QDialogButtonBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QDialogButtonBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QDialogButtonBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDialogButtonBox#tr (%d)", argc);
 }
@@ -49913,10 +50699,11 @@ static VALUE rb_QDialogButtonBox_prot_custom_event(int argc, VALUE* argv, VALUE 
   rb_raise(rb_eArgError, "wrong number of arguments for QDialogButtonBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QDialogButtonBox_on_clicked(VALUE self) {
+static VALUE rb_QDialogButtonBox_on_clicked(int argc, VALUE* argv, VALUE self) {
   QDialogButtonBox* o = static_cast<QDialogButtonBox*>(qt6rb::unwrap(self, &cls_QDialogButtonBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDialogButtonBox::clicked, o, [proc](QAbstractButton* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAbstractButton) };
     qt6rb::call_proc(proc, 1, args);
@@ -49924,30 +50711,33 @@ static VALUE rb_QDialogButtonBox_on_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QDialogButtonBox_on_accepted(VALUE self) {
+static VALUE rb_QDialogButtonBox_on_accepted(int argc, VALUE* argv, VALUE self) {
   QDialogButtonBox* o = static_cast<QDialogButtonBox*>(qt6rb::unwrap(self, &cls_QDialogButtonBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDialogButtonBox::accepted, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QDialogButtonBox_on_help_requested(VALUE self) {
+static VALUE rb_QDialogButtonBox_on_help_requested(int argc, VALUE* argv, VALUE self) {
   QDialogButtonBox* o = static_cast<QDialogButtonBox*>(qt6rb::unwrap(self, &cls_QDialogButtonBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDialogButtonBox::helpRequested, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QDialogButtonBox_on_rejected(VALUE self) {
+static VALUE rb_QDialogButtonBox_on_rejected(int argc, VALUE* argv, VALUE self) {
   QDialogButtonBox* o = static_cast<QDialogButtonBox*>(qt6rb::unwrap(self, &cls_QDialogButtonBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDialogButtonBox::rejected, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -50377,7 +51167,7 @@ static VALUE rb_QCalendarWidget_show_today(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QCalendarWidget_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QCalendarWidget::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QCalendarWidget::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#tr (%d)", argc);
 }
@@ -50695,20 +51485,22 @@ static VALUE rb_QCalendarWidget_prot_custom_event(int argc, VALUE* argv, VALUE s
   rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#custom_event (%d)", argc);
 }
 
-static VALUE rb_QCalendarWidget_on_selection_changed(VALUE self) {
+static VALUE rb_QCalendarWidget_on_selection_changed(int argc, VALUE* argv, VALUE self) {
   QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCalendarWidget::selectionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QCalendarWidget_on_clicked(VALUE self) {
+static VALUE rb_QCalendarWidget_on_clicked(int argc, VALUE* argv, VALUE self) {
   QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCalendarWidget::clicked, o, [proc](QDate a0) {
     VALUE args[] = { qt6rb::wrap(new QDate(a0), &cls_QDate, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -50716,10 +51508,11 @@ static VALUE rb_QCalendarWidget_on_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QCalendarWidget_on_activated(VALUE self) {
+static VALUE rb_QCalendarWidget_on_activated(int argc, VALUE* argv, VALUE self) {
   QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCalendarWidget::activated, o, [proc](QDate a0) {
     VALUE args[] = { qt6rb::wrap(new QDate(a0), &cls_QDate, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -50727,10 +51520,11 @@ static VALUE rb_QCalendarWidget_on_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QCalendarWidget_on_current_page_changed(VALUE self) {
+static VALUE rb_QCalendarWidget_on_current_page_changed(int argc, VALUE* argv, VALUE self) {
   QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QCalendarWidget::currentPageChanged, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -51048,11 +51842,11 @@ static VALUE rb_QTableWidget_open_persistent_editor(int argc, VALUE* argv, VALUE
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTableWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTableWidgetItem))) {
       o->openPersistentEditor(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       o->QAbstractItemView::openPersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
       return Qnil;
     }
@@ -51065,11 +51859,11 @@ static VALUE rb_QTableWidget_close_persistent_editor(int argc, VALUE* argv, VALU
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTableWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTableWidgetItem))) {
       o->closePersistentEditor(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       o->QAbstractItemView::closePersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
       return Qnil;
     }
@@ -51082,10 +51876,10 @@ static VALUE rb_QTableWidget_is_persistent_editor_open(int argc, VALUE* argv, VA
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTableWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTableWidgetItem))) {
       return (o->isPersistentEditorOpen(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)))) ? Qtrue : Qfalse;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       return (o->QAbstractItemView::isPersistentEditorOpen(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QTableWidget#is_persistent_editor_open for given argument types");
@@ -51276,7 +52070,7 @@ static VALUE rb_QTableWidget_clear_contents(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTableWidget_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTableWidget::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTableWidget::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#tr (%d)", argc);
 }
@@ -51791,10 +52585,11 @@ static VALUE rb_QTableWidget_prot_custom_event(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#custom_event (%d)", argc);
 }
 
-static VALUE rb_QTableWidget_on_item_pressed(VALUE self) {
+static VALUE rb_QTableWidget_on_item_pressed(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::itemPressed, o, [proc](QTableWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTableWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -51802,10 +52597,11 @@ static VALUE rb_QTableWidget_on_item_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_item_clicked(VALUE self) {
+static VALUE rb_QTableWidget_on_item_clicked(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::itemClicked, o, [proc](QTableWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTableWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -51813,10 +52609,11 @@ static VALUE rb_QTableWidget_on_item_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_item_double_clicked(VALUE self) {
+static VALUE rb_QTableWidget_on_item_double_clicked(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::itemDoubleClicked, o, [proc](QTableWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTableWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -51824,10 +52621,11 @@ static VALUE rb_QTableWidget_on_item_double_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_item_activated(VALUE self) {
+static VALUE rb_QTableWidget_on_item_activated(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::itemActivated, o, [proc](QTableWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTableWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -51835,10 +52633,11 @@ static VALUE rb_QTableWidget_on_item_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_item_entered(VALUE self) {
+static VALUE rb_QTableWidget_on_item_entered(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::itemEntered, o, [proc](QTableWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTableWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -51846,10 +52645,11 @@ static VALUE rb_QTableWidget_on_item_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_item_changed(VALUE self) {
+static VALUE rb_QTableWidget_on_item_changed(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::itemChanged, o, [proc](QTableWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTableWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -51857,10 +52657,11 @@ static VALUE rb_QTableWidget_on_item_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_current_item_changed(VALUE self) {
+static VALUE rb_QTableWidget_on_current_item_changed(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::currentItemChanged, o, [proc](QTableWidgetItem* a0, QTableWidgetItem* a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTableWidgetItem, false), qt6rb::wrap((void*)(a1), &cls_QTableWidgetItem, false) };
     qt6rb::call_proc(proc, 2, args);
@@ -51868,20 +52669,22 @@ static VALUE rb_QTableWidget_on_current_item_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_item_selection_changed(VALUE self) {
+static VALUE rb_QTableWidget_on_item_selection_changed(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::itemSelectionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QTableWidget_on_cell_pressed(VALUE self) {
+static VALUE rb_QTableWidget_on_cell_pressed(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::cellPressed, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -51889,10 +52692,11 @@ static VALUE rb_QTableWidget_on_cell_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_cell_clicked(VALUE self) {
+static VALUE rb_QTableWidget_on_cell_clicked(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::cellClicked, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -51900,10 +52704,11 @@ static VALUE rb_QTableWidget_on_cell_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_cell_double_clicked(VALUE self) {
+static VALUE rb_QTableWidget_on_cell_double_clicked(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::cellDoubleClicked, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -51911,10 +52716,11 @@ static VALUE rb_QTableWidget_on_cell_double_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_cell_activated(VALUE self) {
+static VALUE rb_QTableWidget_on_cell_activated(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::cellActivated, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -51922,10 +52728,11 @@ static VALUE rb_QTableWidget_on_cell_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_cell_entered(VALUE self) {
+static VALUE rb_QTableWidget_on_cell_entered(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::cellEntered, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -51933,10 +52740,11 @@ static VALUE rb_QTableWidget_on_cell_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_cell_changed(VALUE self) {
+static VALUE rb_QTableWidget_on_cell_changed(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::cellChanged, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -51944,10 +52752,11 @@ static VALUE rb_QTableWidget_on_cell_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTableWidget_on_current_cell_changed(VALUE self) {
+static VALUE rb_QTableWidget_on_current_cell_changed(int argc, VALUE* argv, VALUE self) {
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTableWidget::currentCellChanged, o, [proc](int a0, int a1, int a2, int a3) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1), INT2NUM(a2), INT2NUM(a3) };
     qt6rb::call_proc(proc, 4, args);
@@ -51976,6 +52785,12 @@ static VALUE rb_QTableWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
+    if (qt6rb::is_kind_of(argv[0], &cls_QTableWidgetItem)) {
+      Rb_QTableWidgetItem* p = new Rb_QTableWidgetItem(*static_cast<QTableWidgetItem*>(qt6rb::unwrap_ref(argv[0], &cls_QTableWidgetItem)));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
     rb_raise(rb_eTypeError, "no matching overload of QTableWidgetItem#initialize for given argument types");
   }
   if (argc == 2) {
@@ -51985,7 +52800,7 @@ static VALUE rb_QTableWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       Rb_QTableWidgetItem* p = new Rb_QTableWidgetItem(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
@@ -52560,11 +53375,11 @@ static VALUE rb_QTreeWidget_open_persistent_editor(int argc, VALUE* argv, VALUE 
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem))) {
       o->openPersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       o->QAbstractItemView::openPersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
       return Qnil;
     }
@@ -52581,11 +53396,11 @@ static VALUE rb_QTreeWidget_close_persistent_editor(int argc, VALUE* argv, VALUE
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem))) {
       o->closePersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       o->QAbstractItemView::closePersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
       return Qnil;
     }
@@ -52602,10 +53417,10 @@ static VALUE rb_QTreeWidget_is_persistent_editor_open(int argc, VALUE* argv, VAL
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem))) {
       return (o->isPersistentEditorOpen(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)))) ? Qtrue : Qfalse;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       return (o->QAbstractItemView::isPersistentEditorOpen(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QTreeWidget#is_persistent_editor_open for given argument types");
@@ -52750,7 +53565,7 @@ static VALUE rb_QTreeWidget_clear(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTreeWidget_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTreeWidget::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTreeWidget::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidget#tr (%d)", argc);
 }
@@ -53288,10 +54103,11 @@ static VALUE rb_QTreeWidget_prot_custom_event(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidget#custom_event (%d)", argc);
 }
 
-static VALUE rb_QTreeWidget_on_item_pressed(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_pressed(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemPressed, o, [proc](QTreeWidgetItem* a0, int a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -53299,10 +54115,11 @@ static VALUE rb_QTreeWidget_on_item_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_clicked(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_clicked(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemClicked, o, [proc](QTreeWidgetItem* a0, int a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -53310,10 +54127,11 @@ static VALUE rb_QTreeWidget_on_item_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_double_clicked(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_double_clicked(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemDoubleClicked, o, [proc](QTreeWidgetItem* a0, int a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -53321,10 +54139,11 @@ static VALUE rb_QTreeWidget_on_item_double_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_activated(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_activated(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemActivated, o, [proc](QTreeWidgetItem* a0, int a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -53332,10 +54151,11 @@ static VALUE rb_QTreeWidget_on_item_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_entered(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_entered(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemEntered, o, [proc](QTreeWidgetItem* a0, int a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -53343,10 +54163,11 @@ static VALUE rb_QTreeWidget_on_item_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_changed(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_changed(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemChanged, o, [proc](QTreeWidgetItem* a0, int a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -53354,10 +54175,11 @@ static VALUE rb_QTreeWidget_on_item_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_expanded(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_expanded(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemExpanded, o, [proc](QTreeWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -53365,10 +54187,11 @@ static VALUE rb_QTreeWidget_on_item_expanded(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_collapsed(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_collapsed(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemCollapsed, o, [proc](QTreeWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -53376,10 +54199,11 @@ static VALUE rb_QTreeWidget_on_item_collapsed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_current_item_changed(VALUE self) {
+static VALUE rb_QTreeWidget_on_current_item_changed(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::currentItemChanged, o, [proc](QTreeWidgetItem* a0, QTreeWidgetItem* a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QTreeWidgetItem, false), qt6rb::wrap((void*)(a1), &cls_QTreeWidgetItem, false) };
     qt6rb::call_proc(proc, 2, args);
@@ -53387,10 +54211,11 @@ static VALUE rb_QTreeWidget_on_current_item_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeWidget_on_item_selection_changed(VALUE self) {
+static VALUE rb_QTreeWidget_on_item_selection_changed(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeWidget::itemSelectionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -53418,14 +54243,20 @@ static VALUE rb_QTreeWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidget))) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidget*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidget)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem))) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem)) {
+      Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(*static_cast<QTreeWidgetItem*>(qt6rb::unwrap_ref(argv[0], &cls_QTreeWidgetItem)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
@@ -53439,37 +54270,37 @@ static VALUE rb_QTreeWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidget)) && RB_INTEGER_TYPE_P(argv[1])) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidget*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidget)), NUM2INT(argv[1]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidget.rb_class)) && RB_TYPE_P(argv[1], T_ARRAY)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidget)) && RB_TYPE_P(argv[1], T_ARRAY)) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidget*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidget)), qt6rb::to_qstringlist(argv[1]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidget.rb_class)) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QTreeWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidget)) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QTreeWidgetItem))) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidget*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidget)), static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[1], &cls_QTreeWidgetItem)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem)) && RB_INTEGER_TYPE_P(argv[1])) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), NUM2INT(argv[1]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class)) && RB_TYPE_P(argv[1], T_ARRAY)) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem)) && RB_TYPE_P(argv[1], T_ARRAY)) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), qt6rb::to_qstringlist(argv[1]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class)) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QTreeWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem)) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QTreeWidgetItem))) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[1], &cls_QTreeWidgetItem)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
@@ -53478,25 +54309,25 @@ static VALUE rb_QTreeWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QTreeWidgetItem#initialize for given argument types");
   }
   if (argc == 3) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidget.rb_class)) && RB_TYPE_P(argv[1], T_ARRAY) && RB_INTEGER_TYPE_P(argv[2])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidget)) && RB_TYPE_P(argv[1], T_ARRAY) && RB_INTEGER_TYPE_P(argv[2])) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidget*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidget)), qt6rb::to_qstringlist(argv[1]), NUM2INT(argv[2]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidget.rb_class)) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QTreeWidgetItem.rb_class)) && RB_INTEGER_TYPE_P(argv[2])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidget)) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QTreeWidgetItem)) && RB_INTEGER_TYPE_P(argv[2])) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidget*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidget)), static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[1], &cls_QTreeWidgetItem)), NUM2INT(argv[2]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class)) && RB_TYPE_P(argv[1], T_ARRAY) && RB_INTEGER_TYPE_P(argv[2])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem)) && RB_TYPE_P(argv[1], T_ARRAY) && RB_INTEGER_TYPE_P(argv[2])) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), qt6rb::to_qstringlist(argv[1]), NUM2INT(argv[2]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class)) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QTreeWidgetItem.rb_class)) && RB_INTEGER_TYPE_P(argv[2])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTreeWidgetItem)) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QTreeWidgetItem)) && RB_INTEGER_TYPE_P(argv[2])) {
       Rb_QTreeWidgetItem* p = new Rb_QTreeWidgetItem(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[1], &cls_QTreeWidgetItem)), NUM2INT(argv[2]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
@@ -54478,7 +55309,7 @@ static VALUE rb_QTabWidget_set_current_widget(int argc, VALUE* argv, VALUE self)
 static VALUE rb_QTabWidget_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTabWidget::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTabWidget::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTabWidget#tr (%d)", argc);
 }
@@ -54797,10 +55628,11 @@ static VALUE rb_QTabWidget_prot_custom_event(int argc, VALUE* argv, VALUE self) 
   rb_raise(rb_eArgError, "wrong number of arguments for QTabWidget#custom_event (%d)", argc);
 }
 
-static VALUE rb_QTabWidget_on_current_changed(VALUE self) {
+static VALUE rb_QTabWidget_on_current_changed(int argc, VALUE* argv, VALUE self) {
   QTabWidget* o = static_cast<QTabWidget*>(qt6rb::unwrap(self, &cls_QTabWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTabWidget::currentChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -54808,10 +55640,11 @@ static VALUE rb_QTabWidget_on_current_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTabWidget_on_tab_close_requested(VALUE self) {
+static VALUE rb_QTabWidget_on_tab_close_requested(int argc, VALUE* argv, VALUE self) {
   QTabWidget* o = static_cast<QTabWidget*>(qt6rb::unwrap(self, &cls_QTabWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTabWidget::tabCloseRequested, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -54819,10 +55652,11 @@ static VALUE rb_QTabWidget_on_tab_close_requested(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTabWidget_on_tab_bar_clicked(VALUE self) {
+static VALUE rb_QTabWidget_on_tab_bar_clicked(int argc, VALUE* argv, VALUE self) {
   QTabWidget* o = static_cast<QTabWidget*>(qt6rb::unwrap(self, &cls_QTabWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTabWidget::tabBarClicked, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -54830,10 +55664,11 @@ static VALUE rb_QTabWidget_on_tab_bar_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTabWidget_on_tab_bar_double_clicked(VALUE self) {
+static VALUE rb_QTabWidget_on_tab_bar_double_clicked(int argc, VALUE* argv, VALUE self) {
   QTabWidget* o = static_cast<QTabWidget*>(qt6rb::unwrap(self, &cls_QTabWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTabWidget::tabBarDoubleClicked, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -54881,7 +55716,7 @@ static VALUE rb_QListWidget_insert_item(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   (void)argv; (void)self;
   if (argc == 2) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QListWidgetItem.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QListWidgetItem))) {
       o->insertItem(NUM2INT(argv[0]), static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[1], &cls_QListWidgetItem)));
       return Qnil;
     }
@@ -54912,7 +55747,7 @@ static VALUE rb_QListWidget_add_item(int argc, VALUE* argv, VALUE self) {
       o->addItem(qt6rb::to_qstring(argv[0]));
       return Qnil;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QListWidgetItem))) {
       o->addItem(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)));
       return Qnil;
     }
@@ -55063,11 +55898,11 @@ static VALUE rb_QListWidget_open_persistent_editor(int argc, VALUE* argv, VALUE 
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QListWidgetItem))) {
       o->openPersistentEditor(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       o->QAbstractItemView::openPersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
       return Qnil;
     }
@@ -55080,11 +55915,11 @@ static VALUE rb_QListWidget_close_persistent_editor(int argc, VALUE* argv, VALUE
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QListWidgetItem))) {
       o->closePersistentEditor(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       o->QAbstractItemView::closePersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
       return Qnil;
     }
@@ -55097,10 +55932,10 @@ static VALUE rb_QListWidget_is_persistent_editor_open(int argc, VALUE* argv, VAL
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidgetItem.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QListWidgetItem))) {
       return (o->isPersistentEditorOpen(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)))) ? Qtrue : Qfalse;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       return (o->QAbstractItemView::isPersistentEditorOpen(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))) ? Qtrue : Qfalse;
     }
     rb_raise(rb_eTypeError, "no matching overload of QListWidget#is_persistent_editor_open for given argument types");
@@ -55201,7 +56036,7 @@ static VALUE rb_QListWidget_clear(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QListWidget_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QListWidget::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QListWidget::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#tr (%d)", argc);
 }
@@ -55696,10 +56531,11 @@ static VALUE rb_QListWidget_prot_custom_event(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#custom_event (%d)", argc);
 }
 
-static VALUE rb_QListWidget_on_item_pressed(VALUE self) {
+static VALUE rb_QListWidget_on_item_pressed(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::itemPressed, o, [proc](QListWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QListWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -55707,10 +56543,11 @@ static VALUE rb_QListWidget_on_item_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_item_clicked(VALUE self) {
+static VALUE rb_QListWidget_on_item_clicked(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::itemClicked, o, [proc](QListWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QListWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -55718,10 +56555,11 @@ static VALUE rb_QListWidget_on_item_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_item_double_clicked(VALUE self) {
+static VALUE rb_QListWidget_on_item_double_clicked(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::itemDoubleClicked, o, [proc](QListWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QListWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -55729,10 +56567,11 @@ static VALUE rb_QListWidget_on_item_double_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_item_activated(VALUE self) {
+static VALUE rb_QListWidget_on_item_activated(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::itemActivated, o, [proc](QListWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QListWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -55740,10 +56579,11 @@ static VALUE rb_QListWidget_on_item_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_item_entered(VALUE self) {
+static VALUE rb_QListWidget_on_item_entered(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::itemEntered, o, [proc](QListWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QListWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -55751,10 +56591,11 @@ static VALUE rb_QListWidget_on_item_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_item_changed(VALUE self) {
+static VALUE rb_QListWidget_on_item_changed(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::itemChanged, o, [proc](QListWidgetItem* a0) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QListWidgetItem, false) };
     qt6rb::call_proc(proc, 1, args);
@@ -55762,10 +56603,11 @@ static VALUE rb_QListWidget_on_item_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_current_item_changed(VALUE self) {
+static VALUE rb_QListWidget_on_current_item_changed(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::currentItemChanged, o, [proc](QListWidgetItem* a0, QListWidgetItem* a1) {
     VALUE args[] = { qt6rb::wrap((void*)(a0), &cls_QListWidgetItem, false), qt6rb::wrap((void*)(a1), &cls_QListWidgetItem, false) };
     qt6rb::call_proc(proc, 2, args);
@@ -55773,10 +56615,11 @@ static VALUE rb_QListWidget_on_current_item_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_current_text_changed(VALUE self) {
+static VALUE rb_QListWidget_on_current_text_changed(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::currentTextChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -55784,10 +56627,11 @@ static VALUE rb_QListWidget_on_current_text_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_current_row_changed(VALUE self) {
+static VALUE rb_QListWidget_on_current_row_changed(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::currentRowChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -55795,10 +56639,11 @@ static VALUE rb_QListWidget_on_current_row_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QListWidget_on_item_selection_changed(VALUE self) {
+static VALUE rb_QListWidget_on_item_selection_changed(int argc, VALUE* argv, VALUE self) {
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QListWidget::itemSelectionChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -55814,7 +56659,7 @@ static VALUE rb_QListWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QListWidget))) {
       Rb_QListWidgetItem* p = new Rb_QListWidgetItem(static_cast<QListWidget*>(qt6rb::unwrap_release(argv[0], &cls_QListWidget)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
@@ -55826,22 +56671,28 @@ static VALUE rb_QListWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
+    if (qt6rb::is_kind_of(argv[0], &cls_QListWidgetItem)) {
+      Rb_QListWidgetItem* p = new Rb_QListWidgetItem(*static_cast<QListWidgetItem*>(qt6rb::unwrap_ref(argv[0], &cls_QListWidgetItem)));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
     rb_raise(rb_eTypeError, "no matching overload of QListWidgetItem#initialize for given argument types");
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QListWidget)) && RB_INTEGER_TYPE_P(argv[1])) {
       Rb_QListWidgetItem* p = new Rb_QListWidgetItem(static_cast<QListWidget*>(qt6rb::unwrap_release(argv[0], &cls_QListWidget)), NUM2INT(argv[1]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QListWidget.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QListWidget))) {
       Rb_QListWidgetItem* p = new Rb_QListWidgetItem(qt6rb::to_qstring(argv[0]), static_cast<QListWidget*>(qt6rb::unwrap_release(argv[1], &cls_QListWidget)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       Rb_QListWidgetItem* p = new Rb_QListWidgetItem(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
@@ -55850,13 +56701,13 @@ static VALUE rb_QListWidgetItem_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QListWidgetItem#initialize for given argument types");
   }
   if (argc == 3) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QListWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QListWidget)) && RB_INTEGER_TYPE_P(argv[2])) {
       Rb_QListWidgetItem* p = new Rb_QListWidgetItem(qt6rb::to_qstring(argv[0]), static_cast<QListWidget*>(qt6rb::unwrap_release(argv[1], &cls_QListWidget)), NUM2INT(argv[2]));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QListWidget.rb_class))) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QListWidget))) {
       Rb_QListWidgetItem* p = new Rb_QListWidgetItem(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QListWidget*>(qt6rb::unwrap_release(argv[2], &cls_QListWidget)));
       qt6rb::attach(self, p, true);
       p->qt6rb_set_self(self);
@@ -56205,9 +57056,17 @@ static VALUE rb_QTextCursor_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    QTextCursor* p = new QTextCursor(static_cast<QTextDocument*>(qt6rb::unwrap_release(argv[0], &cls_QTextDocument)));
-    qt6rb::attach(self, p, true);
-    return self;
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTextDocument))) {
+      QTextCursor* p = new QTextCursor(static_cast<QTextDocument*>(qt6rb::unwrap_release(argv[0], &cls_QTextDocument)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QTextCursor)) {
+      QTextCursor* p = new QTextCursor(*static_cast<QTextCursor*>(qt6rb::unwrap_ref(argv[0], &cls_QTextCursor)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTextCursor#initialize for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTextCursor#initialize (%d)", argc);
 }
@@ -56599,7 +57458,7 @@ static VALUE rb_QTextCursor_insert_image(int argc, VALUE* argv, VALUE self) {
       o->insertImage(qt6rb::to_qstring(argv[0]));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QImage.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QImage)) {
       o->insertImage(*static_cast<QImage*>(qt6rb::unwrap_ref(argv[0], &cls_QImage)));
       return Qnil;
     }
@@ -56687,7 +57546,7 @@ static VALUE rb_QTextDocument_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       Rb_QTextDocument* p = new Rb_QTextDocument(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -56908,7 +57767,7 @@ static VALUE rb_QTextDocument_find(int argc, VALUE* argv, VALUE self) {
     if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QTextCursor(o->find(qt6rb::to_qstring(argv[0]), NUM2INT(argv[1]))), &cls_QTextCursor, true);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QTextCursor.rb_class)) {
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QTextCursor)) {
       return qt6rb::wrap(new QTextCursor(o->find(qt6rb::to_qstring(argv[0]), *static_cast<QTextCursor*>(qt6rb::unwrap_ref(argv[1], &cls_QTextCursor)))), &cls_QTextCursor, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QTextDocument#find for given argument types");
@@ -56917,7 +57776,7 @@ static VALUE rb_QTextDocument_find(int argc, VALUE* argv, VALUE self) {
     if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QTextCursor(o->find(qt6rb::to_qstring(argv[0]), NUM2INT(argv[1]), QFlags<QTextDocument::FindFlag>::fromInt(NUM2INT(argv[2])))), &cls_QTextCursor, true);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QTextCursor.rb_class) && RB_INTEGER_TYPE_P(argv[2])) {
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QTextCursor) && RB_INTEGER_TYPE_P(argv[2])) {
       return qt6rb::wrap(new QTextCursor(o->find(qt6rb::to_qstring(argv[0]), *static_cast<QTextCursor*>(qt6rb::unwrap_ref(argv[1], &cls_QTextCursor)), QFlags<QTextDocument::FindFlag>::fromInt(NUM2INT(argv[2])))), &cls_QTextCursor, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QTextDocument#find for given argument types");
@@ -57385,7 +58244,7 @@ static VALUE rb_QTextDocument_set_modified(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTextDocument_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTextDocument::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTextDocument::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTextDocument#tr (%d)", argc);
 }
@@ -57433,10 +58292,11 @@ static VALUE rb_QTextDocument_prot_custom_event(int argc, VALUE* argv, VALUE sel
   rb_raise(rb_eArgError, "wrong number of arguments for QTextDocument#custom_event (%d)", argc);
 }
 
-static VALUE rb_QTextDocument_on_contents_change(VALUE self) {
+static VALUE rb_QTextDocument_on_contents_change(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::contentsChange, o, [proc](int a0, int a1, int a2) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -57444,20 +58304,22 @@ static VALUE rb_QTextDocument_on_contents_change(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextDocument_on_contents_changed(VALUE self) {
+static VALUE rb_QTextDocument_on_contents_changed(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::contentsChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QTextDocument_on_undo_available(VALUE self) {
+static VALUE rb_QTextDocument_on_undo_available(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::undoAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -57465,10 +58327,11 @@ static VALUE rb_QTextDocument_on_undo_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextDocument_on_redo_available(VALUE self) {
+static VALUE rb_QTextDocument_on_redo_available(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::redoAvailable, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -57476,20 +58339,22 @@ static VALUE rb_QTextDocument_on_redo_available(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextDocument_on_undo_command_added(VALUE self) {
+static VALUE rb_QTextDocument_on_undo_command_added(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::undoCommandAdded, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QTextDocument_on_modification_changed(VALUE self) {
+static VALUE rb_QTextDocument_on_modification_changed(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::modificationChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -57497,10 +58362,11 @@ static VALUE rb_QTextDocument_on_modification_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextDocument_on_cursor_position_changed(VALUE self) {
+static VALUE rb_QTextDocument_on_cursor_position_changed(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::cursorPositionChanged, o, [proc](QTextCursor a0) {
     VALUE args[] = { qt6rb::wrap(new QTextCursor(a0), &cls_QTextCursor, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -57508,10 +58374,11 @@ static VALUE rb_QTextDocument_on_cursor_position_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextDocument_on_block_count_changed(VALUE self) {
+static VALUE rb_QTextDocument_on_block_count_changed(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::blockCountChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -57519,10 +58386,11 @@ static VALUE rb_QTextDocument_on_block_count_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextDocument_on_base_url_changed(VALUE self) {
+static VALUE rb_QTextDocument_on_base_url_changed(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::baseUrlChanged, o, [proc](QUrl a0) {
     VALUE args[] = { qt6rb::wrap(new QUrl(a0), &cls_QUrl, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -57530,10 +58398,11 @@ static VALUE rb_QTextDocument_on_base_url_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextDocument_on_document_layout_changed(VALUE self) {
+static VALUE rb_QTextDocument_on_document_layout_changed(int argc, VALUE* argv, VALUE self) {
   QTextDocument* o = static_cast<QTextDocument*>(qt6rb::unwrap(self, &cls_QTextDocument));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTextDocument::documentLayoutChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -57548,13 +58417,18 @@ static VALUE rb_QTextDocumentFragment_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTextDocument.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QTextDocument))) {
       QTextDocumentFragment* p = new QTextDocumentFragment(static_cast<QTextDocument*>(qt6rb::unwrap_release(argv[0], &cls_QTextDocument)));
       qt6rb::attach(self, p, true);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QTextCursor.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QTextCursor)) {
       QTextDocumentFragment* p = new QTextDocumentFragment(*static_cast<QTextCursor*>(qt6rb::unwrap_ref(argv[0], &cls_QTextCursor)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QTextDocumentFragment)) {
+      QTextDocumentFragment* p = new QTextDocumentFragment(*static_cast<QTextDocumentFragment*>(qt6rb::unwrap_ref(argv[0], &cls_QTextDocumentFragment)));
       qt6rb::attach(self, p, true);
       return self;
     }
@@ -58329,7 +59203,7 @@ static VALUE rb_QSyntaxHighlighter_rehighlight(int argc, VALUE* argv, VALUE self
 static VALUE rb_QSyntaxHighlighter_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QSyntaxHighlighter::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QSyntaxHighlighter::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSyntaxHighlighter#tr (%d)", argc);
 }
@@ -58342,9 +59216,17 @@ static VALUE rb_QTextOption_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    QTextOption* p = new QTextOption(QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[0])));
-    qt6rb::attach(self, p, true);
-    return self;
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QTextOption* p = new QTextOption(QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[0])));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QTextOption)) {
+      QTextOption* p = new QTextOption(*static_cast<QTextOption*>(qt6rb::unwrap_ref(argv[0], &cls_QTextOption)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTextOption#initialize for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTextOption#initialize (%d)", argc);
 }
@@ -58473,7 +59355,7 @@ static VALUE rb_QScrollBar_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QScrollBar* p = new Rb_QScrollBar(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -58527,7 +59409,7 @@ static VALUE rb_QScrollBar_create_standard_context_menu(int argc, VALUE* argv, V
 static VALUE rb_QScrollBar_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QScrollBar::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QScrollBar::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QScrollBar#tr (%d)", argc);
 }
@@ -59207,6 +60089,38 @@ static VALUE rb_QAbstractItemView_keyboard_search(int argc, VALUE* argv, VALUE s
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#keyboard_search (%d)", argc);
 }
 
+static VALUE rb_QAbstractItemView_visual_rect(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QRect(o->visualRect(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#visual_rect (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemView_scroll_to(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->scrollTo(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+    return Qnil;
+  }
+  if (argc == 2) {
+    o->scrollTo(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), static_cast<QAbstractItemView::ScrollHint>(NUM2INT(argv[1])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#scroll_to (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemView_index_at(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QModelIndex(o->indexAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QModelIndex, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#index_at (%d)", argc);
+}
+
 static VALUE rb_QAbstractItemView_size_hint_for_index(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   (void)argv; (void)self;
@@ -59474,11 +60388,11 @@ static VALUE rb_QAbstractItemView_update(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 1) {
-    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QModelIndex)) {
       o->update(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
       return Qnil;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect)) {
       o->QWidget::update(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
       return Qnil;
     }
@@ -59494,15 +60408,16 @@ static VALUE rb_QAbstractItemView_update(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QAbstractItemView_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractItemView::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractItemView::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#tr (%d)", argc);
 }
 
-static VALUE rb_QAbstractItemView_on_pressed(VALUE self) {
+static VALUE rb_QAbstractItemView_on_pressed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemView::pressed, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -59510,10 +60425,11 @@ static VALUE rb_QAbstractItemView_on_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemView_on_clicked(VALUE self) {
+static VALUE rb_QAbstractItemView_on_clicked(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemView::clicked, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -59521,10 +60437,11 @@ static VALUE rb_QAbstractItemView_on_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemView_on_double_clicked(VALUE self) {
+static VALUE rb_QAbstractItemView_on_double_clicked(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemView::doubleClicked, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -59532,10 +60449,11 @@ static VALUE rb_QAbstractItemView_on_double_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemView_on_activated(VALUE self) {
+static VALUE rb_QAbstractItemView_on_activated(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemView::activated, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -59543,10 +60461,11 @@ static VALUE rb_QAbstractItemView_on_activated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemView_on_entered(VALUE self) {
+static VALUE rb_QAbstractItemView_on_entered(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemView::entered, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -59554,20 +60473,22 @@ static VALUE rb_QAbstractItemView_on_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemView_on_viewport_entered(VALUE self) {
+static VALUE rb_QAbstractItemView_on_viewport_entered(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemView::viewportEntered, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractItemView_on_icon_size_changed(VALUE self) {
+static VALUE rb_QAbstractItemView_on_icon_size_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemView::iconSizeChanged, o, [proc](QSize a0) {
     VALUE args[] = { qt6rb::wrap(new QSize(a0), &cls_QSize, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -59674,7 +60595,7 @@ static VALUE rb_QHeaderView_logical_index_at(int argc, VALUE* argv, VALUE self) 
     if (RB_INTEGER_TYPE_P(argv[0])) {
       return INT2NUM(o->logicalIndexAt(NUM2INT(argv[0])));
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
       return INT2NUM(o->logicalIndexAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint))));
     }
     rb_raise(rb_eTypeError, "no matching overload of QHeaderView#logical_index_at for given argument types");
@@ -60243,7 +61164,7 @@ static VALUE rb_QHeaderView_header_data_changed(int argc, VALUE* argv, VALUE sel
 static VALUE rb_QHeaderView_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QHeaderView::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QHeaderView::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QHeaderView#tr (%d)", argc);
 }
@@ -60749,10 +61670,11 @@ static VALUE rb_QHeaderView_prot_custom_event(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QHeaderView#custom_event (%d)", argc);
 }
 
-static VALUE rb_QHeaderView_on_section_moved(VALUE self) {
+static VALUE rb_QHeaderView_on_section_moved(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionMoved, o, [proc](int a0, int a1, int a2) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -60760,10 +61682,11 @@ static VALUE rb_QHeaderView_on_section_moved(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_section_resized(VALUE self) {
+static VALUE rb_QHeaderView_on_section_resized(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionResized, o, [proc](int a0, int a1, int a2) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -60771,10 +61694,11 @@ static VALUE rb_QHeaderView_on_section_resized(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_section_pressed(VALUE self) {
+static VALUE rb_QHeaderView_on_section_pressed(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionPressed, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -60782,10 +61706,11 @@ static VALUE rb_QHeaderView_on_section_pressed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_section_clicked(VALUE self) {
+static VALUE rb_QHeaderView_on_section_clicked(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionClicked, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -60793,10 +61718,11 @@ static VALUE rb_QHeaderView_on_section_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_section_entered(VALUE self) {
+static VALUE rb_QHeaderView_on_section_entered(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionEntered, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -60804,10 +61730,11 @@ static VALUE rb_QHeaderView_on_section_entered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_section_double_clicked(VALUE self) {
+static VALUE rb_QHeaderView_on_section_double_clicked(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionDoubleClicked, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -60815,10 +61742,11 @@ static VALUE rb_QHeaderView_on_section_double_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_section_count_changed(VALUE self) {
+static VALUE rb_QHeaderView_on_section_count_changed(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionCountChanged, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -60826,10 +61754,11 @@ static VALUE rb_QHeaderView_on_section_count_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_section_handle_double_clicked(VALUE self) {
+static VALUE rb_QHeaderView_on_section_handle_double_clicked(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sectionHandleDoubleClicked, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -60837,20 +61766,22 @@ static VALUE rb_QHeaderView_on_section_handle_double_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_geometries_changed(VALUE self) {
+static VALUE rb_QHeaderView_on_geometries_changed(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::geometriesChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QHeaderView_on_sort_indicator_changed(VALUE self) {
+static VALUE rb_QHeaderView_on_sort_indicator_changed(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sortIndicatorChanged, o, [proc](int a0, Qt::SortOrder a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(static_cast<int>(a1)) };
     qt6rb::call_proc(proc, 2, args);
@@ -60858,10 +61789,11 @@ static VALUE rb_QHeaderView_on_sort_indicator_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QHeaderView_on_sort_indicator_clearable_changed(VALUE self) {
+static VALUE rb_QHeaderView_on_sort_indicator_clearable_changed(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QHeaderView::sortIndicatorClearableChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -60878,7 +61810,7 @@ static VALUE rb_QGroupBox_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QGroupBox* p = new Rb_QGroupBox(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -61009,7 +61941,7 @@ static VALUE rb_QGroupBox_set_checked(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QGroupBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QGroupBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QGroupBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGroupBox#tr (%d)", argc);
 }
@@ -61306,10 +62238,11 @@ static VALUE rb_QGroupBox_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QGroupBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QGroupBox_on_clicked(VALUE self) {
+static VALUE rb_QGroupBox_on_clicked(int argc, VALUE* argv, VALUE self) {
   QGroupBox* o = static_cast<QGroupBox*>(qt6rb::unwrap(self, &cls_QGroupBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGroupBox::clicked, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -61317,10 +62250,11 @@ static VALUE rb_QGroupBox_on_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QGroupBox_on_toggled(VALUE self) {
+static VALUE rb_QGroupBox_on_toggled(int argc, VALUE* argv, VALUE self) {
   QGroupBox* o = static_cast<QGroupBox*>(qt6rb::unwrap(self, &cls_QGroupBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QGroupBox::toggled, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -61337,7 +62271,7 @@ static VALUE rb_QSplitter_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QSplitter* p = new Rb_QSplitter(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -61575,7 +62509,7 @@ static VALUE rb_QSplitter_set_stretch_factor(int argc, VALUE* argv, VALUE self) 
 static VALUE rb_QSplitter_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QSplitter::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QSplitter::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSplitter#tr (%d)", argc);
 }
@@ -61872,10 +62806,11 @@ static VALUE rb_QSplitter_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QSplitter#custom_event (%d)", argc);
 }
 
-static VALUE rb_QSplitter_on_splitter_moved(VALUE self) {
+static VALUE rb_QSplitter_on_splitter_moved(int argc, VALUE* argv, VALUE self) {
   QSplitter* o = static_cast<QSplitter*>(qt6rb::unwrap(self, &cls_QSplitter));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QSplitter::splitterMoved, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -62024,7 +62959,7 @@ static VALUE rb_QScrollArea_ensure_widget_visible(int argc, VALUE* argv, VALUE s
 static VALUE rb_QScrollArea_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QScrollArea::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QScrollArea::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QScrollArea#tr (%d)", argc);
 }
@@ -62487,7 +63422,7 @@ static VALUE rb_QStatusBar_clear_message(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QStatusBar_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QStatusBar::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QStatusBar::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QStatusBar#tr (%d)", argc);
 }
@@ -62784,10 +63719,11 @@ static VALUE rb_QStatusBar_prot_custom_event(int argc, VALUE* argv, VALUE self) 
   rb_raise(rb_eArgError, "wrong number of arguments for QStatusBar#custom_event (%d)", argc);
 }
 
-static VALUE rb_QStatusBar_on_message_changed(VALUE self) {
+static VALUE rb_QStatusBar_on_message_changed(int argc, VALUE* argv, VALUE self) {
   QStatusBar* o = static_cast<QStatusBar*>(qt6rb::unwrap(self, &cls_QStatusBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QStatusBar::messageChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -62817,7 +63753,7 @@ static VALUE rb_QMenuBar_add_menu(int argc, VALUE* argv, VALUE self) {
   QMenuBar* o = static_cast<QMenuBar*>(qt6rb::unwrap(self, &cls_QMenuBar));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QMenu.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QMenu))) {
       return qt6rb::wrap_qobject((QObject*)(o->addMenu(static_cast<QMenu*>(qt6rb::unwrap_release(argv[0], &cls_QMenu)))), &cls_QAction);
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
@@ -63009,7 +63945,7 @@ static VALUE rb_QMenuBar_set_visible(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QMenuBar_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QMenuBar::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QMenuBar::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMenuBar#tr (%d)", argc);
 }
@@ -63316,10 +64252,11 @@ static VALUE rb_QMenuBar_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMenuBar#custom_event (%d)", argc);
 }
 
-static VALUE rb_QMenuBar_on_triggered(VALUE self) {
+static VALUE rb_QMenuBar_on_triggered(int argc, VALUE* argv, VALUE self) {
   QMenuBar* o = static_cast<QMenuBar*>(qt6rb::unwrap(self, &cls_QMenuBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMenuBar::triggered, o, [proc](QAction* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAction) };
     qt6rb::call_proc(proc, 1, args);
@@ -63327,10 +64264,11 @@ static VALUE rb_QMenuBar_on_triggered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMenuBar_on_hovered(VALUE self) {
+static VALUE rb_QMenuBar_on_hovered(int argc, VALUE* argv, VALUE self) {
   QMenuBar* o = static_cast<QMenuBar*>(qt6rb::unwrap(self, &cls_QMenuBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMenuBar::hovered, o, [proc](QAction* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAction) };
     qt6rb::call_proc(proc, 1, args);
@@ -63347,7 +64285,7 @@ static VALUE rb_QMenu_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QMenu* p = new Rb_QMenu(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -63375,7 +64313,7 @@ static VALUE rb_QMenu_add_action(int argc, VALUE* argv, VALUE self) {
   QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAction))) {
       o->QWidget::addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)));
       return Qnil;
     }
@@ -63385,55 +64323,55 @@ static VALUE rb_QMenu_add_action(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
   }
   if (argc == 2) {
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class)) {
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence)) {
       return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
   }
   if (argc == 3) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QKeySequence)) {
       return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
   }
   if (argc == 4) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING) && rb_obj_is_kind_of(argv[3], cls_QKeySequence.rb_class)) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[3], &cls_QKeySequence)))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && qt6rb::is_kind_of(argv[3], &cls_QKeySequence)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[3], &cls_QKeySequence)))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
   }
   if (argc == 5) {
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && rb_obj_is_kind_of(argv[4], cls_QKeySequence.rb_class)) {
-      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[4], &cls_QKeySequence)))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING) && qt6rb::is_kind_of(argv[4], &cls_QKeySequence)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[4], &cls_QKeySequence)))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QKeySequence) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QObject.rb_class)) && RB_TYPE_P(argv[4], T_STRING)) {
-      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]))), &cls_QAction);
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING) && qt6rb::is_kind_of(argv[2], &cls_QKeySequence) && (NIL_P(argv[3]) || qt6rb::is_kind_of(argv[3], &cls_QObject)) && RB_TYPE_P(argv[4], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[4])))), &cls_QAction);
     }
     rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
   }
   if (argc == 6) {
-    return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
+    return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[4])), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMenu#add_action (%d)", argc);
 }
@@ -63442,7 +64380,7 @@ static VALUE rb_QMenu_add_menu(int argc, VALUE* argv, VALUE self) {
   QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QMenu.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QMenu))) {
       return qt6rb::wrap_qobject((QObject*)(o->addMenu(static_cast<QMenu*>(qt6rb::unwrap_release(argv[0], &cls_QMenu)))), &cls_QAction);
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
@@ -63780,7 +64718,7 @@ static VALUE rb_QMenu_set_tool_tips_visible(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QMenu_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QMenu::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QMenu::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMenu#tr (%d)", argc);
 }
@@ -64085,30 +65023,33 @@ static VALUE rb_QMenu_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMenu#custom_event (%d)", argc);
 }
 
-static VALUE rb_QMenu_on_about_to_show(VALUE self) {
+static VALUE rb_QMenu_on_about_to_show(int argc, VALUE* argv, VALUE self) {
   QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMenu::aboutToShow, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QMenu_on_about_to_hide(VALUE self) {
+static VALUE rb_QMenu_on_about_to_hide(int argc, VALUE* argv, VALUE self) {
   QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMenu::aboutToHide, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QMenu_on_triggered(VALUE self) {
+static VALUE rb_QMenu_on_triggered(int argc, VALUE* argv, VALUE self) {
   QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMenu::triggered, o, [proc](QAction* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAction) };
     qt6rb::call_proc(proc, 1, args);
@@ -64116,10 +65057,11 @@ static VALUE rb_QMenu_on_triggered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMenu_on_hovered(VALUE self) {
+static VALUE rb_QMenu_on_hovered(int argc, VALUE* argv, VALUE self) {
   QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMenu::hovered, o, [proc](QAction* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAction) };
     qt6rb::call_proc(proc, 1, args);
@@ -64136,7 +65078,7 @@ static VALUE rb_QAction_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       Rb_QAction* p = new Rb_QAction(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -64151,13 +65093,13 @@ static VALUE rb_QAction_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QAction#initialize for given argument types");
   }
   if (argc == 2) {
-    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject))) {
       Rb_QAction* p = new Rb_QAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QIcon) && RB_TYPE_P(argv[1], T_STRING)) {
       Rb_QAction* p = new Rb_QAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -64659,7 +65601,7 @@ static VALUE rb_QAction_set_visible(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QAction_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAction::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAction::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAction#tr (%d)", argc);
 }
@@ -64707,20 +65649,22 @@ static VALUE rb_QAction_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QAction#custom_event (%d)", argc);
 }
 
-static VALUE rb_QAction_on_changed(VALUE self) {
+static VALUE rb_QAction_on_changed(int argc, VALUE* argv, VALUE self) {
   QAction* o = static_cast<QAction*>(qt6rb::unwrap(self, &cls_QAction));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAction::changed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAction_on_enabled_changed(VALUE self) {
+static VALUE rb_QAction_on_enabled_changed(int argc, VALUE* argv, VALUE self) {
   QAction* o = static_cast<QAction*>(qt6rb::unwrap(self, &cls_QAction));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAction::enabledChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -64728,10 +65672,11 @@ static VALUE rb_QAction_on_enabled_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAction_on_checkable_changed(VALUE self) {
+static VALUE rb_QAction_on_checkable_changed(int argc, VALUE* argv, VALUE self) {
   QAction* o = static_cast<QAction*>(qt6rb::unwrap(self, &cls_QAction));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAction::checkableChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -64739,20 +65684,22 @@ static VALUE rb_QAction_on_checkable_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAction_on_visible_changed(VALUE self) {
+static VALUE rb_QAction_on_visible_changed(int argc, VALUE* argv, VALUE self) {
   QAction* o = static_cast<QAction*>(qt6rb::unwrap(self, &cls_QAction));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAction::visibleChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAction_on_triggered(VALUE self) {
+static VALUE rb_QAction_on_triggered(int argc, VALUE* argv, VALUE self) {
   QAction* o = static_cast<QAction*>(qt6rb::unwrap(self, &cls_QAction));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAction::triggered, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -64760,20 +65707,22 @@ static VALUE rb_QAction_on_triggered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAction_on_hovered(VALUE self) {
+static VALUE rb_QAction_on_hovered(int argc, VALUE* argv, VALUE self) {
   QAction* o = static_cast<QAction*>(qt6rb::unwrap(self, &cls_QAction));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAction::hovered, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAction_on_toggled(VALUE self) {
+static VALUE rb_QAction_on_toggled(int argc, VALUE* argv, VALUE self) {
   QAction* o = static_cast<QAction*>(qt6rb::unwrap(self, &cls_QAction));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAction::toggled, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -64797,7 +65746,7 @@ static VALUE rb_QActionGroup_add_action(int argc, VALUE* argv, VALUE self) {
   QActionGroup* o = static_cast<QActionGroup*>(qt6rb::unwrap(self, &cls_QActionGroup));
   (void)argv; (void)self;
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAction))) {
       return qt6rb::wrap_qobject((QObject*)(o->addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)))), &cls_QAction);
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
@@ -64919,7 +65868,7 @@ static VALUE rb_QActionGroup_set_exclusion_policy(int argc, VALUE* argv, VALUE s
 static VALUE rb_QActionGroup_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QActionGroup::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QActionGroup::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QActionGroup#tr (%d)", argc);
 }
@@ -64957,10 +65906,11 @@ static VALUE rb_QActionGroup_prot_custom_event(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QActionGroup#custom_event (%d)", argc);
 }
 
-static VALUE rb_QActionGroup_on_triggered(VALUE self) {
+static VALUE rb_QActionGroup_on_triggered(int argc, VALUE* argv, VALUE self) {
   QActionGroup* o = static_cast<QActionGroup*>(qt6rb::unwrap(self, &cls_QActionGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QActionGroup::triggered, o, [proc](QAction* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAction) };
     qt6rb::call_proc(proc, 1, args);
@@ -64968,10 +65918,11 @@ static VALUE rb_QActionGroup_on_triggered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QActionGroup_on_hovered(VALUE self) {
+static VALUE rb_QActionGroup_on_hovered(int argc, VALUE* argv, VALUE self) {
   QActionGroup* o = static_cast<QActionGroup*>(qt6rb::unwrap(self, &cls_QActionGroup));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QActionGroup::hovered, o, [proc](QAction* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAction) };
     qt6rb::call_proc(proc, 1, args);
@@ -64994,7 +65945,7 @@ static VALUE rb_QToolBar_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
       Rb_QToolBar* p = new Rb_QToolBar(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -65232,7 +66183,7 @@ static VALUE rb_QToolBar_set_tool_button_style(int argc, VALUE* argv, VALUE self
 static VALUE rb_QToolBar_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QToolBar::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QToolBar::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QToolBar#tr (%d)", argc);
 }
@@ -65529,10 +66480,11 @@ static VALUE rb_QToolBar_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QToolBar#custom_event (%d)", argc);
 }
 
-static VALUE rb_QToolBar_on_action_triggered(VALUE self) {
+static VALUE rb_QToolBar_on_action_triggered(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::actionTriggered, o, [proc](QAction* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QAction) };
     qt6rb::call_proc(proc, 1, args);
@@ -65540,10 +66492,11 @@ static VALUE rb_QToolBar_on_action_triggered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QToolBar_on_movable_changed(VALUE self) {
+static VALUE rb_QToolBar_on_movable_changed(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::movableChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -65551,10 +66504,11 @@ static VALUE rb_QToolBar_on_movable_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QToolBar_on_allowed_areas_changed(VALUE self) {
+static VALUE rb_QToolBar_on_allowed_areas_changed(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::allowedAreasChanged, o, [proc](QFlags<Qt::ToolBarArea> a0) {
     VALUE args[] = { INT2NUM((a0).toInt()) };
     qt6rb::call_proc(proc, 1, args);
@@ -65562,10 +66516,11 @@ static VALUE rb_QToolBar_on_allowed_areas_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QToolBar_on_orientation_changed(VALUE self) {
+static VALUE rb_QToolBar_on_orientation_changed(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::orientationChanged, o, [proc](Qt::Orientation a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -65573,10 +66528,11 @@ static VALUE rb_QToolBar_on_orientation_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QToolBar_on_icon_size_changed(VALUE self) {
+static VALUE rb_QToolBar_on_icon_size_changed(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::iconSizeChanged, o, [proc](QSize a0) {
     VALUE args[] = { qt6rb::wrap(new QSize(a0), &cls_QSize, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -65584,10 +66540,11 @@ static VALUE rb_QToolBar_on_icon_size_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QToolBar_on_tool_button_style_changed(VALUE self) {
+static VALUE rb_QToolBar_on_tool_button_style_changed(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::toolButtonStyleChanged, o, [proc](Qt::ToolButtonStyle a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -65595,10 +66552,11 @@ static VALUE rb_QToolBar_on_tool_button_style_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QToolBar_on_top_level_changed(VALUE self) {
+static VALUE rb_QToolBar_on_top_level_changed(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::topLevelChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -65606,10 +66564,11 @@ static VALUE rb_QToolBar_on_top_level_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QToolBar_on_visibility_changed(VALUE self) {
+static VALUE rb_QToolBar_on_visibility_changed(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QToolBar::visibilityChanged, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -65628,7 +66587,7 @@ static VALUE rb_QDesktopServices_s_open_url(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QDesktopServices_s_set_url_handler(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    QDesktopServices::setUrlHandler(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]));
+    QDesktopServices::setUrlHandler(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDesktopServices#set_url_handler (%d)", argc);
@@ -65646,15 +66605,16 @@ static VALUE rb_QDesktopServices_s_unset_url_handler(int argc, VALUE* argv, VALU
 static VALUE rb_QValidator_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QValidator::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QValidator::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QValidator#tr (%d)", argc);
 }
 
-static VALUE rb_QValidator_on_changed(VALUE self) {
+static VALUE rb_QValidator_on_changed(int argc, VALUE* argv, VALUE self) {
   QValidator* o = static_cast<QValidator*>(qt6rb::unwrap(self, &cls_QValidator));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QValidator::changed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -65742,7 +66702,7 @@ static VALUE rb_QIntValidator_top(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QIntValidator_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QIntValidator::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QIntValidator::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QIntValidator#tr (%d)", argc);
 }
@@ -65780,10 +66740,11 @@ static VALUE rb_QIntValidator_prot_custom_event(int argc, VALUE* argv, VALUE sel
   rb_raise(rb_eArgError, "wrong number of arguments for QIntValidator#custom_event (%d)", argc);
 }
 
-static VALUE rb_QIntValidator_on_bottom_changed(VALUE self) {
+static VALUE rb_QIntValidator_on_bottom_changed(int argc, VALUE* argv, VALUE self) {
   QIntValidator* o = static_cast<QIntValidator*>(qt6rb::unwrap(self, &cls_QIntValidator));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QIntValidator::bottomChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -65791,10 +66752,11 @@ static VALUE rb_QIntValidator_on_bottom_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QIntValidator_on_top_changed(VALUE self) {
+static VALUE rb_QIntValidator_on_top_changed(int argc, VALUE* argv, VALUE self) {
   QIntValidator* o = static_cast<QIntValidator*>(qt6rb::unwrap(self, &cls_QIntValidator));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QIntValidator::topChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -65925,7 +66887,7 @@ static VALUE rb_QDoubleValidator_notation(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QDoubleValidator_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QDoubleValidator::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QDoubleValidator::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDoubleValidator#tr (%d)", argc);
 }
@@ -65963,10 +66925,11 @@ static VALUE rb_QDoubleValidator_prot_custom_event(int argc, VALUE* argv, VALUE 
   rb_raise(rb_eArgError, "wrong number of arguments for QDoubleValidator#custom_event (%d)", argc);
 }
 
-static VALUE rb_QDoubleValidator_on_bottom_changed(VALUE self) {
+static VALUE rb_QDoubleValidator_on_bottom_changed(int argc, VALUE* argv, VALUE self) {
   QDoubleValidator* o = static_cast<QDoubleValidator*>(qt6rb::unwrap(self, &cls_QDoubleValidator));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDoubleValidator::bottomChanged, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -65974,10 +66937,11 @@ static VALUE rb_QDoubleValidator_on_bottom_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QDoubleValidator_on_top_changed(VALUE self) {
+static VALUE rb_QDoubleValidator_on_top_changed(int argc, VALUE* argv, VALUE self) {
   QDoubleValidator* o = static_cast<QDoubleValidator*>(qt6rb::unwrap(self, &cls_QDoubleValidator));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDoubleValidator::topChanged, o, [proc](double a0) {
     VALUE args[] = { DBL2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -65985,10 +66949,11 @@ static VALUE rb_QDoubleValidator_on_top_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QDoubleValidator_on_decimals_changed(VALUE self) {
+static VALUE rb_QDoubleValidator_on_decimals_changed(int argc, VALUE* argv, VALUE self) {
   QDoubleValidator* o = static_cast<QDoubleValidator*>(qt6rb::unwrap(self, &cls_QDoubleValidator));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDoubleValidator::decimalsChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -65996,10 +66961,11 @@ static VALUE rb_QDoubleValidator_on_decimals_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QDoubleValidator_on_notation_changed(VALUE self) {
+static VALUE rb_QDoubleValidator_on_notation_changed(int argc, VALUE* argv, VALUE self) {
   QDoubleValidator* o = static_cast<QDoubleValidator*>(qt6rb::unwrap(self, &cls_QDoubleValidator));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QDoubleValidator::notationChanged, o, [proc](QDoubleValidator::Notation a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -66022,6 +66988,11 @@ static VALUE rb_QKeySequence_ctor(int argc, VALUE* argv, VALUE self) {
     }
     if (RB_INTEGER_TYPE_P(argv[0])) {
       QKeySequence* p = new QKeySequence(NUM2INT(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QKeySequence)) {
+      QKeySequence* p = new QKeySequence(*static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[0], &cls_QKeySequence)));
       qt6rb::attach(self, p, true);
       return self;
     }
@@ -66362,7 +67333,7 @@ static VALUE rb_QSettings_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       Rb_QSettings* p = new Rb_QSettings(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -66395,7 +67366,7 @@ static VALUE rb_QSettings_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
-    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject))) {
       Rb_QSettings* p = new Rb_QSettings(static_cast<QSettings::Scope>(NUM2INT(argv[0])), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -66404,7 +67375,7 @@ static VALUE rb_QSettings_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QSettings#initialize for given argument types");
   }
   if (argc == 3) {
-    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject))) {
       Rb_QSettings* p = new Rb_QSettings(qt6rb::to_qstring(argv[0]), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -66422,7 +67393,7 @@ static VALUE rb_QSettings_ctor(int argc, VALUE* argv, VALUE self) {
       p->qt6rb_set_self(self);
       return self;
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1]) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1]) && (NIL_P(argv[2]) || qt6rb::is_kind_of(argv[2], &cls_QObject))) {
       Rb_QSettings* p = new Rb_QSettings(qt6rb::to_qstring(argv[0]), static_cast<QSettings::Format>(NUM2INT(argv[1])), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -66431,7 +67402,7 @@ static VALUE rb_QSettings_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QSettings#initialize for given argument types");
   }
   if (argc == 4) {
-    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QObject.rb_class))) {
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_STRING) && RB_TYPE_P(argv[2], T_STRING) && (NIL_P(argv[3]) || qt6rb::is_kind_of(argv[3], &cls_QObject))) {
       Rb_QSettings* p = new Rb_QSettings(static_cast<QSettings::Scope>(NUM2INT(argv[0])), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -66719,7 +67690,7 @@ static VALUE rb_QSettings_application_name(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QSettings_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QSettings::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QSettings::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSettings#tr (%d)", argc);
 }
@@ -66915,7 +67886,7 @@ static VALUE rb_QStringListModel_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       Rb_QStringListModel* p = new Rb_QStringListModel(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -67080,7 +68051,7 @@ static VALUE rb_QStringListModel_supported_drop_actions(int argc, VALUE* argv, V
 static VALUE rb_QStringListModel_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QStringListModel::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QStringListModel::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QStringListModel#tr (%d)", argc);
 }
@@ -67130,6 +68101,30 @@ static VALUE rb_QAbstractItemModel_has_index(int argc, VALUE* argv, VALUE self) 
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#has_index (%d)", argc);
 }
 
+static VALUE rb_QAbstractItemModel_index(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return qt6rb::wrap(new QModelIndex(o->index(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QModelIndex, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QModelIndex(o->index(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex)))), &cls_QModelIndex, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#index (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemModel_parent(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->QObject::parent()), &cls_QObject);
+  }
+  if (argc == 1) {
+    return qt6rb::wrap(new QModelIndex(o->parent(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))), &cls_QModelIndex, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#parent (%d)", argc);
+}
+
 static VALUE rb_QAbstractItemModel_sibling(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   (void)argv; (void)self;
@@ -67137,6 +68132,30 @@ static VALUE rb_QAbstractItemModel_sibling(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QModelIndex(o->sibling(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex)))), &cls_QModelIndex, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#sibling (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemModel_row_count(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->rowCount());
+  }
+  if (argc == 1) {
+    return INT2NUM(o->rowCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#row_count (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemModel_column_count(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->columnCount());
+  }
+  if (argc == 1) {
+    return INT2NUM(o->columnCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#column_count (%d)", argc);
 }
 
 static VALUE rb_QAbstractItemModel_has_children(int argc, VALUE* argv, VALUE self) {
@@ -67149,6 +68168,18 @@ static VALUE rb_QAbstractItemModel_has_children(int argc, VALUE* argv, VALUE sel
     return (o->hasChildren(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#has_children (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemModel_data(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::from_qvariant(o->data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))));
+  }
+  if (argc == 2) {
+    return qt6rb::from_qvariant(o->data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), NUM2INT(argv[1])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#data (%d)", argc);
 }
 
 static VALUE rb_QAbstractItemModel_set_data(int argc, VALUE* argv, VALUE self) {
@@ -67467,15 +68498,16 @@ static VALUE rb_QAbstractItemModel_revert(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QAbstractItemModel_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractItemModel::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractItemModel::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#tr (%d)", argc);
 }
 
-static VALUE rb_QAbstractItemModel_on_data_changed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_data_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::dataChanged, o, [proc](QModelIndex a0, QModelIndex a1) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 2, args);
@@ -67483,10 +68515,11 @@ static VALUE rb_QAbstractItemModel_on_data_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_header_data_changed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_header_data_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::headerDataChanged, o, [proc](Qt::Orientation a0, int a1, int a2) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67494,30 +68527,33 @@ static VALUE rb_QAbstractItemModel_on_header_data_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_layout_changed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_layout_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::layoutChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_layout_about_to_be_changed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_layout_about_to_be_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::layoutAboutToBeChanged, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_rows_about_to_be_inserted(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_rows_about_to_be_inserted(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::rowsAboutToBeInserted, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67525,10 +68561,11 @@ static VALUE rb_QAbstractItemModel_on_rows_about_to_be_inserted(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_rows_inserted(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_rows_inserted(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::rowsInserted, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67536,10 +68573,11 @@ static VALUE rb_QAbstractItemModel_on_rows_inserted(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_rows_about_to_be_removed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_rows_about_to_be_removed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::rowsAboutToBeRemoved, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67547,10 +68585,11 @@ static VALUE rb_QAbstractItemModel_on_rows_about_to_be_removed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_rows_removed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_rows_removed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::rowsRemoved, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67558,10 +68597,11 @@ static VALUE rb_QAbstractItemModel_on_rows_removed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_columns_about_to_be_inserted(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_columns_about_to_be_inserted(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::columnsAboutToBeInserted, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67569,10 +68609,11 @@ static VALUE rb_QAbstractItemModel_on_columns_about_to_be_inserted(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_columns_inserted(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_columns_inserted(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::columnsInserted, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67580,10 +68621,11 @@ static VALUE rb_QAbstractItemModel_on_columns_inserted(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_columns_about_to_be_removed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_columns_about_to_be_removed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::columnsAboutToBeRemoved, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67591,10 +68633,11 @@ static VALUE rb_QAbstractItemModel_on_columns_about_to_be_removed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_columns_removed(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_columns_removed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::columnsRemoved, o, [proc](QModelIndex a0, int a1, int a2) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -67602,30 +68645,33 @@ static VALUE rb_QAbstractItemModel_on_columns_removed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_model_about_to_be_reset(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_model_about_to_be_reset(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::modelAboutToBeReset, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_model_reset(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_model_reset(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::modelReset, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_rows_about_to_be_moved(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_rows_about_to_be_moved(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::rowsAboutToBeMoved, o, [proc](QModelIndex a0, int a1, int a2, QModelIndex a3, int a4) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2), qt6rb::wrap(new QModelIndex(a3), &cls_QModelIndex, true), INT2NUM(a4) };
     qt6rb::call_proc(proc, 5, args);
@@ -67633,10 +68679,11 @@ static VALUE rb_QAbstractItemModel_on_rows_about_to_be_moved(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_rows_moved(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_rows_moved(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::rowsMoved, o, [proc](QModelIndex a0, int a1, int a2, QModelIndex a3, int a4) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2), qt6rb::wrap(new QModelIndex(a3), &cls_QModelIndex, true), INT2NUM(a4) };
     qt6rb::call_proc(proc, 5, args);
@@ -67644,10 +68691,11 @@ static VALUE rb_QAbstractItemModel_on_rows_moved(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_columns_about_to_be_moved(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_columns_about_to_be_moved(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::columnsAboutToBeMoved, o, [proc](QModelIndex a0, int a1, int a2, QModelIndex a3, int a4) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2), qt6rb::wrap(new QModelIndex(a3), &cls_QModelIndex, true), INT2NUM(a4) };
     qt6rb::call_proc(proc, 5, args);
@@ -67655,10 +68703,11 @@ static VALUE rb_QAbstractItemModel_on_columns_about_to_be_moved(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemModel_on_columns_moved(VALUE self) {
+static VALUE rb_QAbstractItemModel_on_columns_moved(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemModel::columnsMoved, o, [proc](QModelIndex a0, int a1, int a2, QModelIndex a3, int a4) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), INT2NUM(a1), INT2NUM(a2), qt6rb::wrap(new QModelIndex(a3), &cls_QModelIndex, true), INT2NUM(a4) };
     qt6rb::call_proc(proc, 5, args);
@@ -68127,7 +69176,7 @@ static VALUE rb_QFileSystemModel_remove(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QFileSystemModel_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QFileSystemModel::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QFileSystemModel::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFileSystemModel#tr (%d)", argc);
 }
@@ -68175,10 +69224,11 @@ static VALUE rb_QFileSystemModel_prot_custom_event(int argc, VALUE* argv, VALUE 
   rb_raise(rb_eArgError, "wrong number of arguments for QFileSystemModel#custom_event (%d)", argc);
 }
 
-static VALUE rb_QFileSystemModel_on_root_path_changed(VALUE self) {
+static VALUE rb_QFileSystemModel_on_root_path_changed(int argc, VALUE* argv, VALUE self) {
   QFileSystemModel* o = static_cast<QFileSystemModel*>(qt6rb::unwrap(self, &cls_QFileSystemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileSystemModel::rootPathChanged, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -68186,10 +69236,11 @@ static VALUE rb_QFileSystemModel_on_root_path_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileSystemModel_on_file_renamed(VALUE self) {
+static VALUE rb_QFileSystemModel_on_file_renamed(int argc, VALUE* argv, VALUE self) {
   QFileSystemModel* o = static_cast<QFileSystemModel*>(qt6rb::unwrap(self, &cls_QFileSystemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileSystemModel::fileRenamed, o, [proc](QString a0, QString a1, QString a2) {
     VALUE args[] = { qt6rb::from_qstring(a0), qt6rb::from_qstring(a1), qt6rb::from_qstring(a2) };
     qt6rb::call_proc(proc, 3, args);
@@ -68197,10 +69248,11 @@ static VALUE rb_QFileSystemModel_on_file_renamed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QFileSystemModel_on_directory_loaded(VALUE self) {
+static VALUE rb_QFileSystemModel_on_directory_loaded(int argc, VALUE* argv, VALUE self) {
   QFileSystemModel* o = static_cast<QFileSystemModel*>(qt6rb::unwrap(self, &cls_QFileSystemModel));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QFileSystemModel::directoryLoaded, o, [proc](QString a0) {
     VALUE args[] = { qt6rb::from_qstring(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -68586,7 +69638,7 @@ static VALUE rb_QListView_set_root_index(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QListView_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QListView::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QListView::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QListView#tr (%d)", argc);
 }
@@ -69666,7 +70718,7 @@ static VALUE rb_QTreeView_expand_to_depth(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTreeView_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTreeView::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTreeView::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeView#tr (%d)", argc);
 }
@@ -70174,10 +71226,11 @@ static VALUE rb_QTreeView_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeView#custom_event (%d)", argc);
 }
 
-static VALUE rb_QTreeView_on_expanded(VALUE self) {
+static VALUE rb_QTreeView_on_expanded(int argc, VALUE* argv, VALUE self) {
   QTreeView* o = static_cast<QTreeView*>(qt6rb::unwrap(self, &cls_QTreeView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeView::expanded, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -70185,10 +71238,11 @@ static VALUE rb_QTreeView_on_expanded(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTreeView_on_collapsed(VALUE self) {
+static VALUE rb_QTreeView_on_collapsed(int argc, VALUE* argv, VALUE self) {
   QTreeView* o = static_cast<QTreeView*>(qt6rb::unwrap(self, &cls_QTreeView));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QTreeView::collapsed, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -70205,13 +71259,13 @@ static VALUE rb_QCompleter_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       Rb_QCompleter* p = new Rb_QCompleter(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAbstractItemModel.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAbstractItemModel))) {
       Rb_QCompleter* p = new Rb_QCompleter(static_cast<QAbstractItemModel*>(qt6rb::unwrap_release(argv[0], &cls_QAbstractItemModel)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -70226,13 +71280,13 @@ static VALUE rb_QCompleter_ctor(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QCompleter#initialize for given argument types");
   }
   if (argc == 2) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAbstractItemModel.rb_class)) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QAbstractItemModel)) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject))) {
       Rb_QCompleter* p = new Rb_QCompleter(static_cast<QAbstractItemModel*>(qt6rb::unwrap_release(argv[0], &cls_QAbstractItemModel)), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
       return self;
     }
-    if (RB_TYPE_P(argv[0], T_ARRAY) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class))) {
+    if (RB_TYPE_P(argv[0], T_ARRAY) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject))) {
       Rb_QCompleter* p = new Rb_QCompleter(qt6rb::to_qstringlist(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -70561,7 +71615,7 @@ static VALUE rb_QCompleter_split_path(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QCompleter_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QCompleter::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QCompleter::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCompleter#tr (%d)", argc);
 }
@@ -70617,6 +71671,60 @@ static VALUE rb_QCompleter_prot_custom_event(int argc, VALUE* argv, VALUE self) 
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCompleter#custom_event (%d)", argc);
+}
+
+static VALUE rb_QCompleter_on_activated(int argc, VALUE* argv, VALUE self) {
+  QCompleter* o = static_cast<QCompleter*>(qt6rb::unwrap(self, &cls_QCompleter));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  std::string want = qt6rb::signal_param_key(argc > 0 ? argv[0] : Qnil);
+  if (want == "QString") {
+    QObject::connect(o, static_cast<void (QCompleter::*)(const QString &)>(&QCompleter::activated), o, [proc](QString a0) {
+      VALUE args[] = { qt6rb::from_qstring(a0) };
+      qt6rb::call_proc(proc, 1, args);
+    });
+    return self;
+  }
+  if (want == "QModelIndex") {
+    QObject::connect(o, static_cast<void (QCompleter::*)(const QModelIndex &)>(&QCompleter::activated), o, [proc](QModelIndex a0) {
+      VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
+      qt6rb::call_proc(proc, 1, args);
+    });
+    return self;
+  }
+  // No (or unrecognized) signature: first declared overload wins
+  QObject::connect(o, static_cast<void (QCompleter::*)(const QString &)>(&QCompleter::activated), o, [proc](QString a0) {
+    VALUE args[] = { qt6rb::from_qstring(a0) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QCompleter_on_highlighted(int argc, VALUE* argv, VALUE self) {
+  QCompleter* o = static_cast<QCompleter*>(qt6rb::unwrap(self, &cls_QCompleter));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  std::string want = qt6rb::signal_param_key(argc > 0 ? argv[0] : Qnil);
+  if (want == "QString") {
+    QObject::connect(o, static_cast<void (QCompleter::*)(const QString &)>(&QCompleter::highlighted), o, [proc](QString a0) {
+      VALUE args[] = { qt6rb::from_qstring(a0) };
+      qt6rb::call_proc(proc, 1, args);
+    });
+    return self;
+  }
+  if (want == "QModelIndex") {
+    QObject::connect(o, static_cast<void (QCompleter::*)(const QModelIndex &)>(&QCompleter::highlighted), o, [proc](QModelIndex a0) {
+      VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
+      qt6rb::call_proc(proc, 1, args);
+    });
+    return self;
+  }
+  // No (or unrecognized) signature: first declared overload wins
+  QObject::connect(o, static_cast<void (QCompleter::*)(const QString &)>(&QCompleter::highlighted), o, [proc](QString a0) {
+    VALUE args[] = { qt6rb::from_qstring(a0) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
 }
 
 static VALUE rb_QEventLoop_ctor(int argc, VALUE* argv, VALUE self) {
@@ -70720,7 +71828,7 @@ static VALUE rb_QEventLoop_quit(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QEventLoop_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QEventLoop::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QEventLoop::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QEventLoop#tr (%d)", argc);
 }
@@ -70951,7 +72059,7 @@ static VALUE rb_QMimeData_clear(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QMimeData_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QMimeData::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QMimeData::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMimeData#tr (%d)", argc);
 }
@@ -70998,7 +72106,7 @@ static VALUE rb_QMovie_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QObject))) {
       Rb_QMovie* p = new Rb_QMovie(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
       qt6rb::attach(self, p, false);
       p->qt6rb_set_self(self);
@@ -71292,7 +72400,7 @@ static VALUE rb_QMovie_set_speed(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QMovie_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QMovie::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QMovie::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMovie#tr (%d)", argc);
 }
@@ -71330,20 +72438,22 @@ static VALUE rb_QMovie_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMovie#custom_event (%d)", argc);
 }
 
-static VALUE rb_QMovie_on_started(VALUE self) {
+static VALUE rb_QMovie_on_started(int argc, VALUE* argv, VALUE self) {
   QMovie* o = static_cast<QMovie*>(qt6rb::unwrap(self, &cls_QMovie));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMovie::started, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QMovie_on_resized(VALUE self) {
+static VALUE rb_QMovie_on_resized(int argc, VALUE* argv, VALUE self) {
   QMovie* o = static_cast<QMovie*>(qt6rb::unwrap(self, &cls_QMovie));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMovie::resized, o, [proc](QSize a0) {
     VALUE args[] = { qt6rb::wrap(new QSize(a0), &cls_QSize, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -71351,10 +72461,11 @@ static VALUE rb_QMovie_on_resized(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMovie_on_updated(VALUE self) {
+static VALUE rb_QMovie_on_updated(int argc, VALUE* argv, VALUE self) {
   QMovie* o = static_cast<QMovie*>(qt6rb::unwrap(self, &cls_QMovie));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMovie::updated, o, [proc](QRect a0) {
     VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -71362,10 +72473,11 @@ static VALUE rb_QMovie_on_updated(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMovie_on_state_changed(VALUE self) {
+static VALUE rb_QMovie_on_state_changed(int argc, VALUE* argv, VALUE self) {
   QMovie* o = static_cast<QMovie*>(qt6rb::unwrap(self, &cls_QMovie));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMovie::stateChanged, o, [proc](QMovie::MovieState a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -71373,10 +72485,11 @@ static VALUE rb_QMovie_on_state_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMovie_on_error(VALUE self) {
+static VALUE rb_QMovie_on_error(int argc, VALUE* argv, VALUE self) {
   QMovie* o = static_cast<QMovie*>(qt6rb::unwrap(self, &cls_QMovie));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMovie::error, o, [proc](QImageReader::ImageReaderError a0) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
@@ -71384,20 +72497,22 @@ static VALUE rb_QMovie_on_error(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMovie_on_finished(VALUE self) {
+static VALUE rb_QMovie_on_finished(int argc, VALUE* argv, VALUE self) {
   QMovie* o = static_cast<QMovie*>(qt6rb::unwrap(self, &cls_QMovie));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMovie::finished, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QMovie_on_frame_changed(VALUE self) {
+static VALUE rb_QMovie_on_frame_changed(int argc, VALUE* argv, VALUE self) {
   QMovie* o = static_cast<QMovie*>(qt6rb::unwrap(self, &cls_QMovie));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QMovie::frameChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -71484,7 +72599,7 @@ static VALUE rb_QStyledItemDelegate_update_editor_geometry(int argc, VALUE* argv
 static VALUE rb_QStyledItemDelegate_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QStyledItemDelegate::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QStyledItemDelegate::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QStyledItemDelegate#tr (%d)", argc);
 }
@@ -71560,9 +72675,179 @@ static VALUE rb_QStyleOptionViewItem_ctor(int argc, VALUE* argv, VALUE self) {
     qt6rb::attach(self, p, true);
     return self;
   }
+  if (argc == 1) {
+    QStyleOptionViewItem* p = new QStyleOptionViewItem(*static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[0], &cls_QStyleOptionViewItem)));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
   rb_raise(rb_eArgError, "wrong number of arguments for QStyleOptionViewItem#initialize (%d)", argc);
 }
 static VALUE rb_QStyleOptionViewItem_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QStyleOptionViewItem); }
+
+static VALUE rb_QStyleOptionViewItem_field_display_alignment(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return INT2NUM((o->displayAlignment).toInt());
+}
+
+static VALUE rb_QStyleOptionViewItem_field_display_alignment_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->displayAlignment = QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_decoration_alignment(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return INT2NUM((o->decorationAlignment).toInt());
+}
+
+static VALUE rb_QStyleOptionViewItem_field_decoration_alignment_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->decorationAlignment = QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_text_elide_mode(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return INT2NUM(static_cast<int>(o->textElideMode));
+}
+
+static VALUE rb_QStyleOptionViewItem_field_text_elide_mode_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->textElideMode = static_cast<Qt::TextElideMode>(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_decoration_position(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return INT2NUM(static_cast<int>(o->decorationPosition));
+}
+
+static VALUE rb_QStyleOptionViewItem_field_decoration_position_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->decorationPosition = static_cast<QStyleOptionViewItem::Position>(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_decoration_size(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return qt6rb::wrap(new QSize(o->decorationSize), &cls_QSize, true);
+}
+
+static VALUE rb_QStyleOptionViewItem_field_decoration_size_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->decorationSize = *static_cast<QSize*>(qt6rb::unwrap_ref(v, &cls_QSize));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_font(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return qt6rb::wrap(new QFont(o->font), &cls_QFont, true);
+}
+
+static VALUE rb_QStyleOptionViewItem_field_font_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->font = *static_cast<QFont*>(qt6rb::unwrap_ref(v, &cls_QFont));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_show_decoration_selected(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return (o->showDecorationSelected) ? Qtrue : Qfalse;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_show_decoration_selected_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->showDecorationSelected = RTEST(v);
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_features(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return INT2NUM((o->features).toInt());
+}
+
+static VALUE rb_QStyleOptionViewItem_field_features_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->features = QFlags<QStyleOptionViewItem::ViewItemFeature>::fromInt(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_widget(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return qt6rb::wrap_qobject((QObject*)(o->widget), &cls_QWidget);
+}
+
+static VALUE rb_QStyleOptionViewItem_field_widget_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->widget = static_cast<QWidget*>(qt6rb::unwrap_release(v, &cls_QWidget));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_index(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return qt6rb::wrap(new QModelIndex(o->index), &cls_QModelIndex, true);
+}
+
+static VALUE rb_QStyleOptionViewItem_field_index_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->index = *static_cast<QModelIndex*>(qt6rb::unwrap_ref(v, &cls_QModelIndex));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_check_state(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return INT2NUM(static_cast<int>(o->checkState));
+}
+
+static VALUE rb_QStyleOptionViewItem_field_check_state_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->checkState = static_cast<Qt::CheckState>(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_icon(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return qt6rb::wrap(new QIcon(o->icon), &cls_QIcon, true);
+}
+
+static VALUE rb_QStyleOptionViewItem_field_icon_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->icon = *static_cast<QIcon*>(qt6rb::unwrap_ref(v, &cls_QIcon));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_text(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return qt6rb::from_qstring(o->text);
+}
+
+static VALUE rb_QStyleOptionViewItem_field_text_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->text = qt6rb::to_qstring(v);
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_view_item_position(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return INT2NUM(static_cast<int>(o->viewItemPosition));
+}
+
+static VALUE rb_QStyleOptionViewItem_field_view_item_position_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->viewItemPosition = static_cast<QStyleOptionViewItem::ViewItemPosition>(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionViewItem_field_background_brush(VALUE self) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  return qt6rb::wrap(new QBrush(o->backgroundBrush), &cls_QBrush, true);
+}
+
+static VALUE rb_QStyleOptionViewItem_field_background_brush_set(VALUE self, VALUE v) {
+  QStyleOptionViewItem* o = static_cast<QStyleOptionViewItem*>(qt6rb::unwrap(self, &cls_QStyleOptionViewItem));
+  o->backgroundBrush = *static_cast<QBrush*>(qt6rb::unwrap_ref(v, &cls_QBrush));
+  return v;
+}
 
 static VALUE rb_QStyleOptionButton_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
@@ -71571,9 +72856,58 @@ static VALUE rb_QStyleOptionButton_ctor(int argc, VALUE* argv, VALUE self) {
     qt6rb::attach(self, p, true);
     return self;
   }
+  if (argc == 1) {
+    QStyleOptionButton* p = new QStyleOptionButton(*static_cast<QStyleOptionButton*>(qt6rb::unwrap_ref(argv[0], &cls_QStyleOptionButton)));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
   rb_raise(rb_eArgError, "wrong number of arguments for QStyleOptionButton#initialize (%d)", argc);
 }
 static VALUE rb_QStyleOptionButton_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QStyleOptionButton); }
+
+static VALUE rb_QStyleOptionButton_field_features(VALUE self) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  return INT2NUM((o->features).toInt());
+}
+
+static VALUE rb_QStyleOptionButton_field_features_set(VALUE self, VALUE v) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  o->features = QFlags<QStyleOptionButton::ButtonFeature>::fromInt(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOptionButton_field_text(VALUE self) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  return qt6rb::from_qstring(o->text);
+}
+
+static VALUE rb_QStyleOptionButton_field_text_set(VALUE self, VALUE v) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  o->text = qt6rb::to_qstring(v);
+  return v;
+}
+
+static VALUE rb_QStyleOptionButton_field_icon(VALUE self) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  return qt6rb::wrap(new QIcon(o->icon), &cls_QIcon, true);
+}
+
+static VALUE rb_QStyleOptionButton_field_icon_set(VALUE self, VALUE v) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  o->icon = *static_cast<QIcon*>(qt6rb::unwrap_ref(v, &cls_QIcon));
+  return v;
+}
+
+static VALUE rb_QStyleOptionButton_field_icon_size(VALUE self) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  return qt6rb::wrap(new QSize(o->iconSize), &cls_QSize, true);
+}
+
+static VALUE rb_QStyleOptionButton_field_icon_size_set(VALUE self, VALUE v) {
+  QStyleOptionButton* o = static_cast<QStyleOptionButton*>(qt6rb::unwrap(self, &cls_QStyleOptionButton));
+  o->iconSize = *static_cast<QSize*>(qt6rb::unwrap_ref(v, &cls_QSize));
+  return v;
+}
 
 static VALUE rb_QFrame_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
@@ -71734,7 +73068,7 @@ static VALUE rb_QFrame_set_frame_rect(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QFrame_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QFrame::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QFrame::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFrame#tr (%d)", argc);
 }
@@ -72031,6 +73365,863 @@ static VALUE rb_QFrame_prot_custom_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QFrame#custom_event (%d)", argc);
 }
 
+static VALUE rb_QShortcut_ctor(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 1) {
+    Rb_QShortcut* p = new Rb_QShortcut(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 2) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QKeySequence) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject))) {
+      Rb_QShortcut* p = new Rb_QShortcut(*static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[0], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject))) {
+      Rb_QShortcut* p = new Rb_QShortcut(static_cast<QKeySequence::StandardKey>(NUM2INT(argv[0])), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QShortcut#initialize for given argument types");
+  }
+  if (argc == 3) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QKeySequence) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING)) {
+      Rb_QShortcut* p = new Rb_QShortcut(*static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[0], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING)) {
+      Rb_QShortcut* p = new Rb_QShortcut(static_cast<QKeySequence::StandardKey>(NUM2INT(argv[0])), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QShortcut#initialize for given argument types");
+  }
+  if (argc == 4) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QKeySequence) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
+      Rb_QShortcut* p = new Rb_QShortcut(*static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[0], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), static_cast<const char*>(StringValueCStr(argv[3])));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING)) {
+      Rb_QShortcut* p = new Rb_QShortcut(static_cast<QKeySequence::StandardKey>(NUM2INT(argv[0])), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), static_cast<const char*>(StringValueCStr(argv[3])));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QShortcut#initialize for given argument types");
+  }
+  if (argc == 5) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QKeySequence) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      Rb_QShortcut* p = new Rb_QShortcut(*static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[0], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ShortcutContext>(NUM2INT(argv[4])));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0]) && (NIL_P(argv[1]) || qt6rb::is_kind_of(argv[1], &cls_QObject)) && RB_TYPE_P(argv[2], T_STRING) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      Rb_QShortcut* p = new Rb_QShortcut(static_cast<QKeySequence::StandardKey>(NUM2INT(argv[0])), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), static_cast<const char*>(StringValueCStr(argv[2])), static_cast<const char*>(StringValueCStr(argv[3])), static_cast<Qt::ShortcutContext>(NUM2INT(argv[4])));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QShortcut#initialize for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#initialize (%d)", argc);
+}
+static VALUE rb_QShortcut_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QShortcut); }
+
+static VALUE rb_QShortcut_set_key(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setKey(*static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[0], &cls_QKeySequence)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#set_key (%d)", argc);
+}
+
+static VALUE rb_QShortcut_key(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QKeySequence(o->key()), &cls_QKeySequence, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#key (%d)", argc);
+}
+
+static VALUE rb_QShortcut_set_keys(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setKeys(static_cast<QKeySequence::StandardKey>(NUM2INT(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#set_keys (%d)", argc);
+}
+
+static VALUE rb_QShortcut_set_enabled(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setEnabled(RTEST(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#set_enabled (%d)", argc);
+}
+
+static VALUE rb_QShortcut_is_enabled(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isEnabled()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#is_enabled (%d)", argc);
+}
+
+static VALUE rb_QShortcut_set_context(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setContext(static_cast<Qt::ShortcutContext>(NUM2INT(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#set_context (%d)", argc);
+}
+
+static VALUE rb_QShortcut_context(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->context()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#context (%d)", argc);
+}
+
+static VALUE rb_QShortcut_set_auto_repeat(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setAutoRepeat(RTEST(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#set_auto_repeat (%d)", argc);
+}
+
+static VALUE rb_QShortcut_auto_repeat(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->autoRepeat()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#auto_repeat (%d)", argc);
+}
+
+static VALUE rb_QShortcut_id(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->id());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#id (%d)", argc);
+}
+
+static VALUE rb_QShortcut_set_whats_this(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setWhatsThis(qt6rb::to_qstring(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#set_whats_this (%d)", argc);
+}
+
+static VALUE rb_QShortcut_whats_this(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->whatsThis());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#whats_this (%d)", argc);
+}
+
+static VALUE rb_QShortcut_s_tr(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::from_qstring(QShortcut::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#tr (%d)", argc);
+}
+
+static VALUE rb_QShortcut_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QShortcut* shim = dynamic_cast<Rb_QShortcut*>(static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap_release(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#event (%d)", argc);
+}
+
+static VALUE rb_QShortcut_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QShortcut* shim = dynamic_cast<Rb_QShortcut*>(static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap_release(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#timer_event (%d)", argc);
+}
+
+static VALUE rb_QShortcut_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QShortcut* shim = dynamic_cast<Rb_QShortcut*>(static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap_release(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#child_event (%d)", argc);
+}
+
+static VALUE rb_QShortcut_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QShortcut* shim = dynamic_cast<Rb_QShortcut*>(static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap_release(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShortcut#custom_event (%d)", argc);
+}
+
+static VALUE rb_QShortcut_on_activated(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
+  QObject::connect(o, &QShortcut::activated, o, [proc]() {
+    qt6rb::call_proc(proc, 0, nullptr);
+  });
+  return self;
+}
+
+static VALUE rb_QShortcut_on_activated_ambiguously(int argc, VALUE* argv, VALUE self) {
+  QShortcut* o = static_cast<QShortcut*>(qt6rb::unwrap(self, &cls_QShortcut));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
+  QObject::connect(o, &QShortcut::activatedAmbiguously, o, [proc]() {
+    qt6rb::call_proc(proc, 0, nullptr);
+  });
+  return self;
+}
+
+static VALUE rb_QStyle_name(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->name());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#name (%d)", argc);
+}
+
+static VALUE rb_QStyle_polish(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
+      o->polish(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QApplication))) {
+      o->polish(static_cast<QApplication*>(qt6rb::unwrap_release(argv[0], &cls_QApplication)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QStyle#polish for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#polish (%d)", argc);
+}
+
+static VALUE rb_QStyle_unpolish(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QWidget))) {
+      o->unpolish(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QApplication))) {
+      o->unpolish(static_cast<QApplication*>(qt6rb::unwrap_release(argv[0], &cls_QApplication)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QStyle#unpolish for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#unpolish (%d)", argc);
+}
+
+static VALUE rb_QStyle_item_text_rect(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 5) {
+    return qt6rb::wrap(new QRect(o->itemTextRect(*static_cast<QFontMetrics*>(qt6rb::unwrap_ref(argv[0], &cls_QFontMetrics)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[1], &cls_QRect)), NUM2INT(argv[2]), RTEST(argv[3]), qt6rb::to_qstring(argv[4]))), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#item_text_rect (%d)", argc);
+}
+
+static VALUE rb_QStyle_item_pixmap_rect(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::wrap(new QRect(o->itemPixmapRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[2], &cls_QPixmap)))), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#item_pixmap_rect (%d)", argc);
+}
+
+static VALUE rb_QStyle_draw_item_text(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 6) {
+    o->drawItemText(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[1], &cls_QRect)), NUM2INT(argv[2]), *static_cast<QPalette*>(qt6rb::unwrap_ref(argv[3], &cls_QPalette)), RTEST(argv[4]), qt6rb::to_qstring(argv[5]));
+    return Qnil;
+  }
+  if (argc == 7) {
+    o->drawItemText(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[1], &cls_QRect)), NUM2INT(argv[2]), *static_cast<QPalette*>(qt6rb::unwrap_ref(argv[3], &cls_QPalette)), RTEST(argv[4]), qt6rb::to_qstring(argv[5]), static_cast<QPalette::ColorRole>(NUM2INT(argv[6])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#draw_item_text (%d)", argc);
+}
+
+static VALUE rb_QStyle_draw_item_pixmap(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 4) {
+    o->drawItemPixmap(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[1], &cls_QRect)), NUM2INT(argv[2]), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[3], &cls_QPixmap)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#draw_item_pixmap (%d)", argc);
+}
+
+static VALUE rb_QStyle_standard_palette(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPalette(o->standardPalette()), &cls_QPalette, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#standard_palette (%d)", argc);
+}
+
+static VALUE rb_QStyle_draw_primitive(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->drawPrimitive(static_cast<QStyle::PrimitiveElement>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QPainter*>(qt6rb::unwrap_release(argv[2], &cls_QPainter)));
+    return Qnil;
+  }
+  if (argc == 4) {
+    o->drawPrimitive(static_cast<QStyle::PrimitiveElement>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QPainter*>(qt6rb::unwrap_release(argv[2], &cls_QPainter)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[3], &cls_QWidget)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#draw_primitive (%d)", argc);
+}
+
+static VALUE rb_QStyle_draw_control(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->drawControl(static_cast<QStyle::ControlElement>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QPainter*>(qt6rb::unwrap_release(argv[2], &cls_QPainter)));
+    return Qnil;
+  }
+  if (argc == 4) {
+    o->drawControl(static_cast<QStyle::ControlElement>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QPainter*>(qt6rb::unwrap_release(argv[2], &cls_QPainter)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[3], &cls_QWidget)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#draw_control (%d)", argc);
+}
+
+static VALUE rb_QStyle_sub_element_rect(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return qt6rb::wrap(new QRect(o->subElementRect(static_cast<QStyle::SubElement>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)))), &cls_QRect, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QRect(o->subElementRect(static_cast<QStyle::SubElement>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget)))), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#sub_element_rect (%d)", argc);
+}
+
+static VALUE rb_QStyle_pixel_metric(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return INT2NUM(o->pixelMetric(static_cast<QStyle::PixelMetric>(NUM2INT(argv[0]))));
+  }
+  if (argc == 2) {
+    return INT2NUM(o->pixelMetric(static_cast<QStyle::PixelMetric>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption))));
+  }
+  if (argc == 3) {
+    return INT2NUM(o->pixelMetric(static_cast<QStyle::PixelMetric>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#pixel_metric (%d)", argc);
+}
+
+static VALUE rb_QStyle_size_from_contents(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::wrap(new QSize(o->sizeFromContents(static_cast<QStyle::ContentsType>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), *static_cast<QSize*>(qt6rb::unwrap_ref(argv[2], &cls_QSize)))), &cls_QSize, true);
+  }
+  if (argc == 4) {
+    return qt6rb::wrap(new QSize(o->sizeFromContents(static_cast<QStyle::ContentsType>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), *static_cast<QSize*>(qt6rb::unwrap_ref(argv[2], &cls_QSize)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[3], &cls_QWidget)))), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#size_from_contents (%d)", argc);
+}
+
+static VALUE rb_QStyle_style_hint(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return INT2NUM(o->styleHint(static_cast<QStyle::StyleHint>(NUM2INT(argv[0]))));
+  }
+  if (argc == 2) {
+    return INT2NUM(o->styleHint(static_cast<QStyle::StyleHint>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption))));
+  }
+  if (argc == 3) {
+    return INT2NUM(o->styleHint(static_cast<QStyle::StyleHint>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#style_hint (%d)", argc);
+}
+
+static VALUE rb_QStyle_standard_pixmap(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QPixmap(o->standardPixmap(static_cast<QStyle::StandardPixmap>(NUM2INT(argv[0])))), &cls_QPixmap, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QPixmap(o->standardPixmap(static_cast<QStyle::StandardPixmap>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)))), &cls_QPixmap, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QPixmap(o->standardPixmap(static_cast<QStyle::StandardPixmap>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget)))), &cls_QPixmap, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#standard_pixmap (%d)", argc);
+}
+
+static VALUE rb_QStyle_standard_icon(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QIcon(o->standardIcon(static_cast<QStyle::StandardPixmap>(NUM2INT(argv[0])))), &cls_QIcon, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QIcon(o->standardIcon(static_cast<QStyle::StandardPixmap>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)))), &cls_QIcon, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QIcon(o->standardIcon(static_cast<QStyle::StandardPixmap>(NUM2INT(argv[0])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[1], &cls_QStyleOption)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget)))), &cls_QIcon, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#standard_icon (%d)", argc);
+}
+
+static VALUE rb_QStyle_generated_icon_pixmap(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::wrap(new QPixmap(o->generatedIconPixmap(static_cast<QIcon::Mode>(NUM2INT(argv[0])), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[2], &cls_QStyleOption)))), &cls_QPixmap, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#generated_icon_pixmap (%d)", argc);
+}
+
+static VALUE rb_QStyle_layout_spacing(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return INT2NUM(o->layoutSpacing(static_cast<QSizePolicy::ControlType>(NUM2INT(argv[0])), static_cast<QSizePolicy::ControlType>(NUM2INT(argv[1])), static_cast<Qt::Orientation>(NUM2INT(argv[2]))));
+  }
+  if (argc == 4) {
+    return INT2NUM(o->layoutSpacing(static_cast<QSizePolicy::ControlType>(NUM2INT(argv[0])), static_cast<QSizePolicy::ControlType>(NUM2INT(argv[1])), static_cast<Qt::Orientation>(NUM2INT(argv[2])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[3], &cls_QStyleOption))));
+  }
+  if (argc == 5) {
+    return INT2NUM(o->layoutSpacing(static_cast<QSizePolicy::ControlType>(NUM2INT(argv[0])), static_cast<QSizePolicy::ControlType>(NUM2INT(argv[1])), static_cast<Qt::Orientation>(NUM2INT(argv[2])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[3], &cls_QStyleOption)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[4], &cls_QWidget))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#layout_spacing (%d)", argc);
+}
+
+static VALUE rb_QStyle_combined_layout_spacing(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return INT2NUM(o->combinedLayoutSpacing(QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(argv[0])), QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(argv[1])), static_cast<Qt::Orientation>(NUM2INT(argv[2]))));
+  }
+  if (argc == 4) {
+    return INT2NUM(o->combinedLayoutSpacing(QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(argv[0])), QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(argv[1])), static_cast<Qt::Orientation>(NUM2INT(argv[2])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[3], &cls_QStyleOption))));
+  }
+  if (argc == 5) {
+    return INT2NUM(o->combinedLayoutSpacing(QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(argv[0])), QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(argv[1])), static_cast<Qt::Orientation>(NUM2INT(argv[2])), static_cast<QStyleOption*>(qt6rb::unwrap_release(argv[3], &cls_QStyleOption)), static_cast<QWidget*>(qt6rb::unwrap_release(argv[4], &cls_QWidget))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#combined_layout_spacing (%d)", argc);
+}
+
+static VALUE rb_QStyle_proxy(int argc, VALUE* argv, VALUE self) {
+  QStyle* o = static_cast<QStyle*>(qt6rb::unwrap(self, &cls_QStyle));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->proxy()), &cls_QStyle);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#proxy (%d)", argc);
+}
+
+static VALUE rb_QStyle_s_tr(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::from_qstring(QStyle::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#tr (%d)", argc);
+}
+
+static VALUE rb_QStyle_s_visual_rect(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::wrap(new QRect(QStyle::visualRect(static_cast<Qt::LayoutDirection>(NUM2INT(argv[0])), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[1], &cls_QRect)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)))), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#visual_rect (%d)", argc);
+}
+
+static VALUE rb_QStyle_s_visual_pos(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::wrap(new QPoint(QStyle::visualPos(static_cast<Qt::LayoutDirection>(NUM2INT(argv[0])), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[1], &cls_QRect)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[2], &cls_QPoint)))), &cls_QPoint, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#visual_pos (%d)", argc);
+}
+
+static VALUE rb_QStyle_s_slider_position_from_value(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 4) {
+    return INT2NUM(QStyle::sliderPositionFromValue(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3])));
+  }
+  if (argc == 5) {
+    return INT2NUM(QStyle::sliderPositionFromValue(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), RTEST(argv[4])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#slider_position_from_value (%d)", argc);
+}
+
+static VALUE rb_QStyle_s_slider_value_from_position(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 4) {
+    return INT2NUM(QStyle::sliderValueFromPosition(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3])));
+  }
+  if (argc == 5) {
+    return INT2NUM(QStyle::sliderValueFromPosition(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), RTEST(argv[4])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#slider_value_from_position (%d)", argc);
+}
+
+static VALUE rb_QStyle_s_visual_alignment(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return INT2NUM((QStyle::visualAlignment(static_cast<Qt::LayoutDirection>(NUM2INT(argv[0])), QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[1])))).toInt());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#visual_alignment (%d)", argc);
+}
+
+static VALUE rb_QStyle_s_aligned_rect(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 4) {
+    return qt6rb::wrap(new QRect(QStyle::alignedRect(static_cast<Qt::LayoutDirection>(NUM2INT(argv[0])), QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[1])), *static_cast<QSize*>(qt6rb::unwrap_ref(argv[2], &cls_QSize)), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[3], &cls_QRect)))), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QStyle#aligned_rect (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_is_active(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isActive()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#is_active (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_set_active(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setActive(RTEST(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#set_active (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_begin(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->begin(static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[0], &cls_QPaintDevice)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#begin (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_end(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->end()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#end (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_draw_rects(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QRect)) && RB_INTEGER_TYPE_P(argv[1])) {
+      o->drawRects(static_cast<QRect*>(qt6rb::unwrap_release(argv[0], &cls_QRect)), NUM2INT(argv[1]));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QRectF)) && RB_INTEGER_TYPE_P(argv[1])) {
+      o->drawRects(static_cast<QRectF*>(qt6rb::unwrap_release(argv[0], &cls_QRectF)), NUM2INT(argv[1]));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QPaintEngine#draw_rects for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#draw_rects (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_draw_ellipse(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    if (qt6rb::is_kind_of(argv[0], &cls_QRectF)) {
+      o->drawEllipse(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)));
+      return Qnil;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QRect)) {
+      o->drawEllipse(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QPaintEngine#draw_ellipse for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#draw_ellipse (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_draw_points(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1])) {
+      o->drawPoints(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1])) {
+      o->drawPoints(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QPaintEngine#draw_points for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#draw_points (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_draw_polygon(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPointF)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+      o->drawPolygon(static_cast<QPointF*>(qt6rb::unwrap_release(argv[0], &cls_QPointF)), NUM2INT(argv[1]), static_cast<QPaintEngine::PolygonDrawMode>(NUM2INT(argv[2])));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || qt6rb::is_kind_of(argv[0], &cls_QPoint)) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2])) {
+      o->drawPolygon(static_cast<QPoint*>(qt6rb::unwrap_release(argv[0], &cls_QPoint)), NUM2INT(argv[1]), static_cast<QPaintEngine::PolygonDrawMode>(NUM2INT(argv[2])));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QPaintEngine#draw_polygon for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#draw_polygon (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_draw_pixmap(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->drawPixmap(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#draw_pixmap (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_draw_tiled_pixmap(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->drawTiledPixmap(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QPixmap*>(qt6rb::unwrap_ref(argv[1], &cls_QPixmap)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[2], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#draw_tiled_pixmap (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_draw_image(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->drawImage(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)));
+    return Qnil;
+  }
+  if (argc == 4) {
+    o->drawImage(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)), *static_cast<QImage*>(qt6rb::unwrap_ref(argv[1], &cls_QImage)), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[2], &cls_QRectF)), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[3])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#draw_image (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_set_paint_device(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setPaintDevice(static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[0], &cls_QPaintDevice)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#set_paint_device (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_paint_device(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->paintDevice()), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#paint_device (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_set_system_rect(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setSystemRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#set_system_rect (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_system_rect(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->systemRect()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#system_rect (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_coordinate_offset(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPoint(o->coordinateOffset()), &cls_QPoint, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#coordinate_offset (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_type(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->type()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#type (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_test_dirty(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->testDirty(QFlags<QPaintEngine::DirtyFlag>::fromInt(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#test_dirty (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_set_dirty(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setDirty(QFlags<QPaintEngine::DirtyFlag>::fromInt(NUM2INT(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#set_dirty (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_clear_dirty(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->clearDirty(QFlags<QPaintEngine::DirtyFlag>::fromInt(NUM2INT(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#clear_dirty (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_has_feature(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->hasFeature(QFlags<QPaintEngine::PaintEngineFeature>::fromInt(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#has_feature (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_painter(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->painter()), &cls_QPainter, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#painter (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_sync_state(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->syncState();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#sync_state (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_is_extended(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isExtended()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#is_extended (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_create_pixmap(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QPixmap(o->createPixmap(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)))), &cls_QPixmap, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#create_pixmap (%d)", argc);
+}
+
+static VALUE rb_QPaintEngine_create_pixmap_from_image(int argc, VALUE* argv, VALUE self) {
+  QPaintEngine* o = static_cast<QPaintEngine*>(qt6rb::unwrap(self, &cls_QPaintEngine));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QPixmap(o->createPixmapFromImage(*static_cast<QImage*>(qt6rb::unwrap_ref(argv[0], &cls_QImage)))), &cls_QPixmap, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QPixmap(o->createPixmapFromImage(*static_cast<QImage*>(qt6rb::unwrap_ref(argv[0], &cls_QImage)), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[1])))), &cls_QPixmap, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEngine#create_pixmap_from_image (%d)", argc);
+}
+
 static VALUE rb_QPaintDevice_dev_type(int argc, VALUE* argv, VALUE self) {
   QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
   (void)argv; (void)self;
@@ -72047,6 +74238,15 @@ static VALUE rb_QPaintDevice_painting_active(int argc, VALUE* argv, VALUE self) 
     return (o->paintingActive()) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#painting_active (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_paint_engine(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->paintEngine()), &cls_QPaintEngine, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#paint_engine (%d)", argc);
 }
 
 static VALUE rb_QPaintDevice_width(int argc, VALUE* argv, VALUE self) {
@@ -72424,35 +74624,38 @@ static VALUE rb_QAbstractButton_set_checked(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QAbstractButton_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractButton::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractButton::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractButton#tr (%d)", argc);
 }
 
-static VALUE rb_QAbstractButton_on_pressed(VALUE self) {
+static VALUE rb_QAbstractButton_on_pressed(int argc, VALUE* argv, VALUE self) {
   QAbstractButton* o = static_cast<QAbstractButton*>(qt6rb::unwrap(self, &cls_QAbstractButton));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractButton::pressed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractButton_on_released(VALUE self) {
+static VALUE rb_QAbstractButton_on_released(int argc, VALUE* argv, VALUE self) {
   QAbstractButton* o = static_cast<QAbstractButton*>(qt6rb::unwrap(self, &cls_QAbstractButton));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractButton::released, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractButton_on_clicked(VALUE self) {
+static VALUE rb_QAbstractButton_on_clicked(int argc, VALUE* argv, VALUE self) {
   QAbstractButton* o = static_cast<QAbstractButton*>(qt6rb::unwrap(self, &cls_QAbstractButton));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractButton::clicked, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -72460,10 +74663,11 @@ static VALUE rb_QAbstractButton_on_clicked(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractButton_on_toggled(VALUE self) {
+static VALUE rb_QAbstractButton_on_toggled(int argc, VALUE* argv, VALUE self) {
   QAbstractButton* o = static_cast<QAbstractButton*>(qt6rb::unwrap(self, &cls_QAbstractButton));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractButton::toggled, o, [proc](bool a0) {
     VALUE args[] = { (a0) ? Qtrue : Qfalse };
     qt6rb::call_proc(proc, 1, args);
@@ -72672,7 +74876,7 @@ static VALUE rb_QAbstractScrollArea_set_size_adjust_policy(int argc, VALUE* argv
 static VALUE rb_QAbstractScrollArea_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractScrollArea::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractScrollArea::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#tr (%d)", argc);
 }
@@ -73008,6 +75212,70 @@ static VALUE rb_QAbstractScrollArea_prot_custom_event(int argc, VALUE* argv, VAL
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#custom_event (%d)", argc);
+}
+
+static VALUE rb_QLayoutItem_size_hint(int argc, VALUE* argv, VALUE self) {
+  QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#size_hint (%d)", argc);
+}
+
+static VALUE rb_QLayoutItem_minimum_size(int argc, VALUE* argv, VALUE self) {
+  QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->minimumSize()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#minimum_size (%d)", argc);
+}
+
+static VALUE rb_QLayoutItem_maximum_size(int argc, VALUE* argv, VALUE self) {
+  QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->maximumSize()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#maximum_size (%d)", argc);
+}
+
+static VALUE rb_QLayoutItem_expanding_directions(int argc, VALUE* argv, VALUE self) {
+  QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM((o->expandingDirections()).toInt());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#expanding_directions (%d)", argc);
+}
+
+static VALUE rb_QLayoutItem_set_geometry(int argc, VALUE* argv, VALUE self) {
+  QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#set_geometry (%d)", argc);
+}
+
+static VALUE rb_QLayoutItem_geometry(int argc, VALUE* argv, VALUE self) {
+  QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->geometry()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#geometry (%d)", argc);
+}
+
+static VALUE rb_QLayoutItem_is_empty(int argc, VALUE* argv, VALUE self) {
+  QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isEmpty()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#is_empty (%d)", argc);
 }
 
 static VALUE rb_QLayoutItem_has_height_for_width(int argc, VALUE* argv, VALUE self) {
@@ -73620,7 +75888,7 @@ static VALUE rb_QAbstractSlider_set_range(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QAbstractSlider_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractSlider::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractSlider::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSlider#tr (%d)", argc);
 }
@@ -73917,10 +76185,11 @@ static VALUE rb_QAbstractSlider_prot_custom_event(int argc, VALUE* argv, VALUE s
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSlider#custom_event (%d)", argc);
 }
 
-static VALUE rb_QAbstractSlider_on_value_changed(VALUE self) {
+static VALUE rb_QAbstractSlider_on_value_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractSlider* o = static_cast<QAbstractSlider*>(qt6rb::unwrap(self, &cls_QAbstractSlider));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSlider::valueChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -73928,20 +76197,22 @@ static VALUE rb_QAbstractSlider_on_value_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractSlider_on_slider_pressed(VALUE self) {
+static VALUE rb_QAbstractSlider_on_slider_pressed(int argc, VALUE* argv, VALUE self) {
   QAbstractSlider* o = static_cast<QAbstractSlider*>(qt6rb::unwrap(self, &cls_QAbstractSlider));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSlider::sliderPressed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractSlider_on_slider_moved(VALUE self) {
+static VALUE rb_QAbstractSlider_on_slider_moved(int argc, VALUE* argv, VALUE self) {
   QAbstractSlider* o = static_cast<QAbstractSlider*>(qt6rb::unwrap(self, &cls_QAbstractSlider));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSlider::sliderMoved, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -73949,20 +76220,22 @@ static VALUE rb_QAbstractSlider_on_slider_moved(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractSlider_on_slider_released(VALUE self) {
+static VALUE rb_QAbstractSlider_on_slider_released(int argc, VALUE* argv, VALUE self) {
   QAbstractSlider* o = static_cast<QAbstractSlider*>(qt6rb::unwrap(self, &cls_QAbstractSlider));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSlider::sliderReleased, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractSlider_on_range_changed(VALUE self) {
+static VALUE rb_QAbstractSlider_on_range_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractSlider* o = static_cast<QAbstractSlider*>(qt6rb::unwrap(self, &cls_QAbstractSlider));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSlider::rangeChanged, o, [proc](int a0, int a1) {
     VALUE args[] = { INT2NUM(a0), INT2NUM(a1) };
     qt6rb::call_proc(proc, 2, args);
@@ -73970,10 +76243,11 @@ static VALUE rb_QAbstractSlider_on_range_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractSlider_on_action_triggered(VALUE self) {
+static VALUE rb_QAbstractSlider_on_action_triggered(int argc, VALUE* argv, VALUE self) {
   QAbstractSlider* o = static_cast<QAbstractSlider*>(qt6rb::unwrap(self, &cls_QAbstractSlider));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSlider::actionTriggered, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
@@ -74306,7 +76580,7 @@ static VALUE rb_QAbstractSpinBox_clear(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QAbstractSpinBox_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractSpinBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractSpinBox::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSpinBox#tr (%d)", argc);
 }
@@ -74603,20 +76877,22 @@ static VALUE rb_QAbstractSpinBox_prot_custom_event(int argc, VALUE* argv, VALUE 
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSpinBox#custom_event (%d)", argc);
 }
 
-static VALUE rb_QAbstractSpinBox_on_editing_finished(VALUE self) {
+static VALUE rb_QAbstractSpinBox_on_editing_finished(int argc, VALUE* argv, VALUE self) {
   QAbstractSpinBox* o = static_cast<QAbstractSpinBox*>(qt6rb::unwrap(self, &cls_QAbstractSpinBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSpinBox::editingFinished, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
 
-static VALUE rb_QAbstractSpinBox_on_return_pressed(VALUE self) {
+static VALUE rb_QAbstractSpinBox_on_return_pressed(int argc, VALUE* argv, VALUE self) {
   QAbstractSpinBox* o = static_cast<QAbstractSpinBox*>(qt6rb::unwrap(self, &cls_QAbstractSpinBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSpinBox::returnPressed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
@@ -75099,7 +77375,7 @@ static VALUE rb_QTableView_set_show_grid(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QTableView_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QTableView::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QTableView::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTableView#tr (%d)", argc);
 }
@@ -75592,9 +77868,17 @@ static VALUE rb_QTextFormat_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    QTextFormat* p = new QTextFormat(NUM2INT(argv[0]));
-    qt6rb::attach(self, p, true);
-    return self;
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QTextFormat* p = new QTextFormat(NUM2INT(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QTextFormat)) {
+      QTextFormat* p = new QTextFormat(*static_cast<QTextFormat*>(qt6rb::unwrap_ref(argv[0], &cls_QTextFormat)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTextFormat#initialize for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTextFormat#initialize (%d)", argc);
 }
@@ -75989,9 +78273,28 @@ static VALUE rb_QAbstractListModel_flags(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QAbstractListModel_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractListModel::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractListModel::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractListModel#tr (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemDelegate_paint(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->paint(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[1], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#paint (%d)", argc);
+}
+
+static VALUE rb_QAbstractItemDelegate_size_hint(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return qt6rb::wrap(new QSize(o->sizeHint(*static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[0], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex)))), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#size_hint (%d)", argc);
 }
 
 static VALUE rb_QAbstractItemDelegate_create_editor(int argc, VALUE* argv, VALUE self) {
@@ -76064,15 +78367,16 @@ static VALUE rb_QAbstractItemDelegate_handle_editor_event(int argc, VALUE* argv,
 static VALUE rb_QAbstractItemDelegate_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
-    return qt6rb::from_qstring(QAbstractItemDelegate::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+    return qt6rb::from_qstring(QAbstractItemDelegate::tr(static_cast<const char*>(StringValueCStr(argv[0])), static_cast<const char*>(StringValueCStr(argv[1])), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#tr (%d)", argc);
 }
 
-static VALUE rb_QAbstractItemDelegate_on_commit_data(VALUE self) {
+static VALUE rb_QAbstractItemDelegate_on_commit_data(int argc, VALUE* argv, VALUE self) {
   QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemDelegate::commitData, o, [proc](QWidget* a0) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget) };
     qt6rb::call_proc(proc, 1, args);
@@ -76080,10 +78384,11 @@ static VALUE rb_QAbstractItemDelegate_on_commit_data(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemDelegate_on_close_editor(VALUE self) {
+static VALUE rb_QAbstractItemDelegate_on_close_editor(int argc, VALUE* argv, VALUE self) {
   QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemDelegate::closeEditor, o, [proc](QWidget* a0, QAbstractItemDelegate::EndEditHint a1) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget), INT2NUM(static_cast<int>(a1)) };
     qt6rb::call_proc(proc, 2, args);
@@ -76091,10 +78396,11 @@ static VALUE rb_QAbstractItemDelegate_on_close_editor(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractItemDelegate_on_size_hint_changed(VALUE self) {
+static VALUE rb_QAbstractItemDelegate_on_size_hint_changed(int argc, VALUE* argv, VALUE self) {
   QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
+  (void)argc; (void)argv;
   QObject::connect(o, &QAbstractItemDelegate::sizeHintChanged, o, [proc](QModelIndex a0) {
     VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true) };
     qt6rb::call_proc(proc, 1, args);
@@ -76110,9 +78416,17 @@ static VALUE rb_QStyleOption_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 1) {
-    QStyleOption* p = new QStyleOption(NUM2INT(argv[0]));
-    qt6rb::attach(self, p, true);
-    return self;
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QStyleOption* p = new QStyleOption(NUM2INT(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QStyleOption)) {
+      QStyleOption* p = new QStyleOption(*static_cast<QStyleOption*>(qt6rb::unwrap_ref(argv[0], &cls_QStyleOption)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QStyleOption#initialize for given argument types");
   }
   if (argc == 2) {
     QStyleOption* p = new QStyleOption(NUM2INT(argv[0]), NUM2INT(argv[1]));
@@ -76131,6 +78445,94 @@ static VALUE rb_QStyleOption_init_from(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QStyleOption#init_from (%d)", argc);
+}
+
+static VALUE rb_QStyleOption_field_version(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return INT2NUM(o->version);
+}
+
+static VALUE rb_QStyleOption_field_version_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->version = NUM2INT(v);
+  return v;
+}
+
+static VALUE rb_QStyleOption_field_type(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return INT2NUM(o->type);
+}
+
+static VALUE rb_QStyleOption_field_type_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->type = NUM2INT(v);
+  return v;
+}
+
+static VALUE rb_QStyleOption_field_state(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return INT2NUM((o->state).toInt());
+}
+
+static VALUE rb_QStyleOption_field_state_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->state = QFlags<QStyle::StateFlag>::fromInt(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOption_field_direction(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return INT2NUM(static_cast<int>(o->direction));
+}
+
+static VALUE rb_QStyleOption_field_direction_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->direction = static_cast<Qt::LayoutDirection>(NUM2INT(v));
+  return v;
+}
+
+static VALUE rb_QStyleOption_field_rect(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return qt6rb::wrap(new QRect(o->rect), &cls_QRect, true);
+}
+
+static VALUE rb_QStyleOption_field_rect_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->rect = *static_cast<QRect*>(qt6rb::unwrap_ref(v, &cls_QRect));
+  return v;
+}
+
+static VALUE rb_QStyleOption_field_font_metrics(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return qt6rb::wrap(new QFontMetrics(o->fontMetrics), &cls_QFontMetrics, true);
+}
+
+static VALUE rb_QStyleOption_field_font_metrics_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->fontMetrics = *static_cast<QFontMetrics*>(qt6rb::unwrap_ref(v, &cls_QFontMetrics));
+  return v;
+}
+
+static VALUE rb_QStyleOption_field_palette(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return qt6rb::wrap(new QPalette(o->palette), &cls_QPalette, true);
+}
+
+static VALUE rb_QStyleOption_field_palette_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->palette = *static_cast<QPalette*>(qt6rb::unwrap_ref(v, &cls_QPalette));
+  return v;
+}
+
+static VALUE rb_QStyleOption_field_style_object(VALUE self) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  return qt6rb::wrap_qobject((QObject*)(o->styleObject), &cls_QObject);
+}
+
+static VALUE rb_QStyleOption_field_style_object_set(VALUE self, VALUE v) {
+  QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
+  o->styleObject = static_cast<QObject*>(qt6rb::unwrap_release(v, &cls_QObject));
+  return v;
 }
 
 static VALUE rb_QPointerEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
@@ -76370,6 +78772,110 @@ extern "C" void Init_qt6() {
   qt6rb::define_class(&cls_QStyleOption, "StyleOption", Qnil);
   qt6rb::define_class(&cls_QStyleOptionViewItem, "StyleOptionViewItem", cls_QStyleOption.rb_class);
   qt6rb::define_class(&cls_QStyleOptionButton, "StyleOptionButton", cls_QStyleOption.rb_class);
+  qt6rb::define_class(&cls_QShortcut, "Shortcut", cls_QObject.rb_class);
+  qt6rb::define_class(&cls_QStyle, "Style", cls_QObject.rb_class);
+  qt6rb::define_class(&cls_QPaintEngine, "PaintEngine", Qnil);
+  qt6rb::register_base(&cls_QTimer, &cls_QObject, upcast_QTimer_QObject);
+  qt6rb::register_base(&cls_QCoreApplication, &cls_QObject, upcast_QCoreApplication_QObject);
+  qt6rb::register_base(&cls_QGuiApplication, &cls_QCoreApplication, upcast_QGuiApplication_QCoreApplication);
+  qt6rb::register_base(&cls_QApplication, &cls_QGuiApplication, upcast_QApplication_QGuiApplication);
+  qt6rb::register_base(&cls_QScreen, &cls_QObject, upcast_QScreen_QObject);
+  qt6rb::register_base(&cls_QWidget, &cls_QObject, upcast_QWidget_QObject);
+  qt6rb::register_base(&cls_QWidget, &cls_QPaintDevice, upcast_QWidget_QPaintDevice);
+  qt6rb::register_base(&cls_QLabel, &cls_QFrame, upcast_QLabel_QFrame);
+  qt6rb::register_base(&cls_QPushButton, &cls_QAbstractButton, upcast_QPushButton_QAbstractButton);
+  qt6rb::register_base(&cls_QCheckBox, &cls_QAbstractButton, upcast_QCheckBox_QAbstractButton);
+  qt6rb::register_base(&cls_QComboBox, &cls_QWidget, upcast_QComboBox_QWidget);
+  qt6rb::register_base(&cls_QLineEdit, &cls_QWidget, upcast_QLineEdit_QWidget);
+  qt6rb::register_base(&cls_QTextEdit, &cls_QAbstractScrollArea, upcast_QTextEdit_QAbstractScrollArea);
+  qt6rb::register_base(&cls_QPlainTextEdit, &cls_QAbstractScrollArea, upcast_QPlainTextEdit_QAbstractScrollArea);
+  qt6rb::register_base(&cls_QMainWindow, &cls_QWidget, upcast_QMainWindow_QWidget);
+  qt6rb::register_base(&cls_QLayout, &cls_QObject, upcast_QLayout_QObject);
+  qt6rb::register_base(&cls_QLayout, &cls_QLayoutItem, upcast_QLayout_QLayoutItem);
+  qt6rb::register_base(&cls_QBoxLayout, &cls_QLayout, upcast_QBoxLayout_QLayout);
+  qt6rb::register_base(&cls_QVBoxLayout, &cls_QBoxLayout, upcast_QVBoxLayout_QBoxLayout);
+  qt6rb::register_base(&cls_QHBoxLayout, &cls_QBoxLayout, upcast_QHBoxLayout_QBoxLayout);
+  qt6rb::register_base(&cls_QGridLayout, &cls_QLayout, upcast_QGridLayout_QLayout);
+  qt6rb::register_base(&cls_QFormLayout, &cls_QLayout, upcast_QFormLayout_QLayout);
+  qt6rb::register_base(&cls_QStackedLayout, &cls_QLayout, upcast_QStackedLayout_QLayout);
+  qt6rb::register_base(&cls_QSpacerItem, &cls_QLayoutItem, upcast_QSpacerItem_QLayoutItem);
+  qt6rb::register_base(&cls_QTimerEvent, &cls_QEvent, upcast_QTimerEvent_QEvent);
+  qt6rb::register_base(&cls_QChildEvent, &cls_QEvent, upcast_QChildEvent_QEvent);
+  qt6rb::register_base(&cls_QCloseEvent, &cls_QEvent, upcast_QCloseEvent_QEvent);
+  qt6rb::register_base(&cls_QShowEvent, &cls_QEvent, upcast_QShowEvent_QEvent);
+  qt6rb::register_base(&cls_QHideEvent, &cls_QEvent, upcast_QHideEvent_QEvent);
+  qt6rb::register_base(&cls_QMoveEvent, &cls_QEvent, upcast_QMoveEvent_QEvent);
+  qt6rb::register_base(&cls_QResizeEvent, &cls_QEvent, upcast_QResizeEvent_QEvent);
+  qt6rb::register_base(&cls_QPaintEvent, &cls_QEvent, upcast_QPaintEvent_QEvent);
+  qt6rb::register_base(&cls_QKeyEvent, &cls_QInputEvent, upcast_QKeyEvent_QInputEvent);
+  qt6rb::register_base(&cls_QFocusEvent, &cls_QEvent, upcast_QFocusEvent_QEvent);
+  qt6rb::register_base(&cls_QEnterEvent, &cls_QSinglePointEvent, upcast_QEnterEvent_QSinglePointEvent);
+  qt6rb::register_base(&cls_QMouseEvent, &cls_QSinglePointEvent, upcast_QMouseEvent_QSinglePointEvent);
+  qt6rb::register_base(&cls_QWheelEvent, &cls_QSinglePointEvent, upcast_QWheelEvent_QSinglePointEvent);
+  qt6rb::register_base(&cls_QPixmap, &cls_QPaintDevice, upcast_QPixmap_QPaintDevice);
+  qt6rb::register_base(&cls_QImage, &cls_QPaintDevice, upcast_QImage_QPaintDevice);
+  qt6rb::register_base(&cls_QLinearGradient, &cls_QGradient, upcast_QLinearGradient_QGradient);
+  qt6rb::register_base(&cls_QRadialGradient, &cls_QGradient, upcast_QRadialGradient_QGradient);
+  qt6rb::register_base(&cls_QMessageBox, &cls_QDialog, upcast_QMessageBox_QDialog);
+  qt6rb::register_base(&cls_QDialog, &cls_QWidget, upcast_QDialog_QWidget);
+  qt6rb::register_base(&cls_QFileDialog, &cls_QDialog, upcast_QFileDialog_QDialog);
+  qt6rb::register_base(&cls_QInputDialog, &cls_QDialog, upcast_QInputDialog_QDialog);
+  qt6rb::register_base(&cls_QProgressBar, &cls_QWidget, upcast_QProgressBar_QWidget);
+  qt6rb::register_base(&cls_QSlider, &cls_QAbstractSlider, upcast_QSlider_QAbstractSlider);
+  qt6rb::register_base(&cls_QSpinBox, &cls_QAbstractSpinBox, upcast_QSpinBox_QAbstractSpinBox);
+  qt6rb::register_base(&cls_QDoubleSpinBox, &cls_QAbstractSpinBox, upcast_QDoubleSpinBox_QAbstractSpinBox);
+  qt6rb::register_base(&cls_QRadioButton, &cls_QAbstractButton, upcast_QRadioButton_QAbstractButton);
+  qt6rb::register_base(&cls_QButtonGroup, &cls_QObject, upcast_QButtonGroup_QObject);
+  qt6rb::register_base(&cls_QDialogButtonBox, &cls_QWidget, upcast_QDialogButtonBox_QWidget);
+  qt6rb::register_base(&cls_QCalendarWidget, &cls_QWidget, upcast_QCalendarWidget_QWidget);
+  qt6rb::register_base(&cls_QTableWidget, &cls_QTableView, upcast_QTableWidget_QTableView);
+  qt6rb::register_base(&cls_QTreeWidget, &cls_QTreeView, upcast_QTreeWidget_QTreeView);
+  qt6rb::register_base(&cls_QTabWidget, &cls_QWidget, upcast_QTabWidget_QWidget);
+  qt6rb::register_base(&cls_QListWidget, &cls_QListView, upcast_QListWidget_QListView);
+  qt6rb::register_base(&cls_QTextDocument, &cls_QObject, upcast_QTextDocument_QObject);
+  qt6rb::register_base(&cls_QTextCharFormat, &cls_QTextFormat, upcast_QTextCharFormat_QTextFormat);
+  qt6rb::register_base(&cls_QSyntaxHighlighter, &cls_QObject, upcast_QSyntaxHighlighter_QObject);
+  qt6rb::register_base(&cls_QScrollBar, &cls_QAbstractSlider, upcast_QScrollBar_QAbstractSlider);
+  qt6rb::register_base(&cls_QAbstractItemView, &cls_QAbstractScrollArea, upcast_QAbstractItemView_QAbstractScrollArea);
+  qt6rb::register_base(&cls_QHeaderView, &cls_QAbstractItemView, upcast_QHeaderView_QAbstractItemView);
+  qt6rb::register_base(&cls_QGroupBox, &cls_QWidget, upcast_QGroupBox_QWidget);
+  qt6rb::register_base(&cls_QSplitter, &cls_QFrame, upcast_QSplitter_QFrame);
+  qt6rb::register_base(&cls_QScrollArea, &cls_QAbstractScrollArea, upcast_QScrollArea_QAbstractScrollArea);
+  qt6rb::register_base(&cls_QStatusBar, &cls_QWidget, upcast_QStatusBar_QWidget);
+  qt6rb::register_base(&cls_QMenuBar, &cls_QWidget, upcast_QMenuBar_QWidget);
+  qt6rb::register_base(&cls_QMenu, &cls_QWidget, upcast_QMenu_QWidget);
+  qt6rb::register_base(&cls_QAction, &cls_QObject, upcast_QAction_QObject);
+  qt6rb::register_base(&cls_QActionGroup, &cls_QObject, upcast_QActionGroup_QObject);
+  qt6rb::register_base(&cls_QToolBar, &cls_QWidget, upcast_QToolBar_QWidget);
+  qt6rb::register_base(&cls_QValidator, &cls_QObject, upcast_QValidator_QObject);
+  qt6rb::register_base(&cls_QIntValidator, &cls_QValidator, upcast_QIntValidator_QValidator);
+  qt6rb::register_base(&cls_QDoubleValidator, &cls_QValidator, upcast_QDoubleValidator_QValidator);
+  qt6rb::register_base(&cls_QSettings, &cls_QObject, upcast_QSettings_QObject);
+  qt6rb::register_base(&cls_QStringListModel, &cls_QAbstractListModel, upcast_QStringListModel_QAbstractListModel);
+  qt6rb::register_base(&cls_QAbstractItemModel, &cls_QObject, upcast_QAbstractItemModel_QObject);
+  qt6rb::register_base(&cls_QFileSystemModel, &cls_QAbstractItemModel, upcast_QFileSystemModel_QAbstractItemModel);
+  qt6rb::register_base(&cls_QListView, &cls_QAbstractItemView, upcast_QListView_QAbstractItemView);
+  qt6rb::register_base(&cls_QTreeView, &cls_QAbstractItemView, upcast_QTreeView_QAbstractItemView);
+  qt6rb::register_base(&cls_QCompleter, &cls_QObject, upcast_QCompleter_QObject);
+  qt6rb::register_base(&cls_QEventLoop, &cls_QObject, upcast_QEventLoop_QObject);
+  qt6rb::register_base(&cls_QMimeData, &cls_QObject, upcast_QMimeData_QObject);
+  qt6rb::register_base(&cls_QMovie, &cls_QObject, upcast_QMovie_QObject);
+  qt6rb::register_base(&cls_QStyledItemDelegate, &cls_QAbstractItemDelegate, upcast_QStyledItemDelegate_QAbstractItemDelegate);
+  qt6rb::register_base(&cls_QStyleOptionViewItem, &cls_QStyleOption, upcast_QStyleOptionViewItem_QStyleOption);
+  qt6rb::register_base(&cls_QStyleOptionButton, &cls_QStyleOption, upcast_QStyleOptionButton_QStyleOption);
+  qt6rb::register_base(&cls_QFrame, &cls_QWidget, upcast_QFrame_QWidget);
+  qt6rb::register_base(&cls_QShortcut, &cls_QObject, upcast_QShortcut_QObject);
+  qt6rb::register_base(&cls_QStyle, &cls_QObject, upcast_QStyle_QObject);
+  qt6rb::register_base(&cls_QAbstractButton, &cls_QWidget, upcast_QAbstractButton_QWidget);
+  qt6rb::register_base(&cls_QAbstractScrollArea, &cls_QFrame, upcast_QAbstractScrollArea_QFrame);
+  qt6rb::register_base(&cls_QInputEvent, &cls_QEvent, upcast_QInputEvent_QEvent);
+  qt6rb::register_base(&cls_QSinglePointEvent, &cls_QPointerEvent, upcast_QSinglePointEvent_QPointerEvent);
+  qt6rb::register_base(&cls_QAbstractSlider, &cls_QWidget, upcast_QAbstractSlider_QWidget);
+  qt6rb::register_base(&cls_QAbstractSpinBox, &cls_QWidget, upcast_QAbstractSpinBox_QWidget);
+  qt6rb::register_base(&cls_QTableView, &cls_QAbstractItemView, upcast_QTableView_QAbstractItemView);
+  qt6rb::register_base(&cls_QAbstractListModel, &cls_QAbstractItemModel, upcast_QAbstractListModel_QAbstractItemModel);
+  qt6rb::register_base(&cls_QAbstractItemDelegate, &cls_QObject, upcast_QAbstractItemDelegate_QObject);
+  qt6rb::register_base(&cls_QPointerEvent, &cls_QInputEvent, upcast_QPointerEvent_QInputEvent);
   rb_define_alloc_func(cls_QObject.rb_class, rb_QObject_alloc);
   qt6rb::register_ctor(cls_QObject.rb_class, rb_QObject_ctor);
   rb_include_module(cls_QObject.rb_class, qt6rb::constructable_module());
@@ -76430,8 +78936,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QObject.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QObject_prot_child_event), -1);
   rb_define_method(cls_QObject.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QObject_prot_custom_event), -1);
   rb_define_method(cls_QObject.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QObject_prot_custom_event), -1);
-  rb_define_method(cls_QObject.rb_class, "on_destroyed", RUBY_METHOD_FUNC(rb_QObject_on_destroyed), 0);
-  rb_define_method(cls_QObject.rb_class, "on_object_name_changed", RUBY_METHOD_FUNC(rb_QObject_on_object_name_changed), 0);
+  rb_define_method(cls_QObject.rb_class, "on_destroyed", RUBY_METHOD_FUNC(rb_QObject_on_destroyed), -1);
+  rb_define_method(cls_QObject.rb_class, "on_object_name_changed", RUBY_METHOD_FUNC(rb_QObject_on_object_name_changed), -1);
   rb_define_alloc_func(cls_QTimer.rb_class, rb_QTimer_alloc);
   qt6rb::register_ctor(cls_QTimer.rb_class, rb_QTimer_ctor);
   rb_include_module(cls_QTimer.rb_class, qt6rb::constructable_module());
@@ -76471,7 +78977,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTimer.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QTimer_prot_child_event), -1);
   rb_define_method(cls_QTimer.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTimer_prot_custom_event), -1);
   rb_define_method(cls_QTimer.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QTimer_prot_custom_event), -1);
-  rb_define_method(cls_QTimer.rb_class, "on_timeout", RUBY_METHOD_FUNC(rb_QTimer_on_timeout), 0);
+  rb_define_method(cls_QTimer.rb_class, "on_timeout", RUBY_METHOD_FUNC(rb_QTimer_on_timeout), -1);
   rb_define_alloc_func(cls_QCoreApplication.rb_class, rb_QCoreApplication_alloc);
   qt6rb::register_ctor(cls_QCoreApplication.rb_class, rb_QCoreApplication_ctor);
   rb_include_module(cls_QCoreApplication.rb_class, qt6rb::constructable_module());
@@ -76541,11 +79047,11 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "setQuitLockEnabled", RUBY_METHOD_FUNC(rb_QCoreApplication_s_set_quit_lock_enabled), -1);
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "quit", RUBY_METHOD_FUNC(rb_QCoreApplication_s_quit), -1);
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "exit", RUBY_METHOD_FUNC(rb_QCoreApplication_s_exit), -1);
-  rb_define_method(cls_QCoreApplication.rb_class, "on_about_to_quit", RUBY_METHOD_FUNC(rb_QCoreApplication_on_about_to_quit), 0);
-  rb_define_method(cls_QCoreApplication.rb_class, "on_organization_name_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_organization_name_changed), 0);
-  rb_define_method(cls_QCoreApplication.rb_class, "on_organization_domain_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_organization_domain_changed), 0);
-  rb_define_method(cls_QCoreApplication.rb_class, "on_application_name_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_application_name_changed), 0);
-  rb_define_method(cls_QCoreApplication.rb_class, "on_application_version_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_application_version_changed), 0);
+  rb_define_method(cls_QCoreApplication.rb_class, "on_about_to_quit", RUBY_METHOD_FUNC(rb_QCoreApplication_on_about_to_quit), -1);
+  rb_define_method(cls_QCoreApplication.rb_class, "on_organization_name_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_organization_name_changed), -1);
+  rb_define_method(cls_QCoreApplication.rb_class, "on_organization_domain_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_organization_domain_changed), -1);
+  rb_define_method(cls_QCoreApplication.rb_class, "on_application_name_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_application_name_changed), -1);
+  rb_define_method(cls_QCoreApplication.rb_class, "on_application_version_changed", RUBY_METHOD_FUNC(rb_QCoreApplication_on_application_version_changed), -1);
   rb_define_alloc_func(cls_QGuiApplication.rb_class, rb_QGuiApplication_alloc);
   qt6rb::register_ctor(cls_QGuiApplication.rb_class, rb_QGuiApplication_ctor);
   rb_include_module(cls_QGuiApplication.rb_class, qt6rb::constructable_module());
@@ -76631,17 +79137,17 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "highDpiScaleFactorRoundingPolicy", RUBY_METHOD_FUNC(rb_QGuiApplication_s_high_dpi_scale_factor_rounding_policy), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "exec", RUBY_METHOD_FUNC(rb_QGuiApplication_s_exec), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "sync", RUBY_METHOD_FUNC(rb_QGuiApplication_s_sync), -1);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_font_database_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_font_database_changed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_screen_added", RUBY_METHOD_FUNC(rb_QGuiApplication_on_screen_added), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_screen_removed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_screen_removed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_primary_screen_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_primary_screen_changed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_last_window_closed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_last_window_closed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_focus_object_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_focus_object_changed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_application_state_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_application_state_changed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_layout_direction_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_layout_direction_changed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_application_display_name_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_application_display_name_changed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_palette_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_palette_changed), 0);
-  rb_define_method(cls_QGuiApplication.rb_class, "on_font_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_font_changed), 0);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_font_database_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_font_database_changed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_screen_added", RUBY_METHOD_FUNC(rb_QGuiApplication_on_screen_added), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_screen_removed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_screen_removed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_primary_screen_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_primary_screen_changed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_last_window_closed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_last_window_closed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_focus_object_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_focus_object_changed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_application_state_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_application_state_changed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_layout_direction_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_layout_direction_changed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_application_display_name_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_application_display_name_changed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_palette_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_palette_changed), -1);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_font_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_font_changed), -1);
   rb_define_alloc_func(cls_QApplication.rb_class, rb_QApplication_alloc);
   qt6rb::register_ctor(cls_QApplication.rb_class, rb_QApplication_ctor);
   rb_include_module(cls_QApplication.rb_class, qt6rb::constructable_module());
@@ -76659,6 +79165,9 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QApplication.rb_class, "auto_sip_enabled=", "set_auto_sip_enabled");
   rb_define_alias(cls_QApplication.rb_class, "autoSipEnabled=", "set_auto_sip_enabled");
   rb_define_singleton_method(cls_QApplication.rb_class, "tr", RUBY_METHOD_FUNC(rb_QApplication_s_tr), -1);
+  rb_define_singleton_method(cls_QApplication.rb_class, "style", RUBY_METHOD_FUNC(rb_QApplication_s_style), -1);
+  rb_define_singleton_method(cls_QApplication.rb_class, "set_style", RUBY_METHOD_FUNC(rb_QApplication_s_set_style), -1);
+  rb_define_singleton_method(cls_QApplication.rb_class, "setStyle", RUBY_METHOD_FUNC(rb_QApplication_s_set_style), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "palette", RUBY_METHOD_FUNC(rb_QApplication_s_palette), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "set_palette", RUBY_METHOD_FUNC(rb_QApplication_s_set_palette), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "setPalette", RUBY_METHOD_FUNC(rb_QApplication_s_set_palette), -1);
@@ -76716,7 +79225,7 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QApplication.rb_class, "closeAllWindows", RUBY_METHOD_FUNC(rb_QApplication_s_close_all_windows), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "about_qt", RUBY_METHOD_FUNC(rb_QApplication_s_about_qt), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "aboutQt", RUBY_METHOD_FUNC(rb_QApplication_s_about_qt), -1);
-  rb_define_method(cls_QApplication.rb_class, "on_focus_changed", RUBY_METHOD_FUNC(rb_QApplication_on_focus_changed), 0);
+  rb_define_method(cls_QApplication.rb_class, "on_focus_changed", RUBY_METHOD_FUNC(rb_QApplication_on_focus_changed), -1);
   rb_undef_alloc_func(cls_QScreen.rb_class);
   rb_define_method(cls_QScreen.rb_class, "name", RUBY_METHOD_FUNC(rb_QScreen_name), -1);
   rb_define_method(cls_QScreen.rb_class, "manufacturer", RUBY_METHOD_FUNC(rb_QScreen_manufacturer), -1);
@@ -76774,15 +79283,15 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QScreen.rb_class, "refresh_rate", RUBY_METHOD_FUNC(rb_QScreen_refresh_rate), -1);
   rb_define_method(cls_QScreen.rb_class, "refreshRate", RUBY_METHOD_FUNC(rb_QScreen_refresh_rate), -1);
   rb_define_singleton_method(cls_QScreen.rb_class, "tr", RUBY_METHOD_FUNC(rb_QScreen_s_tr), -1);
-  rb_define_method(cls_QScreen.rb_class, "on_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_geometry_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_available_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_available_geometry_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_physical_size_changed", RUBY_METHOD_FUNC(rb_QScreen_on_physical_size_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_physical_dots_per_inch_changed", RUBY_METHOD_FUNC(rb_QScreen_on_physical_dots_per_inch_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_logical_dots_per_inch_changed", RUBY_METHOD_FUNC(rb_QScreen_on_logical_dots_per_inch_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_virtual_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_virtual_geometry_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_primary_orientation_changed", RUBY_METHOD_FUNC(rb_QScreen_on_primary_orientation_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_orientation_changed", RUBY_METHOD_FUNC(rb_QScreen_on_orientation_changed), 0);
-  rb_define_method(cls_QScreen.rb_class, "on_refresh_rate_changed", RUBY_METHOD_FUNC(rb_QScreen_on_refresh_rate_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_geometry_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_available_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_available_geometry_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_physical_size_changed", RUBY_METHOD_FUNC(rb_QScreen_on_physical_size_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_physical_dots_per_inch_changed", RUBY_METHOD_FUNC(rb_QScreen_on_physical_dots_per_inch_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_logical_dots_per_inch_changed", RUBY_METHOD_FUNC(rb_QScreen_on_logical_dots_per_inch_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_virtual_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_virtual_geometry_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_primary_orientation_changed", RUBY_METHOD_FUNC(rb_QScreen_on_primary_orientation_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_orientation_changed", RUBY_METHOD_FUNC(rb_QScreen_on_orientation_changed), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_refresh_rate_changed", RUBY_METHOD_FUNC(rb_QScreen_on_refresh_rate_changed), -1);
   rb_define_alloc_func(cls_QWidget.rb_class, rb_QWidget_alloc);
   qt6rb::register_ctor(cls_QWidget.rb_class, rb_QWidget_ctor);
   rb_include_module(cls_QWidget.rb_class, qt6rb::constructable_module());
@@ -76796,6 +79305,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "internalWinId", RUBY_METHOD_FUNC(rb_QWidget_internal_win_id), -1);
   rb_define_method(cls_QWidget.rb_class, "effective_win_id", RUBY_METHOD_FUNC(rb_QWidget_effective_win_id), -1);
   rb_define_method(cls_QWidget.rb_class, "effectiveWinId", RUBY_METHOD_FUNC(rb_QWidget_effective_win_id), -1);
+  rb_define_method(cls_QWidget.rb_class, "style", RUBY_METHOD_FUNC(rb_QWidget_style), -1);
+  rb_define_method(cls_QWidget.rb_class, "set_style", RUBY_METHOD_FUNC(rb_QWidget_set_style), -1);
+  rb_define_method(cls_QWidget.rb_class, "setStyle", RUBY_METHOD_FUNC(rb_QWidget_set_style), -1);
+  rb_define_alias(cls_QWidget.rb_class, "style=", "set_style");
   rb_define_method(cls_QWidget.rb_class, "is_top_level", RUBY_METHOD_FUNC(rb_QWidget_is_top_level), -1);
   rb_define_method(cls_QWidget.rb_class, "isTopLevel", RUBY_METHOD_FUNC(rb_QWidget_is_top_level), -1);
   rb_define_alias(cls_QWidget.rb_class, "top_level?", "is_top_level");
@@ -77258,6 +79771,8 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QWidget.rb_class, "attribute=", "set_attribute");
   rb_define_method(cls_QWidget.rb_class, "test_attribute", RUBY_METHOD_FUNC(rb_QWidget_test_attribute), -1);
   rb_define_method(cls_QWidget.rb_class, "testAttribute", RUBY_METHOD_FUNC(rb_QWidget_test_attribute), -1);
+  rb_define_method(cls_QWidget.rb_class, "paint_engine", RUBY_METHOD_FUNC(rb_QWidget_paint_engine), -1);
+  rb_define_method(cls_QWidget.rb_class, "paintEngine", RUBY_METHOD_FUNC(rb_QWidget_paint_engine), -1);
   rb_define_method(cls_QWidget.rb_class, "ensure_polished", RUBY_METHOD_FUNC(rb_QWidget_ensure_polished), -1);
   rb_define_method(cls_QWidget.rb_class, "ensurePolished", RUBY_METHOD_FUNC(rb_QWidget_ensure_polished), -1);
   rb_define_method(cls_QWidget.rb_class, "is_ancestor_of", RUBY_METHOD_FUNC(rb_QWidget_is_ancestor_of), -1);
@@ -77339,10 +79854,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QWidget_prot_child_event), -1);
   rb_define_method(cls_QWidget.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QWidget_prot_custom_event), -1);
   rb_define_method(cls_QWidget.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QWidget_prot_custom_event), -1);
-  rb_define_method(cls_QWidget.rb_class, "on_window_title_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_title_changed), 0);
-  rb_define_method(cls_QWidget.rb_class, "on_window_icon_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_icon_changed), 0);
-  rb_define_method(cls_QWidget.rb_class, "on_window_icon_text_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_icon_text_changed), 0);
-  rb_define_method(cls_QWidget.rb_class, "on_custom_context_menu_requested", RUBY_METHOD_FUNC(rb_QWidget_on_custom_context_menu_requested), 0);
+  rb_define_method(cls_QWidget.rb_class, "on_window_title_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_title_changed), -1);
+  rb_define_method(cls_QWidget.rb_class, "on_window_icon_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_icon_changed), -1);
+  rb_define_method(cls_QWidget.rb_class, "on_window_icon_text_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_icon_text_changed), -1);
+  rb_define_method(cls_QWidget.rb_class, "on_custom_context_menu_requested", RUBY_METHOD_FUNC(rb_QWidget_on_custom_context_menu_requested), -1);
   rb_define_alloc_func(cls_QLabel.rb_class, rb_QLabel_alloc);
   qt6rb::register_ctor(cls_QLabel.rb_class, rb_QLabel_ctor);
   rb_include_module(cls_QLabel.rb_class, qt6rb::constructable_module());
@@ -77475,8 +79990,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLabel.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QLabel_prot_child_event), -1);
   rb_define_method(cls_QLabel.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QLabel_prot_custom_event), -1);
   rb_define_method(cls_QLabel.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QLabel_prot_custom_event), -1);
-  rb_define_method(cls_QLabel.rb_class, "on_link_activated", RUBY_METHOD_FUNC(rb_QLabel_on_link_activated), 0);
-  rb_define_method(cls_QLabel.rb_class, "on_link_hovered", RUBY_METHOD_FUNC(rb_QLabel_on_link_hovered), 0);
+  rb_define_method(cls_QLabel.rb_class, "on_link_activated", RUBY_METHOD_FUNC(rb_QLabel_on_link_activated), -1);
+  rb_define_method(cls_QLabel.rb_class, "on_link_hovered", RUBY_METHOD_FUNC(rb_QLabel_on_link_hovered), -1);
   rb_define_alloc_func(cls_QPushButton.rb_class, rb_QPushButton_alloc);
   qt6rb::register_ctor(cls_QPushButton.rb_class, rb_QPushButton_ctor);
   rb_include_module(cls_QPushButton.rb_class, qt6rb::constructable_module());
@@ -77647,8 +80162,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCheckBox.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QCheckBox_prot_child_event), -1);
   rb_define_method(cls_QCheckBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_custom_event), -1);
   rb_define_method(cls_QCheckBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QCheckBox_prot_custom_event), -1);
-  rb_define_method(cls_QCheckBox.rb_class, "on_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_state_changed), 0);
-  rb_define_method(cls_QCheckBox.rb_class, "on_check_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_check_state_changed), 0);
+  rb_define_method(cls_QCheckBox.rb_class, "on_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_state_changed), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "on_check_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_check_state_changed), -1);
   rb_define_alloc_func(cls_QComboBox.rb_class, rb_QComboBox_alloc);
   qt6rb::register_ctor(cls_QComboBox.rb_class, rb_QComboBox_ctor);
   rb_include_module(cls_QComboBox.rb_class, qt6rb::constructable_module());
@@ -77875,13 +80390,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QComboBox_prot_child_event), -1);
   rb_define_method(cls_QComboBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_custom_event), -1);
   rb_define_method(cls_QComboBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QComboBox_prot_custom_event), -1);
-  rb_define_method(cls_QComboBox.rb_class, "on_edit_text_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_edit_text_changed), 0);
-  rb_define_method(cls_QComboBox.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_activated), 0);
-  rb_define_method(cls_QComboBox.rb_class, "on_text_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_text_activated), 0);
-  rb_define_method(cls_QComboBox.rb_class, "on_highlighted", RUBY_METHOD_FUNC(rb_QComboBox_on_highlighted), 0);
-  rb_define_method(cls_QComboBox.rb_class, "on_text_highlighted", RUBY_METHOD_FUNC(rb_QComboBox_on_text_highlighted), 0);
-  rb_define_method(cls_QComboBox.rb_class, "on_current_index_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_current_index_changed), 0);
-  rb_define_method(cls_QComboBox.rb_class, "on_current_text_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_current_text_changed), 0);
+  rb_define_method(cls_QComboBox.rb_class, "on_edit_text_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_edit_text_changed), -1);
+  rb_define_method(cls_QComboBox.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_activated), -1);
+  rb_define_method(cls_QComboBox.rb_class, "on_text_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_text_activated), -1);
+  rb_define_method(cls_QComboBox.rb_class, "on_highlighted", RUBY_METHOD_FUNC(rb_QComboBox_on_highlighted), -1);
+  rb_define_method(cls_QComboBox.rb_class, "on_text_highlighted", RUBY_METHOD_FUNC(rb_QComboBox_on_text_highlighted), -1);
+  rb_define_method(cls_QComboBox.rb_class, "on_current_index_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_current_index_changed), -1);
+  rb_define_method(cls_QComboBox.rb_class, "on_current_text_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_current_text_changed), -1);
   rb_define_alloc_func(cls_QLineEdit.rb_class, rb_QLineEdit_alloc);
   qt6rb::register_ctor(cls_QLineEdit.rb_class, rb_QLineEdit_ctor);
   rb_include_module(cls_QLineEdit.rb_class, qt6rb::constructable_module());
@@ -78081,13 +80596,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QLineEdit_prot_child_event), -1);
   rb_define_method(cls_QLineEdit.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_custom_event), -1);
   rb_define_method(cls_QLineEdit.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QLineEdit_prot_custom_event), -1);
-  rb_define_method(cls_QLineEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_changed), 0);
-  rb_define_method(cls_QLineEdit.rb_class, "on_text_edited", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_edited), 0);
-  rb_define_method(cls_QLineEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_cursor_position_changed), 0);
-  rb_define_method(cls_QLineEdit.rb_class, "on_return_pressed", RUBY_METHOD_FUNC(rb_QLineEdit_on_return_pressed), 0);
-  rb_define_method(cls_QLineEdit.rb_class, "on_editing_finished", RUBY_METHOD_FUNC(rb_QLineEdit_on_editing_finished), 0);
-  rb_define_method(cls_QLineEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_selection_changed), 0);
-  rb_define_method(cls_QLineEdit.rb_class, "on_input_rejected", RUBY_METHOD_FUNC(rb_QLineEdit_on_input_rejected), 0);
+  rb_define_method(cls_QLineEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_changed), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "on_text_edited", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_edited), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_cursor_position_changed), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "on_return_pressed", RUBY_METHOD_FUNC(rb_QLineEdit_on_return_pressed), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "on_editing_finished", RUBY_METHOD_FUNC(rb_QLineEdit_on_editing_finished), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_selection_changed), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "on_input_rejected", RUBY_METHOD_FUNC(rb_QLineEdit_on_input_rejected), -1);
   rb_define_alloc_func(cls_QTextEdit.rb_class, rb_QTextEdit_alloc);
   qt6rb::register_ctor(cls_QTextEdit.rb_class, rb_QTextEdit_ctor);
   rb_include_module(cls_QTextEdit.rb_class, qt6rb::constructable_module());
@@ -78372,13 +80887,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QTextEdit_prot_child_event), -1);
   rb_define_method(cls_QTextEdit.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_custom_event), -1);
   rb_define_method(cls_QTextEdit.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QTextEdit_prot_custom_event), -1);
-  rb_define_method(cls_QTextEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_text_changed), 0);
-  rb_define_method(cls_QTextEdit.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_undo_available), 0);
-  rb_define_method(cls_QTextEdit.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_redo_available), 0);
-  rb_define_method(cls_QTextEdit.rb_class, "on_current_char_format_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_current_char_format_changed), 0);
-  rb_define_method(cls_QTextEdit.rb_class, "on_copy_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_copy_available), 0);
-  rb_define_method(cls_QTextEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_selection_changed), 0);
-  rb_define_method(cls_QTextEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_cursor_position_changed), 0);
+  rb_define_method(cls_QTextEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_text_changed), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_undo_available), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_redo_available), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "on_current_char_format_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_current_char_format_changed), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "on_copy_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_copy_available), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_selection_changed), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_cursor_position_changed), -1);
   rb_define_alloc_func(cls_QPlainTextEdit.rb_class, rb_QPlainTextEdit_alloc);
   qt6rb::register_ctor(cls_QPlainTextEdit.rb_class, rb_QPlainTextEdit_ctor);
   rb_include_module(cls_QPlainTextEdit.rb_class, qt6rb::constructable_module());
@@ -78601,15 +81116,15 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_child_event), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_custom_event), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_custom_event), -1);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_text_changed), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_undo_available), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_redo_available), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_copy_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_copy_available), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_selection_changed), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_cursor_position_changed), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_update_request", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_update_request), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_block_count_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_block_count_changed), 0);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "on_modification_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_modification_changed), 0);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_text_changed), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_undo_available), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_redo_available), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_copy_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_copy_available), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_selection_changed), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_cursor_position_changed), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_update_request", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_update_request), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_block_count_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_block_count_changed), -1);
+  rb_define_method(cls_QPlainTextEdit.rb_class, "on_modification_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_modification_changed), -1);
   rb_define_alloc_func(cls_QMainWindow.rb_class, rb_QMainWindow_alloc);
   qt6rb::register_ctor(cls_QMainWindow.rb_class, rb_QMainWindow_ctor);
   rb_include_module(cls_QMainWindow.rb_class, qt6rb::constructable_module());
@@ -78774,8 +81289,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMainWindow.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QMainWindow_prot_child_event), -1);
   rb_define_method(cls_QMainWindow.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_custom_event), -1);
   rb_define_method(cls_QMainWindow.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QMainWindow_prot_custom_event), -1);
-  rb_define_method(cls_QMainWindow.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_icon_size_changed), 0);
-  rb_define_method(cls_QMainWindow.rb_class, "on_tool_button_style_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_tool_button_style_changed), 0);
+  rb_define_method(cls_QMainWindow.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_icon_size_changed), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "on_tool_button_style_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_tool_button_style_changed), -1);
   rb_undef_alloc_func(cls_QLayout.rb_class);
   rb_define_method(cls_QLayout.rb_class, "spacing", RUBY_METHOD_FUNC(rb_QLayout_spacing), -1);
   rb_define_method(cls_QLayout.rb_class, "set_spacing", RUBY_METHOD_FUNC(rb_QLayout_set_spacing), -1);
@@ -78828,6 +81343,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLayout.rb_class, "update", RUBY_METHOD_FUNC(rb_QLayout_update), -1);
   rb_define_method(cls_QLayout.rb_class, "add_widget", RUBY_METHOD_FUNC(rb_QLayout_add_widget), -1);
   rb_define_method(cls_QLayout.rb_class, "addWidget", RUBY_METHOD_FUNC(rb_QLayout_add_widget), -1);
+  rb_define_method(cls_QLayout.rb_class, "add_item", RUBY_METHOD_FUNC(rb_QLayout_add_item), -1);
+  rb_define_method(cls_QLayout.rb_class, "addItem", RUBY_METHOD_FUNC(rb_QLayout_add_item), -1);
   rb_define_method(cls_QLayout.rb_class, "remove_widget", RUBY_METHOD_FUNC(rb_QLayout_remove_widget), -1);
   rb_define_method(cls_QLayout.rb_class, "removeWidget", RUBY_METHOD_FUNC(rb_QLayout_remove_widget), -1);
   rb_define_method(cls_QLayout.rb_class, "remove_item", RUBY_METHOD_FUNC(rb_QLayout_remove_item), -1);
@@ -78841,8 +81358,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLayout.rb_class, "set_geometry", RUBY_METHOD_FUNC(rb_QLayout_set_geometry), -1);
   rb_define_method(cls_QLayout.rb_class, "setGeometry", RUBY_METHOD_FUNC(rb_QLayout_set_geometry), -1);
   rb_define_alias(cls_QLayout.rb_class, "geometry=", "set_geometry");
+  rb_define_method(cls_QLayout.rb_class, "item_at", RUBY_METHOD_FUNC(rb_QLayout_item_at), -1);
+  rb_define_method(cls_QLayout.rb_class, "itemAt", RUBY_METHOD_FUNC(rb_QLayout_item_at), -1);
+  rb_define_method(cls_QLayout.rb_class, "take_at", RUBY_METHOD_FUNC(rb_QLayout_take_at), -1);
+  rb_define_method(cls_QLayout.rb_class, "takeAt", RUBY_METHOD_FUNC(rb_QLayout_take_at), -1);
   rb_define_method(cls_QLayout.rb_class, "index_of", RUBY_METHOD_FUNC(rb_QLayout_index_of), -1);
   rb_define_method(cls_QLayout.rb_class, "indexOf", RUBY_METHOD_FUNC(rb_QLayout_index_of), -1);
+  rb_define_method(cls_QLayout.rb_class, "count", RUBY_METHOD_FUNC(rb_QLayout_count), -1);
   rb_define_method(cls_QLayout.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QLayout_is_empty), -1);
   rb_define_method(cls_QLayout.rb_class, "isEmpty", RUBY_METHOD_FUNC(rb_QLayout_is_empty), -1);
   rb_define_alias(cls_QLayout.rb_class, "empty?", "is_empty");
@@ -79209,9 +81731,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStackedLayout.rb_class, "timerEvent", RUBY_METHOD_FUNC(rb_QStackedLayout_prot_timer_event), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QStackedLayout_prot_custom_event), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QStackedLayout_prot_custom_event), -1);
-  rb_define_method(cls_QStackedLayout.rb_class, "on_widget_removed", RUBY_METHOD_FUNC(rb_QStackedLayout_on_widget_removed), 0);
-  rb_define_method(cls_QStackedLayout.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QStackedLayout_on_current_changed), 0);
-  rb_define_method(cls_QStackedLayout.rb_class, "on_widget_added", RUBY_METHOD_FUNC(rb_QStackedLayout_on_widget_added), 0);
+  rb_define_method(cls_QStackedLayout.rb_class, "on_widget_removed", RUBY_METHOD_FUNC(rb_QStackedLayout_on_widget_removed), -1);
+  rb_define_method(cls_QStackedLayout.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QStackedLayout_on_current_changed), -1);
+  rb_define_method(cls_QStackedLayout.rb_class, "on_widget_added", RUBY_METHOD_FUNC(rb_QStackedLayout_on_widget_added), -1);
   rb_define_alloc_func(cls_QSpacerItem.rb_class, rb_QSpacerItem_alloc);
   qt6rb::register_ctor(cls_QSpacerItem.rb_class, rb_QSpacerItem_ctor);
   rb_include_module(cls_QSpacerItem.rb_class, qt6rb::constructable_module());
@@ -80517,6 +83039,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPixmap.rb_class, "is_q_bitmap", RUBY_METHOD_FUNC(rb_QPixmap_is_q_bitmap), -1);
   rb_define_method(cls_QPixmap.rb_class, "isQBitmap", RUBY_METHOD_FUNC(rb_QPixmap_is_q_bitmap), -1);
   rb_define_alias(cls_QPixmap.rb_class, "q_bitmap?", "is_q_bitmap");
+  rb_define_method(cls_QPixmap.rb_class, "paint_engine", RUBY_METHOD_FUNC(rb_QPixmap_paint_engine), -1);
+  rb_define_method(cls_QPixmap.rb_class, "paintEngine", RUBY_METHOD_FUNC(rb_QPixmap_paint_engine), -1);
   rb_define_singleton_method(cls_QPixmap.rb_class, "default_depth", RUBY_METHOD_FUNC(rb_QPixmap_s_default_depth), -1);
   rb_define_singleton_method(cls_QPixmap.rb_class, "defaultDepth", RUBY_METHOD_FUNC(rb_QPixmap_s_default_depth), -1);
   rb_define_singleton_method(cls_QPixmap.rb_class, "from_image", RUBY_METHOD_FUNC(rb_QPixmap_s_from_image), -1);
@@ -80632,6 +83156,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "save", RUBY_METHOD_FUNC(rb_QImage_save), -1);
   rb_define_method(cls_QImage.rb_class, "cache_key", RUBY_METHOD_FUNC(rb_QImage_cache_key), -1);
   rb_define_method(cls_QImage.rb_class, "cacheKey", RUBY_METHOD_FUNC(rb_QImage_cache_key), -1);
+  rb_define_method(cls_QImage.rb_class, "paint_engine", RUBY_METHOD_FUNC(rb_QImage_paint_engine), -1);
+  rb_define_method(cls_QImage.rb_class, "paintEngine", RUBY_METHOD_FUNC(rb_QImage_paint_engine), -1);
   rb_define_method(cls_QImage.rb_class, "dots_per_meter_x", RUBY_METHOD_FUNC(rb_QImage_dots_per_meter_x), -1);
   rb_define_method(cls_QImage.rb_class, "dotsPerMeterX", RUBY_METHOD_FUNC(rb_QImage_dots_per_meter_x), -1);
   rb_define_method(cls_QImage.rb_class, "dots_per_meter_y", RUBY_METHOD_FUNC(rb_QImage_dots_per_meter_y), -1);
@@ -80814,6 +83340,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "renderHints", RUBY_METHOD_FUNC(rb_QPainter_render_hints), -1);
   rb_define_method(cls_QPainter.rb_class, "test_render_hint", RUBY_METHOD_FUNC(rb_QPainter_test_render_hint), -1);
   rb_define_method(cls_QPainter.rb_class, "testRenderHint", RUBY_METHOD_FUNC(rb_QPainter_test_render_hint), -1);
+  rb_define_method(cls_QPainter.rb_class, "paint_engine", RUBY_METHOD_FUNC(rb_QPainter_paint_engine), -1);
+  rb_define_method(cls_QPainter.rb_class, "paintEngine", RUBY_METHOD_FUNC(rb_QPainter_paint_engine), -1);
   rb_define_method(cls_QPainter.rb_class, "begin_native_painting", RUBY_METHOD_FUNC(rb_QPainter_begin_native_painting), -1);
   rb_define_method(cls_QPainter.rb_class, "beginNativePainting", RUBY_METHOD_FUNC(rb_QPainter_begin_native_painting), -1);
   rb_define_method(cls_QPainter.rb_class, "end_native_painting", RUBY_METHOD_FUNC(rb_QPainter_end_native_painting), -1);
@@ -81045,7 +83573,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMessageBox.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QMessageBox_prot_child_event), -1);
   rb_define_method(cls_QMessageBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QMessageBox_prot_custom_event), -1);
   rb_define_method(cls_QMessageBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QMessageBox_prot_custom_event), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "on_button_clicked", RUBY_METHOD_FUNC(rb_QMessageBox_on_button_clicked), 0);
+  rb_define_method(cls_QMessageBox.rb_class, "on_button_clicked", RUBY_METHOD_FUNC(rb_QMessageBox_on_button_clicked), -1);
   rb_define_alloc_func(cls_QDialog.rb_class, rb_QDialog_alloc);
   qt6rb::register_ctor(cls_QDialog.rb_class, rb_QDialog_ctor);
   rb_include_module(cls_QDialog.rb_class, qt6rb::constructable_module());
@@ -81129,9 +83657,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDialog.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QDialog_prot_child_event), -1);
   rb_define_method(cls_QDialog.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QDialog_prot_custom_event), -1);
   rb_define_method(cls_QDialog.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QDialog_prot_custom_event), -1);
-  rb_define_method(cls_QDialog.rb_class, "on_finished", RUBY_METHOD_FUNC(rb_QDialog_on_finished), 0);
-  rb_define_method(cls_QDialog.rb_class, "on_accepted", RUBY_METHOD_FUNC(rb_QDialog_on_accepted), 0);
-  rb_define_method(cls_QDialog.rb_class, "on_rejected", RUBY_METHOD_FUNC(rb_QDialog_on_rejected), 0);
+  rb_define_method(cls_QDialog.rb_class, "on_finished", RUBY_METHOD_FUNC(rb_QDialog_on_finished), -1);
+  rb_define_method(cls_QDialog.rb_class, "on_accepted", RUBY_METHOD_FUNC(rb_QDialog_on_accepted), -1);
+  rb_define_method(cls_QDialog.rb_class, "on_rejected", RUBY_METHOD_FUNC(rb_QDialog_on_rejected), -1);
   rb_define_alloc_func(cls_QFileDialog.rb_class, rb_QFileDialog_alloc);
   qt6rb::register_ctor(cls_QFileDialog.rb_class, rb_QFileDialog_ctor);
   rb_include_module(cls_QFileDialog.rb_class, qt6rb::constructable_module());
@@ -81313,14 +83841,14 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QFileDialog_prot_child_event), -1);
   rb_define_method(cls_QFileDialog.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QFileDialog_prot_custom_event), -1);
   rb_define_method(cls_QFileDialog.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QFileDialog_prot_custom_event), -1);
-  rb_define_method(cls_QFileDialog.rb_class, "on_file_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_file_selected), 0);
-  rb_define_method(cls_QFileDialog.rb_class, "on_files_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_files_selected), 0);
-  rb_define_method(cls_QFileDialog.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QFileDialog_on_current_changed), 0);
-  rb_define_method(cls_QFileDialog.rb_class, "on_directory_entered", RUBY_METHOD_FUNC(rb_QFileDialog_on_directory_entered), 0);
-  rb_define_method(cls_QFileDialog.rb_class, "on_url_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_url_selected), 0);
-  rb_define_method(cls_QFileDialog.rb_class, "on_current_url_changed", RUBY_METHOD_FUNC(rb_QFileDialog_on_current_url_changed), 0);
-  rb_define_method(cls_QFileDialog.rb_class, "on_directory_url_entered", RUBY_METHOD_FUNC(rb_QFileDialog_on_directory_url_entered), 0);
-  rb_define_method(cls_QFileDialog.rb_class, "on_filter_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_filter_selected), 0);
+  rb_define_method(cls_QFileDialog.rb_class, "on_file_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_file_selected), -1);
+  rb_define_method(cls_QFileDialog.rb_class, "on_files_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_files_selected), -1);
+  rb_define_method(cls_QFileDialog.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QFileDialog_on_current_changed), -1);
+  rb_define_method(cls_QFileDialog.rb_class, "on_directory_entered", RUBY_METHOD_FUNC(rb_QFileDialog_on_directory_entered), -1);
+  rb_define_method(cls_QFileDialog.rb_class, "on_url_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_url_selected), -1);
+  rb_define_method(cls_QFileDialog.rb_class, "on_current_url_changed", RUBY_METHOD_FUNC(rb_QFileDialog_on_current_url_changed), -1);
+  rb_define_method(cls_QFileDialog.rb_class, "on_directory_url_entered", RUBY_METHOD_FUNC(rb_QFileDialog_on_directory_url_entered), -1);
+  rb_define_method(cls_QFileDialog.rb_class, "on_filter_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_filter_selected), -1);
   rb_define_alloc_func(cls_QInputDialog.rb_class, rb_QInputDialog_alloc);
   qt6rb::register_ctor(cls_QInputDialog.rb_class, rb_QInputDialog_ctor);
   rb_include_module(cls_QInputDialog.rb_class, qt6rb::constructable_module());
@@ -81517,12 +84045,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QInputDialog.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QInputDialog_prot_child_event), -1);
   rb_define_method(cls_QInputDialog.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QInputDialog_prot_custom_event), -1);
   rb_define_method(cls_QInputDialog.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QInputDialog_prot_custom_event), -1);
-  rb_define_method(cls_QInputDialog.rb_class, "on_text_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_text_value_changed), 0);
-  rb_define_method(cls_QInputDialog.rb_class, "on_text_value_selected", RUBY_METHOD_FUNC(rb_QInputDialog_on_text_value_selected), 0);
-  rb_define_method(cls_QInputDialog.rb_class, "on_int_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_int_value_changed), 0);
-  rb_define_method(cls_QInputDialog.rb_class, "on_int_value_selected", RUBY_METHOD_FUNC(rb_QInputDialog_on_int_value_selected), 0);
-  rb_define_method(cls_QInputDialog.rb_class, "on_double_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_double_value_changed), 0);
-  rb_define_method(cls_QInputDialog.rb_class, "on_double_value_selected", RUBY_METHOD_FUNC(rb_QInputDialog_on_double_value_selected), 0);
+  rb_define_method(cls_QInputDialog.rb_class, "on_text_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_text_value_changed), -1);
+  rb_define_method(cls_QInputDialog.rb_class, "on_text_value_selected", RUBY_METHOD_FUNC(rb_QInputDialog_on_text_value_selected), -1);
+  rb_define_method(cls_QInputDialog.rb_class, "on_int_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_int_value_changed), -1);
+  rb_define_method(cls_QInputDialog.rb_class, "on_int_value_selected", RUBY_METHOD_FUNC(rb_QInputDialog_on_int_value_selected), -1);
+  rb_define_method(cls_QInputDialog.rb_class, "on_double_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_double_value_changed), -1);
+  rb_define_method(cls_QInputDialog.rb_class, "on_double_value_selected", RUBY_METHOD_FUNC(rb_QInputDialog_on_double_value_selected), -1);
   rb_define_alloc_func(cls_QProgressBar.rb_class, rb_QProgressBar_alloc);
   qt6rb::register_ctor(cls_QProgressBar.rb_class, rb_QProgressBar_ctor);
   rb_include_module(cls_QProgressBar.rb_class, qt6rb::constructable_module());
@@ -81632,7 +84160,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QProgressBar.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QProgressBar_prot_child_event), -1);
   rb_define_method(cls_QProgressBar.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QProgressBar_prot_custom_event), -1);
   rb_define_method(cls_QProgressBar.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QProgressBar_prot_custom_event), -1);
-  rb_define_method(cls_QProgressBar.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QProgressBar_on_value_changed), 0);
+  rb_define_method(cls_QProgressBar.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QProgressBar_on_value_changed), -1);
   rb_define_alloc_func(cls_QSlider.rb_class, rb_QSlider_alloc);
   qt6rb::register_ctor(cls_QSlider.rb_class, rb_QSlider_ctor);
   rb_include_module(cls_QSlider.rb_class, qt6rb::constructable_module());
@@ -81808,8 +84336,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSpinBox.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QSpinBox_prot_child_event), -1);
   rb_define_method(cls_QSpinBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QSpinBox_prot_custom_event), -1);
   rb_define_method(cls_QSpinBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QSpinBox_prot_custom_event), -1);
-  rb_define_method(cls_QSpinBox.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QSpinBox_on_value_changed), 0);
-  rb_define_method(cls_QSpinBox.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QSpinBox_on_text_changed), 0);
+  rb_define_method(cls_QSpinBox.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QSpinBox_on_value_changed), -1);
+  rb_define_method(cls_QSpinBox.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QSpinBox_on_text_changed), -1);
   rb_define_alloc_func(cls_QDoubleSpinBox.rb_class, rb_QDoubleSpinBox_alloc);
   qt6rb::register_ctor(cls_QDoubleSpinBox.rb_class, rb_QDoubleSpinBox_ctor);
   rb_include_module(cls_QDoubleSpinBox.rb_class, qt6rb::constructable_module());
@@ -81911,8 +84439,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDoubleSpinBox.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_child_event), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_custom_event), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_custom_event), -1);
-  rb_define_method(cls_QDoubleSpinBox.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_on_value_changed), 0);
-  rb_define_method(cls_QDoubleSpinBox.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_on_text_changed), 0);
+  rb_define_method(cls_QDoubleSpinBox.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_on_value_changed), -1);
+  rb_define_method(cls_QDoubleSpinBox.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_on_text_changed), -1);
   rb_define_alloc_func(cls_QRadioButton.rb_class, rb_QRadioButton_alloc);
   qt6rb::register_ctor(cls_QRadioButton.rb_class, rb_QRadioButton_ctor);
   rb_include_module(cls_QRadioButton.rb_class, qt6rb::constructable_module());
@@ -82007,14 +84535,14 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QButtonGroup.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QButtonGroup_prot_child_event), -1);
   rb_define_method(cls_QButtonGroup.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QButtonGroup_prot_custom_event), -1);
   rb_define_method(cls_QButtonGroup.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QButtonGroup_prot_custom_event), -1);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_button_clicked", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_clicked), 0);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_button_pressed", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_pressed), 0);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_button_released", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_released), 0);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_button_toggled", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_toggled), 0);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_id_clicked", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_clicked), 0);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_id_pressed", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_pressed), 0);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_id_released", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_released), 0);
-  rb_define_method(cls_QButtonGroup.rb_class, "on_id_toggled", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_toggled), 0);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_button_clicked", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_clicked), -1);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_button_pressed", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_pressed), -1);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_button_released", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_released), -1);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_button_toggled", RUBY_METHOD_FUNC(rb_QButtonGroup_on_button_toggled), -1);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_id_clicked", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_clicked), -1);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_id_pressed", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_pressed), -1);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_id_released", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_released), -1);
+  rb_define_method(cls_QButtonGroup.rb_class, "on_id_toggled", RUBY_METHOD_FUNC(rb_QButtonGroup_on_id_toggled), -1);
   rb_define_alloc_func(cls_QDialogButtonBox.rb_class, rb_QDialogButtonBox_alloc);
   qt6rb::register_ctor(cls_QDialogButtonBox.rb_class, rb_QDialogButtonBox_ctor);
   rb_include_module(cls_QDialogButtonBox.rb_class, qt6rb::constructable_module());
@@ -82096,10 +84624,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDialogButtonBox.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_child_event), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_custom_event), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_custom_event), -1);
-  rb_define_method(cls_QDialogButtonBox.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_clicked), 0);
-  rb_define_method(cls_QDialogButtonBox.rb_class, "on_accepted", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_accepted), 0);
-  rb_define_method(cls_QDialogButtonBox.rb_class, "on_help_requested", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_help_requested), 0);
-  rb_define_method(cls_QDialogButtonBox.rb_class, "on_rejected", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_rejected), 0);
+  rb_define_method(cls_QDialogButtonBox.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_clicked), -1);
+  rb_define_method(cls_QDialogButtonBox.rb_class, "on_accepted", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_accepted), -1);
+  rb_define_method(cls_QDialogButtonBox.rb_class, "on_help_requested", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_help_requested), -1);
+  rb_define_method(cls_QDialogButtonBox.rb_class, "on_rejected", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_rejected), -1);
   rb_define_alloc_func(cls_QCalendarWidget.rb_class, rb_QCalendarWidget_alloc);
   qt6rb::register_ctor(cls_QCalendarWidget.rb_class, rb_QCalendarWidget_ctor);
   rb_include_module(cls_QCalendarWidget.rb_class, qt6rb::constructable_module());
@@ -82278,10 +84806,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCalendarWidget.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_child_event), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_custom_event), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_custom_event), -1);
-  rb_define_method(cls_QCalendarWidget.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_selection_changed), 0);
-  rb_define_method(cls_QCalendarWidget.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_clicked), 0);
-  rb_define_method(cls_QCalendarWidget.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_activated), 0);
-  rb_define_method(cls_QCalendarWidget.rb_class, "on_current_page_changed", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_current_page_changed), 0);
+  rb_define_method(cls_QCalendarWidget.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_selection_changed), -1);
+  rb_define_method(cls_QCalendarWidget.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_clicked), -1);
+  rb_define_method(cls_QCalendarWidget.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_activated), -1);
+  rb_define_method(cls_QCalendarWidget.rb_class, "on_current_page_changed", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_current_page_changed), -1);
   rb_define_alloc_func(cls_QTableWidget.rb_class, rb_QTableWidget_alloc);
   qt6rb::register_ctor(cls_QTableWidget.rb_class, rb_QTableWidget_ctor);
   rb_include_module(cls_QTableWidget.rb_class, qt6rb::constructable_module());
@@ -82498,21 +85026,21 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QTableWidget_prot_child_event), -1);
   rb_define_method(cls_QTableWidget.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTableWidget_prot_custom_event), -1);
   rb_define_method(cls_QTableWidget.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QTableWidget_prot_custom_event), -1);
-  rb_define_method(cls_QTableWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_pressed), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_clicked), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_double_clicked), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_item_activated", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_activated), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_item_entered", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_entered), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_item_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_changed), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_current_item_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_current_item_changed), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_item_selection_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_selection_changed), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_cell_pressed", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_pressed), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_cell_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_clicked), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_cell_double_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_double_clicked), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_cell_activated", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_activated), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_cell_entered", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_entered), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_cell_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_changed), 0);
-  rb_define_method(cls_QTableWidget.rb_class, "on_current_cell_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_current_cell_changed), 0);
+  rb_define_method(cls_QTableWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_pressed), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_clicked), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_double_clicked), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_item_activated", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_activated), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_item_entered", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_entered), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_item_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_changed), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_current_item_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_current_item_changed), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_item_selection_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_selection_changed), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_cell_pressed", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_pressed), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_cell_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_clicked), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_cell_double_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_double_clicked), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_cell_activated", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_activated), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_cell_entered", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_entered), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_cell_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_cell_changed), -1);
+  rb_define_method(cls_QTableWidget.rb_class, "on_current_cell_changed", RUBY_METHOD_FUNC(rb_QTableWidget_on_current_cell_changed), -1);
   rb_define_alloc_func(cls_QTableWidgetItem.rb_class, rb_QTableWidgetItem_alloc);
   qt6rb::register_ctor(cls_QTableWidgetItem.rb_class, rb_QTableWidgetItem_ctor);
   rb_include_module(cls_QTableWidgetItem.rb_class, qt6rb::constructable_module());
@@ -82779,16 +85307,16 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_child_event), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_custom_event), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_custom_event), -1);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_pressed), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_clicked), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_double_clicked), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_activated", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_activated), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_entered", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_entered), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_changed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_changed), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_expanded", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_expanded), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_collapsed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_collapsed), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_current_item_changed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_current_item_changed), 0);
-  rb_define_method(cls_QTreeWidget.rb_class, "on_item_selection_changed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_selection_changed), 0);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_pressed), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_clicked), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_double_clicked), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_activated", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_activated), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_entered", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_entered), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_changed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_changed), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_expanded", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_expanded), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_collapsed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_collapsed), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_current_item_changed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_current_item_changed), -1);
+  rb_define_method(cls_QTreeWidget.rb_class, "on_item_selection_changed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_selection_changed), -1);
   rb_define_alloc_func(cls_QTreeWidgetItem.rb_class, rb_QTreeWidgetItem_alloc);
   qt6rb::register_ctor(cls_QTreeWidgetItem.rb_class, rb_QTreeWidgetItem_ctor);
   rb_include_module(cls_QTreeWidgetItem.rb_class, qt6rb::constructable_module());
@@ -83101,10 +85629,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabWidget.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QTabWidget_prot_child_event), -1);
   rb_define_method(cls_QTabWidget.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTabWidget_prot_custom_event), -1);
   rb_define_method(cls_QTabWidget.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QTabWidget_prot_custom_event), -1);
-  rb_define_method(cls_QTabWidget.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QTabWidget_on_current_changed), 0);
-  rb_define_method(cls_QTabWidget.rb_class, "on_tab_close_requested", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_close_requested), 0);
-  rb_define_method(cls_QTabWidget.rb_class, "on_tab_bar_clicked", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_bar_clicked), 0);
-  rb_define_method(cls_QTabWidget.rb_class, "on_tab_bar_double_clicked", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_bar_double_clicked), 0);
+  rb_define_method(cls_QTabWidget.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QTabWidget_on_current_changed), -1);
+  rb_define_method(cls_QTabWidget.rb_class, "on_tab_close_requested", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_close_requested), -1);
+  rb_define_method(cls_QTabWidget.rb_class, "on_tab_bar_clicked", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_bar_clicked), -1);
+  rb_define_method(cls_QTabWidget.rb_class, "on_tab_bar_double_clicked", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_bar_double_clicked), -1);
   rb_define_alloc_func(cls_QListWidget.rb_class, rb_QListWidget_alloc);
   qt6rb::register_ctor(cls_QListWidget.rb_class, rb_QListWidget_ctor);
   rb_include_module(cls_QListWidget.rb_class, qt6rb::constructable_module());
@@ -83264,16 +85792,16 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QListWidget_prot_child_event), -1);
   rb_define_method(cls_QListWidget.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QListWidget_prot_custom_event), -1);
   rb_define_method(cls_QListWidget.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QListWidget_prot_custom_event), -1);
-  rb_define_method(cls_QListWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QListWidget_on_item_pressed), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QListWidget_on_item_clicked), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QListWidget_on_item_double_clicked), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_item_activated", RUBY_METHOD_FUNC(rb_QListWidget_on_item_activated), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_item_entered", RUBY_METHOD_FUNC(rb_QListWidget_on_item_entered), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_item_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_item_changed), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_current_item_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_current_item_changed), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_current_text_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_current_text_changed), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_current_row_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_current_row_changed), 0);
-  rb_define_method(cls_QListWidget.rb_class, "on_item_selection_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_item_selection_changed), 0);
+  rb_define_method(cls_QListWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QListWidget_on_item_pressed), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QListWidget_on_item_clicked), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QListWidget_on_item_double_clicked), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_item_activated", RUBY_METHOD_FUNC(rb_QListWidget_on_item_activated), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_item_entered", RUBY_METHOD_FUNC(rb_QListWidget_on_item_entered), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_item_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_item_changed), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_current_item_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_current_item_changed), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_current_text_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_current_text_changed), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_current_row_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_current_row_changed), -1);
+  rb_define_method(cls_QListWidget.rb_class, "on_item_selection_changed", RUBY_METHOD_FUNC(rb_QListWidget_on_item_selection_changed), -1);
   rb_define_alloc_func(cls_QListWidgetItem.rb_class, rb_QListWidgetItem_alloc);
   qt6rb::register_ctor(cls_QListWidgetItem.rb_class, rb_QListWidgetItem_ctor);
   rb_include_module(cls_QListWidgetItem.rb_class, qt6rb::constructable_module());
@@ -83640,16 +86168,16 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QTextDocument_prot_child_event), -1);
   rb_define_method(cls_QTextDocument.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTextDocument_prot_custom_event), -1);
   rb_define_method(cls_QTextDocument.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QTextDocument_prot_custom_event), -1);
-  rb_define_method(cls_QTextDocument.rb_class, "on_contents_change", RUBY_METHOD_FUNC(rb_QTextDocument_on_contents_change), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_contents_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_contents_changed), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QTextDocument_on_undo_available), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QTextDocument_on_redo_available), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_undo_command_added", RUBY_METHOD_FUNC(rb_QTextDocument_on_undo_command_added), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_modification_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_modification_changed), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_cursor_position_changed), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_block_count_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_block_count_changed), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_base_url_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_base_url_changed), 0);
-  rb_define_method(cls_QTextDocument.rb_class, "on_document_layout_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_document_layout_changed), 0);
+  rb_define_method(cls_QTextDocument.rb_class, "on_contents_change", RUBY_METHOD_FUNC(rb_QTextDocument_on_contents_change), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_contents_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_contents_changed), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QTextDocument_on_undo_available), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QTextDocument_on_redo_available), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_undo_command_added", RUBY_METHOD_FUNC(rb_QTextDocument_on_undo_command_added), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_modification_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_modification_changed), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_cursor_position_changed), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_block_count_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_block_count_changed), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_base_url_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_base_url_changed), -1);
+  rb_define_method(cls_QTextDocument.rb_class, "on_document_layout_changed", RUBY_METHOD_FUNC(rb_QTextDocument_on_document_layout_changed), -1);
   rb_define_alloc_func(cls_QTextDocumentFragment.rb_class, rb_QTextDocumentFragment_alloc);
   qt6rb::register_ctor(cls_QTextDocumentFragment.rb_class, rb_QTextDocumentFragment_ctor);
   rb_include_module(cls_QTextDocumentFragment.rb_class, qt6rb::constructable_module());
@@ -84090,6 +86618,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "textElideMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_text_elide_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "keyboard_search", RUBY_METHOD_FUNC(rb_QAbstractItemView_keyboard_search), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "keyboardSearch", RUBY_METHOD_FUNC(rb_QAbstractItemView_keyboard_search), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "visual_rect", RUBY_METHOD_FUNC(rb_QAbstractItemView_visual_rect), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "visualRect", RUBY_METHOD_FUNC(rb_QAbstractItemView_visual_rect), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "scroll_to", RUBY_METHOD_FUNC(rb_QAbstractItemView_scroll_to), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "scrollTo", RUBY_METHOD_FUNC(rb_QAbstractItemView_scroll_to), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "index_at", RUBY_METHOD_FUNC(rb_QAbstractItemView_index_at), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "indexAt", RUBY_METHOD_FUNC(rb_QAbstractItemView_index_at), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "size_hint_for_index", RUBY_METHOD_FUNC(rb_QAbstractItemView_size_hint_for_index), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "sizeHintForIndex", RUBY_METHOD_FUNC(rb_QAbstractItemView_size_hint_for_index), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "size_hint_for_row", RUBY_METHOD_FUNC(rb_QAbstractItemView_size_hint_for_row), -1);
@@ -84158,13 +86692,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "scrollToBottom", RUBY_METHOD_FUNC(rb_QAbstractItemView_scroll_to_bottom), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "update", RUBY_METHOD_FUNC(rb_QAbstractItemView_update), -1);
   rb_define_singleton_method(cls_QAbstractItemView.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractItemView_s_tr), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "on_pressed", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_pressed), 0);
-  rb_define_method(cls_QAbstractItemView.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_clicked), 0);
-  rb_define_method(cls_QAbstractItemView.rb_class, "on_double_clicked", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_double_clicked), 0);
-  rb_define_method(cls_QAbstractItemView.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_activated), 0);
-  rb_define_method(cls_QAbstractItemView.rb_class, "on_entered", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_entered), 0);
-  rb_define_method(cls_QAbstractItemView.rb_class, "on_viewport_entered", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_viewport_entered), 0);
-  rb_define_method(cls_QAbstractItemView.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_icon_size_changed), 0);
+  rb_define_method(cls_QAbstractItemView.rb_class, "on_pressed", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_pressed), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_clicked), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "on_double_clicked", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_double_clicked), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_activated), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "on_entered", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_entered), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "on_viewport_entered", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_viewport_entered), -1);
+  rb_define_method(cls_QAbstractItemView.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QAbstractItemView_on_icon_size_changed), -1);
   rb_define_alloc_func(cls_QHeaderView.rb_class, rb_QHeaderView_alloc);
   qt6rb::register_ctor(cls_QHeaderView.rb_class, rb_QHeaderView_ctor);
   rb_include_module(cls_QHeaderView.rb_class, qt6rb::constructable_module());
@@ -84428,17 +86962,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QHeaderView_prot_child_event), -1);
   rb_define_method(cls_QHeaderView.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QHeaderView_prot_custom_event), -1);
   rb_define_method(cls_QHeaderView.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QHeaderView_prot_custom_event), -1);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_moved", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_moved), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_resized", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_resized), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_pressed", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_pressed), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_clicked", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_clicked), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_entered", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_entered), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_double_clicked", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_double_clicked), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_count_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_count_changed), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_section_handle_double_clicked", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_handle_double_clicked), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_geometries_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_geometries_changed), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_sort_indicator_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_sort_indicator_changed), 0);
-  rb_define_method(cls_QHeaderView.rb_class, "on_sort_indicator_clearable_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_sort_indicator_clearable_changed), 0);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_moved", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_moved), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_resized", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_resized), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_pressed", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_pressed), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_clicked", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_clicked), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_entered", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_entered), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_double_clicked", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_double_clicked), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_count_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_count_changed), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_section_handle_double_clicked", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_handle_double_clicked), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_geometries_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_geometries_changed), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_sort_indicator_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_sort_indicator_changed), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "on_sort_indicator_clearable_changed", RUBY_METHOD_FUNC(rb_QHeaderView_on_sort_indicator_clearable_changed), -1);
   rb_define_alloc_func(cls_QGroupBox.rb_class, rb_QGroupBox_alloc);
   qt6rb::register_ctor(cls_QGroupBox.rb_class, rb_QGroupBox_ctor);
   rb_include_module(cls_QGroupBox.rb_class, qt6rb::constructable_module());
@@ -84522,8 +87056,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGroupBox.rb_class, "timerEvent", RUBY_METHOD_FUNC(rb_QGroupBox_prot_timer_event), -1);
   rb_define_method(cls_QGroupBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QGroupBox_prot_custom_event), -1);
   rb_define_method(cls_QGroupBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QGroupBox_prot_custom_event), -1);
-  rb_define_method(cls_QGroupBox.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QGroupBox_on_clicked), 0);
-  rb_define_method(cls_QGroupBox.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QGroupBox_on_toggled), 0);
+  rb_define_method(cls_QGroupBox.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QGroupBox_on_clicked), -1);
+  rb_define_method(cls_QGroupBox.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QGroupBox_on_toggled), -1);
   rb_define_alloc_func(cls_QSplitter.rb_class, rb_QSplitter_alloc);
   qt6rb::register_ctor(cls_QSplitter.rb_class, rb_QSplitter_ctor);
   rb_include_module(cls_QSplitter.rb_class, qt6rb::constructable_module());
@@ -84629,7 +87163,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSplitter.rb_class, "timerEvent", RUBY_METHOD_FUNC(rb_QSplitter_prot_timer_event), -1);
   rb_define_method(cls_QSplitter.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QSplitter_prot_custom_event), -1);
   rb_define_method(cls_QSplitter.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QSplitter_prot_custom_event), -1);
-  rb_define_method(cls_QSplitter.rb_class, "on_splitter_moved", RUBY_METHOD_FUNC(rb_QSplitter_on_splitter_moved), 0);
+  rb_define_method(cls_QSplitter.rb_class, "on_splitter_moved", RUBY_METHOD_FUNC(rb_QSplitter_on_splitter_moved), -1);
   rb_define_alloc_func(cls_QScrollArea.rb_class, rb_QScrollArea_alloc);
   qt6rb::register_ctor(cls_QScrollArea.rb_class, rb_QScrollArea_ctor);
   rb_include_module(cls_QScrollArea.rb_class, qt6rb::constructable_module());
@@ -84793,7 +87327,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStatusBar.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QStatusBar_prot_child_event), -1);
   rb_define_method(cls_QStatusBar.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QStatusBar_prot_custom_event), -1);
   rb_define_method(cls_QStatusBar.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QStatusBar_prot_custom_event), -1);
-  rb_define_method(cls_QStatusBar.rb_class, "on_message_changed", RUBY_METHOD_FUNC(rb_QStatusBar_on_message_changed), 0);
+  rb_define_method(cls_QStatusBar.rb_class, "on_message_changed", RUBY_METHOD_FUNC(rb_QStatusBar_on_message_changed), -1);
   rb_define_alloc_func(cls_QMenuBar.rb_class, rb_QMenuBar_alloc);
   qt6rb::register_ctor(cls_QMenuBar.rb_class, rb_QMenuBar_ctor);
   rb_include_module(cls_QMenuBar.rb_class, qt6rb::constructable_module());
@@ -84899,8 +87433,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenuBar.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QMenuBar_prot_child_event), -1);
   rb_define_method(cls_QMenuBar.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QMenuBar_prot_custom_event), -1);
   rb_define_method(cls_QMenuBar.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QMenuBar_prot_custom_event), -1);
-  rb_define_method(cls_QMenuBar.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QMenuBar_on_triggered), 0);
-  rb_define_method(cls_QMenuBar.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QMenuBar_on_hovered), 0);
+  rb_define_method(cls_QMenuBar.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QMenuBar_on_triggered), -1);
+  rb_define_method(cls_QMenuBar.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QMenuBar_on_hovered), -1);
   rb_define_alloc_func(cls_QMenu.rb_class, rb_QMenu_alloc);
   qt6rb::register_ctor(cls_QMenu.rb_class, rb_QMenu_ctor);
   rb_include_module(cls_QMenu.rb_class, qt6rb::constructable_module());
@@ -85038,10 +87572,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenu.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QMenu_prot_child_event), -1);
   rb_define_method(cls_QMenu.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QMenu_prot_custom_event), -1);
   rb_define_method(cls_QMenu.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QMenu_prot_custom_event), -1);
-  rb_define_method(cls_QMenu.rb_class, "on_about_to_show", RUBY_METHOD_FUNC(rb_QMenu_on_about_to_show), 0);
-  rb_define_method(cls_QMenu.rb_class, "on_about_to_hide", RUBY_METHOD_FUNC(rb_QMenu_on_about_to_hide), 0);
-  rb_define_method(cls_QMenu.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QMenu_on_triggered), 0);
-  rb_define_method(cls_QMenu.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QMenu_on_hovered), 0);
+  rb_define_method(cls_QMenu.rb_class, "on_about_to_show", RUBY_METHOD_FUNC(rb_QMenu_on_about_to_show), -1);
+  rb_define_method(cls_QMenu.rb_class, "on_about_to_hide", RUBY_METHOD_FUNC(rb_QMenu_on_about_to_hide), -1);
+  rb_define_method(cls_QMenu.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QMenu_on_triggered), -1);
+  rb_define_method(cls_QMenu.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QMenu_on_hovered), -1);
   rb_define_alloc_func(cls_QAction.rb_class, rb_QAction_alloc);
   qt6rb::register_ctor(cls_QAction.rb_class, rb_QAction_ctor);
   rb_include_module(cls_QAction.rb_class, qt6rb::constructable_module());
@@ -85183,13 +87717,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAction.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QAction_prot_child_event), -1);
   rb_define_method(cls_QAction.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QAction_prot_custom_event), -1);
   rb_define_method(cls_QAction.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QAction_prot_custom_event), -1);
-  rb_define_method(cls_QAction.rb_class, "on_changed", RUBY_METHOD_FUNC(rb_QAction_on_changed), 0);
-  rb_define_method(cls_QAction.rb_class, "on_enabled_changed", RUBY_METHOD_FUNC(rb_QAction_on_enabled_changed), 0);
-  rb_define_method(cls_QAction.rb_class, "on_checkable_changed", RUBY_METHOD_FUNC(rb_QAction_on_checkable_changed), 0);
-  rb_define_method(cls_QAction.rb_class, "on_visible_changed", RUBY_METHOD_FUNC(rb_QAction_on_visible_changed), 0);
-  rb_define_method(cls_QAction.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QAction_on_triggered), 0);
-  rb_define_method(cls_QAction.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QAction_on_hovered), 0);
-  rb_define_method(cls_QAction.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QAction_on_toggled), 0);
+  rb_define_method(cls_QAction.rb_class, "on_changed", RUBY_METHOD_FUNC(rb_QAction_on_changed), -1);
+  rb_define_method(cls_QAction.rb_class, "on_enabled_changed", RUBY_METHOD_FUNC(rb_QAction_on_enabled_changed), -1);
+  rb_define_method(cls_QAction.rb_class, "on_checkable_changed", RUBY_METHOD_FUNC(rb_QAction_on_checkable_changed), -1);
+  rb_define_method(cls_QAction.rb_class, "on_visible_changed", RUBY_METHOD_FUNC(rb_QAction_on_visible_changed), -1);
+  rb_define_method(cls_QAction.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QAction_on_triggered), -1);
+  rb_define_method(cls_QAction.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QAction_on_hovered), -1);
+  rb_define_method(cls_QAction.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QAction_on_toggled), -1);
   rb_define_alloc_func(cls_QActionGroup.rb_class, rb_QActionGroup_alloc);
   qt6rb::register_ctor(cls_QActionGroup.rb_class, rb_QActionGroup_ctor);
   rb_include_module(cls_QActionGroup.rb_class, qt6rb::constructable_module());
@@ -85233,8 +87767,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QActionGroup.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QActionGroup_prot_child_event), -1);
   rb_define_method(cls_QActionGroup.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QActionGroup_prot_custom_event), -1);
   rb_define_method(cls_QActionGroup.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QActionGroup_prot_custom_event), -1);
-  rb_define_method(cls_QActionGroup.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QActionGroup_on_triggered), 0);
-  rb_define_method(cls_QActionGroup.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QActionGroup_on_hovered), 0);
+  rb_define_method(cls_QActionGroup.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QActionGroup_on_triggered), -1);
+  rb_define_method(cls_QActionGroup.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QActionGroup_on_hovered), -1);
   rb_define_alloc_func(cls_QToolBar.rb_class, rb_QToolBar_alloc);
   qt6rb::register_ctor(cls_QToolBar.rb_class, rb_QToolBar_ctor);
   rb_include_module(cls_QToolBar.rb_class, qt6rb::constructable_module());
@@ -85346,14 +87880,14 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QToolBar.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QToolBar_prot_child_event), -1);
   rb_define_method(cls_QToolBar.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QToolBar_prot_custom_event), -1);
   rb_define_method(cls_QToolBar.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QToolBar_prot_custom_event), -1);
-  rb_define_method(cls_QToolBar.rb_class, "on_action_triggered", RUBY_METHOD_FUNC(rb_QToolBar_on_action_triggered), 0);
-  rb_define_method(cls_QToolBar.rb_class, "on_movable_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_movable_changed), 0);
-  rb_define_method(cls_QToolBar.rb_class, "on_allowed_areas_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_allowed_areas_changed), 0);
-  rb_define_method(cls_QToolBar.rb_class, "on_orientation_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_orientation_changed), 0);
-  rb_define_method(cls_QToolBar.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_icon_size_changed), 0);
-  rb_define_method(cls_QToolBar.rb_class, "on_tool_button_style_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_tool_button_style_changed), 0);
-  rb_define_method(cls_QToolBar.rb_class, "on_top_level_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_top_level_changed), 0);
-  rb_define_method(cls_QToolBar.rb_class, "on_visibility_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_visibility_changed), 0);
+  rb_define_method(cls_QToolBar.rb_class, "on_action_triggered", RUBY_METHOD_FUNC(rb_QToolBar_on_action_triggered), -1);
+  rb_define_method(cls_QToolBar.rb_class, "on_movable_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_movable_changed), -1);
+  rb_define_method(cls_QToolBar.rb_class, "on_allowed_areas_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_allowed_areas_changed), -1);
+  rb_define_method(cls_QToolBar.rb_class, "on_orientation_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_orientation_changed), -1);
+  rb_define_method(cls_QToolBar.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_icon_size_changed), -1);
+  rb_define_method(cls_QToolBar.rb_class, "on_tool_button_style_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_tool_button_style_changed), -1);
+  rb_define_method(cls_QToolBar.rb_class, "on_top_level_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_top_level_changed), -1);
+  rb_define_method(cls_QToolBar.rb_class, "on_visibility_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_visibility_changed), -1);
   rb_undef_alloc_func(cls_QDesktopServices.rb_class);
   rb_define_singleton_method(cls_QDesktopServices.rb_class, "open_url", RUBY_METHOD_FUNC(rb_QDesktopServices_s_open_url), -1);
   rb_define_singleton_method(cls_QDesktopServices.rb_class, "openUrl", RUBY_METHOD_FUNC(rb_QDesktopServices_s_open_url), -1);
@@ -85363,7 +87897,7 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QDesktopServices.rb_class, "unsetUrlHandler", RUBY_METHOD_FUNC(rb_QDesktopServices_s_unset_url_handler), -1);
   rb_undef_alloc_func(cls_QValidator.rb_class);
   rb_define_singleton_method(cls_QValidator.rb_class, "tr", RUBY_METHOD_FUNC(rb_QValidator_s_tr), -1);
-  rb_define_method(cls_QValidator.rb_class, "on_changed", RUBY_METHOD_FUNC(rb_QValidator_on_changed), 0);
+  rb_define_method(cls_QValidator.rb_class, "on_changed", RUBY_METHOD_FUNC(rb_QValidator_on_changed), -1);
   rb_define_alloc_func(cls_QIntValidator.rb_class, rb_QIntValidator_alloc);
   qt6rb::register_ctor(cls_QIntValidator.rb_class, rb_QIntValidator_ctor);
   rb_include_module(cls_QIntValidator.rb_class, qt6rb::constructable_module());
@@ -85385,8 +87919,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QIntValidator.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QIntValidator_prot_child_event), -1);
   rb_define_method(cls_QIntValidator.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QIntValidator_prot_custom_event), -1);
   rb_define_method(cls_QIntValidator.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QIntValidator_prot_custom_event), -1);
-  rb_define_method(cls_QIntValidator.rb_class, "on_bottom_changed", RUBY_METHOD_FUNC(rb_QIntValidator_on_bottom_changed), 0);
-  rb_define_method(cls_QIntValidator.rb_class, "on_top_changed", RUBY_METHOD_FUNC(rb_QIntValidator_on_top_changed), 0);
+  rb_define_method(cls_QIntValidator.rb_class, "on_bottom_changed", RUBY_METHOD_FUNC(rb_QIntValidator_on_bottom_changed), -1);
+  rb_define_method(cls_QIntValidator.rb_class, "on_top_changed", RUBY_METHOD_FUNC(rb_QIntValidator_on_top_changed), -1);
   rb_define_alloc_func(cls_QDoubleValidator.rb_class, rb_QDoubleValidator_alloc);
   qt6rb::register_ctor(cls_QDoubleValidator.rb_class, rb_QDoubleValidator_ctor);
   rb_include_module(cls_QDoubleValidator.rb_class, qt6rb::constructable_module());
@@ -85416,10 +87950,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDoubleValidator.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QDoubleValidator_prot_child_event), -1);
   rb_define_method(cls_QDoubleValidator.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QDoubleValidator_prot_custom_event), -1);
   rb_define_method(cls_QDoubleValidator.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QDoubleValidator_prot_custom_event), -1);
-  rb_define_method(cls_QDoubleValidator.rb_class, "on_bottom_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_bottom_changed), 0);
-  rb_define_method(cls_QDoubleValidator.rb_class, "on_top_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_top_changed), 0);
-  rb_define_method(cls_QDoubleValidator.rb_class, "on_decimals_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_decimals_changed), 0);
-  rb_define_method(cls_QDoubleValidator.rb_class, "on_notation_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_notation_changed), 0);
+  rb_define_method(cls_QDoubleValidator.rb_class, "on_bottom_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_bottom_changed), -1);
+  rb_define_method(cls_QDoubleValidator.rb_class, "on_top_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_top_changed), -1);
+  rb_define_method(cls_QDoubleValidator.rb_class, "on_decimals_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_decimals_changed), -1);
+  rb_define_method(cls_QDoubleValidator.rb_class, "on_notation_changed", RUBY_METHOD_FUNC(rb_QDoubleValidator_on_notation_changed), -1);
   rb_define_alloc_func(cls_QKeySequence.rb_class, rb_QKeySequence_alloc);
   qt6rb::register_ctor(cls_QKeySequence.rb_class, rb_QKeySequence_ctor);
   rb_include_module(cls_QKeySequence.rb_class, qt6rb::constructable_module());
@@ -85623,9 +88157,16 @@ extern "C" void Init_qt6() {
   rb_undef_alloc_func(cls_QAbstractItemModel.rb_class);
   rb_define_method(cls_QAbstractItemModel.rb_class, "has_index", RUBY_METHOD_FUNC(rb_QAbstractItemModel_has_index), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "hasIndex", RUBY_METHOD_FUNC(rb_QAbstractItemModel_has_index), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "index", RUBY_METHOD_FUNC(rb_QAbstractItemModel_index), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "parent", RUBY_METHOD_FUNC(rb_QAbstractItemModel_parent), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "sibling", RUBY_METHOD_FUNC(rb_QAbstractItemModel_sibling), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "row_count", RUBY_METHOD_FUNC(rb_QAbstractItemModel_row_count), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "rowCount", RUBY_METHOD_FUNC(rb_QAbstractItemModel_row_count), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "column_count", RUBY_METHOD_FUNC(rb_QAbstractItemModel_column_count), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "columnCount", RUBY_METHOD_FUNC(rb_QAbstractItemModel_column_count), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "has_children", RUBY_METHOD_FUNC(rb_QAbstractItemModel_has_children), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "hasChildren", RUBY_METHOD_FUNC(rb_QAbstractItemModel_has_children), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "data", RUBY_METHOD_FUNC(rb_QAbstractItemModel_data), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "set_data", RUBY_METHOD_FUNC(rb_QAbstractItemModel_set_data), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "setData", RUBY_METHOD_FUNC(rb_QAbstractItemModel_set_data), -1);
   rb_define_alias(cls_QAbstractItemModel.rb_class, "data=", "set_data");
@@ -85684,24 +88225,24 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemModel.rb_class, "submit", RUBY_METHOD_FUNC(rb_QAbstractItemModel_submit), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "revert", RUBY_METHOD_FUNC(rb_QAbstractItemModel_revert), -1);
   rb_define_singleton_method(cls_QAbstractItemModel.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractItemModel_s_tr), -1);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_data_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_data_changed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_header_data_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_header_data_changed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_layout_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_layout_changed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_layout_about_to_be_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_layout_about_to_be_changed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_inserted), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_inserted), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_removed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_removed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_about_to_be_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_about_to_be_inserted), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_inserted), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_about_to_be_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_about_to_be_removed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_removed), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_model_about_to_be_reset", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_model_about_to_be_reset), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_model_reset", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_model_reset), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_moved), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_moved), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_about_to_be_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_about_to_be_moved), 0);
-  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_moved), 0);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_data_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_data_changed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_header_data_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_header_data_changed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_layout_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_layout_changed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_layout_about_to_be_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_layout_about_to_be_changed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_inserted), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_inserted), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_removed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_removed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_about_to_be_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_about_to_be_inserted), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_inserted), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_about_to_be_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_about_to_be_removed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_removed), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_model_about_to_be_reset", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_model_about_to_be_reset), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_model_reset", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_model_reset), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_moved), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_moved), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_about_to_be_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_about_to_be_moved), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_columns_moved", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_columns_moved), -1);
   rb_define_alloc_func(cls_QFileSystemModel.rb_class, rb_QFileSystemModel_alloc);
   qt6rb::register_ctor(cls_QFileSystemModel.rb_class, rb_QFileSystemModel_ctor);
   rb_include_module(cls_QFileSystemModel.rb_class, qt6rb::constructable_module());
@@ -85800,9 +88341,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileSystemModel.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QFileSystemModel_prot_child_event), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QFileSystemModel_prot_custom_event), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QFileSystemModel_prot_custom_event), -1);
-  rb_define_method(cls_QFileSystemModel.rb_class, "on_root_path_changed", RUBY_METHOD_FUNC(rb_QFileSystemModel_on_root_path_changed), 0);
-  rb_define_method(cls_QFileSystemModel.rb_class, "on_file_renamed", RUBY_METHOD_FUNC(rb_QFileSystemModel_on_file_renamed), 0);
-  rb_define_method(cls_QFileSystemModel.rb_class, "on_directory_loaded", RUBY_METHOD_FUNC(rb_QFileSystemModel_on_directory_loaded), 0);
+  rb_define_method(cls_QFileSystemModel.rb_class, "on_root_path_changed", RUBY_METHOD_FUNC(rb_QFileSystemModel_on_root_path_changed), -1);
+  rb_define_method(cls_QFileSystemModel.rb_class, "on_file_renamed", RUBY_METHOD_FUNC(rb_QFileSystemModel_on_file_renamed), -1);
+  rb_define_method(cls_QFileSystemModel.rb_class, "on_directory_loaded", RUBY_METHOD_FUNC(rb_QFileSystemModel_on_directory_loaded), -1);
   rb_define_alloc_func(cls_QListView.rb_class, rb_QListView_alloc);
   qt6rb::register_ctor(cls_QListView.rb_class, rb_QListView_ctor);
   rb_include_module(cls_QListView.rb_class, qt6rb::constructable_module());
@@ -86238,8 +88779,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QTreeView_prot_child_event), -1);
   rb_define_method(cls_QTreeView.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTreeView_prot_custom_event), -1);
   rb_define_method(cls_QTreeView.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QTreeView_prot_custom_event), -1);
-  rb_define_method(cls_QTreeView.rb_class, "on_expanded", RUBY_METHOD_FUNC(rb_QTreeView_on_expanded), 0);
-  rb_define_method(cls_QTreeView.rb_class, "on_collapsed", RUBY_METHOD_FUNC(rb_QTreeView_on_collapsed), 0);
+  rb_define_method(cls_QTreeView.rb_class, "on_expanded", RUBY_METHOD_FUNC(rb_QTreeView_on_expanded), -1);
+  rb_define_method(cls_QTreeView.rb_class, "on_collapsed", RUBY_METHOD_FUNC(rb_QTreeView_on_collapsed), -1);
   rb_define_alloc_func(cls_QCompleter.rb_class, rb_QCompleter_alloc);
   qt6rb::register_ctor(cls_QCompleter.rb_class, rb_QCompleter_ctor);
   rb_include_module(cls_QCompleter.rb_class, qt6rb::constructable_module());
@@ -86338,6 +88879,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCompleter.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QCompleter_prot_child_event), -1);
   rb_define_method(cls_QCompleter.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QCompleter_prot_custom_event), -1);
   rb_define_method(cls_QCompleter.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QCompleter_prot_custom_event), -1);
+  rb_define_method(cls_QCompleter.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QCompleter_on_activated), -1);
+  rb_define_method(cls_QCompleter.rb_class, "on_highlighted", RUBY_METHOD_FUNC(rb_QCompleter_on_highlighted), -1);
   rb_define_alloc_func(cls_QEventLoop.rb_class, rb_QEventLoop_alloc);
   qt6rb::register_ctor(cls_QEventLoop.rb_class, rb_QEventLoop_ctor);
   rb_include_module(cls_QEventLoop.rb_class, qt6rb::constructable_module());
@@ -86482,13 +89025,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMovie.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QMovie_prot_child_event), -1);
   rb_define_method(cls_QMovie.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QMovie_prot_custom_event), -1);
   rb_define_method(cls_QMovie.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QMovie_prot_custom_event), -1);
-  rb_define_method(cls_QMovie.rb_class, "on_started", RUBY_METHOD_FUNC(rb_QMovie_on_started), 0);
-  rb_define_method(cls_QMovie.rb_class, "on_resized", RUBY_METHOD_FUNC(rb_QMovie_on_resized), 0);
-  rb_define_method(cls_QMovie.rb_class, "on_updated", RUBY_METHOD_FUNC(rb_QMovie_on_updated), 0);
-  rb_define_method(cls_QMovie.rb_class, "on_state_changed", RUBY_METHOD_FUNC(rb_QMovie_on_state_changed), 0);
-  rb_define_method(cls_QMovie.rb_class, "on_error", RUBY_METHOD_FUNC(rb_QMovie_on_error), 0);
-  rb_define_method(cls_QMovie.rb_class, "on_finished", RUBY_METHOD_FUNC(rb_QMovie_on_finished), 0);
-  rb_define_method(cls_QMovie.rb_class, "on_frame_changed", RUBY_METHOD_FUNC(rb_QMovie_on_frame_changed), 0);
+  rb_define_method(cls_QMovie.rb_class, "on_started", RUBY_METHOD_FUNC(rb_QMovie_on_started), -1);
+  rb_define_method(cls_QMovie.rb_class, "on_resized", RUBY_METHOD_FUNC(rb_QMovie_on_resized), -1);
+  rb_define_method(cls_QMovie.rb_class, "on_updated", RUBY_METHOD_FUNC(rb_QMovie_on_updated), -1);
+  rb_define_method(cls_QMovie.rb_class, "on_state_changed", RUBY_METHOD_FUNC(rb_QMovie_on_state_changed), -1);
+  rb_define_method(cls_QMovie.rb_class, "on_error", RUBY_METHOD_FUNC(rb_QMovie_on_error), -1);
+  rb_define_method(cls_QMovie.rb_class, "on_finished", RUBY_METHOD_FUNC(rb_QMovie_on_finished), -1);
+  rb_define_method(cls_QMovie.rb_class, "on_frame_changed", RUBY_METHOD_FUNC(rb_QMovie_on_frame_changed), -1);
   rb_define_alloc_func(cls_QStyledItemDelegate.rb_class, rb_QStyledItemDelegate_alloc);
   qt6rb::register_ctor(cls_QStyledItemDelegate.rb_class, rb_QStyledItemDelegate_ctor);
   rb_include_module(cls_QStyledItemDelegate.rb_class, qt6rb::constructable_module());
@@ -86523,9 +89066,86 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QStyleOptionViewItem.rb_class, rb_QStyleOptionViewItem_alloc);
   qt6rb::register_ctor(cls_QStyleOptionViewItem.rb_class, rb_QStyleOptionViewItem_ctor);
   rb_include_module(cls_QStyleOptionViewItem.rb_class, qt6rb::constructable_module());
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_display_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationAlignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationAlignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_alignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_decoration_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "textElideMode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "textElideMode=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "text_elide_mode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "text_elide_mode=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_text_elide_mode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_decoration_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationSize", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationSize=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_decoration_size", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "font", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "font=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "showDecorationSelected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "showDecorationSelected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "features", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_features), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "features=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_features_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_features", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_features_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "widget", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_widget), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "widget=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_widget_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_widget", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_widget_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "index", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "index=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_index", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "icon", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_icon), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "icon=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_icon_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_icon", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_icon_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "text", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "text=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_text", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "viewItemPosition", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_view_item_position), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "viewItemPosition=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_view_item_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "view_item_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_view_item_position), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "view_item_position=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_view_item_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_view_item_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_view_item_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "background_brush", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_background_brush), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "background_brush=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_background_brush_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "backgroundBrush", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_background_brush), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "backgroundBrush=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_background_brush_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_background_brush", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_background_brush_set), 1);
   rb_define_alloc_func(cls_QStyleOptionButton.rb_class, rb_QStyleOptionButton_alloc);
   qt6rb::register_ctor(cls_QStyleOptionButton.rb_class, rb_QStyleOptionButton_ctor);
   rb_include_module(cls_QStyleOptionButton.rb_class, qt6rb::constructable_module());
+  rb_define_method(cls_QStyleOptionButton.rb_class, "features", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_features), 0);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "features=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_features_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "set_features", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_features_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "text", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_text), 0);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "text=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_text_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "set_text", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_text_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "icon", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon), 0);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "icon=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "set_icon", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "icon_size", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size), 0);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "icon_size=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "iconSize", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size), 0);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "iconSize=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size_set), 1);
   rb_define_alloc_func(cls_QFrame.rb_class, rb_QFrame_alloc);
   qt6rb::register_ctor(cls_QFrame.rb_class, rb_QFrame_ctor);
   rb_include_module(cls_QFrame.rb_class, qt6rb::constructable_module());
@@ -86621,11 +89241,163 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFrame.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QFrame_prot_child_event), -1);
   rb_define_method(cls_QFrame.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QFrame_prot_custom_event), -1);
   rb_define_method(cls_QFrame.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QFrame_prot_custom_event), -1);
+  rb_define_alloc_func(cls_QShortcut.rb_class, rb_QShortcut_alloc);
+  qt6rb::register_ctor(cls_QShortcut.rb_class, rb_QShortcut_ctor);
+  rb_include_module(cls_QShortcut.rb_class, qt6rb::constructable_module());
+  rb_define_method(cls_QShortcut.rb_class, "set_key", RUBY_METHOD_FUNC(rb_QShortcut_set_key), -1);
+  rb_define_method(cls_QShortcut.rb_class, "setKey", RUBY_METHOD_FUNC(rb_QShortcut_set_key), -1);
+  rb_define_alias(cls_QShortcut.rb_class, "key=", "set_key");
+  rb_define_method(cls_QShortcut.rb_class, "key", RUBY_METHOD_FUNC(rb_QShortcut_key), -1);
+  rb_define_method(cls_QShortcut.rb_class, "set_keys", RUBY_METHOD_FUNC(rb_QShortcut_set_keys), -1);
+  rb_define_method(cls_QShortcut.rb_class, "setKeys", RUBY_METHOD_FUNC(rb_QShortcut_set_keys), -1);
+  rb_define_alias(cls_QShortcut.rb_class, "keys=", "set_keys");
+  rb_define_method(cls_QShortcut.rb_class, "set_enabled", RUBY_METHOD_FUNC(rb_QShortcut_set_enabled), -1);
+  rb_define_method(cls_QShortcut.rb_class, "setEnabled", RUBY_METHOD_FUNC(rb_QShortcut_set_enabled), -1);
+  rb_define_alias(cls_QShortcut.rb_class, "enabled=", "set_enabled");
+  rb_define_method(cls_QShortcut.rb_class, "is_enabled", RUBY_METHOD_FUNC(rb_QShortcut_is_enabled), -1);
+  rb_define_method(cls_QShortcut.rb_class, "isEnabled", RUBY_METHOD_FUNC(rb_QShortcut_is_enabled), -1);
+  rb_define_alias(cls_QShortcut.rb_class, "enabled?", "is_enabled");
+  rb_define_method(cls_QShortcut.rb_class, "set_context", RUBY_METHOD_FUNC(rb_QShortcut_set_context), -1);
+  rb_define_method(cls_QShortcut.rb_class, "setContext", RUBY_METHOD_FUNC(rb_QShortcut_set_context), -1);
+  rb_define_alias(cls_QShortcut.rb_class, "context=", "set_context");
+  rb_define_method(cls_QShortcut.rb_class, "context", RUBY_METHOD_FUNC(rb_QShortcut_context), -1);
+  rb_define_method(cls_QShortcut.rb_class, "set_auto_repeat", RUBY_METHOD_FUNC(rb_QShortcut_set_auto_repeat), -1);
+  rb_define_method(cls_QShortcut.rb_class, "setAutoRepeat", RUBY_METHOD_FUNC(rb_QShortcut_set_auto_repeat), -1);
+  rb_define_alias(cls_QShortcut.rb_class, "auto_repeat=", "set_auto_repeat");
+  rb_define_alias(cls_QShortcut.rb_class, "autoRepeat=", "set_auto_repeat");
+  rb_define_method(cls_QShortcut.rb_class, "auto_repeat", RUBY_METHOD_FUNC(rb_QShortcut_auto_repeat), -1);
+  rb_define_method(cls_QShortcut.rb_class, "autoRepeat", RUBY_METHOD_FUNC(rb_QShortcut_auto_repeat), -1);
+  rb_define_method(cls_QShortcut.rb_class, "id", RUBY_METHOD_FUNC(rb_QShortcut_id), -1);
+  rb_define_method(cls_QShortcut.rb_class, "set_whats_this", RUBY_METHOD_FUNC(rb_QShortcut_set_whats_this), -1);
+  rb_define_method(cls_QShortcut.rb_class, "setWhatsThis", RUBY_METHOD_FUNC(rb_QShortcut_set_whats_this), -1);
+  rb_define_alias(cls_QShortcut.rb_class, "whats_this=", "set_whats_this");
+  rb_define_alias(cls_QShortcut.rb_class, "whatsThis=", "set_whats_this");
+  rb_define_method(cls_QShortcut.rb_class, "whats_this", RUBY_METHOD_FUNC(rb_QShortcut_whats_this), -1);
+  rb_define_method(cls_QShortcut.rb_class, "whatsThis", RUBY_METHOD_FUNC(rb_QShortcut_whats_this), -1);
+  rb_define_singleton_method(cls_QShortcut.rb_class, "tr", RUBY_METHOD_FUNC(rb_QShortcut_s_tr), -1);
+  rb_define_method(cls_QShortcut.rb_class, "event", RUBY_METHOD_FUNC(rb_QShortcut_prot_event), -1);
+  rb_define_method(cls_QShortcut.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QShortcut_prot_timer_event), -1);
+  rb_define_method(cls_QShortcut.rb_class, "timerEvent", RUBY_METHOD_FUNC(rb_QShortcut_prot_timer_event), -1);
+  rb_define_method(cls_QShortcut.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QShortcut_prot_child_event), -1);
+  rb_define_method(cls_QShortcut.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QShortcut_prot_child_event), -1);
+  rb_define_method(cls_QShortcut.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QShortcut_prot_custom_event), -1);
+  rb_define_method(cls_QShortcut.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QShortcut_prot_custom_event), -1);
+  rb_define_method(cls_QShortcut.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QShortcut_on_activated), -1);
+  rb_define_method(cls_QShortcut.rb_class, "on_activated_ambiguously", RUBY_METHOD_FUNC(rb_QShortcut_on_activated_ambiguously), -1);
+  rb_undef_alloc_func(cls_QStyle.rb_class);
+  rb_define_method(cls_QStyle.rb_class, "name", RUBY_METHOD_FUNC(rb_QStyle_name), -1);
+  rb_define_method(cls_QStyle.rb_class, "polish", RUBY_METHOD_FUNC(rb_QStyle_polish), -1);
+  rb_define_method(cls_QStyle.rb_class, "unpolish", RUBY_METHOD_FUNC(rb_QStyle_unpolish), -1);
+  rb_define_method(cls_QStyle.rb_class, "item_text_rect", RUBY_METHOD_FUNC(rb_QStyle_item_text_rect), -1);
+  rb_define_method(cls_QStyle.rb_class, "itemTextRect", RUBY_METHOD_FUNC(rb_QStyle_item_text_rect), -1);
+  rb_define_method(cls_QStyle.rb_class, "item_pixmap_rect", RUBY_METHOD_FUNC(rb_QStyle_item_pixmap_rect), -1);
+  rb_define_method(cls_QStyle.rb_class, "itemPixmapRect", RUBY_METHOD_FUNC(rb_QStyle_item_pixmap_rect), -1);
+  rb_define_method(cls_QStyle.rb_class, "draw_item_text", RUBY_METHOD_FUNC(rb_QStyle_draw_item_text), -1);
+  rb_define_method(cls_QStyle.rb_class, "drawItemText", RUBY_METHOD_FUNC(rb_QStyle_draw_item_text), -1);
+  rb_define_method(cls_QStyle.rb_class, "draw_item_pixmap", RUBY_METHOD_FUNC(rb_QStyle_draw_item_pixmap), -1);
+  rb_define_method(cls_QStyle.rb_class, "drawItemPixmap", RUBY_METHOD_FUNC(rb_QStyle_draw_item_pixmap), -1);
+  rb_define_method(cls_QStyle.rb_class, "standard_palette", RUBY_METHOD_FUNC(rb_QStyle_standard_palette), -1);
+  rb_define_method(cls_QStyle.rb_class, "standardPalette", RUBY_METHOD_FUNC(rb_QStyle_standard_palette), -1);
+  rb_define_method(cls_QStyle.rb_class, "draw_primitive", RUBY_METHOD_FUNC(rb_QStyle_draw_primitive), -1);
+  rb_define_method(cls_QStyle.rb_class, "drawPrimitive", RUBY_METHOD_FUNC(rb_QStyle_draw_primitive), -1);
+  rb_define_method(cls_QStyle.rb_class, "draw_control", RUBY_METHOD_FUNC(rb_QStyle_draw_control), -1);
+  rb_define_method(cls_QStyle.rb_class, "drawControl", RUBY_METHOD_FUNC(rb_QStyle_draw_control), -1);
+  rb_define_method(cls_QStyle.rb_class, "sub_element_rect", RUBY_METHOD_FUNC(rb_QStyle_sub_element_rect), -1);
+  rb_define_method(cls_QStyle.rb_class, "subElementRect", RUBY_METHOD_FUNC(rb_QStyle_sub_element_rect), -1);
+  rb_define_method(cls_QStyle.rb_class, "pixel_metric", RUBY_METHOD_FUNC(rb_QStyle_pixel_metric), -1);
+  rb_define_method(cls_QStyle.rb_class, "pixelMetric", RUBY_METHOD_FUNC(rb_QStyle_pixel_metric), -1);
+  rb_define_method(cls_QStyle.rb_class, "size_from_contents", RUBY_METHOD_FUNC(rb_QStyle_size_from_contents), -1);
+  rb_define_method(cls_QStyle.rb_class, "sizeFromContents", RUBY_METHOD_FUNC(rb_QStyle_size_from_contents), -1);
+  rb_define_method(cls_QStyle.rb_class, "style_hint", RUBY_METHOD_FUNC(rb_QStyle_style_hint), -1);
+  rb_define_method(cls_QStyle.rb_class, "styleHint", RUBY_METHOD_FUNC(rb_QStyle_style_hint), -1);
+  rb_define_method(cls_QStyle.rb_class, "standard_pixmap", RUBY_METHOD_FUNC(rb_QStyle_standard_pixmap), -1);
+  rb_define_method(cls_QStyle.rb_class, "standardPixmap", RUBY_METHOD_FUNC(rb_QStyle_standard_pixmap), -1);
+  rb_define_method(cls_QStyle.rb_class, "standard_icon", RUBY_METHOD_FUNC(rb_QStyle_standard_icon), -1);
+  rb_define_method(cls_QStyle.rb_class, "standardIcon", RUBY_METHOD_FUNC(rb_QStyle_standard_icon), -1);
+  rb_define_method(cls_QStyle.rb_class, "generated_icon_pixmap", RUBY_METHOD_FUNC(rb_QStyle_generated_icon_pixmap), -1);
+  rb_define_method(cls_QStyle.rb_class, "generatedIconPixmap", RUBY_METHOD_FUNC(rb_QStyle_generated_icon_pixmap), -1);
+  rb_define_method(cls_QStyle.rb_class, "layout_spacing", RUBY_METHOD_FUNC(rb_QStyle_layout_spacing), -1);
+  rb_define_method(cls_QStyle.rb_class, "layoutSpacing", RUBY_METHOD_FUNC(rb_QStyle_layout_spacing), -1);
+  rb_define_method(cls_QStyle.rb_class, "combined_layout_spacing", RUBY_METHOD_FUNC(rb_QStyle_combined_layout_spacing), -1);
+  rb_define_method(cls_QStyle.rb_class, "combinedLayoutSpacing", RUBY_METHOD_FUNC(rb_QStyle_combined_layout_spacing), -1);
+  rb_define_method(cls_QStyle.rb_class, "proxy", RUBY_METHOD_FUNC(rb_QStyle_proxy), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "tr", RUBY_METHOD_FUNC(rb_QStyle_s_tr), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "visual_rect", RUBY_METHOD_FUNC(rb_QStyle_s_visual_rect), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "visualRect", RUBY_METHOD_FUNC(rb_QStyle_s_visual_rect), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "visual_pos", RUBY_METHOD_FUNC(rb_QStyle_s_visual_pos), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "visualPos", RUBY_METHOD_FUNC(rb_QStyle_s_visual_pos), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "slider_position_from_value", RUBY_METHOD_FUNC(rb_QStyle_s_slider_position_from_value), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "sliderPositionFromValue", RUBY_METHOD_FUNC(rb_QStyle_s_slider_position_from_value), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "slider_value_from_position", RUBY_METHOD_FUNC(rb_QStyle_s_slider_value_from_position), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "sliderValueFromPosition", RUBY_METHOD_FUNC(rb_QStyle_s_slider_value_from_position), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "visual_alignment", RUBY_METHOD_FUNC(rb_QStyle_s_visual_alignment), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "visualAlignment", RUBY_METHOD_FUNC(rb_QStyle_s_visual_alignment), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "aligned_rect", RUBY_METHOD_FUNC(rb_QStyle_s_aligned_rect), -1);
+  rb_define_singleton_method(cls_QStyle.rb_class, "alignedRect", RUBY_METHOD_FUNC(rb_QStyle_s_aligned_rect), -1);
+  rb_undef_alloc_func(cls_QPaintEngine.rb_class);
+  rb_define_method(cls_QPaintEngine.rb_class, "is_active", RUBY_METHOD_FUNC(rb_QPaintEngine_is_active), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "isActive", RUBY_METHOD_FUNC(rb_QPaintEngine_is_active), -1);
+  rb_define_alias(cls_QPaintEngine.rb_class, "active?", "is_active");
+  rb_define_method(cls_QPaintEngine.rb_class, "set_active", RUBY_METHOD_FUNC(rb_QPaintEngine_set_active), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "setActive", RUBY_METHOD_FUNC(rb_QPaintEngine_set_active), -1);
+  rb_define_alias(cls_QPaintEngine.rb_class, "active=", "set_active");
+  rb_define_method(cls_QPaintEngine.rb_class, "begin", RUBY_METHOD_FUNC(rb_QPaintEngine_begin), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "end", RUBY_METHOD_FUNC(rb_QPaintEngine_end), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "draw_rects", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_rects), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "drawRects", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_rects), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "draw_ellipse", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_ellipse), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "drawEllipse", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_ellipse), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "draw_points", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_points), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "drawPoints", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_points), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "draw_polygon", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_polygon), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "drawPolygon", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_polygon), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "draw_pixmap", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_pixmap), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "drawPixmap", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_pixmap), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "draw_tiled_pixmap", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_tiled_pixmap), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "drawTiledPixmap", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_tiled_pixmap), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "draw_image", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_image), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "drawImage", RUBY_METHOD_FUNC(rb_QPaintEngine_draw_image), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "set_paint_device", RUBY_METHOD_FUNC(rb_QPaintEngine_set_paint_device), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "setPaintDevice", RUBY_METHOD_FUNC(rb_QPaintEngine_set_paint_device), -1);
+  rb_define_alias(cls_QPaintEngine.rb_class, "paint_device=", "set_paint_device");
+  rb_define_alias(cls_QPaintEngine.rb_class, "paintDevice=", "set_paint_device");
+  rb_define_method(cls_QPaintEngine.rb_class, "paint_device", RUBY_METHOD_FUNC(rb_QPaintEngine_paint_device), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "paintDevice", RUBY_METHOD_FUNC(rb_QPaintEngine_paint_device), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "set_system_rect", RUBY_METHOD_FUNC(rb_QPaintEngine_set_system_rect), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "setSystemRect", RUBY_METHOD_FUNC(rb_QPaintEngine_set_system_rect), -1);
+  rb_define_alias(cls_QPaintEngine.rb_class, "system_rect=", "set_system_rect");
+  rb_define_alias(cls_QPaintEngine.rb_class, "systemRect=", "set_system_rect");
+  rb_define_method(cls_QPaintEngine.rb_class, "system_rect", RUBY_METHOD_FUNC(rb_QPaintEngine_system_rect), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "systemRect", RUBY_METHOD_FUNC(rb_QPaintEngine_system_rect), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "coordinate_offset", RUBY_METHOD_FUNC(rb_QPaintEngine_coordinate_offset), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "coordinateOffset", RUBY_METHOD_FUNC(rb_QPaintEngine_coordinate_offset), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "type", RUBY_METHOD_FUNC(rb_QPaintEngine_type), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "test_dirty", RUBY_METHOD_FUNC(rb_QPaintEngine_test_dirty), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "testDirty", RUBY_METHOD_FUNC(rb_QPaintEngine_test_dirty), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "set_dirty", RUBY_METHOD_FUNC(rb_QPaintEngine_set_dirty), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "setDirty", RUBY_METHOD_FUNC(rb_QPaintEngine_set_dirty), -1);
+  rb_define_alias(cls_QPaintEngine.rb_class, "dirty=", "set_dirty");
+  rb_define_method(cls_QPaintEngine.rb_class, "clear_dirty", RUBY_METHOD_FUNC(rb_QPaintEngine_clear_dirty), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "clearDirty", RUBY_METHOD_FUNC(rb_QPaintEngine_clear_dirty), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "has_feature", RUBY_METHOD_FUNC(rb_QPaintEngine_has_feature), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "hasFeature", RUBY_METHOD_FUNC(rb_QPaintEngine_has_feature), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "painter", RUBY_METHOD_FUNC(rb_QPaintEngine_painter), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "sync_state", RUBY_METHOD_FUNC(rb_QPaintEngine_sync_state), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "syncState", RUBY_METHOD_FUNC(rb_QPaintEngine_sync_state), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "is_extended", RUBY_METHOD_FUNC(rb_QPaintEngine_is_extended), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "isExtended", RUBY_METHOD_FUNC(rb_QPaintEngine_is_extended), -1);
+  rb_define_alias(cls_QPaintEngine.rb_class, "extended?", "is_extended");
+  rb_define_method(cls_QPaintEngine.rb_class, "create_pixmap", RUBY_METHOD_FUNC(rb_QPaintEngine_create_pixmap), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "createPixmap", RUBY_METHOD_FUNC(rb_QPaintEngine_create_pixmap), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "create_pixmap_from_image", RUBY_METHOD_FUNC(rb_QPaintEngine_create_pixmap_from_image), -1);
+  rb_define_method(cls_QPaintEngine.rb_class, "createPixmapFromImage", RUBY_METHOD_FUNC(rb_QPaintEngine_create_pixmap_from_image), -1);
   rb_undef_alloc_func(cls_QPaintDevice.rb_class);
   rb_define_method(cls_QPaintDevice.rb_class, "dev_type", RUBY_METHOD_FUNC(rb_QPaintDevice_dev_type), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "devType", RUBY_METHOD_FUNC(rb_QPaintDevice_dev_type), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "painting_active", RUBY_METHOD_FUNC(rb_QPaintDevice_painting_active), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "paintingActive", RUBY_METHOD_FUNC(rb_QPaintDevice_painting_active), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "paint_engine", RUBY_METHOD_FUNC(rb_QPaintDevice_paint_engine), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "paintEngine", RUBY_METHOD_FUNC(rb_QPaintDevice_paint_engine), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "width", RUBY_METHOD_FUNC(rb_QPaintDevice_width), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "height", RUBY_METHOD_FUNC(rb_QPaintDevice_height), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "width_mm", RUBY_METHOD_FUNC(rb_QPaintDevice_width_mm), -1);
@@ -86718,10 +89490,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractButton.rb_class, "setChecked", RUBY_METHOD_FUNC(rb_QAbstractButton_set_checked), -1);
   rb_define_alias(cls_QAbstractButton.rb_class, "checked=", "set_checked");
   rb_define_singleton_method(cls_QAbstractButton.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractButton_s_tr), -1);
-  rb_define_method(cls_QAbstractButton.rb_class, "on_pressed", RUBY_METHOD_FUNC(rb_QAbstractButton_on_pressed), 0);
-  rb_define_method(cls_QAbstractButton.rb_class, "on_released", RUBY_METHOD_FUNC(rb_QAbstractButton_on_released), 0);
-  rb_define_method(cls_QAbstractButton.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QAbstractButton_on_clicked), 0);
-  rb_define_method(cls_QAbstractButton.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QAbstractButton_on_toggled), 0);
+  rb_define_method(cls_QAbstractButton.rb_class, "on_pressed", RUBY_METHOD_FUNC(rb_QAbstractButton_on_pressed), -1);
+  rb_define_method(cls_QAbstractButton.rb_class, "on_released", RUBY_METHOD_FUNC(rb_QAbstractButton_on_released), -1);
+  rb_define_method(cls_QAbstractButton.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QAbstractButton_on_clicked), -1);
+  rb_define_method(cls_QAbstractButton.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QAbstractButton_on_toggled), -1);
   rb_define_alloc_func(cls_QAbstractScrollArea.rb_class, rb_QAbstractScrollArea_alloc);
   qt6rb::register_ctor(cls_QAbstractScrollArea.rb_class, rb_QAbstractScrollArea_ctor);
   rb_include_module(cls_QAbstractScrollArea.rb_class, qt6rb::constructable_module());
@@ -86836,6 +89608,21 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractScrollArea.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_custom_event), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_custom_event), -1);
   rb_undef_alloc_func(cls_QLayoutItem.rb_class);
+  rb_define_method(cls_QLayoutItem.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QLayoutItem_size_hint), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QLayoutItem_size_hint), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "minimum_size", RUBY_METHOD_FUNC(rb_QLayoutItem_minimum_size), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "minimumSize", RUBY_METHOD_FUNC(rb_QLayoutItem_minimum_size), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "maximum_size", RUBY_METHOD_FUNC(rb_QLayoutItem_maximum_size), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "maximumSize", RUBY_METHOD_FUNC(rb_QLayoutItem_maximum_size), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "expanding_directions", RUBY_METHOD_FUNC(rb_QLayoutItem_expanding_directions), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "expandingDirections", RUBY_METHOD_FUNC(rb_QLayoutItem_expanding_directions), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "set_geometry", RUBY_METHOD_FUNC(rb_QLayoutItem_set_geometry), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "setGeometry", RUBY_METHOD_FUNC(rb_QLayoutItem_set_geometry), -1);
+  rb_define_alias(cls_QLayoutItem.rb_class, "geometry=", "set_geometry");
+  rb_define_method(cls_QLayoutItem.rb_class, "geometry", RUBY_METHOD_FUNC(rb_QLayoutItem_geometry), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QLayoutItem_is_empty), -1);
+  rb_define_method(cls_QLayoutItem.rb_class, "isEmpty", RUBY_METHOD_FUNC(rb_QLayoutItem_is_empty), -1);
+  rb_define_alias(cls_QLayoutItem.rb_class, "empty?", "is_empty");
   rb_define_method(cls_QLayoutItem.rb_class, "has_height_for_width", RUBY_METHOD_FUNC(rb_QLayoutItem_has_height_for_width), -1);
   rb_define_method(cls_QLayoutItem.rb_class, "hasHeightForWidth", RUBY_METHOD_FUNC(rb_QLayoutItem_has_height_for_width), -1);
   rb_define_method(cls_QLayoutItem.rb_class, "height_for_width", RUBY_METHOD_FUNC(rb_QLayoutItem_height_for_width), -1);
@@ -87035,12 +89822,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSlider.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_child_event), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_custom_event), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_custom_event), -1);
-  rb_define_method(cls_QAbstractSlider.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_value_changed), 0);
-  rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_pressed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_pressed), 0);
-  rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_moved", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_moved), 0);
-  rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_released", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_released), 0);
-  rb_define_method(cls_QAbstractSlider.rb_class, "on_range_changed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_range_changed), 0);
-  rb_define_method(cls_QAbstractSlider.rb_class, "on_action_triggered", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_action_triggered), 0);
+  rb_define_method(cls_QAbstractSlider.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_value_changed), -1);
+  rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_pressed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_pressed), -1);
+  rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_moved", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_moved), -1);
+  rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_released", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_released), -1);
+  rb_define_method(cls_QAbstractSlider.rb_class, "on_range_changed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_range_changed), -1);
+  rb_define_method(cls_QAbstractSlider.rb_class, "on_action_triggered", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_action_triggered), -1);
   rb_define_alloc_func(cls_QAbstractSpinBox.rb_class, rb_QAbstractSpinBox_alloc);
   qt6rb::register_ctor(cls_QAbstractSpinBox.rb_class, rb_QAbstractSpinBox_ctor);
   rb_include_module(cls_QAbstractSpinBox.rb_class, qt6rb::constructable_module());
@@ -87175,8 +89962,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSpinBox.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_child_event), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_custom_event), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_custom_event), -1);
-  rb_define_method(cls_QAbstractSpinBox.rb_class, "on_editing_finished", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_on_editing_finished), 0);
-  rb_define_method(cls_QAbstractSpinBox.rb_class, "on_return_pressed", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_on_return_pressed), 0);
+  rb_define_method(cls_QAbstractSpinBox.rb_class, "on_editing_finished", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_on_editing_finished), -1);
+  rb_define_method(cls_QAbstractSpinBox.rb_class, "on_return_pressed", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_on_return_pressed), -1);
   rb_define_alloc_func(cls_QTableView.rb_class, rb_QTableView_alloc);
   qt6rb::register_ctor(cls_QTableView.rb_class, rb_QTableView_ctor);
   rb_include_module(cls_QTableView.rb_class, qt6rb::constructable_module());
@@ -87487,6 +90274,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractListModel.rb_class, "flags", RUBY_METHOD_FUNC(rb_QAbstractListModel_flags), -1);
   rb_define_singleton_method(cls_QAbstractListModel.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractListModel_s_tr), -1);
   rb_undef_alloc_func(cls_QAbstractItemDelegate.rb_class);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "paint", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_paint), -1);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_size_hint), -1);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_size_hint), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "create_editor", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_create_editor), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "createEditor", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_create_editor), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "destroy_editor", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_destroy_editor), -1);
@@ -87506,14 +90296,42 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "handle_editor_event", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_handle_editor_event), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "handleEditorEvent", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_handle_editor_event), -1);
   rb_define_singleton_method(cls_QAbstractItemDelegate.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_s_tr), -1);
-  rb_define_method(cls_QAbstractItemDelegate.rb_class, "on_commit_data", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_on_commit_data), 0);
-  rb_define_method(cls_QAbstractItemDelegate.rb_class, "on_close_editor", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_on_close_editor), 0);
-  rb_define_method(cls_QAbstractItemDelegate.rb_class, "on_size_hint_changed", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_on_size_hint_changed), 0);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "on_commit_data", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_on_commit_data), -1);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "on_close_editor", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_on_close_editor), -1);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "on_size_hint_changed", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_on_size_hint_changed), -1);
   rb_define_alloc_func(cls_QStyleOption.rb_class, rb_QStyleOption_alloc);
   qt6rb::register_ctor(cls_QStyleOption.rb_class, rb_QStyleOption_ctor);
   rb_include_module(cls_QStyleOption.rb_class, qt6rb::constructable_module());
   rb_define_method(cls_QStyleOption.rb_class, "init_from", RUBY_METHOD_FUNC(rb_QStyleOption_init_from), -1);
   rb_define_method(cls_QStyleOption.rb_class, "initFrom", RUBY_METHOD_FUNC(rb_QStyleOption_init_from), -1);
+  rb_define_method(cls_QStyleOption.rb_class, "version", RUBY_METHOD_FUNC(rb_QStyleOption_field_version), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "version=", RUBY_METHOD_FUNC(rb_QStyleOption_field_version_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_version", RUBY_METHOD_FUNC(rb_QStyleOption_field_version_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "type", RUBY_METHOD_FUNC(rb_QStyleOption_field_type), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "type=", RUBY_METHOD_FUNC(rb_QStyleOption_field_type_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_type", RUBY_METHOD_FUNC(rb_QStyleOption_field_type_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "state", RUBY_METHOD_FUNC(rb_QStyleOption_field_state), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "state=", RUBY_METHOD_FUNC(rb_QStyleOption_field_state_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_state", RUBY_METHOD_FUNC(rb_QStyleOption_field_state_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "direction", RUBY_METHOD_FUNC(rb_QStyleOption_field_direction), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "direction=", RUBY_METHOD_FUNC(rb_QStyleOption_field_direction_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_direction", RUBY_METHOD_FUNC(rb_QStyleOption_field_direction_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "rect", RUBY_METHOD_FUNC(rb_QStyleOption_field_rect), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "rect=", RUBY_METHOD_FUNC(rb_QStyleOption_field_rect_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_rect", RUBY_METHOD_FUNC(rb_QStyleOption_field_rect_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "font_metrics", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "font_metrics=", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "fontMetrics", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "fontMetrics=", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_font_metrics", RUBY_METHOD_FUNC(rb_QStyleOption_field_font_metrics_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "palette", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "palette=", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_palette", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "styleObject", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "styleObject=", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "style_object", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "style_object=", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "set_style_object", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
   rb_undef_alloc_func(cls_QPointerEvent.rb_class);
   rb_define_method(cls_QPointerEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QPointerEvent_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QPointerEvent.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QPointerEvent_qt_check_for_qgadget_macro), -1);
@@ -88657,6 +91475,629 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QFrame.rb_class, "Sunken", INT2NUM(48));
   rb_define_const(cls_QFrame.rb_class, "Shadow_Mask", INT2NUM(240));
   rb_define_const(cls_QFrame.rb_class, "Shape_Mask", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "State_None", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "State_Enabled", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "State_Raised", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "State_Sunken", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "State_Off", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "State_NoChange", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "State_On", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "State_DownArrow", INT2NUM(64));
+  rb_define_const(cls_QStyle.rb_class, "State_Horizontal", INT2NUM(128));
+  rb_define_const(cls_QStyle.rb_class, "State_HasFocus", INT2NUM(256));
+  rb_define_const(cls_QStyle.rb_class, "State_Top", INT2NUM(512));
+  rb_define_const(cls_QStyle.rb_class, "State_Bottom", INT2NUM(1024));
+  rb_define_const(cls_QStyle.rb_class, "State_FocusAtBorder", INT2NUM(2048));
+  rb_define_const(cls_QStyle.rb_class, "State_AutoRaise", INT2NUM(4096));
+  rb_define_const(cls_QStyle.rb_class, "State_MouseOver", INT2NUM(8192));
+  rb_define_const(cls_QStyle.rb_class, "State_UpArrow", INT2NUM(16384));
+  rb_define_const(cls_QStyle.rb_class, "State_Selected", INT2NUM(32768));
+  rb_define_const(cls_QStyle.rb_class, "State_Active", INT2NUM(65536));
+  rb_define_const(cls_QStyle.rb_class, "State_Window", INT2NUM(131072));
+  rb_define_const(cls_QStyle.rb_class, "State_Open", INT2NUM(262144));
+  rb_define_const(cls_QStyle.rb_class, "State_Children", INT2NUM(524288));
+  rb_define_const(cls_QStyle.rb_class, "State_Item", INT2NUM(1048576));
+  rb_define_const(cls_QStyle.rb_class, "State_Sibling", INT2NUM(2097152));
+  rb_define_const(cls_QStyle.rb_class, "State_Editing", INT2NUM(4194304));
+  rb_define_const(cls_QStyle.rb_class, "State_KeyboardFocusChange", INT2NUM(8388608));
+  rb_define_const(cls_QStyle.rb_class, "State_ReadOnly", INT2NUM(33554432));
+  rb_define_const(cls_QStyle.rb_class, "State_Small", INT2NUM(67108864));
+  rb_define_const(cls_QStyle.rb_class, "State_Mini", INT2NUM(134217728));
+  rb_define_const(cls_QStyle.rb_class, "PE_Frame", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameDefaultButton", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameDockWidget", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameFocusRect", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameGroupBox", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameLineEdit", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameMenu", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameStatusBarItem", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameTabWidget", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameWindow", INT2NUM(9));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameButtonBevel", INT2NUM(10));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameButtonTool", INT2NUM(11));
+  rb_define_const(cls_QStyle.rb_class, "PE_FrameTabBarBase", INT2NUM(12));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelButtonCommand", INT2NUM(13));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelButtonBevel", INT2NUM(14));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelButtonTool", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelMenuBar", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelToolBar", INT2NUM(17));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelLineEdit", INT2NUM(18));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorArrowDown", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorArrowLeft", INT2NUM(20));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorArrowRight", INT2NUM(21));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorArrowUp", INT2NUM(22));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorBranch", INT2NUM(23));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorButtonDropDown", INT2NUM(24));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorItemViewItemCheck", INT2NUM(25));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorCheckBox", INT2NUM(26));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorDockWidgetResizeHandle", INT2NUM(27));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorHeaderArrow", INT2NUM(28));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorMenuCheckMark", INT2NUM(29));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorProgressChunk", INT2NUM(30));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorRadioButton", INT2NUM(31));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorSpinDown", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorSpinMinus", INT2NUM(33));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorSpinPlus", INT2NUM(34));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorSpinUp", INT2NUM(35));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorToolBarHandle", INT2NUM(36));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorToolBarSeparator", INT2NUM(37));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelTipLabel", INT2NUM(38));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorTabTear", INT2NUM(39));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorTabTearLeft", INT2NUM(39));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelScrollAreaCorner", INT2NUM(40));
+  rb_define_const(cls_QStyle.rb_class, "PE_Widget", INT2NUM(41));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorColumnViewArrow", INT2NUM(42));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorItemViewItemDrop", INT2NUM(43));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelItemViewItem", INT2NUM(44));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelItemViewRow", INT2NUM(45));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelStatusBar", INT2NUM(46));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorTabClose", INT2NUM(47));
+  rb_define_const(cls_QStyle.rb_class, "PE_PanelMenu", INT2NUM(48));
+  rb_define_const(cls_QStyle.rb_class, "PE_IndicatorTabTearRight", INT2NUM(49));
+  rb_define_const(cls_QStyle.rb_class, "PE_CustomBase", INT2NUM(251658240));
+  rb_define_const(cls_QStyle.rb_class, "CE_PushButton", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "CE_PushButtonBevel", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "CE_PushButtonLabel", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "CE_CheckBox", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "CE_CheckBoxLabel", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "CE_RadioButton", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "CE_RadioButtonLabel", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "CE_TabBarTab", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "CE_TabBarTabShape", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "CE_TabBarTabLabel", INT2NUM(9));
+  rb_define_const(cls_QStyle.rb_class, "CE_ProgressBar", INT2NUM(10));
+  rb_define_const(cls_QStyle.rb_class, "CE_ProgressBarGroove", INT2NUM(11));
+  rb_define_const(cls_QStyle.rb_class, "CE_ProgressBarContents", INT2NUM(12));
+  rb_define_const(cls_QStyle.rb_class, "CE_ProgressBarLabel", INT2NUM(13));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuItem", INT2NUM(14));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuScroller", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuVMargin", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuHMargin", INT2NUM(17));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuTearoff", INT2NUM(18));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuEmptyArea", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuBarItem", INT2NUM(20));
+  rb_define_const(cls_QStyle.rb_class, "CE_MenuBarEmptyArea", INT2NUM(21));
+  rb_define_const(cls_QStyle.rb_class, "CE_ToolButtonLabel", INT2NUM(22));
+  rb_define_const(cls_QStyle.rb_class, "CE_Header", INT2NUM(23));
+  rb_define_const(cls_QStyle.rb_class, "CE_HeaderSection", INT2NUM(24));
+  rb_define_const(cls_QStyle.rb_class, "CE_HeaderLabel", INT2NUM(25));
+  rb_define_const(cls_QStyle.rb_class, "CE_ToolBoxTab", INT2NUM(26));
+  rb_define_const(cls_QStyle.rb_class, "CE_SizeGrip", INT2NUM(27));
+  rb_define_const(cls_QStyle.rb_class, "CE_Splitter", INT2NUM(28));
+  rb_define_const(cls_QStyle.rb_class, "CE_RubberBand", INT2NUM(29));
+  rb_define_const(cls_QStyle.rb_class, "CE_DockWidgetTitle", INT2NUM(30));
+  rb_define_const(cls_QStyle.rb_class, "CE_ScrollBarAddLine", INT2NUM(31));
+  rb_define_const(cls_QStyle.rb_class, "CE_ScrollBarSubLine", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "CE_ScrollBarAddPage", INT2NUM(33));
+  rb_define_const(cls_QStyle.rb_class, "CE_ScrollBarSubPage", INT2NUM(34));
+  rb_define_const(cls_QStyle.rb_class, "CE_ScrollBarSlider", INT2NUM(35));
+  rb_define_const(cls_QStyle.rb_class, "CE_ScrollBarFirst", INT2NUM(36));
+  rb_define_const(cls_QStyle.rb_class, "CE_ScrollBarLast", INT2NUM(37));
+  rb_define_const(cls_QStyle.rb_class, "CE_FocusFrame", INT2NUM(38));
+  rb_define_const(cls_QStyle.rb_class, "CE_ComboBoxLabel", INT2NUM(39));
+  rb_define_const(cls_QStyle.rb_class, "CE_ToolBar", INT2NUM(40));
+  rb_define_const(cls_QStyle.rb_class, "CE_ToolBoxTabShape", INT2NUM(41));
+  rb_define_const(cls_QStyle.rb_class, "CE_ToolBoxTabLabel", INT2NUM(42));
+  rb_define_const(cls_QStyle.rb_class, "CE_HeaderEmptyArea", INT2NUM(43));
+  rb_define_const(cls_QStyle.rb_class, "CE_ColumnViewGrip", INT2NUM(44));
+  rb_define_const(cls_QStyle.rb_class, "CE_ItemViewItem", INT2NUM(45));
+  rb_define_const(cls_QStyle.rb_class, "CE_ShapedFrame", INT2NUM(46));
+  rb_define_const(cls_QStyle.rb_class, "CE_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QStyle.rb_class, "SE_PushButtonContents", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "SE_PushButtonFocusRect", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SE_CheckBoxIndicator", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SE_CheckBoxContents", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "SE_CheckBoxFocusRect", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SE_CheckBoxClickRect", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "SE_RadioButtonIndicator", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "SE_RadioButtonContents", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "SE_RadioButtonFocusRect", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SE_RadioButtonClickRect", INT2NUM(9));
+  rb_define_const(cls_QStyle.rb_class, "SE_ComboBoxFocusRect", INT2NUM(10));
+  rb_define_const(cls_QStyle.rb_class, "SE_SliderFocusRect", INT2NUM(11));
+  rb_define_const(cls_QStyle.rb_class, "SE_ProgressBarGroove", INT2NUM(12));
+  rb_define_const(cls_QStyle.rb_class, "SE_ProgressBarContents", INT2NUM(13));
+  rb_define_const(cls_QStyle.rb_class, "SE_ProgressBarLabel", INT2NUM(14));
+  rb_define_const(cls_QStyle.rb_class, "SE_ToolBoxTabContents", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "SE_HeaderLabel", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "SE_HeaderArrow", INT2NUM(17));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabWidgetTabBar", INT2NUM(18));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabWidgetTabPane", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabWidgetTabContents", INT2NUM(20));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabWidgetLeftCorner", INT2NUM(21));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabWidgetRightCorner", INT2NUM(22));
+  rb_define_const(cls_QStyle.rb_class, "SE_ItemViewItemCheckIndicator", INT2NUM(23));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarTearIndicator", INT2NUM(24));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarTearIndicatorLeft", INT2NUM(24));
+  rb_define_const(cls_QStyle.rb_class, "SE_TreeViewDisclosureItem", INT2NUM(25));
+  rb_define_const(cls_QStyle.rb_class, "SE_LineEditContents", INT2NUM(26));
+  rb_define_const(cls_QStyle.rb_class, "SE_FrameContents", INT2NUM(27));
+  rb_define_const(cls_QStyle.rb_class, "SE_DockWidgetCloseButton", INT2NUM(28));
+  rb_define_const(cls_QStyle.rb_class, "SE_DockWidgetFloatButton", INT2NUM(29));
+  rb_define_const(cls_QStyle.rb_class, "SE_DockWidgetTitleBarText", INT2NUM(30));
+  rb_define_const(cls_QStyle.rb_class, "SE_DockWidgetIcon", INT2NUM(31));
+  rb_define_const(cls_QStyle.rb_class, "SE_CheckBoxLayoutItem", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "SE_ComboBoxLayoutItem", INT2NUM(33));
+  rb_define_const(cls_QStyle.rb_class, "SE_DateTimeEditLayoutItem", INT2NUM(34));
+  rb_define_const(cls_QStyle.rb_class, "SE_LabelLayoutItem", INT2NUM(35));
+  rb_define_const(cls_QStyle.rb_class, "SE_ProgressBarLayoutItem", INT2NUM(36));
+  rb_define_const(cls_QStyle.rb_class, "SE_PushButtonLayoutItem", INT2NUM(37));
+  rb_define_const(cls_QStyle.rb_class, "SE_RadioButtonLayoutItem", INT2NUM(38));
+  rb_define_const(cls_QStyle.rb_class, "SE_SliderLayoutItem", INT2NUM(39));
+  rb_define_const(cls_QStyle.rb_class, "SE_SpinBoxLayoutItem", INT2NUM(40));
+  rb_define_const(cls_QStyle.rb_class, "SE_ToolButtonLayoutItem", INT2NUM(41));
+  rb_define_const(cls_QStyle.rb_class, "SE_FrameLayoutItem", INT2NUM(42));
+  rb_define_const(cls_QStyle.rb_class, "SE_GroupBoxLayoutItem", INT2NUM(43));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabWidgetLayoutItem", INT2NUM(44));
+  rb_define_const(cls_QStyle.rb_class, "SE_ItemViewItemDecoration", INT2NUM(45));
+  rb_define_const(cls_QStyle.rb_class, "SE_ItemViewItemText", INT2NUM(46));
+  rb_define_const(cls_QStyle.rb_class, "SE_ItemViewItemFocusRect", INT2NUM(47));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarTabLeftButton", INT2NUM(48));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarTabRightButton", INT2NUM(49));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarTabText", INT2NUM(50));
+  rb_define_const(cls_QStyle.rb_class, "SE_ShapedFrameContents", INT2NUM(51));
+  rb_define_const(cls_QStyle.rb_class, "SE_ToolBarHandle", INT2NUM(52));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarScrollLeftButton", INT2NUM(53));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarScrollRightButton", INT2NUM(54));
+  rb_define_const(cls_QStyle.rb_class, "SE_TabBarTearIndicatorRight", INT2NUM(55));
+  rb_define_const(cls_QStyle.rb_class, "SE_PushButtonBevel", INT2NUM(56));
+  rb_define_const(cls_QStyle.rb_class, "SE_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QStyle.rb_class, "CC_SpinBox", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "CC_ComboBox", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "CC_ScrollBar", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "CC_Slider", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "CC_ToolButton", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "CC_TitleBar", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "CC_Dial", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "CC_GroupBox", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "CC_MdiControls", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "CC_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QStyle.rb_class, "SC_None", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarAddLine", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarSubLine", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarAddPage", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarSubPage", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarFirst", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarLast", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarSlider", INT2NUM(64));
+  rb_define_const(cls_QStyle.rb_class, "SC_ScrollBarGroove", INT2NUM(128));
+  rb_define_const(cls_QStyle.rb_class, "SC_SpinBoxUp", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_SpinBoxDown", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_SpinBoxFrame", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_SpinBoxEditField", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SC_ComboBoxFrame", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_ComboBoxEditField", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_ComboBoxArrow", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_ComboBoxListBoxPopup", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SC_SliderGroove", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_SliderHandle", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_SliderTickmarks", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_ToolButton", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_ToolButtonMenu", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarSysMenu", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarMinButton", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarMaxButton", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarCloseButton", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarNormalButton", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarShadeButton", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarUnshadeButton", INT2NUM(64));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarContextHelpButton", INT2NUM(128));
+  rb_define_const(cls_QStyle.rb_class, "SC_TitleBarLabel", INT2NUM(256));
+  rb_define_const(cls_QStyle.rb_class, "SC_DialGroove", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_DialHandle", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_DialTickmarks", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_GroupBoxCheckBox", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_GroupBoxLabel", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_GroupBoxContents", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_GroupBoxFrame", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SC_MdiMinButton", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SC_MdiNormalButton", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SC_MdiCloseButton", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SC_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QStyle.rb_class, "SC_All", INT2NUM(4294967295));
+  rb_define_const(cls_QStyle.rb_class, "PM_ButtonMargin", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "PM_ButtonDefaultIndicator", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuButtonIndicator", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "PM_ButtonShiftHorizontal", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "PM_ButtonShiftVertical", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "PM_DefaultFrameWidth", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "PM_SpinBoxFrameWidth", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "PM_ComboBoxFrameWidth", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "PM_MaximumDragDistance", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "PM_ScrollBarExtent", INT2NUM(9));
+  rb_define_const(cls_QStyle.rb_class, "PM_ScrollBarSliderMin", INT2NUM(10));
+  rb_define_const(cls_QStyle.rb_class, "PM_SliderThickness", INT2NUM(11));
+  rb_define_const(cls_QStyle.rb_class, "PM_SliderControlThickness", INT2NUM(12));
+  rb_define_const(cls_QStyle.rb_class, "PM_SliderLength", INT2NUM(13));
+  rb_define_const(cls_QStyle.rb_class, "PM_SliderTickmarkOffset", INT2NUM(14));
+  rb_define_const(cls_QStyle.rb_class, "PM_SliderSpaceAvailable", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "PM_DockWidgetSeparatorExtent", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "PM_DockWidgetHandleExtent", INT2NUM(17));
+  rb_define_const(cls_QStyle.rb_class, "PM_DockWidgetFrameWidth", INT2NUM(18));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarTabOverlap", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarTabHSpace", INT2NUM(20));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarTabVSpace", INT2NUM(21));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarBaseHeight", INT2NUM(22));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarBaseOverlap", INT2NUM(23));
+  rb_define_const(cls_QStyle.rb_class, "PM_ProgressBarChunkWidth", INT2NUM(24));
+  rb_define_const(cls_QStyle.rb_class, "PM_SplitterWidth", INT2NUM(25));
+  rb_define_const(cls_QStyle.rb_class, "PM_TitleBarHeight", INT2NUM(26));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuScrollerHeight", INT2NUM(27));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuHMargin", INT2NUM(28));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuVMargin", INT2NUM(29));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuPanelWidth", INT2NUM(30));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuTearoffHeight", INT2NUM(31));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuDesktopFrameWidth", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuBarPanelWidth", INT2NUM(33));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuBarItemSpacing", INT2NUM(34));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuBarVMargin", INT2NUM(35));
+  rb_define_const(cls_QStyle.rb_class, "PM_MenuBarHMargin", INT2NUM(36));
+  rb_define_const(cls_QStyle.rb_class, "PM_IndicatorWidth", INT2NUM(37));
+  rb_define_const(cls_QStyle.rb_class, "PM_IndicatorHeight", INT2NUM(38));
+  rb_define_const(cls_QStyle.rb_class, "PM_ExclusiveIndicatorWidth", INT2NUM(39));
+  rb_define_const(cls_QStyle.rb_class, "PM_ExclusiveIndicatorHeight", INT2NUM(40));
+  rb_define_const(cls_QStyle.rb_class, "PM_DialogButtonsSeparator", INT2NUM(41));
+  rb_define_const(cls_QStyle.rb_class, "PM_DialogButtonsButtonWidth", INT2NUM(42));
+  rb_define_const(cls_QStyle.rb_class, "PM_DialogButtonsButtonHeight", INT2NUM(43));
+  rb_define_const(cls_QStyle.rb_class, "PM_MdiSubWindowFrameWidth", INT2NUM(44));
+  rb_define_const(cls_QStyle.rb_class, "PM_MdiSubWindowMinimizedWidth", INT2NUM(45));
+  rb_define_const(cls_QStyle.rb_class, "PM_HeaderMargin", INT2NUM(46));
+  rb_define_const(cls_QStyle.rb_class, "PM_HeaderMarkSize", INT2NUM(47));
+  rb_define_const(cls_QStyle.rb_class, "PM_HeaderGripMargin", INT2NUM(48));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarTabShiftHorizontal", INT2NUM(49));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarTabShiftVertical", INT2NUM(50));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarScrollButtonWidth", INT2NUM(51));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolBarFrameWidth", INT2NUM(52));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolBarHandleExtent", INT2NUM(53));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolBarItemSpacing", INT2NUM(54));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolBarItemMargin", INT2NUM(55));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolBarSeparatorExtent", INT2NUM(56));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolBarExtensionExtent", INT2NUM(57));
+  rb_define_const(cls_QStyle.rb_class, "PM_SpinBoxSliderHeight", INT2NUM(58));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolBarIconSize", INT2NUM(59));
+  rb_define_const(cls_QStyle.rb_class, "PM_ListViewIconSize", INT2NUM(60));
+  rb_define_const(cls_QStyle.rb_class, "PM_IconViewIconSize", INT2NUM(61));
+  rb_define_const(cls_QStyle.rb_class, "PM_SmallIconSize", INT2NUM(62));
+  rb_define_const(cls_QStyle.rb_class, "PM_LargeIconSize", INT2NUM(63));
+  rb_define_const(cls_QStyle.rb_class, "PM_FocusFrameVMargin", INT2NUM(64));
+  rb_define_const(cls_QStyle.rb_class, "PM_FocusFrameHMargin", INT2NUM(65));
+  rb_define_const(cls_QStyle.rb_class, "PM_ToolTipLabelFrameWidth", INT2NUM(66));
+  rb_define_const(cls_QStyle.rb_class, "PM_CheckBoxLabelSpacing", INT2NUM(67));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBarIconSize", INT2NUM(68));
+  rb_define_const(cls_QStyle.rb_class, "PM_SizeGripSize", INT2NUM(69));
+  rb_define_const(cls_QStyle.rb_class, "PM_DockWidgetTitleMargin", INT2NUM(70));
+  rb_define_const(cls_QStyle.rb_class, "PM_MessageBoxIconSize", INT2NUM(71));
+  rb_define_const(cls_QStyle.rb_class, "PM_ButtonIconSize", INT2NUM(72));
+  rb_define_const(cls_QStyle.rb_class, "PM_DockWidgetTitleBarButtonMargin", INT2NUM(73));
+  rb_define_const(cls_QStyle.rb_class, "PM_RadioButtonLabelSpacing", INT2NUM(74));
+  rb_define_const(cls_QStyle.rb_class, "PM_LayoutLeftMargin", INT2NUM(75));
+  rb_define_const(cls_QStyle.rb_class, "PM_LayoutTopMargin", INT2NUM(76));
+  rb_define_const(cls_QStyle.rb_class, "PM_LayoutRightMargin", INT2NUM(77));
+  rb_define_const(cls_QStyle.rb_class, "PM_LayoutBottomMargin", INT2NUM(78));
+  rb_define_const(cls_QStyle.rb_class, "PM_LayoutHorizontalSpacing", INT2NUM(79));
+  rb_define_const(cls_QStyle.rb_class, "PM_LayoutVerticalSpacing", INT2NUM(80));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabBar_ScrollButtonOverlap", INT2NUM(81));
+  rb_define_const(cls_QStyle.rb_class, "PM_TextCursorWidth", INT2NUM(82));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabCloseIndicatorWidth", INT2NUM(83));
+  rb_define_const(cls_QStyle.rb_class, "PM_TabCloseIndicatorHeight", INT2NUM(84));
+  rb_define_const(cls_QStyle.rb_class, "PM_ScrollView_ScrollBarSpacing", INT2NUM(85));
+  rb_define_const(cls_QStyle.rb_class, "PM_ScrollView_ScrollBarOverlap", INT2NUM(86));
+  rb_define_const(cls_QStyle.rb_class, "PM_SubMenuOverlap", INT2NUM(87));
+  rb_define_const(cls_QStyle.rb_class, "PM_TreeViewIndentation", INT2NUM(88));
+  rb_define_const(cls_QStyle.rb_class, "PM_HeaderDefaultSectionSizeHorizontal", INT2NUM(89));
+  rb_define_const(cls_QStyle.rb_class, "PM_HeaderDefaultSectionSizeVertical", INT2NUM(90));
+  rb_define_const(cls_QStyle.rb_class, "PM_TitleBarButtonIconSize", INT2NUM(91));
+  rb_define_const(cls_QStyle.rb_class, "PM_TitleBarButtonSize", INT2NUM(92));
+  rb_define_const(cls_QStyle.rb_class, "PM_LineEditIconSize", INT2NUM(93));
+  rb_define_const(cls_QStyle.rb_class, "PM_LineEditIconMargin", INT2NUM(94));
+  rb_define_const(cls_QStyle.rb_class, "PM_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QStyle.rb_class, "CT_PushButton", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "CT_CheckBox", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "CT_RadioButton", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "CT_ToolButton", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "CT_ComboBox", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "CT_Splitter", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "CT_ProgressBar", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "CT_MenuItem", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "CT_MenuBarItem", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "CT_MenuBar", INT2NUM(9));
+  rb_define_const(cls_QStyle.rb_class, "CT_Menu", INT2NUM(10));
+  rb_define_const(cls_QStyle.rb_class, "CT_TabBarTab", INT2NUM(11));
+  rb_define_const(cls_QStyle.rb_class, "CT_Slider", INT2NUM(12));
+  rb_define_const(cls_QStyle.rb_class, "CT_ScrollBar", INT2NUM(13));
+  rb_define_const(cls_QStyle.rb_class, "CT_LineEdit", INT2NUM(14));
+  rb_define_const(cls_QStyle.rb_class, "CT_SpinBox", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "CT_SizeGrip", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "CT_TabWidget", INT2NUM(17));
+  rb_define_const(cls_QStyle.rb_class, "CT_DialogButtons", INT2NUM(18));
+  rb_define_const(cls_QStyle.rb_class, "CT_HeaderSection", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "CT_GroupBox", INT2NUM(20));
+  rb_define_const(cls_QStyle.rb_class, "CT_MdiControls", INT2NUM(21));
+  rb_define_const(cls_QStyle.rb_class, "CT_ItemViewItem", INT2NUM(22));
+  rb_define_const(cls_QStyle.rb_class, "CT_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QStyle.rb_class, "RSIP_OnMouseClickAndAlreadyFocused", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "RSIP_OnMouseClick", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SH_EtchDisabledText", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "SH_DitherDisabledText", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SH_ScrollBar_MiddleClickAbsolutePosition", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SH_ScrollBar_ScrollWhenPointerLeavesControl", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabBar_SelectMouseType", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabBar_Alignment", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "SH_Header_ArrowAlignment", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "SH_Slider_SnapToValue", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "SH_Slider_SloppyKeyEvents", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SH_ProgressDialog_CenterCancelButton", INT2NUM(9));
+  rb_define_const(cls_QStyle.rb_class, "SH_ProgressDialog_TextLabelAlignment", INT2NUM(10));
+  rb_define_const(cls_QStyle.rb_class, "SH_PrintDialog_RightAlignButtons", INT2NUM(11));
+  rb_define_const(cls_QStyle.rb_class, "SH_MainWindow_SpaceBelowMenuBar", INT2NUM(12));
+  rb_define_const(cls_QStyle.rb_class, "SH_FontDialog_SelectAssociatedText", INT2NUM(13));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_AllowActiveAndDisabled", INT2NUM(14));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SpaceActivatesItem", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SubMenuPopupDelay", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "SH_ScrollView_FrameOnlyAroundContents", INT2NUM(17));
+  rb_define_const(cls_QStyle.rb_class, "SH_MenuBar_AltKeyNavigation", INT2NUM(18));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_ListMouseTracking", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_ListMouseTracking_Current", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_MouseTracking", INT2NUM(20));
+  rb_define_const(cls_QStyle.rb_class, "SH_MenuBar_MouseTracking", INT2NUM(21));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_ChangeHighlightOnFocus", INT2NUM(22));
+  rb_define_const(cls_QStyle.rb_class, "SH_Widget_ShareActivation", INT2NUM(23));
+  rb_define_const(cls_QStyle.rb_class, "SH_Workspace_FillSpaceOnMaximize", INT2NUM(24));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_Popup", INT2NUM(25));
+  rb_define_const(cls_QStyle.rb_class, "SH_TitleBar_NoBorder", INT2NUM(26));
+  rb_define_const(cls_QStyle.rb_class, "SH_Slider_StopMouseOverSlider", INT2NUM(27));
+  rb_define_const(cls_QStyle.rb_class, "SH_BlinkCursorWhenTextSelected", INT2NUM(28));
+  rb_define_const(cls_QStyle.rb_class, "SH_RichText_FullWidthSelection", INT2NUM(29));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_Scrollable", INT2NUM(30));
+  rb_define_const(cls_QStyle.rb_class, "SH_GroupBox_TextLabelVerticalAlignment", INT2NUM(31));
+  rb_define_const(cls_QStyle.rb_class, "SH_GroupBox_TextLabelColor", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SloppySubMenus", INT2NUM(33));
+  rb_define_const(cls_QStyle.rb_class, "SH_Table_GridLineColor", INT2NUM(34));
+  rb_define_const(cls_QStyle.rb_class, "SH_LineEdit_PasswordCharacter", INT2NUM(35));
+  rb_define_const(cls_QStyle.rb_class, "SH_DialogButtons_DefaultButton", INT2NUM(36));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolBox_SelectedPageTitleBold", INT2NUM(37));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabBar_PreferNoArrows", INT2NUM(38));
+  rb_define_const(cls_QStyle.rb_class, "SH_ScrollBar_LeftClickAbsolutePosition", INT2NUM(39));
+  rb_define_const(cls_QStyle.rb_class, "SH_ListViewExpand_SelectMouseType", INT2NUM(40));
+  rb_define_const(cls_QStyle.rb_class, "SH_UnderlineShortcut", INT2NUM(41));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_AnimateButton", INT2NUM(42));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_KeyPressAutoRepeatRate", INT2NUM(43));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_ClickAutoRepeatRate", INT2NUM(44));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_FillScreenWithScroll", INT2NUM(45));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolTipLabel_Opacity", INT2NUM(46));
+  rb_define_const(cls_QStyle.rb_class, "SH_DrawMenuBarSeparator", INT2NUM(47));
+  rb_define_const(cls_QStyle.rb_class, "SH_TitleBar_ModifyNotification", INT2NUM(48));
+  rb_define_const(cls_QStyle.rb_class, "SH_Button_FocusPolicy", INT2NUM(49));
+  rb_define_const(cls_QStyle.rb_class, "SH_MessageBox_UseBorderForButtonSpacing", INT2NUM(50));
+  rb_define_const(cls_QStyle.rb_class, "SH_TitleBar_AutoRaise", INT2NUM(51));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolButton_PopupDelay", INT2NUM(52));
+  rb_define_const(cls_QStyle.rb_class, "SH_FocusFrame_Mask", INT2NUM(53));
+  rb_define_const(cls_QStyle.rb_class, "SH_RubberBand_Mask", INT2NUM(54));
+  rb_define_const(cls_QStyle.rb_class, "SH_WindowFrame_Mask", INT2NUM(55));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinControls_DisableOnBounds", INT2NUM(56));
+  rb_define_const(cls_QStyle.rb_class, "SH_Dial_BackgroundRole", INT2NUM(57));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_LayoutDirection", INT2NUM(58));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_EllipsisLocation", INT2NUM(59));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_ShowDecorationSelected", INT2NUM(60));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_ActivateItemOnSingleClick", INT2NUM(61));
+  rb_define_const(cls_QStyle.rb_class, "SH_ScrollBar_ContextMenu", INT2NUM(62));
+  rb_define_const(cls_QStyle.rb_class, "SH_ScrollBar_RollBetweenButtons", INT2NUM(63));
+  rb_define_const(cls_QStyle.rb_class, "SH_Slider_AbsoluteSetButtons", INT2NUM(64));
+  rb_define_const(cls_QStyle.rb_class, "SH_Slider_PageSetButtons", INT2NUM(65));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_KeyboardSearch", INT2NUM(66));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabBar_ElideMode", INT2NUM(67));
+  rb_define_const(cls_QStyle.rb_class, "SH_DialogButtonLayout", INT2NUM(68));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_PopupFrameStyle", INT2NUM(69));
+  rb_define_const(cls_QStyle.rb_class, "SH_MessageBox_TextInteractionFlags", INT2NUM(70));
+  rb_define_const(cls_QStyle.rb_class, "SH_DialogButtonBox_ButtonsHaveIcons", INT2NUM(71));
+  rb_define_const(cls_QStyle.rb_class, "SH_MessageBox_CenterButtons", INT2NUM(72));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SelectionWrap", INT2NUM(73));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_MovementWithoutUpdatingSelection", INT2NUM(74));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolTip_Mask", INT2NUM(75));
+  rb_define_const(cls_QStyle.rb_class, "SH_FocusFrame_AboveWidget", INT2NUM(76));
+  rb_define_const(cls_QStyle.rb_class, "SH_TextControl_FocusIndicatorTextCharFormat", INT2NUM(77));
+  rb_define_const(cls_QStyle.rb_class, "SH_WizardStyle", INT2NUM(78));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_ArrowKeysNavigateIntoChildren", INT2NUM(79));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_Mask", INT2NUM(80));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_FlashTriggeredItem", INT2NUM(81));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_FadeOutOnHide", INT2NUM(82));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_ClickAutoRepeatThreshold", INT2NUM(83));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_PaintAlternatingRowColorsForEmptyArea", INT2NUM(84));
+  rb_define_const(cls_QStyle.rb_class, "SH_FormLayoutWrapPolicy", INT2NUM(85));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabWidget_DefaultTabPosition", INT2NUM(86));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolBar_Movable", INT2NUM(87));
+  rb_define_const(cls_QStyle.rb_class, "SH_FormLayoutFieldGrowthPolicy", INT2NUM(88));
+  rb_define_const(cls_QStyle.rb_class, "SH_FormLayoutFormAlignment", INT2NUM(89));
+  rb_define_const(cls_QStyle.rb_class, "SH_FormLayoutLabelAlignment", INT2NUM(90));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_DrawDelegateFrame", INT2NUM(91));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabBar_CloseButtonPosition", INT2NUM(92));
+  rb_define_const(cls_QStyle.rb_class, "SH_DockWidget_ButtonsHaveFrame", INT2NUM(93));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolButtonStyle", INT2NUM(94));
+  rb_define_const(cls_QStyle.rb_class, "SH_RequestSoftwareInputPanel", INT2NUM(95));
+  rb_define_const(cls_QStyle.rb_class, "SH_ScrollBar_Transient", INT2NUM(96));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SupportsSections", INT2NUM(97));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolTip_WakeUpDelay", INT2NUM(98));
+  rb_define_const(cls_QStyle.rb_class, "SH_ToolTip_FallAsleepDelay", INT2NUM(99));
+  rb_define_const(cls_QStyle.rb_class, "SH_Widget_Animate", INT2NUM(100));
+  rb_define_const(cls_QStyle.rb_class, "SH_Splitter_OpaqueResize", INT2NUM(101));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_UseNativePopup", INT2NUM(102));
+  rb_define_const(cls_QStyle.rb_class, "SH_LineEdit_PasswordMaskDelay", INT2NUM(103));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabBar_ChangeCurrentDelay", INT2NUM(104));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SubMenuUniDirection", INT2NUM(105));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SubMenuUniDirectionFailCount", INT2NUM(106));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SubMenuSloppySelectOtherActions", INT2NUM(107));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SubMenuSloppyCloseTimeout", INT2NUM(108));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SubMenuResetWhenReenteringParent", INT2NUM(109));
+  rb_define_const(cls_QStyle.rb_class, "SH_Menu_SubMenuDontStartSloppyOnLeave", INT2NUM(110));
+  rb_define_const(cls_QStyle.rb_class, "SH_ItemView_ScrollMode", INT2NUM(111));
+  rb_define_const(cls_QStyle.rb_class, "SH_TitleBar_ShowToolTipsOnButtons", INT2NUM(112));
+  rb_define_const(cls_QStyle.rb_class, "SH_Widget_Animation_Duration", INT2NUM(113));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_AllowWheelScrolling", INT2NUM(114));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_ButtonsInsideFrame", INT2NUM(115));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_StepModifier", INT2NUM(116));
+  rb_define_const(cls_QStyle.rb_class, "SH_TabBar_AllowWheelScrolling", INT2NUM(117));
+  rb_define_const(cls_QStyle.rb_class, "SH_Table_AlwaysDrawLeftTopGridLines", INT2NUM(118));
+  rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_SelectOnStep", INT2NUM(119));
+  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_ListMouseTracking_Active", INT2NUM(120));
+  rb_define_const(cls_QStyle.rb_class, "SH_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarMenuButton", INT2NUM(0));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarMinButton", INT2NUM(1));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarMaxButton", INT2NUM(2));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarCloseButton", INT2NUM(3));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarNormalButton", INT2NUM(4));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarShadeButton", INT2NUM(5));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarUnshadeButton", INT2NUM(6));
+  rb_define_const(cls_QStyle.rb_class, "SP_TitleBarContextHelpButton", INT2NUM(7));
+  rb_define_const(cls_QStyle.rb_class, "SP_DockWidgetCloseButton", INT2NUM(8));
+  rb_define_const(cls_QStyle.rb_class, "SP_MessageBoxInformation", INT2NUM(9));
+  rb_define_const(cls_QStyle.rb_class, "SP_MessageBoxWarning", INT2NUM(10));
+  rb_define_const(cls_QStyle.rb_class, "SP_MessageBoxCritical", INT2NUM(11));
+  rb_define_const(cls_QStyle.rb_class, "SP_MessageBoxQuestion", INT2NUM(12));
+  rb_define_const(cls_QStyle.rb_class, "SP_DesktopIcon", INT2NUM(13));
+  rb_define_const(cls_QStyle.rb_class, "SP_TrashIcon", INT2NUM(14));
+  rb_define_const(cls_QStyle.rb_class, "SP_ComputerIcon", INT2NUM(15));
+  rb_define_const(cls_QStyle.rb_class, "SP_DriveFDIcon", INT2NUM(16));
+  rb_define_const(cls_QStyle.rb_class, "SP_DriveHDIcon", INT2NUM(17));
+  rb_define_const(cls_QStyle.rb_class, "SP_DriveCDIcon", INT2NUM(18));
+  rb_define_const(cls_QStyle.rb_class, "SP_DriveDVDIcon", INT2NUM(19));
+  rb_define_const(cls_QStyle.rb_class, "SP_DriveNetIcon", INT2NUM(20));
+  rb_define_const(cls_QStyle.rb_class, "SP_DirOpenIcon", INT2NUM(21));
+  rb_define_const(cls_QStyle.rb_class, "SP_DirClosedIcon", INT2NUM(22));
+  rb_define_const(cls_QStyle.rb_class, "SP_DirLinkIcon", INT2NUM(23));
+  rb_define_const(cls_QStyle.rb_class, "SP_DirLinkOpenIcon", INT2NUM(24));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileIcon", INT2NUM(25));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileLinkIcon", INT2NUM(26));
+  rb_define_const(cls_QStyle.rb_class, "SP_ToolBarHorizontalExtensionButton", INT2NUM(27));
+  rb_define_const(cls_QStyle.rb_class, "SP_ToolBarVerticalExtensionButton", INT2NUM(28));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogStart", INT2NUM(29));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogEnd", INT2NUM(30));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogToParent", INT2NUM(31));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogNewFolder", INT2NUM(32));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogDetailedView", INT2NUM(33));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogInfoView", INT2NUM(34));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogContentsView", INT2NUM(35));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogListView", INT2NUM(36));
+  rb_define_const(cls_QStyle.rb_class, "SP_FileDialogBack", INT2NUM(37));
+  rb_define_const(cls_QStyle.rb_class, "SP_DirIcon", INT2NUM(38));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogOkButton", INT2NUM(39));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogCancelButton", INT2NUM(40));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogHelpButton", INT2NUM(41));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogOpenButton", INT2NUM(42));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogSaveButton", INT2NUM(43));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogCloseButton", INT2NUM(44));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogApplyButton", INT2NUM(45));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogResetButton", INT2NUM(46));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogDiscardButton", INT2NUM(47));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogYesButton", INT2NUM(48));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogNoButton", INT2NUM(49));
+  rb_define_const(cls_QStyle.rb_class, "SP_ArrowUp", INT2NUM(50));
+  rb_define_const(cls_QStyle.rb_class, "SP_ArrowDown", INT2NUM(51));
+  rb_define_const(cls_QStyle.rb_class, "SP_ArrowLeft", INT2NUM(52));
+  rb_define_const(cls_QStyle.rb_class, "SP_ArrowRight", INT2NUM(53));
+  rb_define_const(cls_QStyle.rb_class, "SP_ArrowBack", INT2NUM(54));
+  rb_define_const(cls_QStyle.rb_class, "SP_ArrowForward", INT2NUM(55));
+  rb_define_const(cls_QStyle.rb_class, "SP_DirHomeIcon", INT2NUM(56));
+  rb_define_const(cls_QStyle.rb_class, "SP_CommandLink", INT2NUM(57));
+  rb_define_const(cls_QStyle.rb_class, "SP_VistaShield", INT2NUM(58));
+  rb_define_const(cls_QStyle.rb_class, "SP_BrowserReload", INT2NUM(59));
+  rb_define_const(cls_QStyle.rb_class, "SP_BrowserStop", INT2NUM(60));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaPlay", INT2NUM(61));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaStop", INT2NUM(62));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaPause", INT2NUM(63));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaSkipForward", INT2NUM(64));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaSkipBackward", INT2NUM(65));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaSeekForward", INT2NUM(66));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaSeekBackward", INT2NUM(67));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaVolume", INT2NUM(68));
+  rb_define_const(cls_QStyle.rb_class, "SP_MediaVolumeMuted", INT2NUM(69));
+  rb_define_const(cls_QStyle.rb_class, "SP_LineEditClearButton", INT2NUM(70));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogYesToAllButton", INT2NUM(71));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogNoToAllButton", INT2NUM(72));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogSaveAllButton", INT2NUM(73));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogAbortButton", INT2NUM(74));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogRetryButton", INT2NUM(75));
+  rb_define_const(cls_QStyle.rb_class, "SP_DialogIgnoreButton", INT2NUM(76));
+  rb_define_const(cls_QStyle.rb_class, "SP_RestoreDefaultsButton", INT2NUM(77));
+  rb_define_const(cls_QStyle.rb_class, "SP_TabCloseButton", INT2NUM(78));
+  rb_define_const(cls_QStyle.rb_class, "NStandardPixmap", INT2NUM(79));
+  rb_define_const(cls_QStyle.rb_class, "SP_CustomBase", INT2NUM(4026531840));
+  rb_define_const(cls_QPaintEngine.rb_class, "PrimitiveTransform", INT2NUM(1));
+  rb_define_const(cls_QPaintEngine.rb_class, "PatternTransform", INT2NUM(2));
+  rb_define_const(cls_QPaintEngine.rb_class, "PixmapTransform", INT2NUM(4));
+  rb_define_const(cls_QPaintEngine.rb_class, "PatternBrush", INT2NUM(8));
+  rb_define_const(cls_QPaintEngine.rb_class, "LinearGradientFill", INT2NUM(16));
+  rb_define_const(cls_QPaintEngine.rb_class, "RadialGradientFill", INT2NUM(32));
+  rb_define_const(cls_QPaintEngine.rb_class, "ConicalGradientFill", INT2NUM(64));
+  rb_define_const(cls_QPaintEngine.rb_class, "AlphaBlend", INT2NUM(128));
+  rb_define_const(cls_QPaintEngine.rb_class, "PorterDuff", INT2NUM(256));
+  rb_define_const(cls_QPaintEngine.rb_class, "PainterPaths", INT2NUM(512));
+  rb_define_const(cls_QPaintEngine.rb_class, "Antialiasing", INT2NUM(1024));
+  rb_define_const(cls_QPaintEngine.rb_class, "BrushStroke", INT2NUM(2048));
+  rb_define_const(cls_QPaintEngine.rb_class, "ConstantOpacity", INT2NUM(4096));
+  rb_define_const(cls_QPaintEngine.rb_class, "MaskedBrush", INT2NUM(8192));
+  rb_define_const(cls_QPaintEngine.rb_class, "PerspectiveTransform", INT2NUM(16384));
+  rb_define_const(cls_QPaintEngine.rb_class, "BlendModes", INT2NUM(32768));
+  rb_define_const(cls_QPaintEngine.rb_class, "ObjectBoundingModeGradients", INT2NUM(65536));
+  rb_define_const(cls_QPaintEngine.rb_class, "RasterOpModes", INT2NUM(131072));
+  rb_define_const(cls_QPaintEngine.rb_class, "PaintOutsidePaintEvent", INT2NUM(536870912));
+  rb_define_const(cls_QPaintEngine.rb_class, "AllFeatures", INT2NUM(4294967295));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyPen", INT2NUM(1));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyBrush", INT2NUM(2));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyBrushOrigin", INT2NUM(4));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyFont", INT2NUM(8));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyBackground", INT2NUM(16));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyBackgroundMode", INT2NUM(32));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyTransform", INT2NUM(64));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyClipRegion", INT2NUM(128));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyClipPath", INT2NUM(256));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyHints", INT2NUM(512));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyCompositionMode", INT2NUM(1024));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyClipEnabled", INT2NUM(2048));
+  rb_define_const(cls_QPaintEngine.rb_class, "DirtyOpacity", INT2NUM(4096));
+  rb_define_const(cls_QPaintEngine.rb_class, "AllDirty", INT2NUM(65535));
+  rb_define_const(cls_QPaintEngine.rb_class, "OddEvenMode", INT2NUM(0));
+  rb_define_const(cls_QPaintEngine.rb_class, "WindingMode", INT2NUM(1));
+  rb_define_const(cls_QPaintEngine.rb_class, "ConvexMode", INT2NUM(2));
+  rb_define_const(cls_QPaintEngine.rb_class, "PolylineMode", INT2NUM(3));
+  rb_define_const(cls_QPaintEngine.rb_class, "X11", INT2NUM(0));
+  rb_define_const(cls_QPaintEngine.rb_class, "Windows", INT2NUM(1));
+  rb_define_const(cls_QPaintEngine.rb_class, "QuickDraw", INT2NUM(2));
+  rb_define_const(cls_QPaintEngine.rb_class, "CoreGraphics", INT2NUM(3));
+  rb_define_const(cls_QPaintEngine.rb_class, "MacPrinter", INT2NUM(4));
+  rb_define_const(cls_QPaintEngine.rb_class, "QWindowSystem", INT2NUM(5));
+  rb_define_const(cls_QPaintEngine.rb_class, "OpenGL", INT2NUM(6));
+  rb_define_const(cls_QPaintEngine.rb_class, "Picture", INT2NUM(7));
+  rb_define_const(cls_QPaintEngine.rb_class, "SVG", INT2NUM(8));
+  rb_define_const(cls_QPaintEngine.rb_class, "Raster", INT2NUM(9));
+  rb_define_const(cls_QPaintEngine.rb_class, "Direct3D", INT2NUM(10));
+  rb_define_const(cls_QPaintEngine.rb_class, "Pdf", INT2NUM(11));
+  rb_define_const(cls_QPaintEngine.rb_class, "OpenVG", INT2NUM(12));
+  rb_define_const(cls_QPaintEngine.rb_class, "OpenGL2", INT2NUM(13));
+  rb_define_const(cls_QPaintEngine.rb_class, "PaintBuffer", INT2NUM(14));
+  rb_define_const(cls_QPaintEngine.rb_class, "Blitter", INT2NUM(15));
+  rb_define_const(cls_QPaintEngine.rb_class, "Direct2D", INT2NUM(16));
+  rb_define_const(cls_QPaintEngine.rb_class, "User", INT2NUM(50));
+  rb_define_const(cls_QPaintEngine.rb_class, "MaxUser", INT2NUM(100));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmWidth", INT2NUM(1));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmHeight", INT2NUM(2));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmWidthMM", INT2NUM(3));

@@ -95,10 +95,12 @@ class Type:
         self.cls = cls        # class name for objptr/objval
 
     def guard(self, expr):
+        # qt6rb::is_kind_of also accepts C++ bases the single-inheritance
+        # Ruby hierarchy cannot express (QWidget is also a QPaintDevice)
         if self.kind == "objptr":
-            return f"(NIL_P({expr}) || rb_obj_is_kind_of({expr}, cls_{self.cls}.rb_class))"
+            return f"(NIL_P({expr}) || qt6rb::is_kind_of({expr}, &cls_{self.cls}))"
         if self.kind == "objval":
-            return f"rb_obj_is_kind_of({expr}, cls_{self.cls}.rb_class)"
+            return f"qt6rb::is_kind_of({expr}, &cls_{self.cls})"
         return GUARDS[self.kind].format(expr)
 
 
@@ -124,8 +126,12 @@ def classify(t, generated):
         pointee = canon.get_pointee()
         pspell = pointee.spelling.replace("const ", "").strip()
         if pspell == "char" and pointee.is_const_qualified():
+            # The static_cast matters: StringValueCStr yields char*, and an
+            # unqualified char* makes C++ prefer Qt's functor template
+            # overloads (QShortcut's constructors) over the const char* ones
             return Type("cstr", "const char*",
-                        "StringValueCStr({})", "rb_str_new_cstr({})")
+                        "static_cast<const char*>(StringValueCStr({}))",
+                        "rb_str_new_cstr({})")
         if pspell == "bool" and not pointee.is_const_qualified():
             # Qt's `bool *ok` out-param idiom (QInputDialog::getText, ...).
             # qt6rb::BoolOut is a temporary that converts to bool* and, when
@@ -238,6 +244,7 @@ class Klass:
         self.methods = []
         self.signals = []
         self.ctors = []
+        self.fields = []        # public data members (name, Type, writable)
         self.enums = []
         self.virtuals = []      # hookable virtuals (own + inherited)
         self.shim = False
@@ -373,9 +380,21 @@ def harvest(tu, qt_prefix, wanted):
 
     for k in classes.values():
         for child in k.cursor.get_children():
-            if child.kind == CursorKind.CXX_METHOD:
-                if child.is_pure_virtual_method():
+            if child.kind == CursorKind.FIELD_DECL:
+                # Public data members: the QStyleOption family is configured
+                # entirely through them (opt.rect =, opt.text =)
+                if child.access_specifier != AccessSpecifier.PUBLIC:
                     continue
+                ft = classify(child.type, generated)
+                if ft.kind in ("unsupported", "void", "boolout"):
+                    k.skipped += 1
+                    continue
+                writable = not child.type.is_const_qualified()
+                k.fields.append((child.spelling, ft, writable))
+            elif child.kind == CursorKind.CXX_METHOD:
+                # Pure virtuals are still callable through the abstract base
+                # (QStyle::drawControl); only overriding them is impossible,
+                # and collect_virtuals filters those separately.
                 if child.access_specifier != AccessSpecifier.PUBLIC:
                     continue
                 if child.is_deleted_method():
@@ -396,8 +415,12 @@ def harvest(tu, qt_prefix, wanted):
             elif child.kind == CursorKind.CONSTRUCTOR:
                 if child.access_specifier != AccessSpecifier.PUBLIC:
                     continue
-                if child.is_deleted_method() or child.is_copy_constructor() \
-                        or child.is_move_constructor():
+                if child.is_deleted_method() or child.is_move_constructor():
+                    continue
+                # Copy constructors are useful for value classes
+                # (Qt::StyleOptionViewItem.new(other)); a QObject's copy ctor
+                # is deleted anyway, but skip them for clarity
+                if child.is_copy_constructor() and generated.get(k.name):
                     continue
                 m = Method(child, generated)
                 if m.supported:
@@ -555,6 +578,10 @@ def emit_shim(out, klass):
     out.append(f"class {shim} : public {klass.name} {{")
     out.append("public:")
     out.append(f"  using {klass.name}::{klass.name};")
+    # Inherited-constructor declarations never include the copy constructor,
+    # so forward it explicitly when the class exposes one
+    if any(m.cursor.is_copy_constructor() for m in klass.ctors):
+        out.append(f"  {shim}(const {klass.name}& other) : {klass.name}(other) {{}}")
     out.append("  VALUE qt6rb_self = Qnil;")
     out.append("  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }")
     out.append(f"  ~{shim}() override {{ if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }}")
@@ -633,22 +660,87 @@ def emit_protected_callers(out, klass):
     return result
 
 
-def emit_signal(out, klass, sig):
-    rname = f"on_{snake(sig.name)}"
+def emit_field(out, klass, name, ftype, writable):
+    """Reader (and writer) for a public data member."""
+    base = snake(name)
+    getter = f"rb_{klass.name}_field_{base}"
+    out.append(f"static VALUE {getter}(VALUE self) {{")
+    out.append(f"  {klass.name}* o = static_cast<{klass.name}*>(qt6rb::unwrap(self, &cls_{klass.name}));")
+    out.append(f"  return {ftype.to_rb.format('o->' + name)};")
+    out.append("}")
+    out.append("")
+    setter = None
+    if writable and ftype.to_cxx:
+        setter = f"rb_{klass.name}_field_{base}_set"
+        out.append(f"static VALUE {setter}(VALUE self, VALUE v) {{")
+        out.append(f"  {klass.name}* o = static_cast<{klass.name}*>(qt6rb::unwrap(self, &cls_{klass.name}));")
+        out.append(f"  o->{name} = {ftype.to_cxx.format('v')};")
+        out.append("  return v;")
+        out.append("}")
+        out.append("")
+    return getter, setter
+
+
+def signal_param_key(decls):
+    """Normalized parameter-type key used to pick between overloaded signals.
+
+    Mirrors qt6rb::signal_param_key in the runtime: drop whitespace, const,
+    and reference/pointer markers so a SIGNAL() string written any of the
+    usual ways ('activated(const QString&)', 'activated(QString)') selects
+    the same overload."""
+    parts = []
+    for d in decls:
+        d = d.replace("const", " ").replace("&", " ").replace("*", " ")
+        parts.append("".join(d.split()))
+    return ",".join(parts)
+
+
+def emit_signal(out, klass, sigs):
+    """Emit the `on_<signal>` registration method for one signal name.
+
+    Overloaded signals (QCompleter::activated(QString) vs (QModelIndex))
+    would make a plain `&Klass::sig` member pointer ambiguous, so each
+    overload is disambiguated with a static_cast and selected at runtime by
+    the parameter types in the SIGNAL() string. With no signature (or an
+    unrecognized one) the first declared overload wins."""
+    name = sigs[0].name
+    rname = f"on_{snake(name)}"
     cname = f"rb_{klass.name}_{rname}"
-    lam_params = ", ".join(f"{t.cxx} a{i}" for i, t in enumerate(sig.params))
-    out.append(f"static VALUE {cname}(VALUE self) {{")
+    out.append(f"static VALUE {cname}(int argc, VALUE* argv, VALUE self) {{")
     out.append(f"  {klass.name}* o = static_cast<{klass.name}*>(qt6rb::unwrap(self, &cls_{klass.name}));")
     out.append("  VALUE proc = rb_block_proc();")
     out.append("  qt6rb::retain_proc(proc);")
-    out.append(f"  QObject::connect(o, &{klass.name}::{sig.name}, o, [proc]({lam_params}) {{")
-    if sig.params:
-        conv = ", ".join(t.to_rb.format(f"a{i}") for i, t in enumerate(sig.params))
-        out.append(f"    VALUE args[] = {{ {conv} }};")
-        out.append(f"    qt6rb::call_proc(proc, {len(sig.params)}, args);")
+    overloaded = len(sigs) > 1
+
+    def connect(sig, indent):
+        lam_params = ", ".join(f"{t.cxx} a{j}" for j, t in enumerate(sig.params))
+        member = f"&{klass.name}::{name}"
+        if overloaded:
+            # The member-pointer type must use the *declared* parameter types
+            # (const QString &), not the marshalling types (QString)
+            ptr_params = ", ".join(sig.param_decls)
+            member = f"static_cast<void ({klass.name}::*)({ptr_params})>({member})"
+        out.append(f"{indent}QObject::connect(o, {member}, o, [proc]({lam_params}) {{")
+        if sig.params:
+            conv = ", ".join(t.to_rb.format(f"a{j}") for j, t in enumerate(sig.params))
+            out.append(f"{indent}  VALUE args[] = {{ {conv} }};")
+            out.append(f"{indent}  qt6rb::call_proc(proc, {len(sig.params)}, args);")
+        else:
+            out.append(f"{indent}  qt6rb::call_proc(proc, 0, nullptr);")
+        out.append(f"{indent}}});")
+
+    if overloaded:
+        out.append("  std::string want = qt6rb::signal_param_key(argc > 0 ? argv[0] : Qnil);")
+        for sig in sigs:
+            key = signal_param_key(sig.param_decls)
+            out.append(f'  if (want == "{key}") {{')
+            connect(sig, "    ")
+            out.append("    return self;")
+            out.append("  }")
+        out.append("  // No (or unrecognized) signature: first declared overload wins")
     else:
-        out.append("    qt6rb::call_proc(proc, 0, nullptr);")
-    out.append("  });")
+        out.append("  (void)argc; (void)argv;")
+    connect(sigs[0], "  ")
     out.append("  return self;")
     out.append("}")
     out.append("")
@@ -669,6 +761,18 @@ def generate(classes, modules, ns_constants):
             deleter = "nullptr"
         qobj = "true" if k.is_qobject else "false"
         out.append(f'static qt6rb::ClassInfo cls_{k.name} = {{ "{k.name}", Qnil, {deleter}, {qobj} }};')
+    out.append("")
+
+    # Upcast thunks for every direct base, so a wrapped pointer can be walked
+    # (with the compiler's pointer adjustment) to any C++ ancestor -- the Ruby
+    # hierarchy only mirrors the first base
+    base_edges = []
+    for k in classes.values():
+        for b in k.bases:
+            fn = f"upcast_{k.name}_{b}"
+            out.append(f"static void* {fn}(void* p) {{ "
+                       f"return static_cast<{b}*>(static_cast<{k.name}*>(p)); }}")
+            base_edges.append(f"  qt6rb::register_base(&cls_{k.name}, &cls_{b}, {fn});")
     out.append("")
 
     for k in classes.values():
@@ -747,6 +851,26 @@ def generate(classes, modules, ns_constants):
                             and all(m.result.kind == "bool" for m in overloads):
                         registrations.append(
                             f'  rb_define_alias({target}, "{rname[3:]}?", "{rname}");')
+        # Public data members. Methods win a name clash (a class with both a
+        # `text` field and a text() method keeps the method).
+        method_names = set()
+        for m in k.methods:
+            method_names.add(m.name)
+            method_names.add(snake(m.name))
+        for fname, ftype, writable in k.fields:
+            if fname in method_names or snake(fname) in method_names:
+                continue
+            getter, setter = emit_field(out, k, fname, ftype, writable)
+            target = f"cls_{k.name}.rb_class"
+            for rname in {fname, snake(fname)}:
+                registrations.append(
+                    f'  rb_define_method({target}, "{rname}", RUBY_METHOD_FUNC({getter}), 0);')
+                if setter:
+                    registrations.append(
+                        f'  rb_define_method({target}, "{rname}=", RUBY_METHOD_FUNC({setter}), 1);')
+            if setter:
+                registrations.append(
+                    f'  rb_define_method({target}, "set_{snake(fname)}", RUBY_METHOD_FUNC({setter}), 1);')
         if k.shim:
             for rname, cname, camels in emit_protected_callers(out, k):
                 registrations.append(
@@ -755,16 +879,30 @@ def generate(classes, modules, ns_constants):
                     if camel != rname:
                         registrations.append(
                             f'  rb_define_method(cls_{k.name}.rb_class, "{camel}", RUBY_METHOD_FUNC({cname}), -1);')
-        # Signals (skip overloaded ones -- member pointer would be ambiguous)
-        sig_counts = {}
+        # Signals, grouped by name so overloads share one on_<signal> method
+        # that selects the overload from the SIGNAL() signature
+        groups = {}
         for s in k.signals:
-            sig_counts[s.name] = sig_counts.get(s.name, 0) + 1
-        for s in k.signals:
-            if sig_counts[s.name] > 1:
+            groups.setdefault(s.name, []).append(s)
+        for sigs in groups.values():
+            # Distinct C++ signatures only (a redeclaration would make the
+            # static_cast ambiguous again). Truncated signatures can't be
+            # named in a member-pointer cast, so they can't take part in an
+            # overload set.
+            seen_keys, unique = set(), []
+            for s in sigs:
+                if len(sigs) > 1 and s.truncated:
+                    k.skipped += 1
+                    continue
+                key = signal_param_key(s.param_decls)
+                if key not in seen_keys:
+                    seen_keys.add(key)
+                    unique.append(s)
+            if not unique:
                 continue
-            rname, cname = emit_signal(out, k, s)
+            rname, cname = emit_signal(out, k, unique)
             registrations.append(
-                f'  rb_define_method(cls_{k.name}.rb_class, "{rname}", RUBY_METHOD_FUNC({cname}), 0);')
+                f'  rb_define_method(cls_{k.name}.rb_class, "{rname}", RUBY_METHOD_FUNC({cname}), -1);')
 
     out.append('extern "C" void Init_qt6() {')
     out.append("  VALUE mQt = qt6rb::module_qt();")
@@ -783,6 +921,7 @@ def generate(classes, modules, ns_constants):
 
     for k in classes.values():
         register(k)
+    out.extend(base_edges)
     out.extend(registrations)
     for k in classes.values():
         for e in k.enums:

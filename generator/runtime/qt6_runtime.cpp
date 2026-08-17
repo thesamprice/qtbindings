@@ -79,20 +79,61 @@ VALUE wrap(void* ptr, ClassInfo* cls, bool owned) {
   return TypedData_Wrap_Struct(cls->rb_class, &wrapper_type, w);
 }
 
+// derived -> [(direct base, upcast thunk)] for every C++ base, so a pointer
+// can be walked (and adjusted) to any ancestor, including the ones the
+// single-inheritance Ruby hierarchy cannot express
+struct BaseEdge { ClassInfo* base; UpcastFn fn; };
+static std::map<ClassInfo*, std::vector<BaseEdge> >* s_extra_bases = nullptr;
+
+void register_base(ClassInfo* derived, ClassInfo* base, UpcastFn fn) {
+  if (!s_extra_bases) s_extra_bases = new std::map<ClassInfo*, std::vector<BaseEdge> >();
+  BaseEdge e = { base, fn };
+  (*s_extra_bases)[derived].push_back(e);
+}
+
+// Walks the recorded secondary-base edges from `from` to `to`, applying each
+// thunk, and returns the adjusted pointer (or nullptr when unreachable).
+static void* upcast(void* ptr, ClassInfo* from, ClassInfo* to) {
+  if (from == to) return ptr;
+  if (!s_extra_bases) return nullptr;
+  auto it = s_extra_bases->find(from);
+  if (it == s_extra_bases->end()) return nullptr;
+  for (const BaseEdge& e : it->second) {
+    void* adjusted = e.fn(ptr);
+    if (void* result = upcast(adjusted, e.base, to)) return result;
+  }
+  return nullptr;
+}
+
+bool is_kind_of(VALUE obj, ClassInfo* cls) {
+  if (NIL_P(obj) || !cls) return true;
+  if (rb_obj_is_kind_of(obj, cls->rb_class)) return true;
+  if (!rb_typeddata_is_kind_of(obj, &wrapper_type)) return false;
+  Wrapper* w;
+  TypedData_Get_Struct(obj, Wrapper, &wrapper_type, w);
+  return w->ptr && upcast(w->ptr, w->cls, cls) != nullptr;
+}
+
 void* unwrap(VALUE obj, ClassInfo* cls) {
   if (NIL_P(obj)) return nullptr;
   Wrapper* w;
   TypedData_Get_Struct(obj, Wrapper, &wrapper_type, w);
+  void* adjusted = w->ptr;
   if (cls && !rb_obj_is_kind_of(obj, cls->rb_class)) {
-    rb_raise(rb_eTypeError, "expected %s but got %s",
-             cls->cxx_name, rb_obj_classname(obj));
+    // Not in the Ruby hierarchy: it may still be a secondary C++ base
+    // (Qt::Painter.new(widget) wants the QWidget's QPaintDevice)
+    adjusted = w->ptr ? upcast(w->ptr, w->cls, cls) : nullptr;
+    if (!adjusted) {
+      rb_raise(rb_eTypeError, "expected %s but got %s",
+               cls->cxx_name, rb_obj_classname(obj));
+    }
   }
   if (!w->ptr) {
     rb_raise(rb_eRuntimeError,
              "%s used before construction (did initialize call super?)",
              rb_obj_classname(obj));
   }
-  return w->ptr;
+  return adjusted;
 }
 
 VALUE alloc_wrapper(VALUE klass, ClassInfo* cls) {
@@ -361,6 +402,40 @@ void retain_proc(VALUE proc) {
     rb_gc_register_address(&s_proc_registry);
   }
   rb_ary_push(s_proc_registry, proc);
+}
+
+std::string signal_param_key(VALUE signature) {
+  // "activated(const QString&)" -> "QString"; used to pick between
+  // overloaded signals. Whitespace, const and &/* are dropped so any of the
+  // usual SIGNAL() spellings select the same overload. Returns "" for nil,
+  // a non-String, or a signature with no parameter list.
+  if (NIL_P(signature) || !RB_TYPE_P(signature, T_STRING)) return std::string();
+  std::string s(RSTRING_PTR(signature), RSTRING_LEN(signature));
+  std::string::size_type open = s.find('(');
+  std::string::size_type close = s.rfind(')');
+  if (open == std::string::npos || close == std::string::npos || close < open)
+    return std::string();
+  std::string params = s.substr(open + 1, close - open - 1);
+  std::string out;
+  int depth = 0;
+  for (std::string::size_type i = 0; i < params.size(); ++i) {
+    char c = params[i];
+    if (c == '<') depth++;
+    if (c == '>') depth--;
+    if (c == '&' || c == '*' || isspace(static_cast<unsigned char>(c))) continue;
+    if (c == ',' && depth == 0) { out += ','; continue; }
+    // Drop the "const" keyword (only ever appears at a token boundary)
+    if (c == 'c' && params.compare(i, 5, "const") == 0) {
+      bool at_start = (i == 0);
+      if (!at_start) {
+        char prev = params[i - 1];
+        at_start = isspace(static_cast<unsigned char>(prev)) || prev == ',';
+      }
+      if (at_start) { i += 4; continue; }
+    }
+    out += c;
+  }
+  return out;
 }
 
 struct ProcCall { VALUE proc; int argc; const VALUE* argv; };

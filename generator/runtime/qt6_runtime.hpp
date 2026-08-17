@@ -4,6 +4,7 @@
 #define QT6_RUBY_RUNTIME_HPP
 
 #include <ruby.h>
+#include <string>
 #include <QString>
 #include <QByteArray>
 #include <QStringList>
@@ -58,6 +59,17 @@ void* unwrap_ref(VALUE obj, ClassInfo* cls);
 // unwrap for pointer parameters: Qt APIs taking object pointers generally
 // take ownership, so Ruby relinquishes its ownership of the passed object
 void* unwrap_release(VALUE obj, ClassInfo* cls);
+
+// C++ base registration. The Ruby class hierarchy can only mirror one base,
+// so classes with several (QWidget is a QObject *and* a QPaintDevice) record
+// the others here together with a thunk that performs the pointer adjustment
+// the compiler would apply for the upcast.
+typedef void* (*UpcastFn)(void*);
+void register_base(ClassInfo* derived, ClassInfo* base, UpcastFn fn);
+
+// True when obj is usable as a `cls`, through either the Ruby class
+// hierarchy or a registered secondary C++ base
+bool is_kind_of(VALUE obj, ClassInfo* cls);
 
 // Wrap a QObject*. Qt parentage manages QObject lifetimes, so these
 // wrappers never delete on GC (top-level objects live for the app;
@@ -129,6 +141,10 @@ void app_args(VALUE rb_args, int** argc_out, char*** argv_out);
 // Call a Ruby method under rb_protect; reports exceptions to stderr.
 // Sets *ok=false (and returns Qnil) if the call raised.
 VALUE call_method(VALUE self, const char* name, int argc, const VALUE* argv, bool* ok);
+
+// Normalized parameter-type key of a SIGNAL() signature, used by generated
+// on_<signal> methods to pick between overloaded signals ("" if absent)
+std::string signal_param_key(VALUE signature);
 
 // Keep a Ruby proc alive for the lifetime of the process (signal handlers)
 void retain_proc(VALUE proc);
