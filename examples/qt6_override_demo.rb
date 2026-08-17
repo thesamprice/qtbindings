@@ -1,5 +1,5 @@
 ENV['QT_QPA_PLATFORM'] = 'offscreen'
-require_relative '/Users/sprice5/src/qtbindings/ext/qt6/qt6'
+require_relative File.join(__dir__, '../ext/qt6/qt6')
 
 app = Qt::Application.new
 
