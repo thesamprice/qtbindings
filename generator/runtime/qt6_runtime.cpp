@@ -91,7 +91,8 @@ void attach(VALUE self, void* ptr, bool owned) {
 
 bool has_override(VALUE self, ClassInfo* cls, const char* name) {
   if (NIL_P(self)) return false;
-  VALUE klass = rb_obj_class(self);
+  // rb_class_of sees per-object singleton classes (define_singleton_method)
+  VALUE klass = rb_class_of(self);
   if (klass == cls->rb_class) return false;
   static ID id_cache = 0;
   if (!id_cache) id_cache = rb_intern("__qt6rb_overrides__");
@@ -142,6 +143,15 @@ VALUE call_method(VALUE self, const char* name, int argc, const VALUE* argv, boo
   }
   if (ok) *ok = true;
   return result;
+}
+
+void* unwrap_release(VALUE obj, ClassInfo* cls) {
+  if (NIL_P(obj)) return nullptr;
+  void* ptr = unwrap(obj, cls);
+  Wrapper* w;
+  TypedData_Get_Struct(obj, Wrapper, &wrapper_type, w);
+  w->owned = false;
+  return ptr;
 }
 
 void* unwrap_ref(VALUE obj, ClassInfo* cls) {
@@ -282,6 +292,7 @@ static VALUE call_proc_body(VALUE arg) {
 }
 
 VALUE call_proc(VALUE proc, int argc, const VALUE* argv) {
+  if (rb_during_gc()) return Qnil;
   ProcCall pc = { proc, argc, argv };
   int state = 0;
   VALUE result = rb_protect(call_proc_body, reinterpret_cast<VALUE>(&pc), &state);
@@ -296,16 +307,46 @@ VALUE call_proc(VALUE proc, int argc, const VALUE* argv) {
   return result;
 }
 
+const char* pick_override(VALUE self, ClassInfo* cls,
+                          const char* snake_name, const char* camel_name) {
+  // Virtuals fire during C++ teardown of GC-collected objects; calling into
+  // Ruby (or even allocating) inside the GC phase is fatal
+  if (rb_during_gc()) return nullptr;
+  if (has_override(self, cls, snake_name)) return snake_name;
+  if (camel_name && strcmp(camel_name, snake_name) != 0 &&
+      has_override(self, cls, camel_name)) return camel_name;
+  return nullptr;
+}
+
 // ---------------------------------------------------------------------------
-// Hand-written application classes
+// Constructor resolution
 // ---------------------------------------------------------------------------
 
-static ClassInfo coreapp_class = { "QCoreApplication", Qnil, nullptr, true };
-#ifdef QT6RB_HAVE_WIDGETS
-static ClassInfo app_class = { "QApplication", Qnil, nullptr, true };
-#endif
+#include <map>
+static std::map<VALUE, CtorFn>* s_ctors = nullptr;
 
-// QCoreApplication requires argc/argv that outlive it
+void register_ctor(VALUE rb_class, CtorFn fn) {
+  if (!s_ctors) s_ctors = new std::map<VALUE, CtorFn>();
+  (*s_ctors)[rb_class] = fn;
+}
+
+VALUE generic_initialize(int argc, VALUE* argv, VALUE self) {
+  VALUE klass = rb_obj_class(self);
+  while (!NIL_P(klass)) {
+    if (s_ctors) {
+      auto it = s_ctors->find(klass);
+      if (it != s_ctors->end()) return it->second(argc, argv, self);
+    }
+    klass = rb_class_superclass(klass);
+  }
+  rb_raise(rb_eRuntimeError, "no constructor registered for %s",
+           rb_obj_classname(self));
+}
+
+// ---------------------------------------------------------------------------
+// Application argc/argv storage
+// ---------------------------------------------------------------------------
+
 struct AppArgs {
   int argc = 0;
   std::vector<char*> argv;
@@ -313,7 +354,7 @@ struct AppArgs {
 };
 static AppArgs s_app_args;
 
-static void build_app_args(VALUE rb_args) {
+void app_args(VALUE rb_args, int** argc_out, char*** argv_out) {
   s_app_args.storage.clear();
   s_app_args.argv.clear();
   s_app_args.storage.push_back("ruby");
@@ -324,73 +365,58 @@ static void build_app_args(VALUE rb_args) {
       s_app_args.storage.push_back(StringValueCStr(e));
     }
   }
-  for (auto& s : s_app_args.storage) s_app_args.argv.push_back(s.data());
+  for (auto& str : s_app_args.storage) s_app_args.argv.push_back(str.data());
   s_app_args.argc = (int)s_app_args.argv.size();
+  *argc_out = &s_app_args.argc;
+  *argv_out = s_app_args.argv.data();
 }
 
-static VALUE coreapp_new(int argc, VALUE* argv, VALUE klass) {
-  (void)klass;
-  VALUE rb_args = Qnil;
-  rb_scan_args(argc, argv, "01", &rb_args);
-  build_app_args(rb_args);
-  QCoreApplication* app = new QCoreApplication(s_app_args.argc, s_app_args.argv.data());
-  return wrap(app, &coreapp_class, true);
-}
+// ---------------------------------------------------------------------------
+// Qt module helpers
+// ---------------------------------------------------------------------------
 
-static VALUE coreapp_exec(VALUE self) {
-  (void)self;
-  return INT2NUM(QCoreApplication::exec());
-}
-
-static VALUE coreapp_quit(VALUE self) {
-  (void)self;
-  QCoreApplication::quit();
+// Qt._dispose(obj): owned objects are deleted now; unowned QObjects get
+// deleteLater; anything else is just detached. Wrapper is marked disposed.
+static VALUE qt_dispose(VALUE mod, VALUE obj) {
+  (void)mod;
+  if (NIL_P(obj)) return Qnil;
+  Wrapper* w;
+  TypedData_Get_Struct(obj, Wrapper, &wrapper_type, w);
+  if (w->ptr) {
+    if (w->owned && w->cls && w->cls->deleter) {
+      w->cls->deleter(w->ptr);
+    } else if (w->cls && w->cls->is_qobject) {
+      static_cast<QObject*>(w->ptr)->deleteLater();
+    }
+    w->ptr = nullptr;
+    w->owned = false;
+  }
   return Qnil;
 }
 
-static VALUE coreapp_process_events(VALUE self) {
-  (void)self;
-  QCoreApplication::processEvents();
-  return Qnil;
+static VALUE qt_disposed_p(VALUE mod, VALUE obj) {
+  (void)mod;
+  if (NIL_P(obj)) return Qtrue;
+  Wrapper* w;
+  TypedData_Get_Struct(obj, Wrapper, &wrapper_type, w);
+  return w->ptr ? Qfalse : Qtrue;
 }
 
-static VALUE coreapp_application_name(VALUE self) {
-  (void)self;
-  return from_qstring(QCoreApplication::applicationName());
-}
+static VALUE s_constructable = Qnil;
 
-static VALUE coreapp_set_application_name(VALUE self, VALUE name) {
-  (void)self;
-  QCoreApplication::setApplicationName(to_qstring(name));
-  return name;
+VALUE constructable_module() {
+  if (NIL_P(s_constructable)) {
+    s_constructable = rb_define_module_under(module_qt(), "Constructable");
+    rb_gc_register_address(&s_constructable);
+    rb_define_method(s_constructable, "initialize",
+                     RUBY_METHOD_FUNC(generic_initialize), -1);
+  }
+  return s_constructable;
 }
-
-#ifdef QT6RB_HAVE_WIDGETS
-static VALUE app_new(int argc, VALUE* argv, VALUE klass) {
-  (void)klass;
-  VALUE rb_args = Qnil;
-  rb_scan_args(argc, argv, "01", &rb_args);
-  build_app_args(rb_args);
-  QApplication* app = new QApplication(s_app_args.argc, s_app_args.argv.data());
-  return wrap(app, &app_class, true);
-}
-#endif
 
 void init_core(VALUE mQt) {
-  (void)mQt;
-  VALUE cls = define_class(&coreapp_class, "CoreApplication", Qnil);
-  rb_undef_alloc_func(cls);
-  rb_define_singleton_method(cls, "new", RUBY_METHOD_FUNC(coreapp_new), -1);
-  rb_define_method(cls, "exec", RUBY_METHOD_FUNC(coreapp_exec), 0);
-  rb_define_method(cls, "quit", RUBY_METHOD_FUNC(coreapp_quit), 0);
-  rb_define_method(cls, "process_events", RUBY_METHOD_FUNC(coreapp_process_events), 0);
-  rb_define_method(cls, "application_name", RUBY_METHOD_FUNC(coreapp_application_name), 0);
-  rb_define_method(cls, "application_name=", RUBY_METHOD_FUNC(coreapp_set_application_name), 1);
-#ifdef QT6RB_HAVE_WIDGETS
-  VALUE acls = define_class(&app_class, "Application", cls);
-  rb_undef_alloc_func(acls);
-  rb_define_singleton_method(acls, "new", RUBY_METHOD_FUNC(app_new), -1);
-#endif
+  rb_define_module_function(mQt, "_dispose", RUBY_METHOD_FUNC(qt_dispose), 1);
+  rb_define_module_function(mQt, "_disposed?", RUBY_METHOD_FUNC(qt_disposed_p), 1);
 }
 
 } // namespace qt6rb

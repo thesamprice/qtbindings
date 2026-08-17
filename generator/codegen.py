@@ -127,12 +127,13 @@ def classify(t, generated):
         if pspell in generated:
             if generated[pspell]:  # QObject-derived
                 return Type("objptr", f"{pspell}*",
-                            "static_cast<%s*>(qt6rb::unwrap({}, &cls_%s))" % (pspell, pspell),
+                            "static_cast<%s*>(qt6rb::unwrap_release({}, &cls_%s))" % (pspell, pspell),
                             "qt6rb::wrap_qobject((QObject*)({}), &cls_%s)" % pspell,
                             cls=pspell)
-            # Polymorphic non-QObject (events etc.): never owned by Ruby
+            # Polymorphic non-QObject (events, items): passing by pointer
+            # transfers ownership to Qt (tree/table/list containers)
             return Type("objptr", f"{pspell}*",
-                        "static_cast<%s*>(qt6rb::unwrap({}, &cls_%s))" % (pspell, pspell),
+                        "static_cast<%s*>(qt6rb::unwrap_release({}, &cls_%s))" % (pspell, pspell),
                         "qt6rb::wrap((void*)({}), &cls_%s, false)" % pspell,
                         cls=pspell)
         return Type("unsupported", spelling)
@@ -227,6 +228,21 @@ def base_cursors(cursor):
                 yield decl
 
 
+def publicly_typed(cursor):
+    """False when a param or the return type names a protected/private
+    nested type (e.g. QAbstractSlider::SliderChange) which free binding
+    functions cannot reference."""
+    def ok(t):
+        decl = t.get_canonical().get_declaration()
+        if decl is None or decl.kind == CursorKind.NO_DECL_FOUND:
+            return True
+        return decl.access_specifier not in (AccessSpecifier.PROTECTED,
+                                             AccessSpecifier.PRIVATE)
+    if not ok(cursor.result_type):
+        return False
+    return all(ok(a.type) for a in cursor.get_arguments())
+
+
 def collect_virtuals(klass, classes, generated):
     """Hookable virtuals for klass: own + inherited, nearest declaration
     wins; a nearest-but-unhookable declaration blocks the signature."""
@@ -241,8 +257,6 @@ def collect_virtuals(klass, classes, generated):
                 continue
             if not child.is_virtual_method():
                 continue
-            if child.access_specifier == AccessSpecifier.PRIVATE:
-                continue
             if child.spelling.startswith("operator"):
                 continue
             key = (child.spelling,
@@ -250,8 +264,12 @@ def collect_virtuals(klass, classes, generated):
                          for a in child.get_arguments()))
             if key in sigs:
                 continue
+            if child.access_specifier == AccessSpecifier.PRIVATE:
+                # A private redeclaration hides the inherited virtual
+                sigs[key] = None
+                continue
             if child.is_pure_virtual_method() or is_final(child) \
-                    or collect_annotations(child):
+                    or collect_annotations(child) or not publicly_typed(child):
                 sigs[key] = None
                 continue
             m = Method(child, generated)
@@ -261,6 +279,9 @@ def collect_virtuals(klass, classes, generated):
 
     visit(klass.name)
     return [m for m in sigs.values() if m]
+
+
+APP_CLASSES = ("QCoreApplication", "QGuiApplication", "QApplication")
 
 
 def harvest(tu, qt_prefix, wanted):
@@ -290,12 +311,18 @@ def harvest(tu, qt_prefix, wanted):
             missing.append(name)
             continue
         k = Klass(cursor)
+        k.abstract = bool(cursor.is_abstract_record())
         classes[name] = k
         # Pull in base classes so the inheritance chain is complete
         for base in base_cursors(cursor):
             if in_qt_headers(base, qt_prefix):
                 k.bases.append(base.spelling)
                 queue.append(base.spelling)
+
+    # Drop bases that didn't resolve to a generated class (e.g. template
+    # bases like QList<QPoint> under QPolygon)
+    for k in classes.values():
+        k.bases = [b for b in k.bases if b in classes]
 
     # QObject-ness, transitively
     def qobjectish(name, seen=None):
@@ -315,9 +342,7 @@ def harvest(tu, qt_prefix, wanted):
     for k in classes.values():
         for child in k.cursor.get_children():
             if child.kind == CursorKind.CXX_METHOD:
-                # Purity matters at any access level for abstractness
                 if child.is_pure_virtual_method():
-                    k.abstract = True
                     continue
                 if child.access_specifier != AccessSpecifier.PUBLIC:
                     continue
@@ -351,6 +376,9 @@ def harvest(tu, qt_prefix, wanted):
                     k.enums.append(child)
 
     for k in classes.values():
+        if k.name in APP_CLASSES:
+            k.shim = False
+            continue
         if k.ctors and not k.abstract:
             k.virtuals = collect_virtuals(k, classes, generated)
             k.shim = bool(k.virtuals)
@@ -370,9 +398,8 @@ def harvest_namespace_enums(tu, qt_prefix, namespace="Qt"):
                 continue
             for c in enum.get_children():
                 if c.kind == CursorKind.ENUM_CONSTANT_DECL:
-                    name = const_name(c.spelling)
-                    if re.match(r'^[A-Z][A-Za-z0-9_]*$', name) \
-                            and name not in constants:
+                    name = c.spelling
+                    if name and name not in constants:
                         constants[name] = c.enum_value
     return constants
 
@@ -381,9 +408,9 @@ def const_name(name):
     return name[0].upper() + name[1:] if name else name
 
 
-def emit_dispatch(out, overloads, error_name, body):
+def emit_dispatch(out, overloads, error_name, body, fallback=None):
     """Shared arity + type-guard dispatcher. body(m, n, indent) emits the
-    per-overload code."""
+    per-overload code. fallback replaces the final arity error."""
     arities = sorted({n for m in overloads
                       for n in range(m.dispatch_min, len(m.params) + 1)})
     for n in arities:
@@ -405,6 +432,11 @@ def emit_dispatch(out, overloads, error_name, body):
             out.append(f'    rb_raise(rb_eTypeError, "no matching overload of {error_name} for given argument types");')
         out.append("  }")
     out.append(f'  rb_raise(rb_eArgError, "wrong number of arguments for {error_name} (%d)", argc);')
+
+
+# C++ methods whose Ruby name shadows a core method: on arity/type mismatch
+# fall through to super (e.g. widget.raise -> C++, raise Error -> Kernel)
+RESERVED_FALLBACK = {"raise", "clone", "dup", "display", "format", "hash"}
 
 
 def conv_args(m, n):
@@ -437,27 +469,41 @@ def emit_method_group(out, klass, ruby_name, overloads, static):
         else:
             out.append(f"{indent}return {m.result.to_rb.format(call)};")
 
-    emit_dispatch(out, overloads, f"{klass.name}#{ruby_name}", body)
+    if ruby_name in RESERVED_FALLBACK:
+        emit_dispatch(out, overloads, f"{klass.name}#{ruby_name}", body,
+                      fallback="  return rb_call_super(argc, argv);")
+    else:
+        emit_dispatch(out, overloads, f"{klass.name}#{ruby_name}", body)
     out.append("}")
     out.append("")
     return cname
 
 
-def emit_initialize(out, klass):
-    cname = f"rb_{klass.name}_initialize"
-    cxx = f"Rb_{klass.name}" if klass.shim else klass.name
-    owned = "false" if klass.is_qobject else "true"
+def emit_ctor(out, klass):
+    cname = f"rb_{klass.name}_ctor"
     out.append(f"static VALUE {cname}(int argc, VALUE* argv, VALUE self) {{")
     out.append("  (void)argv;")
+    if klass.name in APP_CLASSES:
+        # Q*Application constructors need stable argc/argv storage
+        out.append("  VALUE rb_args = Qnil;")
+        out.append('  rb_scan_args(argc, argv, "01", &rb_args);')
+        out.append("  int* ac; char** av;")
+        out.append("  qt6rb::app_args(rb_args, &ac, &av);")
+        out.append(f"  {klass.name}* p = new {klass.name}(*ac, av);")
+        out.append("  qt6rb::attach(self, p, false);")
+        out.append("  return self;")
+    else:
+        cxx = f"Rb_{klass.name}" if klass.shim else klass.name
+        owned = "false" if klass.is_qobject else "true"
 
-    def body(m, n, indent):
-        out.append(f"{indent}{cxx}* p = new {cxx}({conv_args(m, n)});")
-        out.append(f"{indent}qt6rb::attach(self, p, {owned});")
-        if klass.shim:
-            out.append(f"{indent}p->qt6rb_set_self(self);")
-        out.append(f"{indent}return self;")
+        def body(m, n, indent):
+            out.append(f"{indent}{cxx}* p = new {cxx}({conv_args(m, n)});")
+            out.append(f"{indent}qt6rb::attach(self, p, {owned});")
+            if klass.shim:
+                out.append(f"{indent}p->qt6rb_set_self(self);")
+            out.append(f"{indent}return self;")
 
-    emit_dispatch(out, klass.ctors, f"{klass.name}#initialize", body)
+        emit_dispatch(out, klass.ctors, f"{klass.name}#initialize", body)
     out.append("}")
     out.append(f"static VALUE rb_{klass.name}_alloc(VALUE klass) {{ return qt6rb::alloc_wrapper(klass, &cls_{klass.name}); }}")
     out.append("")
@@ -487,7 +533,7 @@ def emit_shim(out, klass):
         constq = " const" if m.const else ""
         args = ", ".join(f"a{i}" for i in range(len(m.params)))
         out.append(f"  {m.result_decl} {m.name}({params}){constq} override {{")
-        out.append(f'    if (qt6rb::has_override(qt6rb_self, &cls_{klass.name}, "{rname}")) {{')
+        out.append(f'    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_{klass.name}, "{rname}", "{m.name}")) {{')
         if m.params:
             conv = ", ".join(t.to_rb.format(f"a{i}") for i, t in enumerate(m.params))
             out.append(f"      VALUE rb_args[] = {{ {conv} }};")
@@ -496,10 +542,10 @@ def emit_shim(out, klass):
             argse = "0, nullptr"
         out.append("      bool ok = true;")
         if m.result.kind == "void":
-            out.append(f'      qt6rb::call_method(qt6rb_self, "{rname}", {argse}, &ok);')
+            out.append(f"      qt6rb::call_method(qt6rb_self, rbname, {argse}, &ok);")
             out.append("      if (ok) return;")
         else:
-            out.append(f'      VALUE r = qt6rb::call_method(qt6rb_self, "{rname}", {argse}, &ok);')
+            out.append(f"      VALUE r = qt6rb::call_method(qt6rb_self, rbname, {argse}, &ok);")
             out.append(f"      if (ok) return {m.result.to_cxx.format('r')};")
         out.append("    }")
         ret = "" if m.result.kind == "void" else "return "
@@ -543,7 +589,7 @@ def emit_protected_callers(out, klass):
         emit_dispatch(out, overloads, f"{klass.name}#{rname}", body)
         out.append("}")
         out.append("")
-        result.append((rname, cname))
+        result.append((rname, cname, sorted({m.name for m in overloads})))
     return result
 
 
@@ -591,12 +637,14 @@ def generate(classes, modules, ns_constants):
 
     registrations = []
     for k in classes.values():
-        if k.ctors and not k.abstract:
-            cname = emit_initialize(out, k)
+        if (k.ctors or k.name in APP_CLASSES) and not k.abstract:
+            cname = emit_ctor(out, k)
             registrations.append(
                 f"  rb_define_alloc_func(cls_{k.name}.rb_class, rb_{k.name}_alloc);")
             registrations.append(
-                f'  rb_define_method(cls_{k.name}.rb_class, "initialize", RUBY_METHOD_FUNC({cname}), -1);')
+                f"  qt6rb::register_ctor(cls_{k.name}.rb_class, {cname});")
+            registrations.append(
+                f"  rb_include_module(cls_{k.name}.rb_class, qt6rb::constructable_module());")
         else:
             registrations.append(
                 f"  rb_undef_alloc_func(cls_{k.name}.rb_class);")
@@ -612,6 +660,11 @@ def generate(classes, modules, ns_constants):
                 define = "rb_define_singleton_method" if static else "rb_define_method"
                 registrations.append(
                     f'  {define}({target}, "{rname}", RUBY_METHOD_FUNC({cname}), -1);')
+                # qtbindings compatibility: also register the camelCase name
+                for camel in sorted({m.name for m in overloads}):
+                    if camel != rname:
+                        registrations.append(
+                            f'  {define}({target}, "{camel}", RUBY_METHOD_FUNC({cname}), -1);')
                 if not static:
                     # setter sugar: set_interval(v) also as interval=
                     if rname.startswith("set_") and any(len(m.params) >= 1 for m in overloads):
@@ -623,9 +676,13 @@ def generate(classes, modules, ns_constants):
                         registrations.append(
                             f'  rb_define_alias({target}, "{rname[3:]}?", "{rname}");')
         if k.shim:
-            for rname, cname in emit_protected_callers(out, k):
+            for rname, cname, camels in emit_protected_callers(out, k):
                 registrations.append(
                     f'  rb_define_method(cls_{k.name}.rb_class, "{rname}", RUBY_METHOD_FUNC({cname}), -1);')
+                for camel in camels:
+                    if camel != rname:
+                        registrations.append(
+                            f'  rb_define_method(cls_{k.name}.rb_class, "{camel}", RUBY_METHOD_FUNC({cname}), -1);')
         # Signals (skip overloaded ones -- member pointer would be ambiguous)
         sig_counts = {}
         for s in k.signals:
@@ -662,10 +719,20 @@ def generate(classes, modules, ns_constants):
                     name = const_name(c.spelling)
                     if re.match(r'^[A-Z][A-Za-z0-9_]*$', name):
                         out.append(f'  rb_define_const(cls_{k.name}.rb_class, "{name}", INT2NUM({c.enum_value}));')
+    lowercase = {}
     for name, value in ns_constants.items():
-        # Class names (Widget, Window, Dialog, ...) win over enum values
-        out.append(f'  if (!rb_const_defined(mQt, rb_intern("{name}"))) '
-                   f'rb_define_const(mQt, "{name}", INT2NUM({value}));')
+        cname = const_name(name)
+        if re.match(r'^[A-Z][A-Za-z0-9_]*$', cname):
+            # Class names (Widget, Window, Dialog, ...) win over enum values
+            out.append(f'  if (!rb_const_defined(mQt, rb_intern("{cname}"))) '
+                       f'rb_define_const(mQt, "{cname}", INT2NUM({value}));')
+        if re.match(r'^[a-z][A-Za-z0-9_]*$', name):
+            lowercase[name] = value
+    # Lowercase enum values (Qt::red etc.) exposed for a method_missing shim
+    out.append("  VALUE lower = rb_hash_new();")
+    for name, value in lowercase.items():
+        out.append(f'  rb_hash_aset(lower, ID2SYM(rb_intern("{name}")), INT2NUM({value}));')
+    out.append('  rb_define_const(mQt, "LOWERCASE_ENUMS", lower);')
     out.append("}")
     return "\n".join(out) + "\n"
 
