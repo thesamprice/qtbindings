@@ -30,8 +30,19 @@ static void mark_ruby_dead(VALUE) {
 
 bool ruby_alive() { return s_ruby_alive; }
 
+// Defined with the QObject wrapper cache further down; drops the cache entry
+// for `obj` when it is the one owned by `w` (nullptr: whichever entry exists).
+static void uncache_qobject(QObject* obj, Wrapper* w);
+
 static void wrapper_free(void* data) {
   Wrapper* w = static_cast<Wrapper*>(data);
+  // A cached wrapper is a GC root while it is cached, so reaching here means
+  // the cache no longer holds it -- except at VM teardown, when the roots are
+  // released. Evict defensively so a stale entry can never outlive the Ruby
+  // object it points at.
+  if (w->ptr && w->cls && w->cls->is_qobject) {
+    uncache_qobject(static_cast<QObject*>(w->ptr), w);
+  }
   if (w->owned && w->ptr && w->cls && w->cls->deleter) {
     w->cls->deleter(w->ptr);
   }
@@ -240,15 +251,81 @@ RubyPeer::~RubyPeer() {
   if (ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self);
 }
 
+// ---------------------------------------------------------------------------
+// QObject* -> wrapper cache
+// ---------------------------------------------------------------------------
+// Objects Qt created in C++ (menuBar(), parentWidget(), sender(), the QAction
+// a menu returns, ...) have no RubyPeer, so every accessor call used to mint a
+// brand new wrapper. Two consequences, both bad: `w.menuBar.equal?(w.menuBar)`
+// was false and any state a caller put on such a wrapper vanished; and once Qt
+// deleted the object -- typically with its parent -- every wrapper handed out
+// for it still held the freed pointer, so the next call through it was a
+// use-after-free rather than an error.
+//
+// The cache fixes both. One wrapper per QObject*, and QObject::destroyed
+// detaches that wrapper (ptr = nullptr, exactly what dispose does) and drops
+// the entry, so a wrapper outliving its C++ object raises the runtime's
+// existing "used before construction" error instead of crashing.
+//
+// The entry holds a *strong* GC reference to the wrapper. A weak cache is the
+// obvious design but is not safe in CRuby: between the end of a mark phase and
+// the lazy sweep of the wrapper's slot, the entry still points at an object
+// the GC has already condemned, and handing it back out resurrects garbage
+// that is then freed under the caller's feet. Rooting instead costs one live
+// wrapper per C++-created QObject Ruby has actually touched, released as soon
+// as Qt destroys the object -- and since repeat lookups now reuse the wrapper
+// instead of allocating, it is a net reduction in garbage. std::map is chosen
+// deliberately: its nodes never move, so the address handed to
+// rb_gc_register_address stays valid for the life of the entry.
+struct QObjectCacheEntry {
+  VALUE value;   // the wrapper; registered as a GC root while cached
+  Wrapper* w;    // its payload, so destroyed() can detach it
+};
+static std::map<QObject*, QObjectCacheEntry>* s_qobject_cache = nullptr;
+
+static void uncache_qobject(QObject* obj, Wrapper* w) {
+  if (!s_qobject_cache) return;
+  auto it = s_qobject_cache->find(obj);
+  if (it == s_qobject_cache->end()) return;
+  if (w && it->second.w != w) return;  // a different wrapper owns the entry
+  // Erasing the node invalidates the registered address, so the two must
+  // happen together. rb_gc_unregister_address walks the VM's global root
+  // list, which is not safe to mutate from inside a GC or after the VM is
+  // finalized; in that case leave the (already detached, therefore unusable)
+  // entry in place rather than leaving a root pointing at freed memory.
+  if (!s_ruby_alive || rb_during_gc()) return;
+  rb_gc_unregister_address(&it->second.value);
+  s_qobject_cache->erase(it);
+}
+
+// QObject::destroyed handler. Runs inside ~QObject, so it must not allocate or
+// call into Ruby: detaching the wrapper is a pointer store and the eviction is
+// a std::map erase, both of which are safe here.
+static void qobject_destroyed(QObject* obj) {
+  if (!s_qobject_cache) return;
+  auto it = s_qobject_cache->find(obj);
+  if (it == s_qobject_cache->end()) return;
+  if (Wrapper* w = it->second.w) {
+    w->ptr = nullptr;
+    w->owned = false;
+  }
+  uncache_qobject(obj, nullptr);
+}
+
 VALUE wrap_qobject(QObject* obj, ClassInfo* cls) {
   if (!obj) return Qnil;
   // If this object was constructed from Ruby it already has a Ruby peer;
   // return that object so identity (and any Ruby subclass, its methods and
   // its instance variables) survives a round trip through Qt. The cross-cast
   // is safe: QObject is polymorphic and every generated shim derives from
-  // both the Qt class and RubyPeer.
+  // both the Qt class and RubyPeer. Peered objects never enter the cache:
+  // the peer already is the identity, and dispose deliberately unlinks it.
   if (RubyPeer* peer = dynamic_cast<RubyPeer*>(obj)) {
     if (!NIL_P(peer->qt6rb_self)) return peer->qt6rb_self;
+  }
+  if (s_qobject_cache) {
+    auto it = s_qobject_cache->find(obj);
+    if (it != s_qobject_cache->end()) return it->second.value;
   }
   // Downcast to the most-derived generated class via the meta-object, so
   // e.g. activeModalWidget returns a Qt::MessageBox, not a Qt::Widget
@@ -263,7 +340,21 @@ VALUE wrap_qobject(QObject* obj, ClassInfo* cls) {
   }
   // Never owned: Qt's parent/child system (or the app teardown) deletes
   // QObjects; deleting from GC would double-free reparented objects.
-  return wrap(obj, cls, false);
+  VALUE value = wrap(obj, cls, false);
+  if (!s_qobject_cache) s_qobject_cache = new std::map<QObject*, QObjectCacheEntry>();
+  Wrapper* w;
+  TypedData_Get_Struct(value, Wrapper, &wrapper_type, w);
+  QObjectCacheEntry entry = { value, w };
+  auto inserted = s_qobject_cache->insert(std::make_pair(obj, entry));
+  // Unreachable given the lookup above, but registering a second root for an
+  // address the map already owns would leave a dangling one behind on erase.
+  if (!inserted.second) return inserted.first->second.value;
+  rb_gc_register_address(&inserted.first->second.value);
+  // Connect after the entry exists: the functor takes no context object, so
+  // Qt invokes it directly from ~QObject on the destroying thread.
+  QObject::connect(obj, &QObject::destroyed,
+                   [](QObject* dead) { qobject_destroyed(dead); });
+  return value;
 }
 
 QString to_qstring(VALUE v) {
@@ -571,6 +662,11 @@ static VALUE qt_dispose(VALUE mod, VALUE obj) {
           peer->qt6rb_self = Qnil;
         }
       }
+      // Drop the cache entry for the same reason the peer link is dropped:
+      // deleteLater leaves the object alive until the next event loop pass,
+      // and anything that wraps it in the meantime must get a usable wrapper
+      // rather than the detached one being disposed here.
+      uncache_qobject(qobj, w);
       qobj->deleteLater();
     }
     w->ptr = nullptr;

@@ -89,9 +89,11 @@ void register_base(ClassInfo* derived, ClassInfo* base, UpcastFn fn);
 // hierarchy or a registered secondary C++ base
 bool is_kind_of(VALUE obj, ClassInfo* cls);
 
-// Wrap a QObject*. Qt parentage manages QObject lifetimes, so these
-// wrappers never delete on GC (top-level objects live for the app;
-// proper destroyed()-tracking is future work).
+// Wrap a QObject*. Qt parentage manages QObject lifetimes, so these wrappers
+// never delete on GC. Objects with a RubyPeer hand back their peer; everything
+// else gets one cached wrapper per pointer, tracked by QObject::destroyed so
+// the wrapper is detached (and the entry dropped) when Qt deletes the object.
+// See the cache comment in qt6_runtime.cpp.
 VALUE wrap_qobject(QObject* obj, ClassInfo* cls);
 
 // Marshalling

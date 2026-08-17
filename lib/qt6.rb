@@ -559,6 +559,50 @@ class Qt::Dialog
   end
 end
 
+# QMenu::exec() has the same shape and the same two problems as
+# QDialog::exec(): it spins a nested C++ event loop that holds the GVL for as
+# long as the menu is up (so no Ruby thread runs, and a background thread that
+# tries to close the menu or quit the app deadlocks), and headless there is
+# nothing to click, so the loop never ends. Cosmos opens one of these from
+# every right-click handler (table_manager, packet_viewer, tlm_extractor,
+# script_runner, config_editor, tlm_grapher, ...).
+#
+# Rebuild it the way Qt does internally: popup() shows the menu without a
+# nested loop, and the loop is driven from Ruby until the menu hides. QMenu
+# has no "which action fired" accessor, so the triggered() signal is the only
+# way to reproduce exec's return value; it is connected once per menu (the
+# generated on_* registration retains the proc for the life of the process, so
+# reconnecting on every exec would accumulate handlers).
+class Qt::Menu
+  unless method_defined?(:qt6rb_native_exec)
+    alias_method :qt6rb_native_exec, :exec if method_defined?(:exec)
+
+    # exec(), exec(pos) and exec(pos, at) -- the same overloads QMenu offers.
+    def exec(pos = nil, at = nil)
+      @qt6rb_triggered_action = nil
+      unless @qt6rb_triggered_hooked
+        @qt6rb_triggered_hooked = true
+        # QMenu::triggered fires for submenu actions too, exactly like exec's
+        # return value.
+        on_triggered { |action| @qt6rb_triggered_action = action }
+      end
+      pos ||= Qt::Cursor.pos
+      at ? popup(pos, at) : popup(pos)
+      while !disposed? && visible?
+        Qt::CoreApplication.process_events
+        Qt.main_thread_queue.pop.call until Qt.main_thread_queue.empty?
+        sleep 0.001
+      end
+      # The activation that hid the menu and the triggered() emission happen in
+      # the same processEvents pass, but a queued handler may still be pending;
+      # one more pass makes the return value reliable.
+      Qt::CoreApplication.process_events unless disposed?
+      Qt.main_thread_queue.pop.call until Qt.main_thread_queue.empty?
+      @qt6rb_triggered_action
+    end
+  end
+end
+
 # The static QFileDialog convenience functions build a QFileDialog in C++ and
 # call its exec() from there, so they never reach the Ruby-driven
 # Qt::Dialog#exec above and deadlock for exactly the reason it describes: the
@@ -672,11 +716,153 @@ class Qt::Application
   end
 end
 
+module Qt
+  # ---------------------------------------------------------------------
+  # Ruby-driven application event loop
+  # ---------------------------------------------------------------------
+  # QCoreApplication::exec() is a single C call that lives for the whole life
+  # of the application, and it holds the Ruby GVL for all of it: the poll it
+  # blocks in never returns to the Ruby VM. Every Ruby thread a real Cosmos
+  # tool runs under app.exec -- interface threads, the CmdTlmServer, script
+  # threads, and every Qt.execute_in_main_thread(blocking) caller -- is
+  # therefore starved, running only in the slivers the init_thread_fix timer
+  # handler yields while it is executing Ruby.
+  #
+  # Worse, the escape hatch is a deadlock. A background thread that calls
+  # QCoreApplication::quit() to end the app enters
+  # QWindowSystemInterface::flushWindowSystemEvents, which waits on a
+  # condition variable for the main thread; the main thread is at that moment
+  # parked waiting to re-acquire the GVL it lent out mid-handler, and it can
+  # only get it back when the background thread releases it -- which it will
+  # not do until quit() returns. `sample` on the hung process shows exactly
+  # that pair of stacks.
+  #
+  # So exec is rebuilt in Ruby, the same way Qt::Dialog#exec is: pump
+  # processEvents, drain the main-thread queue, sleep briefly (releasing the
+  # GVL every pass), and stop when the app has been asked to quit.
+  #
+  # Quit state lives in class variables rather than on the app object because
+  # the app object has no RubyPeer: the Q*Application constructors take the
+  # special argc/argv path in the generator, which attaches a plain
+  # QApplication rather than an Rb_QApplication shim, so wrap_qobject cannot
+  # recover the Ruby object and Qt::CoreApplication.instance mints a fresh
+  # wrapper on every call. There is at most one QCoreApplication per process
+  # anyway, which is what makes process-global state correct here.
+  @@app_quitting = false
+  @@app_exit_code = 0
+  @@app_in_exec = false
+
+  # Poll interval of the exec loop. Matches Qt::Dialog#exec.
+  QT6RB_APP_EXEC_SLEEP = 0.001
+  # Loop passes between quitOnLastWindowClosed checks (~0.1 s), and the number
+  # of consecutive empty checks required before the loop treats the last
+  # window as closed. Debounced because a tool is momentarily window-less
+  # while it swaps one top-level window for another.
+  QT6RB_APP_WINDOW_POLL_EVERY = 100
+  QT6RB_APP_WINDOW_POLL_MISSES = 3
+
+  # Record a quit request. Qt::CoreApplication.quit/exit route here instead of
+  # calling the C++ statics: from a background thread the native call
+  # deadlocks (see above), and with a Ruby-driven exec there is no native
+  # event loop for QCoreApplication::exit to unwind -- the flag is what the
+  # loop below actually reads.
+  def self.qt6rb_app_exit(code = 0)
+    @@app_exit_code = (Integer(code) rescue 0)
+    @@app_quitting = true
+    nil
+  end
+
+  # True once quit()/exit() has been called and before exec has returned
+  def self.qt6rb_app_quitting?
+    @@app_quitting
+  end
+
+  # True while the Ruby-driven exec loop is running
+  def self.qt6rb_app_in_exec?
+    @@app_in_exec
+  end
+
+  # QGuiApplication quits when the last window that carries
+  # Qt::WA_QuitOnClose is closed. Qt's own lastWindowClosed() signal cannot be
+  # used to detect it: QGuiApplicationPrivate::maybeLastWindowClosed only
+  # emits it `if (in_exec)`, i.e. only from inside the native exec this
+  # replaces, so it never fires here (verified offscreen -- closing the sole
+  # top-level widget emits nothing). Poll the widget list instead, applying
+  # Qt's own predicate: visible, top-level, quit-on-close.
+  def self.qt6rb_quit_on_last_window_closed?
+    return false unless defined?(Qt::Application)
+    return false unless Qt::CoreApplication.instance.is_a?(Qt::Application)
+    Qt::GuiApplication.quitOnLastWindowClosed
+  end
+
+  def self.qt6rb_any_window_open?
+    Qt::Application.topLevelWidgets.any? do |widget|
+      widget.visible? && widget.testAttribute(Qt::WA_QuitOnClose)
+    end
+  end
+
+  # The Ruby equivalent of QCoreApplication::exec(). Returns the code passed
+  # to exit(), or 0 for quit()/last-window-closed, as Qt does.
+  def self.qt6rb_app_exec
+    # QCoreApplication::exec() clears QThreadData::quitNow on entry, so a
+    # quit() that arrived before the loop started is ignored; mirror that.
+    @@app_quitting = false
+    @@app_exit_code = 0
+    @@app_in_exec = true
+    queue = main_thread_queue
+    saw_window = false
+    misses = 0
+    passes = 0
+    begin
+      until @@app_quitting
+        Qt::CoreApplication.process_events
+        # Drain directly rather than trusting the init_thread_fix timer: a
+        # queued block may itself be what is running, and this loop must not
+        # depend on that timer being re-entered.
+        queue.pop.call until queue.empty?
+        # processEvents deliberately does NOT reap DeferredDelete events --
+        # only a real QEventLoop iteration does, and there is none here. Do it
+        # explicitly, once per pass, or nothing disposed while the app runs is
+        # ever actually deleted (unbounded growth, and destroyed() never fires
+        # so the QObject wrapper cache never evicts).
+        Qt::CoreApplication.send_posted_events(nil, Qt::Event::DeferredDelete)
+        break if @@app_quitting
+        passes += 1
+        if passes >= QT6RB_APP_WINDOW_POLL_EVERY
+          passes = 0
+          if qt6rb_quit_on_last_window_closed?
+            if qt6rb_any_window_open?
+              saw_window = true
+              misses = 0
+            elsif saw_window
+              misses += 1
+              qt6rb_app_exit(0) if misses >= QT6RB_APP_WINDOW_POLL_MISSES
+            end
+          end
+        end
+        sleep QT6RB_APP_EXEC_SLEEP
+      end
+    ensure
+      @@app_in_exec = false
+    end
+    # QCoreApplicationPrivate::execCleanup flushes posted deferred deletes
+    # before exec returns; do the same so widgets closed on the way out are
+    # really gone by the time the caller tears the app down.
+    Qt::CoreApplication.send_posted_events(nil, Qt::Event::DeferredDelete)
+    @@app_exit_code
+  end
+end
+
 class Qt::CoreApplication
   # exec/quit/processEvents are static in Qt 6; qtbindings-era code calls
   # them on the instance
   def exec; self.class.exec; end
   def quit; self.class.quit; end
+  # Without this, `Qt::CoreApplication.instance.exit(1)` (Cosmos'
+  # ExceptionDialog does exactly that) fell through WrapperExtensions'
+  # method_missing to *Kernel#exit*, killing the process instead of ending
+  # the event loop with a status.
+  def exit(code = 0); self.class.exit(code); end
   def process_events; self.class.process_events; end
   alias processEvents process_events
 
@@ -691,5 +877,33 @@ class Qt::CoreApplication
   def initialize(*args)
     qt6rb_original_initialize(*args)
     Qt.init_thread_fix
+  end
+end
+
+# Route the static exec/quit/exit through the Ruby loop. Each of the three
+# application classes gets its own generated singleton `exec` (QApplication
+# and QGuiApplication re-declare it), so replacing only QCoreApplication's
+# would leave Qt::Application.exec pointing at the blocking C++ one. quit and
+# exit are declared once, on QCoreApplication, and inherited.
+[Qt::CoreApplication, Qt::GuiApplication, Qt::Application].each do |klass|
+  klass.singleton_class.class_eval do
+    # `false`: QGuiApplication's singleton class inherits QCoreApplication's,
+    # so an inherited-aware check would skip the two subclasses after the
+    # first pass and leave their own generated exec in place.
+    next if method_defined?(:qt6rb_native_exec, false)
+    alias_method :qt6rb_native_exec, :exec
+    define_method(:exec) { Qt.qt6rb_app_exec }
+  end
+end
+
+class << Qt::CoreApplication
+  unless method_defined?(:qt6rb_native_quit)
+    # Kept reachable for anything that genuinely wants Qt's own quit; note it
+    # deadlocks when called off the main thread (see Qt.qt6rb_app_exec).
+    alias_method :qt6rb_native_quit, :quit
+    alias_method :qt6rb_native_exit, :exit
+
+    def quit; Qt.qt6rb_app_exit(0); end
+    def exit(code = 0); Qt.qt6rb_app_exit(code); end
   end
 end
