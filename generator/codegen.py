@@ -150,6 +150,12 @@ def classify(t, generated):
     if vspell == "QString":
         return Type("qstring", "QString",
                     "qt6rb::to_qstring({})", "qt6rb::from_qstring({})")
+    if vspell in ("QAnyStringView", "QStringView"):
+        # Views over a temporary QString are valid for the full expression,
+        # which is exactly the lifetime of the bound call
+        return Type("qstring", "QString",
+                    vspell + "(qt6rb::to_qstring({}))",
+                    "qt6rb::from_qstring(({}).toString())")
     if vspell == "QByteArray":
         return Type("qbytearray", "QByteArray",
                     "qt6rb::to_qbytearray({})", "qt6rb::from_qbytearray({})")

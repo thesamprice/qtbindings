@@ -44,10 +44,50 @@ module Qt
 
     # qtbindings class-level declarations. Slots need no declaration with
     # the new bindings (connect dispatches by method name); accept and
-    # ignore them. Ruby-defined signals are not supported yet.
+    # ignore them.
     module ClassMethods
       def slots(*_signatures); end
-      def signals(*_signatures); end
+
+      # Ruby-defined signals: `signals 'modified(int)'` defines a method
+      # `modified` which invokes every connected handler (the qtruby
+      # convention: `emit modified(5)` calls the signal method, and emit
+      # itself is a pass-through). Handlers connect through the usual
+      # connect(SIGNAL('modified(int)')) forms via the generated
+      # on_<name> registration method. Cross-thread emissions are queued
+      # to the main thread like Qt's AutoConnection.
+      def signals(*signatures)
+        signatures.each do |signature|
+          name = signature[/\A(\w+)/, 1]
+          snake = Qt.underscore(name)
+          define_method(name) do |*args|
+            handlers = @__qt6rb_signal_handlers && @__qt6rb_signal_handlers[name]
+            if handlers
+              handlers.each do |handler|
+                arity = handler.arity
+                arity = args.length if arity < 0
+                if Thread.current == Thread.main
+                  handler.call(*args[0, arity])
+                else
+                  Qt.execute_in_main_thread(false) { handler.call(*args[0, arity]) }
+                end
+              end
+            end
+            nil
+          end
+          alias_method(snake, name) if snake != name
+          define_method("on_#{snake}") do |&block|
+            @__qt6rb_signal_handlers ||= {}
+            (@__qt6rb_signal_handlers[name] ||= []) << block
+            self
+          end
+        end
+      end
+    end
+
+    # qtruby's emit is a pass-through: the signal method call inside the
+    # emit expression performs the emission
+    def emit(result = nil)
+      result
     end
 
     def dispose

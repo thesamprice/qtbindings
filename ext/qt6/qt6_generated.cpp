@@ -19979,6 +19979,16 @@ static VALUE rb_QObject_object_name(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#object_name (%d)", argc);
 }
 
+static VALUE rb_QObject_set_object_name(int argc, VALUE* argv, VALUE self) {
+  QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setObjectName(QAnyStringView(qt6rb::to_qstring(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QObject#set_object_name (%d)", argc);
+}
+
 static VALUE rb_QObject_is_widget_type(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   (void)argv; (void)self;
@@ -35677,6 +35687,9 @@ static VALUE rb_QDate_to_string(int argc, VALUE* argv, VALUE self) {
     if (RB_TYPE_P(argv[0], T_STRING)) {
       return qt6rb::from_qstring(o->toString(qt6rb::to_qstring(argv[0])));
     }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return qt6rb::from_qstring(o->toString(QStringView(qt6rb::to_qstring(argv[0]))));
+    }
     rb_raise(rb_eTypeError, "no matching overload of QDate#to_string for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDate#to_string (%d)", argc);
@@ -35747,11 +35760,26 @@ static VALUE rb_QDate_s_current_date(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QDate_s_from_string(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]))), &cls_QDate, true);
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return qt6rb::wrap(new QDate(QDate::fromString(QStringView(qt6rb::to_qstring(argv[0])))), &cls_QDate, true);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]))), &cls_QDate, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QDate#from_string for given argument types");
   }
   if (argc == 2) {
     if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1])) {
+      return qt6rb::wrap(new QDate(QDate::fromString(QStringView(qt6rb::to_qstring(argv[0])), static_cast<Qt::DateFormat>(NUM2INT(argv[1])))), &cls_QDate, true);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), static_cast<Qt::DateFormat>(NUM2INT(argv[1])))), &cls_QDate, true);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
+      return qt6rb::wrap(new QDate(QDate::fromString(QStringView(qt6rb::to_qstring(argv[0])), QStringView(qt6rb::to_qstring(argv[1])))), &cls_QDate, true);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
+      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), QStringView(qt6rb::to_qstring(argv[1])))), &cls_QDate, true);
     }
     if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
       return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), qt6rb::to_qstring(argv[1]))), &cls_QDate, true);
@@ -35759,7 +35787,16 @@ static VALUE rb_QDate_s_from_string(int argc, VALUE* argv, VALUE self) {
     rb_raise(rb_eTypeError, "no matching overload of QDate#from_string for given argument types");
   }
   if (argc == 3) {
-    return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), qt6rb::to_qstring(argv[1]), NUM2INT(argv[2]))), &cls_QDate, true);
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2])) {
+      return qt6rb::wrap(new QDate(QDate::fromString(QStringView(qt6rb::to_qstring(argv[0])), QStringView(qt6rb::to_qstring(argv[1])), NUM2INT(argv[2]))), &cls_QDate, true);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2])) {
+      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), QStringView(qt6rb::to_qstring(argv[1])), NUM2INT(argv[2]))), &cls_QDate, true);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2])) {
+      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), qt6rb::to_qstring(argv[1]), NUM2INT(argv[2]))), &cls_QDate, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QDate#from_string for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDate#from_string (%d)", argc);
 }
@@ -37316,6 +37353,11 @@ static VALUE rb_QColor_ctor(int argc, VALUE* argv, VALUE self) {
       return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
+      QColor* p = new QColor(QStringView(qt6rb::to_qstring(argv[0])));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
       QColor* p = new QColor(StringValueCStr(argv[0]));
       qt6rb::attach(self, p, true);
       return self;
@@ -37376,8 +37418,15 @@ static VALUE rb_QColor_set_named_color(int argc, VALUE* argv, VALUE self) {
   QColor* o = static_cast<QColor*>(qt6rb::unwrap(self, &cls_QColor));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setNamedColor(qt6rb::to_qstring(argv[0]));
-    return Qnil;
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      o->setNamedColor(qt6rb::to_qstring(argv[0]));
+      return Qnil;
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      o->setNamedColor(QStringView(qt6rb::to_qstring(argv[0])));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QColor#set_named_color for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QColor#set_named_color (%d)", argc);
 }
@@ -37981,6 +38030,14 @@ static VALUE rb_QColor_darker(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QColor#darker (%d)", argc);
 }
 
+static VALUE rb_QColor_s_from_string(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QColor(QColor::fromString(QAnyStringView(qt6rb::to_qstring(argv[0])))), &cls_QColor, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QColor#from_string (%d)", argc);
+}
+
 static VALUE rb_QColor_s_color_names(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 0) {
@@ -38102,9 +38159,23 @@ static VALUE rb_QColor_s_from_hsl_f(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QColor_s_is_valid_color(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    return (QColor::isValidColor(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return (QColor::isValidColor(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return (QColor::isValidColor(QStringView(qt6rb::to_qstring(argv[0])))) ? Qtrue : Qfalse;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QColor#is_valid_color for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QColor#is_valid_color (%d)", argc);
+}
+
+static VALUE rb_QColor_s_is_valid_color_name(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (QColor::isValidColorName(QAnyStringView(qt6rb::to_qstring(argv[0])))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QColor#is_valid_color_name (%d)", argc);
 }
 
 static VALUE rb_QPen_ctor(int argc, VALUE* argv, VALUE self) {
@@ -66390,6 +66461,16 @@ static VALUE rb_QSettings_set_atomic_sync_required(int argc, VALUE* argv, VALUE 
   rb_raise(rb_eArgError, "wrong number of arguments for QSettings#set_atomic_sync_required (%d)", argc);
 }
 
+static VALUE rb_QSettings_begin_group(int argc, VALUE* argv, VALUE self) {
+  QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->beginGroup(QAnyStringView(qt6rb::to_qstring(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#begin_group (%d)", argc);
+}
+
 static VALUE rb_QSettings_end_group(int argc, VALUE* argv, VALUE self) {
   QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
   (void)argv; (void)self;
@@ -66407,6 +66488,29 @@ static VALUE rb_QSettings_group(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(o->group());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSettings#group (%d)", argc);
+}
+
+static VALUE rb_QSettings_begin_read_array(int argc, VALUE* argv, VALUE self) {
+  QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return INT2NUM(o->beginReadArray(QAnyStringView(qt6rb::to_qstring(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#begin_read_array (%d)", argc);
+}
+
+static VALUE rb_QSettings_begin_write_array(int argc, VALUE* argv, VALUE self) {
+  QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->beginWriteArray(QAnyStringView(qt6rb::to_qstring(argv[0])));
+    return Qnil;
+  }
+  if (argc == 2) {
+    o->beginWriteArray(QAnyStringView(qt6rb::to_qstring(argv[0])), NUM2INT(argv[1]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#begin_write_array (%d)", argc);
 }
 
 static VALUE rb_QSettings_end_array(int argc, VALUE* argv, VALUE self) {
@@ -66463,6 +66567,47 @@ static VALUE rb_QSettings_is_writable(int argc, VALUE* argv, VALUE self) {
     return (o->isWritable()) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSettings#is_writable (%d)", argc);
+}
+
+static VALUE rb_QSettings_set_value(int argc, VALUE* argv, VALUE self) {
+  QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    o->setValue(QAnyStringView(qt6rb::to_qstring(argv[0])), qt6rb::to_qvariant(argv[1]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#set_value (%d)", argc);
+}
+
+static VALUE rb_QSettings_value(int argc, VALUE* argv, VALUE self) {
+  QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::from_qvariant(o->value(QAnyStringView(qt6rb::to_qstring(argv[0]))));
+  }
+  if (argc == 2) {
+    return qt6rb::from_qvariant(o->value(QAnyStringView(qt6rb::to_qstring(argv[0])), qt6rb::to_qvariant(argv[1])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#value (%d)", argc);
+}
+
+static VALUE rb_QSettings_remove(int argc, VALUE* argv, VALUE self) {
+  QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->remove(QAnyStringView(qt6rb::to_qstring(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#remove (%d)", argc);
+}
+
+static VALUE rb_QSettings_contains(int argc, VALUE* argv, VALUE self) {
+  QSettings* o = static_cast<QSettings*>(qt6rb::unwrap(self, &cls_QSettings));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->contains(QAnyStringView(qt6rb::to_qstring(argv[0])))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#contains (%d)", argc);
 }
 
 static VALUE rb_QSettings_set_fallbacks_enabled(int argc, VALUE* argv, VALUE self) {
@@ -76191,6 +76336,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QObject.rb_class, "eventFilter", RUBY_METHOD_FUNC(rb_QObject_event_filter), -1);
   rb_define_method(cls_QObject.rb_class, "object_name", RUBY_METHOD_FUNC(rb_QObject_object_name), -1);
   rb_define_method(cls_QObject.rb_class, "objectName", RUBY_METHOD_FUNC(rb_QObject_object_name), -1);
+  rb_define_method(cls_QObject.rb_class, "set_object_name", RUBY_METHOD_FUNC(rb_QObject_set_object_name), -1);
+  rb_define_method(cls_QObject.rb_class, "setObjectName", RUBY_METHOD_FUNC(rb_QObject_set_object_name), -1);
+  rb_define_alias(cls_QObject.rb_class, "object_name=", "set_object_name");
+  rb_define_alias(cls_QObject.rb_class, "objectName=", "set_object_name");
   rb_define_method(cls_QObject.rb_class, "is_widget_type", RUBY_METHOD_FUNC(rb_QObject_is_widget_type), -1);
   rb_define_method(cls_QObject.rb_class, "isWidgetType", RUBY_METHOD_FUNC(rb_QObject_is_widget_type), -1);
   rb_define_alias(cls_QObject.rb_class, "widget_type?", "is_widget_type");
@@ -79828,6 +79977,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QColor.rb_class, "convertTo", RUBY_METHOD_FUNC(rb_QColor_convert_to), -1);
   rb_define_method(cls_QColor.rb_class, "lighter", RUBY_METHOD_FUNC(rb_QColor_lighter), -1);
   rb_define_method(cls_QColor.rb_class, "darker", RUBY_METHOD_FUNC(rb_QColor_darker), -1);
+  rb_define_singleton_method(cls_QColor.rb_class, "from_string", RUBY_METHOD_FUNC(rb_QColor_s_from_string), -1);
+  rb_define_singleton_method(cls_QColor.rb_class, "fromString", RUBY_METHOD_FUNC(rb_QColor_s_from_string), -1);
   rb_define_singleton_method(cls_QColor.rb_class, "color_names", RUBY_METHOD_FUNC(rb_QColor_s_color_names), -1);
   rb_define_singleton_method(cls_QColor.rb_class, "colorNames", RUBY_METHOD_FUNC(rb_QColor_s_color_names), -1);
   rb_define_singleton_method(cls_QColor.rb_class, "from_rgb", RUBY_METHOD_FUNC(rb_QColor_s_from_rgb), -1);
@@ -79852,6 +80003,8 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QColor.rb_class, "fromHslF", RUBY_METHOD_FUNC(rb_QColor_s_from_hsl_f), -1);
   rb_define_singleton_method(cls_QColor.rb_class, "is_valid_color", RUBY_METHOD_FUNC(rb_QColor_s_is_valid_color), -1);
   rb_define_singleton_method(cls_QColor.rb_class, "isValidColor", RUBY_METHOD_FUNC(rb_QColor_s_is_valid_color), -1);
+  rb_define_singleton_method(cls_QColor.rb_class, "is_valid_color_name", RUBY_METHOD_FUNC(rb_QColor_s_is_valid_color_name), -1);
+  rb_define_singleton_method(cls_QColor.rb_class, "isValidColorName", RUBY_METHOD_FUNC(rb_QColor_s_is_valid_color_name), -1);
   rb_define_alloc_func(cls_QPen.rb_class, rb_QPen_alloc);
   qt6rb::register_ctor(cls_QPen.rb_class, rb_QPen_ctor);
   rb_include_module(cls_QPen.rb_class, qt6rb::constructable_module());
@@ -85313,9 +85466,15 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSettings.rb_class, "setAtomicSyncRequired", RUBY_METHOD_FUNC(rb_QSettings_set_atomic_sync_required), -1);
   rb_define_alias(cls_QSettings.rb_class, "atomic_sync_required=", "set_atomic_sync_required");
   rb_define_alias(cls_QSettings.rb_class, "atomicSyncRequired=", "set_atomic_sync_required");
+  rb_define_method(cls_QSettings.rb_class, "begin_group", RUBY_METHOD_FUNC(rb_QSettings_begin_group), -1);
+  rb_define_method(cls_QSettings.rb_class, "beginGroup", RUBY_METHOD_FUNC(rb_QSettings_begin_group), -1);
   rb_define_method(cls_QSettings.rb_class, "end_group", RUBY_METHOD_FUNC(rb_QSettings_end_group), -1);
   rb_define_method(cls_QSettings.rb_class, "endGroup", RUBY_METHOD_FUNC(rb_QSettings_end_group), -1);
   rb_define_method(cls_QSettings.rb_class, "group", RUBY_METHOD_FUNC(rb_QSettings_group), -1);
+  rb_define_method(cls_QSettings.rb_class, "begin_read_array", RUBY_METHOD_FUNC(rb_QSettings_begin_read_array), -1);
+  rb_define_method(cls_QSettings.rb_class, "beginReadArray", RUBY_METHOD_FUNC(rb_QSettings_begin_read_array), -1);
+  rb_define_method(cls_QSettings.rb_class, "begin_write_array", RUBY_METHOD_FUNC(rb_QSettings_begin_write_array), -1);
+  rb_define_method(cls_QSettings.rb_class, "beginWriteArray", RUBY_METHOD_FUNC(rb_QSettings_begin_write_array), -1);
   rb_define_method(cls_QSettings.rb_class, "end_array", RUBY_METHOD_FUNC(rb_QSettings_end_array), -1);
   rb_define_method(cls_QSettings.rb_class, "endArray", RUBY_METHOD_FUNC(rb_QSettings_end_array), -1);
   rb_define_method(cls_QSettings.rb_class, "set_array_index", RUBY_METHOD_FUNC(rb_QSettings_set_array_index), -1);
@@ -85331,6 +85490,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSettings.rb_class, "is_writable", RUBY_METHOD_FUNC(rb_QSettings_is_writable), -1);
   rb_define_method(cls_QSettings.rb_class, "isWritable", RUBY_METHOD_FUNC(rb_QSettings_is_writable), -1);
   rb_define_alias(cls_QSettings.rb_class, "writable?", "is_writable");
+  rb_define_method(cls_QSettings.rb_class, "set_value", RUBY_METHOD_FUNC(rb_QSettings_set_value), -1);
+  rb_define_method(cls_QSettings.rb_class, "setValue", RUBY_METHOD_FUNC(rb_QSettings_set_value), -1);
+  rb_define_alias(cls_QSettings.rb_class, "value=", "set_value");
+  rb_define_method(cls_QSettings.rb_class, "value", RUBY_METHOD_FUNC(rb_QSettings_value), -1);
+  rb_define_method(cls_QSettings.rb_class, "remove", RUBY_METHOD_FUNC(rb_QSettings_remove), -1);
+  rb_define_method(cls_QSettings.rb_class, "contains", RUBY_METHOD_FUNC(rb_QSettings_contains), -1);
   rb_define_method(cls_QSettings.rb_class, "set_fallbacks_enabled", RUBY_METHOD_FUNC(rb_QSettings_set_fallbacks_enabled), -1);
   rb_define_method(cls_QSettings.rb_class, "setFallbacksEnabled", RUBY_METHOD_FUNC(rb_QSettings_set_fallbacks_enabled), -1);
   rb_define_alias(cls_QSettings.rb_class, "fallbacks_enabled=", "set_fallbacks_enabled");
