@@ -90,6 +90,21 @@ module Qt
       result
     end
 
+    # qtbindings dispatched every Qt call through a public Qt::Base#method_missing,
+    # and app code took advantage of that to force dispatch past a Ruby-level
+    # override (e.g. `@timer.method_missing(:start, 100)`). The generated
+    # bindings define real methods, so provide a public forwarder that behaves
+    # like ordinary dispatch (and still raises NoMethodError for real typos).
+    def method_missing(name, *args, &block)
+      # Only reachable explicitly when the method exists (implicit dispatch
+      # never lands here for a defined method), so this is not a loop.
+      return __send__(name, *args, &block) if respond_to?(name)
+      snake = Qt.underscore(name)
+      return __send__(snake, *args, &block) if snake != name.to_s && respond_to?(snake)
+      super
+    end
+    public :method_missing
+
     def dispose
       Qt._dispose(self)
     end
@@ -149,36 +164,70 @@ module Qt
   # ---------------------------------------------------------------------
   # Main-thread execution (qtbindings RubyThreadFix equivalent)
   # ---------------------------------------------------------------------
+  # The queue holds plain callables so qtbindings-era code that drains it by
+  # hand (Qt::RubyThreadFix.queue.pop.call until ...empty?) keeps working.
   @@mt_queue = Queue.new
   @@mt_timer = nil
+
+  # The shared main-thread callback queue
+  def self.main_thread_queue
+    @@mt_queue
+  end
 
   # Must be called from the main (GUI) thread after the app exists
   def self.init_thread_fix
     return if @@mt_timer
     @@mt_timer = Qt::Timer.new
     @@mt_timer.on_timeout do
-      until @@mt_queue.empty?
-        block, done = @@mt_queue.pop(true)
+      @@mt_queue.pop.call until @@mt_queue.empty?
+    end
+    @@mt_timer.start(1)
+  end
+
+  # Code which accesses the GUI must run in the main (GUI) thread. Signature
+  # and defaults match qtbindings' Qt.execute_in_main_thread.
+  #
+  # @param blocking [Boolean] Block the calling thread until the block has run
+  # @param sleep_period [Float] Poll interval used while blocking
+  # @param delay_execution [Boolean] Only consulted when already on the main
+  #   thread: queue the block instead of running it inline. Callers rely on
+  #   this to break re-entrancy (e.g. PacketViewer retrying update_tlm_items
+  #   while its telemetry thread shuts down), so it must never run inline.
+  def self.execute_in_main_thread(blocking = true, sleep_period = 0.001, delay_execution = false, &block)
+    if Thread.current != Thread.main
+      complete = false
+      @@mt_queue << lambda do
         begin
           block.call
         rescue Exception => error
           STDERR.puts "Qt.execute_in_main_thread raised:\n#{error.message}\n#{error.backtrace.join("\n")}"
         ensure
-          done << true if done
+          complete = true
         end
       end
+      sleep(sleep_period) until complete if blocking
+      nil
+    elsif delay_execution
+      @@mt_queue << lambda do
+        begin
+          block.call
+        rescue Exception => error
+          STDERR.puts "Qt.execute_in_main_thread raised:\n#{error.message}\n#{error.backtrace.join("\n")}"
+        end
+      end
+      nil
+    else
+      block.call
     end
-    @@mt_timer.start(5)
   end
 
-  def self.execute_in_main_thread(blocking = false, _sleep_period = nil, &block)
-    if Thread.current == Thread.main
-      return block.call
+  # qtbindings exposed the main-thread pump as a Qt::Object subclass; COSMOS
+  # only ever touches RubyThreadFix.queue to drain it before disposing a
+  # dialog, so a bare shim over the shared queue is enough.
+  class RubyThreadFix
+    def self.queue
+      Qt.main_thread_queue
     end
-    done = blocking ? Queue.new : nil
-    @@mt_queue << [block, done]
-    done.pop if done
-    nil
   end
 end
 
@@ -188,6 +237,31 @@ module Qt
   class Variant
     def self.new(value = nil)
       value
+    end
+  end
+
+  # Mutable out-parameter for Qt's `bool *ok` arguments
+  # (Qt::InputDialog.getText(..., qt_boolean)). The generated bindings write
+  # the flag back through #value=. qtbindings' quirk of reporting an unset /
+  # false flag as #nil? is preserved: COSMOS tests `qt_boolean.nil?` to detect
+  # a cancelled dialog.
+  class Boolean
+    attr_accessor :value
+
+    def initialize(value = nil)
+      @value = value
+    end
+
+    def nil?
+      !@value
+    end
+
+    def to_s
+      @value.to_s
+    end
+
+    def inspect
+      "#<Qt::Boolean #{@value.inspect}>"
     end
   end
 

@@ -74,6 +74,8 @@ GUARDS = {
     "cstr": "RB_TYPE_P({0}, T_STRING)",
     "qstringlist": "RB_TYPE_P({0}, T_ARRAY)",
     "variant": "1",
+    # `bool *ok` out-params take nil or a Qt::Boolean; anything goes
+    "boolout": "1",
 }
 
 
@@ -124,6 +126,13 @@ def classify(t, generated):
         if pspell == "char" and pointee.is_const_qualified():
             return Type("cstr", "const char*",
                         "StringValueCStr({})", "rb_str_new_cstr({})")
+        if pspell == "bool" and not pointee.is_const_qualified():
+            # Qt's `bool *ok` out-param idiom (QInputDialog::getText, ...).
+            # qt6rb::BoolOut is a temporary that converts to bool* and, when
+            # it dies at the end of the enclosing full expression (i.e. after
+            # the wrapped call returns), writes the flag back into the Ruby
+            # object via value=. nil is accepted and simply discards it.
+            return Type("boolout", "bool*", "qt6rb::BoolOut({})")
         if pspell in generated:
             if generated[pspell]:  # QObject-derived
                 return Type("objptr", f"{pspell}*",
@@ -217,7 +226,8 @@ class Method:
             self.truncated = True
             first_bad = None
         self.supported = first_bad is None \
-            and (self.result is None or self.result.kind != "unsupported")
+            and (self.result is None
+                 or self.result.kind not in ("unsupported", "boolout"))
 
 
 class Klass:
@@ -291,8 +301,11 @@ def collect_virtuals(klass, classes, generated):
                 sigs[key] = None
                 continue
             m = Method(child, generated)
-            # Truncated signatures can't be used as overrides (must match)
-            sigs[key] = m if (m.supported and not m.truncated) else None
+            # Truncated signatures can't be used as overrides (must match),
+            # and boolout params have no Ruby representation to pass back
+            usable = m.supported and not m.truncated \
+                and all(p.kind != "boolout" for p in m.params)
+            sigs[key] = m if usable else None
         for b in k.bases:
             visit(b)
 
@@ -374,7 +387,10 @@ def harvest(tu, qt_prefix, wanted):
                 if not m.supported:
                     k.skipped += 1
                 elif "qt_signal" in ann:
-                    k.signals.append(m)
+                    if all(p.kind != "boolout" for p in m.params):
+                        k.signals.append(m)
+                    else:
+                        k.skipped += 1
                 else:
                     k.methods.append(m)
             elif child.kind == CursorKind.CONSTRUCTOR:

@@ -342,6 +342,19 @@ VALUE from_qvariant(const QVariant& v) {
   }
 }
 
+// Writes the `bool *ok` result back into the Ruby out-param object. Runs at
+// the end of the full expression containing the wrapped call, so the flag is
+// final by then. Anything that does not accept `value=` (nil in particular)
+// simply discards it.
+BoolOut::~BoolOut() {
+  if (!ruby_alive() || NIL_P(rb_)) return;
+  if (rb_respond_to(rb_, rb_intern("value="))) {
+    bool ok = true;
+    VALUE arg = value_ ? Qtrue : Qfalse;
+    call_method(rb_, "value=", 1, &arg, &ok);
+  }
+}
+
 void retain_proc(VALUE proc) {
   if (NIL_P(s_proc_registry)) {
     s_proc_registry = rb_ary_new();

@@ -4,3 +4,4 @@ generator-venv/
 ext/qt6/*.o
 ext/qt6/*.bundle
 ext/qt6/Makefile
+ext/qt6/*.dSYM/

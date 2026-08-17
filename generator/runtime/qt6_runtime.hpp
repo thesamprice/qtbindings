@@ -74,6 +74,23 @@ VALUE from_qstringlist(const QStringList& list);
 QVariant to_qvariant(VALUE v);
 VALUE from_qvariant(const QVariant& v);
 
+// Out-parameter helper for Qt's `bool *ok` idiom (QInputDialog::getText and
+// friends). Constructed as a temporary in the argument list; it converts to
+// bool* for the call and, when destroyed at the end of the enclosing full
+// expression (after the call has returned), writes the flag back into the
+// Ruby object by calling `value=` on it. nil discards the result.
+class BoolOut {
+public:
+  explicit BoolOut(VALUE v) : rb_(v), value_(false) {}
+  ~BoolOut();
+  operator bool*() { return &value_; }
+  BoolOut(const BoolOut&) = delete;
+  BoolOut& operator=(const BoolOut&) = delete;
+private:
+  VALUE rb_;
+  bool value_;
+};
+
 // Value-class <-> QVariant bridging (QSize in QSettings values etc.).
 // Registered by generated code for each known value class.
 typedef QVariant (*ToVariantFn)(void*);

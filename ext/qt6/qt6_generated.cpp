@@ -120,8 +120,8 @@ static qt6rb::ClassInfo cls_QMovie = { "QMovie", Qnil, [](void* p) { delete stat
 static qt6rb::ClassInfo cls_QStyledItemDelegate = { "QStyledItemDelegate", Qnil, [](void* p) { delete static_cast<QStyledItemDelegate*>(p); }, true };
 static qt6rb::ClassInfo cls_QStyleOptionViewItem = { "QStyleOptionViewItem", Qnil, [](void* p) { delete static_cast<QStyleOptionViewItem*>(p); }, false };
 static qt6rb::ClassInfo cls_QStyleOptionButton = { "QStyleOptionButton", Qnil, [](void* p) { delete static_cast<QStyleOptionButton*>(p); }, false };
-static qt6rb::ClassInfo cls_QPaintDevice = { "QPaintDevice", Qnil, nullptr, false };
 static qt6rb::ClassInfo cls_QFrame = { "QFrame", Qnil, [](void* p) { delete static_cast<QFrame*>(p); }, true };
+static qt6rb::ClassInfo cls_QPaintDevice = { "QPaintDevice", Qnil, nullptr, false };
 static qt6rb::ClassInfo cls_QAbstractButton = { "QAbstractButton", Qnil, nullptr, true };
 static qt6rb::ClassInfo cls_QAbstractScrollArea = { "QAbstractScrollArea", Qnil, [](void* p) { delete static_cast<QAbstractScrollArea*>(p); }, true };
 static qt6rb::ClassInfo cls_QLayoutItem = { "QLayoutItem", Qnil, nullptr, false };
@@ -46307,6 +46307,15 @@ static VALUE rb_QInputDialog_s_get_text(int argc, VALUE* argv, VALUE self) {
   if (argc == 5) {
     return qt6rb::from_qstring(QInputDialog::getText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QLineEdit::EchoMode>(NUM2INT(argv[3])), qt6rb::to_qstring(argv[4])));
   }
+  if (argc == 6) {
+    return qt6rb::from_qstring(QInputDialog::getText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QLineEdit::EchoMode>(NUM2INT(argv[3])), qt6rb::to_qstring(argv[4]), qt6rb::BoolOut(argv[5])));
+  }
+  if (argc == 7) {
+    return qt6rb::from_qstring(QInputDialog::getText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QLineEdit::EchoMode>(NUM2INT(argv[3])), qt6rb::to_qstring(argv[4]), qt6rb::BoolOut(argv[5]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[6]))));
+  }
+  if (argc == 8) {
+    return qt6rb::from_qstring(QInputDialog::getText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QLineEdit::EchoMode>(NUM2INT(argv[3])), qt6rb::to_qstring(argv[4]), qt6rb::BoolOut(argv[5]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[6])), QFlags<Qt::InputMethodHint>::fromInt(NUM2INT(argv[7]))));
+  }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_text (%d)", argc);
 }
 
@@ -46317,6 +46326,15 @@ static VALUE rb_QInputDialog_s_get_multi_line_text(int argc, VALUE* argv, VALUE 
   }
   if (argc == 4) {
     return qt6rb::from_qstring(QInputDialog::getMultiLineText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
+  }
+  if (argc == 5) {
+    return qt6rb::from_qstring(QInputDialog::getMultiLineText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::BoolOut(argv[4])));
+  }
+  if (argc == 6) {
+    return qt6rb::from_qstring(QInputDialog::getMultiLineText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::BoolOut(argv[4]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[5]))));
+  }
+  if (argc == 7) {
+    return qt6rb::from_qstring(QInputDialog::getMultiLineText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3]), qt6rb::BoolOut(argv[4]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[5])), QFlags<Qt::InputMethodHint>::fromInt(NUM2INT(argv[6]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_multi_line_text (%d)", argc);
 }
@@ -46331,6 +46349,15 @@ static VALUE rb_QInputDialog_s_get_item(int argc, VALUE* argv, VALUE self) {
   }
   if (argc == 6) {
     return qt6rb::from_qstring(QInputDialog::getItem(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstringlist(argv[3]), NUM2INT(argv[4]), RTEST(argv[5])));
+  }
+  if (argc == 7) {
+    return qt6rb::from_qstring(QInputDialog::getItem(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstringlist(argv[3]), NUM2INT(argv[4]), RTEST(argv[5]), qt6rb::BoolOut(argv[6])));
+  }
+  if (argc == 8) {
+    return qt6rb::from_qstring(QInputDialog::getItem(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstringlist(argv[3]), NUM2INT(argv[4]), RTEST(argv[5]), qt6rb::BoolOut(argv[6]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[7]))));
+  }
+  if (argc == 9) {
+    return qt6rb::from_qstring(QInputDialog::getItem(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstringlist(argv[3]), NUM2INT(argv[4]), RTEST(argv[5]), qt6rb::BoolOut(argv[6]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[7])), QFlags<Qt::InputMethodHint>::fromInt(NUM2INT(argv[8]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_item (%d)", argc);
 }
@@ -46352,6 +46379,12 @@ static VALUE rb_QInputDialog_s_get_int(int argc, VALUE* argv, VALUE self) {
   if (argc == 7) {
     return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5]), NUM2INT(argv[6])));
   }
+  if (argc == 8) {
+    return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5]), NUM2INT(argv[6]), qt6rb::BoolOut(argv[7])));
+  }
+  if (argc == 9) {
+    return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5]), NUM2INT(argv[6]), qt6rb::BoolOut(argv[7]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[8]))));
+  }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_int (%d)", argc);
 }
 
@@ -46371,6 +46404,15 @@ static VALUE rb_QInputDialog_s_get_double(int argc, VALUE* argv, VALUE self) {
   }
   if (argc == 7) {
     return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3]), NUM2DBL(argv[4]), NUM2DBL(argv[5]), NUM2INT(argv[6])));
+  }
+  if (argc == 8) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3]), NUM2DBL(argv[4]), NUM2DBL(argv[5]), NUM2INT(argv[6]), qt6rb::BoolOut(argv[7])));
+  }
+  if (argc == 9) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3]), NUM2DBL(argv[4]), NUM2DBL(argv[5]), NUM2INT(argv[6]), qt6rb::BoolOut(argv[7]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[8]))));
+  }
+  if (argc == 10) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3]), NUM2DBL(argv[4]), NUM2DBL(argv[5]), NUM2INT(argv[6]), qt6rb::BoolOut(argv[7]), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[8])), NUM2DBL(argv[9])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_double (%d)", argc);
 }
@@ -71533,148 +71575,6 @@ static VALUE rb_QStyleOptionButton_ctor(int argc, VALUE* argv, VALUE self) {
 }
 static VALUE rb_QStyleOptionButton_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QStyleOptionButton); }
 
-static VALUE rb_QPaintDevice_dev_type(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->devType());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#dev_type (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_painting_active(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return (o->paintingActive()) ? Qtrue : Qfalse;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#painting_active (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_width(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->width());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#width (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_height(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->height());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#height (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_width_mm(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->widthMM());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#width_mm (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_height_mm(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->heightMM());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#height_mm (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_logical_dpi_x(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->logicalDpiX());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#logical_dpi_x (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_logical_dpi_y(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->logicalDpiY());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#logical_dpi_y (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_physical_dpi_x(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->physicalDpiX());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#physical_dpi_x (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_physical_dpi_y(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->physicalDpiY());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#physical_dpi_y (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_device_pixel_ratio(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return DBL2NUM(o->devicePixelRatio());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#device_pixel_ratio (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_device_pixel_ratio_f(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return DBL2NUM(o->devicePixelRatioF());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#device_pixel_ratio_f (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_color_count(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->colorCount());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#color_count (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_depth(int argc, VALUE* argv, VALUE self) {
-  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->depth());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#depth (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_s_device_pixel_ratio_f_scale(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return DBL2NUM(QPaintDevice::devicePixelRatioFScale());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#device_pixel_ratio_f_scale (%d)", argc);
-}
-
-static VALUE rb_QPaintDevice_s_encode_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
-  if (argc == 2) {
-    return INT2NUM(QPaintDevice::encodeMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), NUM2DBL(argv[1])));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#encode_metric_f (%d)", argc);
-}
-
 static VALUE rb_QFrame_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -72129,6 +72029,148 @@ static VALUE rb_QFrame_prot_custom_event(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFrame#custom_event (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_dev_type(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->devType());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#dev_type (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_painting_active(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->paintingActive()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#painting_active (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_width(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->width());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#width (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_height(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->height());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#height (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_width_mm(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->widthMM());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#width_mm (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_height_mm(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->heightMM());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#height_mm (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_logical_dpi_x(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->logicalDpiX());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#logical_dpi_x (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_logical_dpi_y(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->logicalDpiY());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#logical_dpi_y (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_physical_dpi_x(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->physicalDpiX());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#physical_dpi_x (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_physical_dpi_y(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->physicalDpiY());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#physical_dpi_y (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_device_pixel_ratio(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->devicePixelRatio());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#device_pixel_ratio (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_device_pixel_ratio_f(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->devicePixelRatioF());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#device_pixel_ratio_f (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_color_count(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->colorCount());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#color_count (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_depth(int argc, VALUE* argv, VALUE self) {
+  QPaintDevice* o = static_cast<QPaintDevice*>(qt6rb::unwrap(self, &cls_QPaintDevice));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->depth());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#depth (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_s_device_pixel_ratio_f_scale(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(QPaintDevice::devicePixelRatioFScale());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#device_pixel_ratio_f_scale (%d)", argc);
+}
+
+static VALUE rb_QPaintDevice_s_encode_metric_f(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return INT2NUM(QPaintDevice::encodeMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), NUM2DBL(argv[1])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#encode_metric_f (%d)", argc);
 }
 
 static VALUE rb_QAbstractButton_set_text(int argc, VALUE* argv, VALUE self) {
@@ -86484,36 +86526,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QStyleOptionButton.rb_class, rb_QStyleOptionButton_alloc);
   qt6rb::register_ctor(cls_QStyleOptionButton.rb_class, rb_QStyleOptionButton_ctor);
   rb_include_module(cls_QStyleOptionButton.rb_class, qt6rb::constructable_module());
-  rb_undef_alloc_func(cls_QPaintDevice.rb_class);
-  rb_define_method(cls_QPaintDevice.rb_class, "dev_type", RUBY_METHOD_FUNC(rb_QPaintDevice_dev_type), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "devType", RUBY_METHOD_FUNC(rb_QPaintDevice_dev_type), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "painting_active", RUBY_METHOD_FUNC(rb_QPaintDevice_painting_active), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "paintingActive", RUBY_METHOD_FUNC(rb_QPaintDevice_painting_active), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "width", RUBY_METHOD_FUNC(rb_QPaintDevice_width), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "height", RUBY_METHOD_FUNC(rb_QPaintDevice_height), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "width_mm", RUBY_METHOD_FUNC(rb_QPaintDevice_width_mm), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "widthMM", RUBY_METHOD_FUNC(rb_QPaintDevice_width_mm), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "height_mm", RUBY_METHOD_FUNC(rb_QPaintDevice_height_mm), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "heightMM", RUBY_METHOD_FUNC(rb_QPaintDevice_height_mm), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "logical_dpi_x", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_x), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "logicalDpiX", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_x), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "logical_dpi_y", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_y), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "logicalDpiY", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_y), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "physical_dpi_x", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_x), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "physicalDpiX", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_x), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "physical_dpi_y", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_y), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "physicalDpiY", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_y), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "device_pixel_ratio", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "devicePixelRatio", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "device_pixel_ratio_f", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio_f), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "devicePixelRatioF", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio_f), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "color_count", RUBY_METHOD_FUNC(rb_QPaintDevice_color_count), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "colorCount", RUBY_METHOD_FUNC(rb_QPaintDevice_color_count), -1);
-  rb_define_method(cls_QPaintDevice.rb_class, "depth", RUBY_METHOD_FUNC(rb_QPaintDevice_depth), -1);
-  rb_define_singleton_method(cls_QPaintDevice.rb_class, "device_pixel_ratio_f_scale", RUBY_METHOD_FUNC(rb_QPaintDevice_s_device_pixel_ratio_f_scale), -1);
-  rb_define_singleton_method(cls_QPaintDevice.rb_class, "devicePixelRatioFScale", RUBY_METHOD_FUNC(rb_QPaintDevice_s_device_pixel_ratio_f_scale), -1);
-  rb_define_singleton_method(cls_QPaintDevice.rb_class, "encode_metric_f", RUBY_METHOD_FUNC(rb_QPaintDevice_s_encode_metric_f), -1);
-  rb_define_singleton_method(cls_QPaintDevice.rb_class, "encodeMetricF", RUBY_METHOD_FUNC(rb_QPaintDevice_s_encode_metric_f), -1);
   rb_define_alloc_func(cls_QFrame.rb_class, rb_QFrame_alloc);
   qt6rb::register_ctor(cls_QFrame.rb_class, rb_QFrame_ctor);
   rb_include_module(cls_QFrame.rb_class, qt6rb::constructable_module());
@@ -86609,6 +86621,36 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFrame.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QFrame_prot_child_event), -1);
   rb_define_method(cls_QFrame.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QFrame_prot_custom_event), -1);
   rb_define_method(cls_QFrame.rb_class, "customEvent", RUBY_METHOD_FUNC(rb_QFrame_prot_custom_event), -1);
+  rb_undef_alloc_func(cls_QPaintDevice.rb_class);
+  rb_define_method(cls_QPaintDevice.rb_class, "dev_type", RUBY_METHOD_FUNC(rb_QPaintDevice_dev_type), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "devType", RUBY_METHOD_FUNC(rb_QPaintDevice_dev_type), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "painting_active", RUBY_METHOD_FUNC(rb_QPaintDevice_painting_active), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "paintingActive", RUBY_METHOD_FUNC(rb_QPaintDevice_painting_active), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "width", RUBY_METHOD_FUNC(rb_QPaintDevice_width), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "height", RUBY_METHOD_FUNC(rb_QPaintDevice_height), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "width_mm", RUBY_METHOD_FUNC(rb_QPaintDevice_width_mm), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "widthMM", RUBY_METHOD_FUNC(rb_QPaintDevice_width_mm), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "height_mm", RUBY_METHOD_FUNC(rb_QPaintDevice_height_mm), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "heightMM", RUBY_METHOD_FUNC(rb_QPaintDevice_height_mm), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "logical_dpi_x", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_x), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "logicalDpiX", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_x), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "logical_dpi_y", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_y), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "logicalDpiY", RUBY_METHOD_FUNC(rb_QPaintDevice_logical_dpi_y), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "physical_dpi_x", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_x), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "physicalDpiX", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_x), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "physical_dpi_y", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_y), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "physicalDpiY", RUBY_METHOD_FUNC(rb_QPaintDevice_physical_dpi_y), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "device_pixel_ratio", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "devicePixelRatio", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "device_pixel_ratio_f", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio_f), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "devicePixelRatioF", RUBY_METHOD_FUNC(rb_QPaintDevice_device_pixel_ratio_f), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "color_count", RUBY_METHOD_FUNC(rb_QPaintDevice_color_count), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "colorCount", RUBY_METHOD_FUNC(rb_QPaintDevice_color_count), -1);
+  rb_define_method(cls_QPaintDevice.rb_class, "depth", RUBY_METHOD_FUNC(rb_QPaintDevice_depth), -1);
+  rb_define_singleton_method(cls_QPaintDevice.rb_class, "device_pixel_ratio_f_scale", RUBY_METHOD_FUNC(rb_QPaintDevice_s_device_pixel_ratio_f_scale), -1);
+  rb_define_singleton_method(cls_QPaintDevice.rb_class, "devicePixelRatioFScale", RUBY_METHOD_FUNC(rb_QPaintDevice_s_device_pixel_ratio_f_scale), -1);
+  rb_define_singleton_method(cls_QPaintDevice.rb_class, "encode_metric_f", RUBY_METHOD_FUNC(rb_QPaintDevice_s_encode_metric_f), -1);
+  rb_define_singleton_method(cls_QPaintDevice.rb_class, "encodeMetricF", RUBY_METHOD_FUNC(rb_QPaintDevice_s_encode_metric_f), -1);
   rb_undef_alloc_func(cls_QAbstractButton.rb_class);
   rb_define_method(cls_QAbstractButton.rb_class, "set_text", RUBY_METHOD_FUNC(rb_QAbstractButton_set_text), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "setText", RUBY_METHOD_FUNC(rb_QAbstractButton_set_text), -1);
@@ -88603,6 +88645,18 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QStyleOptionButton.rb_class, "DefaultButton", INT2NUM(4));
   rb_define_const(cls_QStyleOptionButton.rb_class, "AutoDefaultButton", INT2NUM(8));
   rb_define_const(cls_QStyleOptionButton.rb_class, "CommandLinkButton", INT2NUM(16));
+  rb_define_const(cls_QFrame.rb_class, "NoFrame", INT2NUM(0));
+  rb_define_const(cls_QFrame.rb_class, "Box", INT2NUM(1));
+  rb_define_const(cls_QFrame.rb_class, "Panel", INT2NUM(2));
+  rb_define_const(cls_QFrame.rb_class, "WinPanel", INT2NUM(3));
+  rb_define_const(cls_QFrame.rb_class, "HLine", INT2NUM(4));
+  rb_define_const(cls_QFrame.rb_class, "VLine", INT2NUM(5));
+  rb_define_const(cls_QFrame.rb_class, "StyledPanel", INT2NUM(6));
+  rb_define_const(cls_QFrame.rb_class, "Plain", INT2NUM(16));
+  rb_define_const(cls_QFrame.rb_class, "Raised", INT2NUM(32));
+  rb_define_const(cls_QFrame.rb_class, "Sunken", INT2NUM(48));
+  rb_define_const(cls_QFrame.rb_class, "Shadow_Mask", INT2NUM(240));
+  rb_define_const(cls_QFrame.rb_class, "Shape_Mask", INT2NUM(15));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmWidth", INT2NUM(1));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmHeight", INT2NUM(2));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmWidthMM", INT2NUM(3));
@@ -88617,18 +88671,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QPaintDevice.rb_class, "PdmDevicePixelRatioScaled", INT2NUM(12));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmDevicePixelRatioF_EncodedA", INT2NUM(13));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmDevicePixelRatioF_EncodedB", INT2NUM(14));
-  rb_define_const(cls_QFrame.rb_class, "NoFrame", INT2NUM(0));
-  rb_define_const(cls_QFrame.rb_class, "Box", INT2NUM(1));
-  rb_define_const(cls_QFrame.rb_class, "Panel", INT2NUM(2));
-  rb_define_const(cls_QFrame.rb_class, "WinPanel", INT2NUM(3));
-  rb_define_const(cls_QFrame.rb_class, "HLine", INT2NUM(4));
-  rb_define_const(cls_QFrame.rb_class, "VLine", INT2NUM(5));
-  rb_define_const(cls_QFrame.rb_class, "StyledPanel", INT2NUM(6));
-  rb_define_const(cls_QFrame.rb_class, "Plain", INT2NUM(16));
-  rb_define_const(cls_QFrame.rb_class, "Raised", INT2NUM(32));
-  rb_define_const(cls_QFrame.rb_class, "Sunken", INT2NUM(48));
-  rb_define_const(cls_QFrame.rb_class, "Shadow_Mask", INT2NUM(240));
-  rb_define_const(cls_QFrame.rb_class, "Shape_Mask", INT2NUM(15));
   rb_define_const(cls_QAbstractScrollArea.rb_class, "AdjustIgnored", INT2NUM(0));
   rb_define_const(cls_QAbstractScrollArea.rb_class, "AdjustToContentsOnFirstShow", INT2NUM(1));
   rb_define_const(cls_QAbstractScrollArea.rb_class, "AdjustToContents", INT2NUM(2));
