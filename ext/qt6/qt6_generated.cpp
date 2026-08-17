@@ -5,6 +5,7 @@
 #include <QtWidgets/QtWidgets>
 
 using QTextEdit__ExtraSelection = QTextEdit::ExtraSelection;
+using QTextLayout__FormatRange = QTextLayout::FormatRange;
 
 static qt6rb::ClassInfo cls_QObject = { "QObject", Qnil, [](void* p) { delete static_cast<QObject*>(p); }, true };
 static qt6rb::ClassInfo cls_QTimer = { "QTimer", Qnil, [](void* p) { delete static_cast<QTimer*>(p); }, true };
@@ -94,6 +95,8 @@ static qt6rb::ClassInfo cls_QSyntaxHighlighter = { "QSyntaxHighlighter", Qnil, [
 static qt6rb::ClassInfo cls_QTextOption = { "QTextOption", Qnil, [](void* p) { delete static_cast<QTextOption*>(p); }, false };
 static qt6rb::ClassInfo cls_QTextEdit__ExtraSelection = { "QTextEdit::ExtraSelection", Qnil, [](void* p) { delete static_cast<QTextEdit__ExtraSelection*>(p); }, false };
 static qt6rb::ClassInfo cls_QTextBlock = { "QTextBlock", Qnil, [](void* p) { delete static_cast<QTextBlock*>(p); }, false };
+static qt6rb::ClassInfo cls_QTextLayout = { "QTextLayout", Qnil, [](void* p) { delete static_cast<QTextLayout*>(p); }, false };
+static qt6rb::ClassInfo cls_QTextLayout__FormatRange = { "QTextLayout::FormatRange", Qnil, [](void* p) { delete static_cast<QTextLayout__FormatRange*>(p); }, false };
 static qt6rb::ClassInfo cls_QScrollBar = { "QScrollBar", Qnil, [](void* p) { delete static_cast<QScrollBar*>(p); }, true };
 static qt6rb::ClassInfo cls_QAbstractItemView = { "QAbstractItemView", Qnil, nullptr, true };
 static qt6rb::ClassInfo cls_QHeaderView = { "QHeaderView", Qnil, [](void* p) { delete static_cast<QHeaderView*>(p); }, true };
@@ -11273,6 +11276,15 @@ public:
     }
     QTreeWidget::reset();
   }
+  void dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeWidget, "data_changed", "dataChanged")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true), qt6rb::from_numlist<int>(a2) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 3, rb_args, &ok);
+      if (ok) return;
+    }
+    QTreeWidget::dataChanged(a0, a1, a2);
+  }
   void selectAll() override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeWidget, "select_all", "selectAll")) {
       bool ok = true;
@@ -12616,6 +12628,7 @@ public:
   bool qt6rb_base_dropMimeData(int a0, const QMimeData * a1, Qt::DropAction a2) { return QListWidget::dropMimeData(a0, a1, a2); }
   Qt::DropActions qt6rb_base_supportedDropActions() { return QListWidget::supportedDropActions(); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QListWidget::scrollContentsBy(a0, a1); }
+  void qt6rb_base_dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) { QListWidget::dataChanged(a0, a1, a2); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QListWidget::rowsInserted(a0, a1, a2); }
   void qt6rb_base_rowsAboutToBeRemoved(const QModelIndex & a0, int a1, int a2) { QListWidget::rowsAboutToBeRemoved(a0, a1, a2); }
   void qt6rb_base_mouseMoveEvent(QMouseEvent * a0) { QListWidget::mouseMoveEvent(a0); }
@@ -12761,6 +12774,15 @@ public:
       if (ok) return;
     }
     QListWidget::scrollContentsBy(a0, a1);
+  }
+  void dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListWidget, "data_changed", "dataChanged")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true), qt6rb::from_numlist<int>(a2) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 3, rb_args, &ok);
+      if (ok) return;
+    }
+    QListWidget::dataChanged(a0, a1, a2);
   }
   void rowsInserted(const QModelIndex & a0, int a1, int a2) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListWidget, "rows_inserted", "rowsInserted")) {
@@ -13802,6 +13824,7 @@ public:
   int qt6rb_base_verticalOffset() { return QHeaderView::verticalOffset(); }
   void qt6rb_base_updateGeometries() { QHeaderView::updateGeometries(); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QHeaderView::scrollContentsBy(a0, a1); }
+  void qt6rb_base_dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) { QHeaderView::dataChanged(a0, a1, a2); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QHeaderView::rowsInserted(a0, a1, a2); }
   QRect qt6rb_base_visualRect(const QModelIndex & a0) { return QHeaderView::visualRect(a0); }
   void qt6rb_base_scrollTo(const QModelIndex & a0, ScrollHint a1) { QHeaderView::scrollTo(a0, a1); }
@@ -14000,6 +14023,15 @@ public:
       if (ok) return;
     }
     QHeaderView::scrollContentsBy(a0, a1);
+  }
+  void dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QHeaderView, "data_changed", "dataChanged")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true), qt6rb::from_numlist<int>(a2) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 3, rb_args, &ok);
+      if (ok) return;
+    }
+    QHeaderView::dataChanged(a0, a1, a2);
   }
   void rowsInserted(const QModelIndex & a0, int a1, int a2) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QHeaderView, "rows_inserted", "rowsInserted")) {
@@ -18202,6 +18234,7 @@ public:
   using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QListView::event(a0); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QListView::scrollContentsBy(a0, a1); }
+  void qt6rb_base_dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) { QListView::dataChanged(a0, a1, a2); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QListView::rowsInserted(a0, a1, a2); }
   void qt6rb_base_rowsAboutToBeRemoved(const QModelIndex & a0, int a1, int a2) { QListView::rowsAboutToBeRemoved(a0, a1, a2); }
   void qt6rb_base_mouseMoveEvent(QMouseEvent * a0) { QListView::mouseMoveEvent(a0); }
@@ -18313,6 +18346,15 @@ public:
       if (ok) return;
     }
     QListView::scrollContentsBy(a0, a1);
+  }
+  void dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListView, "data_changed", "dataChanged")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true), qt6rb::from_numlist<int>(a2) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 3, rb_args, &ok);
+      if (ok) return;
+    }
+    QListView::dataChanged(a0, a1, a2);
   }
   void rowsInserted(const QModelIndex & a0, int a1, int a2) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListView, "rows_inserted", "rowsInserted")) {
@@ -18939,6 +18981,15 @@ public:
       if (ok) return;
     }
     QTreeView::reset();
+  }
+  void dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeView, "data_changed", "dataChanged")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true), qt6rb::from_numlist<int>(a2) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 3, rb_args, &ok);
+      if (ok) return;
+    }
+    QTreeView::dataChanged(a0, a1, a2);
   }
   void selectAll() override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeView, "select_all", "selectAll")) {
@@ -19823,6 +19874,14 @@ public:
       if (ok) return;
     }
     QStyledItemDelegate::destroyEditor(a0, a1);
+  }
+  QList<int> paintingRoles() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QStyledItemDelegate, "painting_roles", "paintingRoles")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return qt6rb::to_numlist<int>(r);
+    }
+    return QStyledItemDelegate::paintingRoles();
   }
   bool event(QEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QStyledItemDelegate, "event", "event")) {
@@ -22899,6 +22958,14 @@ public:
       if (ok) return RTEST(r);
     }
     return QAbstractItemDelegate::editorEvent(a0, a1, a2, a3);
+  }
+  QList<int> paintingRoles() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractItemDelegate, "painting_roles", "paintingRoles")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return qt6rb::to_numlist<int>(r);
+    }
+    return QAbstractItemDelegate::paintingRoles();
   }
   bool event(QEvent * a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QAbstractItemDelegate, "event", "event")) {
@@ -43966,6 +44033,25 @@ static VALUE rb_QPen_set_style(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPen#set_style (%d)", argc);
 }
 
+static VALUE rb_QPen_dash_pattern(int argc, VALUE* argv, VALUE self) {
+  QPen* o = static_cast<QPen*>(qt6rb::unwrap(self, &cls_QPen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_numlist<double>(o->dashPattern());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPen#dash_pattern (%d)", argc);
+}
+
+static VALUE rb_QPen_set_dash_pattern(int argc, VALUE* argv, VALUE self) {
+  QPen* o = static_cast<QPen*>(qt6rb::unwrap(self, &cls_QPen));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setDashPattern(qt6rb::to_numlist<double>(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPen#set_dash_pattern (%d)", argc);
+}
+
 static VALUE rb_QPen_dash_offset(int argc, VALUE* argv, VALUE self) {
   QPen* o = static_cast<QPen*>(qt6rb::unwrap(self, &cls_QPen));
   (void)argv; (void)self;
@@ -46797,7 +46883,13 @@ static VALUE rb_QImage_convert_to_format(int argc, VALUE* argv, VALUE self) {
     if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QImage(o->convertToFormat(static_cast<QImage::Format>(NUM2INT(argv[0])), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[1])))), &cls_QImage, true);
     }
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_TYPE_P(argv[1], T_ARRAY)) {
+      return qt6rb::wrap(new QImage(o->convertToFormat(static_cast<QImage::Format>(NUM2INT(argv[0])), qt6rb::to_numlist<unsigned int>(argv[1]))), &cls_QImage, true);
+    }
     rb_raise(rb_eTypeError, "no matching overload of QImage#convert_to_format for given argument types");
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QImage(o->convertToFormat(static_cast<QImage::Format>(NUM2INT(argv[0])), qt6rb::to_numlist<unsigned int>(argv[1]), QFlags<Qt::ImageConversionFlag>::fromInt(NUM2INT(argv[2])))), &cls_QImage, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#convert_to_format (%d)", argc);
 }
@@ -47051,6 +47143,25 @@ static VALUE rb_QImage_set_pixel_color(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#set_pixel_color (%d)", argc);
+}
+
+static VALUE rb_QImage_color_table(int argc, VALUE* argv, VALUE self) {
+  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_numlist<unsigned int>(o->colorTable());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QImage#color_table (%d)", argc);
+}
+
+static VALUE rb_QImage_set_color_table(int argc, VALUE* argv, VALUE self) {
+  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setColorTable(qt6rb::to_numlist<unsigned int>(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QImage#set_color_table (%d)", argc);
 }
 
 static VALUE rb_QImage_device_pixel_ratio(int argc, VALUE* argv, VALUE self) {
@@ -64490,6 +64601,17 @@ static VALUE rb_QListWidget_prot_scroll_contents_by(int argc, VALUE* argv, VALUE
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#scroll_contents_by (%d)", argc);
 }
 
+static VALUE rb_QListWidget_prot_data_changed(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QListWidget* shim = dynamic_cast<Rb_QListWidget*>(static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "data_changed is protected; only callable on Ruby-created instances");
+  if (argc == 3) {
+    shim->qt6rb_base_dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex)), qt6rb::to_numlist<int>(argv[2]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#data_changed (%d)", argc);
+}
+
 static VALUE rb_QListWidget_prot_rows_inserted(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   Rb_QListWidget* shim = dynamic_cast<Rb_QListWidget*>(static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget)));
@@ -68269,6 +68391,25 @@ static VALUE rb_QTextOption_tab_stop_distance(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QTextOption#tab_stop_distance (%d)", argc);
 }
 
+static VALUE rb_QTextOption_set_tab_array(int argc, VALUE* argv, VALUE self) {
+  QTextOption* o = static_cast<QTextOption*>(qt6rb::unwrap(self, &cls_QTextOption));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setTabArray(qt6rb::to_numlist<double>(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextOption#set_tab_array (%d)", argc);
+}
+
+static VALUE rb_QTextOption_tab_array(int argc, VALUE* argv, VALUE self) {
+  QTextOption* o = static_cast<QTextOption*>(qt6rb::unwrap(self, &cls_QTextOption));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_numlist<double>(o->tabArray());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextOption#tab_array (%d)", argc);
+}
+
 static VALUE rb_QTextOption_set_use_design_metrics(int argc, VALUE* argv, VALUE self) {
   QTextOption* o = static_cast<QTextOption*>(qt6rb::unwrap(self, &cls_QTextOption));
   (void)argv; (void)self;
@@ -68373,6 +68514,15 @@ static VALUE rb_QTextBlock_contains(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTextBlock#contains (%d)", argc);
 }
 
+static VALUE rb_QTextBlock_layout(int argc, VALUE* argv, VALUE self) {
+  QTextBlock* o = static_cast<QTextBlock*>(qt6rb::unwrap(self, &cls_QTextBlock));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->layout()), &cls_QTextLayout, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextBlock#layout (%d)", argc);
+}
+
 static VALUE rb_QTextBlock_clear_layout(int argc, VALUE* argv, VALUE self) {
   QTextBlock* o = static_cast<QTextBlock*>(qt6rb::unwrap(self, &cls_QTextBlock));
   (void)argv; (void)self;
@@ -68426,6 +68576,15 @@ static VALUE rb_QTextBlock_text(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(o->text());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTextBlock#text (%d)", argc);
+}
+
+static VALUE rb_QTextBlock_text_formats(int argc, VALUE* argv, VALUE self) {
+  QTextBlock* o = static_cast<QTextBlock*>(qt6rb::unwrap(self, &cls_QTextBlock));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_objlist<QTextLayout__FormatRange>(o->textFormats(), &cls_QTextLayout__FormatRange);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextBlock#text_formats (%d)", argc);
 }
 
 static VALUE rb_QTextBlock_document(int argc, VALUE* argv, VALUE self) {
@@ -68556,6 +68715,414 @@ static VALUE rb_QTextBlock_fragment_index(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(o->fragmentIndex());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTextBlock#fragment_index (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_ctor(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    QTextLayout* p = new QTextLayout();
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 1) {
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      QTextLayout* p = new QTextLayout(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (qt6rb::is_kind_of(argv[0], &cls_QTextBlock)) {
+      QTextLayout* p = new QTextLayout(*static_cast<QTextBlock*>(qt6rb::unwrap_ref(argv[0], &cls_QTextBlock)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTextLayout#initialize for given argument types");
+  }
+  if (argc == 2) {
+    QTextLayout* p = new QTextLayout(qt6rb::to_qstring(argv[0]), *static_cast<QFont*>(qt6rb::unwrap_ref(argv[1], &cls_QFont)));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 3) {
+    QTextLayout* p = new QTextLayout(qt6rb::to_qstring(argv[0]), *static_cast<QFont*>(qt6rb::unwrap_ref(argv[1], &cls_QFont)), static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[2], &cls_QPaintDevice)));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#initialize (%d)", argc);
+}
+static VALUE rb_QTextLayout_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QTextLayout); }
+
+static VALUE rb_QTextLayout_set_font(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_font (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_font(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QFont(o->font()), &cls_QFont, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#font (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_text(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setText(qt6rb::to_qstring(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_text (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_text(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->text());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#text (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_text_option(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setTextOption(*static_cast<QTextOption*>(qt6rb::unwrap_ref(argv[0], &cls_QTextOption)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_text_option (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_text_option(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QTextOption(o->textOption()), &cls_QTextOption, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#text_option (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_preedit_area(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    o->setPreeditArea(NUM2INT(argv[0]), qt6rb::to_qstring(argv[1]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_preedit_area (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_preedit_area_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->preeditAreaPosition());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#preedit_area_position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_preedit_area_text(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->preeditAreaText());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#preedit_area_text (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_formats(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setFormats(qt6rb::to_objlist<QTextLayout__FormatRange>(argv[0], &cls_QTextLayout__FormatRange));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_formats (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_formats(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_objlist<QTextLayout__FormatRange>(o->formats(), &cls_QTextLayout__FormatRange);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#formats (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_clear_formats(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->clearFormats();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#clear_formats (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_cache_enabled(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setCacheEnabled(RTEST(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_cache_enabled (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_cache_enabled(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->cacheEnabled()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#cache_enabled (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_cursor_move_style(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setCursorMoveStyle(static_cast<Qt::CursorMoveStyle>(NUM2INT(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_cursor_move_style (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_cursor_move_style(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->cursorMoveStyle()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#cursor_move_style (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_begin_layout(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->beginLayout();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#begin_layout (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_end_layout(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->endLayout();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#end_layout (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_clear_layout(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->clearLayout();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#clear_layout (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_line_count(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->lineCount());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#line_count (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_is_valid_cursor_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->isValidCursorPosition(NUM2INT(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#is_valid_cursor_position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_next_cursor_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return INT2NUM(o->nextCursorPosition(NUM2INT(argv[0])));
+  }
+  if (argc == 2) {
+    return INT2NUM(o->nextCursorPosition(NUM2INT(argv[0]), static_cast<QTextLayout::CursorMode>(NUM2INT(argv[1]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#next_cursor_position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_previous_cursor_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return INT2NUM(o->previousCursorPosition(NUM2INT(argv[0])));
+  }
+  if (argc == 2) {
+    return INT2NUM(o->previousCursorPosition(NUM2INT(argv[0]), static_cast<QTextLayout::CursorMode>(NUM2INT(argv[1]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#previous_cursor_position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_left_cursor_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return INT2NUM(o->leftCursorPosition(NUM2INT(argv[0])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#left_cursor_position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_right_cursor_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return INT2NUM(o->rightCursorPosition(NUM2INT(argv[0])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#right_cursor_position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_draw(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    o->draw(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)));
+    return Qnil;
+  }
+  if (argc == 3) {
+    o->draw(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), qt6rb::to_objlist<QTextLayout__FormatRange>(argv[2], &cls_QTextLayout__FormatRange));
+    return Qnil;
+  }
+  if (argc == 4) {
+    o->draw(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), qt6rb::to_objlist<QTextLayout__FormatRange>(argv[2], &cls_QTextLayout__FormatRange), *static_cast<QRectF*>(qt6rb::unwrap_ref(argv[3], &cls_QRectF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#draw (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_draw_cursor(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->drawCursor(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), NUM2INT(argv[2]));
+    return Qnil;
+  }
+  if (argc == 4) {
+    o->drawCursor(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), NUM2INT(argv[2]), NUM2INT(argv[3]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#draw_cursor (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->position()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_position(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setPosition(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_position (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_bounding_rect(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRectF(o->boundingRect()), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#bounding_rect (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_minimum_width(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->minimumWidth());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#minimum_width (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_maximum_width(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->maximumWidth());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#maximum_width (%d)", argc);
+}
+
+static VALUE rb_QTextLayout_set_flags(int argc, VALUE* argv, VALUE self) {
+  QTextLayout* o = static_cast<QTextLayout*>(qt6rb::unwrap(self, &cls_QTextLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setFlags(NUM2INT(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout#set_flags (%d)", argc);
+}
+
+static VALUE rb_QTextLayout__FormatRange_ctor(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    QTextLayout__FormatRange* p = new QTextLayout__FormatRange();
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextLayout__FormatRange#initialize (%d)", argc);
+}
+static VALUE rb_QTextLayout__FormatRange_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QTextLayout__FormatRange); }
+
+static VALUE rb_QTextLayout__FormatRange_field_start(VALUE self) {
+  QTextLayout__FormatRange* o = static_cast<QTextLayout__FormatRange*>(qt6rb::unwrap(self, &cls_QTextLayout__FormatRange));
+  return INT2NUM(o->start);
+}
+
+static VALUE rb_QTextLayout__FormatRange_field_start_set(VALUE self, VALUE v) {
+  QTextLayout__FormatRange* o = static_cast<QTextLayout__FormatRange*>(qt6rb::unwrap(self, &cls_QTextLayout__FormatRange));
+  o->start = NUM2INT(v);
+  return v;
+}
+
+static VALUE rb_QTextLayout__FormatRange_field_length(VALUE self) {
+  QTextLayout__FormatRange* o = static_cast<QTextLayout__FormatRange*>(qt6rb::unwrap(self, &cls_QTextLayout__FormatRange));
+  return INT2NUM(o->length);
+}
+
+static VALUE rb_QTextLayout__FormatRange_field_length_set(VALUE self, VALUE v) {
+  QTextLayout__FormatRange* o = static_cast<QTextLayout__FormatRange*>(qt6rb::unwrap(self, &cls_QTextLayout__FormatRange));
+  o->length = NUM2INT(v);
+  return v;
+}
+
+static VALUE rb_QTextLayout__FormatRange_field_format(VALUE self) {
+  QTextLayout__FormatRange* o = static_cast<QTextLayout__FormatRange*>(qt6rb::unwrap(self, &cls_QTextLayout__FormatRange));
+  return qt6rb::wrap(new QTextCharFormat(o->format), &cls_QTextCharFormat, true);
+}
+
+static VALUE rb_QTextLayout__FormatRange_field_format_set(VALUE self, VALUE v) {
+  QTextLayout__FormatRange* o = static_cast<QTextLayout__FormatRange*>(qt6rb::unwrap(self, &cls_QTextLayout__FormatRange));
+  o->format = *static_cast<QTextCharFormat*>(qt6rb::unwrap_ref(v, &cls_QTextCharFormat));
+  return v;
 }
 
 static VALUE rb_QScrollBar_ctor(int argc, VALUE* argv, VALUE self) {
@@ -70661,6 +71228,17 @@ static VALUE rb_QHeaderView_prot_scroll_contents_by(int argc, VALUE* argv, VALUE
   rb_raise(rb_eArgError, "wrong number of arguments for QHeaderView#scroll_contents_by (%d)", argc);
 }
 
+static VALUE rb_QHeaderView_prot_data_changed(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QHeaderView* shim = dynamic_cast<Rb_QHeaderView*>(static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView)));
+  if (!shim) rb_raise(rb_eTypeError, "data_changed is protected; only callable on Ruby-created instances");
+  if (argc == 3) {
+    shim->qt6rb_base_dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex)), qt6rb::to_numlist<int>(argv[2]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QHeaderView#data_changed (%d)", argc);
+}
+
 static VALUE rb_QHeaderView_prot_rows_inserted(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   Rb_QHeaderView* shim = dynamic_cast<Rb_QHeaderView*>(static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView)));
@@ -72111,6 +72689,25 @@ static VALUE rb_QSplitter_minimum_size_hint(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QSize((dynamic_cast<Rb_QSplitter*>(o) ? o->QSplitter::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSplitter#minimum_size_hint (%d)", argc);
+}
+
+static VALUE rb_QSplitter_sizes(int argc, VALUE* argv, VALUE self) {
+  QSplitter* o = static_cast<QSplitter*>(qt6rb::unwrap(self, &cls_QSplitter));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_numlist<int>(o->sizes());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSplitter#sizes (%d)", argc);
+}
+
+static VALUE rb_QSplitter_set_sizes(int argc, VALUE* argv, VALUE self) {
+  QSplitter* o = static_cast<QSplitter*>(qt6rb::unwrap(self, &cls_QSplitter));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setSizes(qt6rb::to_numlist<int>(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSplitter#set_sizes (%d)", argc);
 }
 
 static VALUE rb_QSplitter_save_state(int argc, VALUE* argv, VALUE self) {
@@ -79660,9 +80257,9 @@ static VALUE rb_QAbstractItemModel_on_data_changed(int argc, VALUE* argv, VALUE 
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
   (void)argc; (void)argv;
-  QObject::connect(o, &QAbstractItemModel::dataChanged, o, [proc](QModelIndex a0, QModelIndex a1) {
-    VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true) };
-    qt6rb::call_proc(proc, 2, args);
+  QObject::connect(o, &QAbstractItemModel::dataChanged, o, [proc](QModelIndex a0, QModelIndex a1, QList<int> a2) {
+    VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true), qt6rb::from_numlist<int>(a2) };
+    qt6rb::call_proc(proc, 3, args);
   });
   return self;
 }
@@ -81049,6 +81646,17 @@ static VALUE rb_QListView_prot_scroll_contents_by(int argc, VALUE* argv, VALUE s
   rb_raise(rb_eArgError, "wrong number of arguments for QListView#scroll_contents_by (%d)", argc);
 }
 
+static VALUE rb_QListView_prot_data_changed(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QListView* shim = dynamic_cast<Rb_QListView*>(static_cast<QListView*>(qt6rb::unwrap(self, &cls_QListView)));
+  if (!shim) rb_raise(rb_eTypeError, "data_changed is protected; only callable on Ruby-created instances");
+  if (argc == 3) {
+    shim->qt6rb_base_dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex)), qt6rb::to_numlist<int>(argv[2]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QListView#data_changed (%d)", argc);
+}
+
 static VALUE rb_QListView_prot_rows_inserted(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   Rb_QListView* shim = dynamic_cast<Rb_QListView*>(static_cast<QListView*>(qt6rb::unwrap(self, &cls_QListView)));
@@ -82245,6 +82853,10 @@ static VALUE rb_QTreeView_data_changed(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 2) {
     (dynamic_cast<Rb_QTreeView*>(o) ? o->QTreeView::dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex))) : o->dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex))));
+    return Qnil;
+  }
+  if (argc == 3) {
+    (dynamic_cast<Rb_QTreeView*>(o) ? o->QTreeView::dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex)), qt6rb::to_numlist<int>(argv[2])) : o->dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex)), qt6rb::to_numlist<int>(argv[2])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeView#data_changed (%d)", argc);
@@ -91912,6 +92524,15 @@ static VALUE rb_QAbstractItemDelegate_handle_editor_event(int argc, VALUE* argv,
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#handle_editor_event (%d)", argc);
 }
 
+static VALUE rb_QAbstractItemDelegate_painting_roles(int argc, VALUE* argv, VALUE self) {
+  QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_numlist<int>((dynamic_cast<Rb_QAbstractItemDelegate*>(o) ? o->QAbstractItemDelegate::paintingRoles() : o->paintingRoles()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#painting_roles (%d)", argc);
+}
+
 static VALUE rb_QAbstractItemDelegate_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
@@ -92355,6 +92976,8 @@ extern "C" void Init_qt6() {
   qt6rb::define_class(&cls_QTextOption, "TextOption", Qnil);
   qt6rb::define_class_under(&cls_QTextEdit__ExtraSelection, cls_QTextEdit.rb_class, "ExtraSelection", Qnil);
   qt6rb::define_class(&cls_QTextBlock, "TextBlock", Qnil);
+  qt6rb::define_class(&cls_QTextLayout, "TextLayout", Qnil);
+  qt6rb::define_class_under(&cls_QTextLayout__FormatRange, cls_QTextLayout.rb_class, "FormatRange", Qnil);
   qt6rb::define_class(&cls_QScrollBar, "ScrollBar", cls_QAbstractSlider.rb_class);
   qt6rb::define_class(&cls_QHeaderView, "HeaderView", cls_QAbstractItemView.rb_class);
   qt6rb::define_class(&cls_QGroupBox, "GroupBox", cls_QWidget.rb_class);
@@ -96630,6 +97253,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPen.rb_class, "set_style", RUBY_METHOD_FUNC(rb_QPen_set_style), -1);
   rb_define_method(cls_QPen.rb_class, "setStyle", RUBY_METHOD_FUNC(rb_QPen_set_style), -1);
   rb_define_alias(cls_QPen.rb_class, "style=", "set_style");
+  rb_define_method(cls_QPen.rb_class, "dash_pattern", RUBY_METHOD_FUNC(rb_QPen_dash_pattern), -1);
+  rb_define_method(cls_QPen.rb_class, "dashPattern", RUBY_METHOD_FUNC(rb_QPen_dash_pattern), -1);
+  rb_define_method(cls_QPen.rb_class, "set_dash_pattern", RUBY_METHOD_FUNC(rb_QPen_set_dash_pattern), -1);
+  rb_define_method(cls_QPen.rb_class, "setDashPattern", RUBY_METHOD_FUNC(rb_QPen_set_dash_pattern), -1);
+  rb_define_alias(cls_QPen.rb_class, "dash_pattern=", "set_dash_pattern");
+  rb_define_alias(cls_QPen.rb_class, "dashPattern=", "set_dash_pattern");
   rb_define_method(cls_QPen.rb_class, "dash_offset", RUBY_METHOD_FUNC(rb_QPen_dash_offset), -1);
   rb_define_method(cls_QPen.rb_class, "dashOffset", RUBY_METHOD_FUNC(rb_QPen_dash_offset), -1);
   rb_define_method(cls_QPen.rb_class, "set_dash_offset", RUBY_METHOD_FUNC(rb_QPen_set_dash_offset), -1);
@@ -97178,6 +97807,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "setPixelColor", RUBY_METHOD_FUNC(rb_QImage_set_pixel_color), -1);
   rb_define_alias(cls_QImage.rb_class, "pixel_color=", "set_pixel_color");
   rb_define_alias(cls_QImage.rb_class, "pixelColor=", "set_pixel_color");
+  rb_define_method(cls_QImage.rb_class, "color_table", RUBY_METHOD_FUNC(rb_QImage_color_table), -1);
+  rb_define_method(cls_QImage.rb_class, "colorTable", RUBY_METHOD_FUNC(rb_QImage_color_table), -1);
+  rb_define_method(cls_QImage.rb_class, "set_color_table", RUBY_METHOD_FUNC(rb_QImage_set_color_table), -1);
+  rb_define_method(cls_QImage.rb_class, "setColorTable", RUBY_METHOD_FUNC(rb_QImage_set_color_table), -1);
+  rb_define_alias(cls_QImage.rb_class, "color_table=", "set_color_table");
+  rb_define_alias(cls_QImage.rb_class, "colorTable=", "set_color_table");
   rb_define_method(cls_QImage.rb_class, "device_pixel_ratio", RUBY_METHOD_FUNC(rb_QImage_device_pixel_ratio), -1);
   rb_define_method(cls_QImage.rb_class, "devicePixelRatio", RUBY_METHOD_FUNC(rb_QImage_device_pixel_ratio), -1);
   rb_define_method(cls_QImage.rb_class, "set_device_pixel_ratio", RUBY_METHOD_FUNC(rb_QImage_set_device_pixel_ratio), -1);
@@ -100316,6 +100951,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "supportedDropActions", RUBY_METHOD_FUNC(rb_QListWidget_prot_supported_drop_actions), -1);
   rb_define_method(cls_QListWidget.rb_class, "scroll_contents_by", RUBY_METHOD_FUNC(rb_QListWidget_prot_scroll_contents_by), -1);
   rb_define_method(cls_QListWidget.rb_class, "scrollContentsBy", RUBY_METHOD_FUNC(rb_QListWidget_prot_scroll_contents_by), -1);
+  rb_define_method(cls_QListWidget.rb_class, "data_changed", RUBY_METHOD_FUNC(rb_QListWidget_prot_data_changed), -1);
+  rb_define_method(cls_QListWidget.rb_class, "dataChanged", RUBY_METHOD_FUNC(rb_QListWidget_prot_data_changed), -1);
   rb_define_method(cls_QListWidget.rb_class, "rows_inserted", RUBY_METHOD_FUNC(rb_QListWidget_prot_rows_inserted), -1);
   rb_define_method(cls_QListWidget.rb_class, "rowsInserted", RUBY_METHOD_FUNC(rb_QListWidget_prot_rows_inserted), -1);
   rb_define_method(cls_QListWidget.rb_class, "rows_about_to_be_removed", RUBY_METHOD_FUNC(rb_QListWidget_prot_rows_about_to_be_removed), -1);
@@ -101125,6 +101762,12 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QTextOption.rb_class, "tabStopDistance=", "set_tab_stop_distance");
   rb_define_method(cls_QTextOption.rb_class, "tab_stop_distance", RUBY_METHOD_FUNC(rb_QTextOption_tab_stop_distance), -1);
   rb_define_method(cls_QTextOption.rb_class, "tabStopDistance", RUBY_METHOD_FUNC(rb_QTextOption_tab_stop_distance), -1);
+  rb_define_method(cls_QTextOption.rb_class, "set_tab_array", RUBY_METHOD_FUNC(rb_QTextOption_set_tab_array), -1);
+  rb_define_method(cls_QTextOption.rb_class, "setTabArray", RUBY_METHOD_FUNC(rb_QTextOption_set_tab_array), -1);
+  rb_define_alias(cls_QTextOption.rb_class, "tab_array=", "set_tab_array");
+  rb_define_alias(cls_QTextOption.rb_class, "tabArray=", "set_tab_array");
+  rb_define_method(cls_QTextOption.rb_class, "tab_array", RUBY_METHOD_FUNC(rb_QTextOption_tab_array), -1);
+  rb_define_method(cls_QTextOption.rb_class, "tabArray", RUBY_METHOD_FUNC(rb_QTextOption_tab_array), -1);
   rb_define_method(cls_QTextOption.rb_class, "set_use_design_metrics", RUBY_METHOD_FUNC(rb_QTextOption_set_use_design_metrics), -1);
   rb_define_method(cls_QTextOption.rb_class, "setUseDesignMetrics", RUBY_METHOD_FUNC(rb_QTextOption_set_use_design_metrics), -1);
   rb_define_alias(cls_QTextOption.rb_class, "use_design_metrics=", "set_use_design_metrics");
@@ -101149,6 +101792,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextBlock.rb_class, "position", RUBY_METHOD_FUNC(rb_QTextBlock_position), -1);
   rb_define_method(cls_QTextBlock.rb_class, "length", RUBY_METHOD_FUNC(rb_QTextBlock_length), -1);
   rb_define_method(cls_QTextBlock.rb_class, "contains", RUBY_METHOD_FUNC(rb_QTextBlock_contains), -1);
+  rb_define_method(cls_QTextBlock.rb_class, "layout", RUBY_METHOD_FUNC(rb_QTextBlock_layout), -1);
   rb_define_method(cls_QTextBlock.rb_class, "clear_layout", RUBY_METHOD_FUNC(rb_QTextBlock_clear_layout), -1);
   rb_define_method(cls_QTextBlock.rb_class, "clearLayout", RUBY_METHOD_FUNC(rb_QTextBlock_clear_layout), -1);
   rb_define_method(cls_QTextBlock.rb_class, "block_format_index", RUBY_METHOD_FUNC(rb_QTextBlock_block_format_index), -1);
@@ -101160,6 +101804,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextBlock.rb_class, "text_direction", RUBY_METHOD_FUNC(rb_QTextBlock_text_direction), -1);
   rb_define_method(cls_QTextBlock.rb_class, "textDirection", RUBY_METHOD_FUNC(rb_QTextBlock_text_direction), -1);
   rb_define_method(cls_QTextBlock.rb_class, "text", RUBY_METHOD_FUNC(rb_QTextBlock_text), -1);
+  rb_define_method(cls_QTextBlock.rb_class, "text_formats", RUBY_METHOD_FUNC(rb_QTextBlock_text_formats), -1);
+  rb_define_method(cls_QTextBlock.rb_class, "textFormats", RUBY_METHOD_FUNC(rb_QTextBlock_text_formats), -1);
   rb_define_method(cls_QTextBlock.rb_class, "document", RUBY_METHOD_FUNC(rb_QTextBlock_document), -1);
   rb_define_method(cls_QTextBlock.rb_class, "user_state", RUBY_METHOD_FUNC(rb_QTextBlock_user_state), -1);
   rb_define_method(cls_QTextBlock.rb_class, "userState", RUBY_METHOD_FUNC(rb_QTextBlock_user_state), -1);
@@ -101191,6 +101837,95 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextBlock.rb_class, "previous", RUBY_METHOD_FUNC(rb_QTextBlock_previous), -1);
   rb_define_method(cls_QTextBlock.rb_class, "fragment_index", RUBY_METHOD_FUNC(rb_QTextBlock_fragment_index), -1);
   rb_define_method(cls_QTextBlock.rb_class, "fragmentIndex", RUBY_METHOD_FUNC(rb_QTextBlock_fragment_index), -1);
+  rb_define_alloc_func(cls_QTextLayout.rb_class, rb_QTextLayout_alloc);
+  qt6rb::register_ctor(cls_QTextLayout.rb_class, rb_QTextLayout_ctor);
+  rb_include_module(cls_QTextLayout.rb_class, qt6rb::constructable_module());
+  rb_define_method(cls_QTextLayout.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QTextLayout_set_font), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setFont", RUBY_METHOD_FUNC(rb_QTextLayout_set_font), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "font=", "set_font");
+  rb_define_method(cls_QTextLayout.rb_class, "font", RUBY_METHOD_FUNC(rb_QTextLayout_font), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_text", RUBY_METHOD_FUNC(rb_QTextLayout_set_text), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setText", RUBY_METHOD_FUNC(rb_QTextLayout_set_text), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "text=", "set_text");
+  rb_define_method(cls_QTextLayout.rb_class, "text", RUBY_METHOD_FUNC(rb_QTextLayout_text), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_text_option", RUBY_METHOD_FUNC(rb_QTextLayout_set_text_option), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setTextOption", RUBY_METHOD_FUNC(rb_QTextLayout_set_text_option), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "text_option=", "set_text_option");
+  rb_define_alias(cls_QTextLayout.rb_class, "textOption=", "set_text_option");
+  rb_define_method(cls_QTextLayout.rb_class, "text_option", RUBY_METHOD_FUNC(rb_QTextLayout_text_option), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "textOption", RUBY_METHOD_FUNC(rb_QTextLayout_text_option), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_preedit_area", RUBY_METHOD_FUNC(rb_QTextLayout_set_preedit_area), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setPreeditArea", RUBY_METHOD_FUNC(rb_QTextLayout_set_preedit_area), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "preedit_area=", "set_preedit_area");
+  rb_define_alias(cls_QTextLayout.rb_class, "preeditArea=", "set_preedit_area");
+  rb_define_method(cls_QTextLayout.rb_class, "preedit_area_position", RUBY_METHOD_FUNC(rb_QTextLayout_preedit_area_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "preeditAreaPosition", RUBY_METHOD_FUNC(rb_QTextLayout_preedit_area_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "preedit_area_text", RUBY_METHOD_FUNC(rb_QTextLayout_preedit_area_text), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "preeditAreaText", RUBY_METHOD_FUNC(rb_QTextLayout_preedit_area_text), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_formats", RUBY_METHOD_FUNC(rb_QTextLayout_set_formats), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setFormats", RUBY_METHOD_FUNC(rb_QTextLayout_set_formats), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "formats=", "set_formats");
+  rb_define_method(cls_QTextLayout.rb_class, "formats", RUBY_METHOD_FUNC(rb_QTextLayout_formats), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "clear_formats", RUBY_METHOD_FUNC(rb_QTextLayout_clear_formats), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "clearFormats", RUBY_METHOD_FUNC(rb_QTextLayout_clear_formats), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_cache_enabled", RUBY_METHOD_FUNC(rb_QTextLayout_set_cache_enabled), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setCacheEnabled", RUBY_METHOD_FUNC(rb_QTextLayout_set_cache_enabled), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "cache_enabled=", "set_cache_enabled");
+  rb_define_alias(cls_QTextLayout.rb_class, "cacheEnabled=", "set_cache_enabled");
+  rb_define_method(cls_QTextLayout.rb_class, "cache_enabled", RUBY_METHOD_FUNC(rb_QTextLayout_cache_enabled), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "cacheEnabled", RUBY_METHOD_FUNC(rb_QTextLayout_cache_enabled), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_cursor_move_style", RUBY_METHOD_FUNC(rb_QTextLayout_set_cursor_move_style), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setCursorMoveStyle", RUBY_METHOD_FUNC(rb_QTextLayout_set_cursor_move_style), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "cursor_move_style=", "set_cursor_move_style");
+  rb_define_alias(cls_QTextLayout.rb_class, "cursorMoveStyle=", "set_cursor_move_style");
+  rb_define_method(cls_QTextLayout.rb_class, "cursor_move_style", RUBY_METHOD_FUNC(rb_QTextLayout_cursor_move_style), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "cursorMoveStyle", RUBY_METHOD_FUNC(rb_QTextLayout_cursor_move_style), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "begin_layout", RUBY_METHOD_FUNC(rb_QTextLayout_begin_layout), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "beginLayout", RUBY_METHOD_FUNC(rb_QTextLayout_begin_layout), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "end_layout", RUBY_METHOD_FUNC(rb_QTextLayout_end_layout), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "endLayout", RUBY_METHOD_FUNC(rb_QTextLayout_end_layout), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "clear_layout", RUBY_METHOD_FUNC(rb_QTextLayout_clear_layout), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "clearLayout", RUBY_METHOD_FUNC(rb_QTextLayout_clear_layout), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "line_count", RUBY_METHOD_FUNC(rb_QTextLayout_line_count), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "lineCount", RUBY_METHOD_FUNC(rb_QTextLayout_line_count), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "is_valid_cursor_position", RUBY_METHOD_FUNC(rb_QTextLayout_is_valid_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "isValidCursorPosition", RUBY_METHOD_FUNC(rb_QTextLayout_is_valid_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "next_cursor_position", RUBY_METHOD_FUNC(rb_QTextLayout_next_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "nextCursorPosition", RUBY_METHOD_FUNC(rb_QTextLayout_next_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "previous_cursor_position", RUBY_METHOD_FUNC(rb_QTextLayout_previous_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "previousCursorPosition", RUBY_METHOD_FUNC(rb_QTextLayout_previous_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "left_cursor_position", RUBY_METHOD_FUNC(rb_QTextLayout_left_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "leftCursorPosition", RUBY_METHOD_FUNC(rb_QTextLayout_left_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "right_cursor_position", RUBY_METHOD_FUNC(rb_QTextLayout_right_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "rightCursorPosition", RUBY_METHOD_FUNC(rb_QTextLayout_right_cursor_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "draw", RUBY_METHOD_FUNC(rb_QTextLayout_draw), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "draw_cursor", RUBY_METHOD_FUNC(rb_QTextLayout_draw_cursor), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "drawCursor", RUBY_METHOD_FUNC(rb_QTextLayout_draw_cursor), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "position", RUBY_METHOD_FUNC(rb_QTextLayout_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_position", RUBY_METHOD_FUNC(rb_QTextLayout_set_position), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setPosition", RUBY_METHOD_FUNC(rb_QTextLayout_set_position), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "position=", "set_position");
+  rb_define_method(cls_QTextLayout.rb_class, "bounding_rect", RUBY_METHOD_FUNC(rb_QTextLayout_bounding_rect), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "boundingRect", RUBY_METHOD_FUNC(rb_QTextLayout_bounding_rect), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "minimum_width", RUBY_METHOD_FUNC(rb_QTextLayout_minimum_width), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "minimumWidth", RUBY_METHOD_FUNC(rb_QTextLayout_minimum_width), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "maximum_width", RUBY_METHOD_FUNC(rb_QTextLayout_maximum_width), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "maximumWidth", RUBY_METHOD_FUNC(rb_QTextLayout_maximum_width), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "set_flags", RUBY_METHOD_FUNC(rb_QTextLayout_set_flags), -1);
+  rb_define_method(cls_QTextLayout.rb_class, "setFlags", RUBY_METHOD_FUNC(rb_QTextLayout_set_flags), -1);
+  rb_define_alias(cls_QTextLayout.rb_class, "flags=", "set_flags");
+  rb_define_alloc_func(cls_QTextLayout__FormatRange.rb_class, rb_QTextLayout__FormatRange_alloc);
+  qt6rb::register_ctor(cls_QTextLayout__FormatRange.rb_class, rb_QTextLayout__FormatRange_ctor);
+  rb_include_module(cls_QTextLayout__FormatRange.rb_class, qt6rb::constructable_module());
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "start", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_start), 0);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "start=", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_start_set), 1);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "set_start", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_start_set), 1);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "length", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_length), 0);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "length=", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_length_set), 1);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "set_length", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_length_set), 1);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "format", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_format), 0);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "format=", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_format_set), 1);
+  rb_define_method(cls_QTextLayout__FormatRange.rb_class, "set_format", RUBY_METHOD_FUNC(rb_QTextLayout__FormatRange_field_format_set), 1);
   rb_define_alloc_func(cls_QScrollBar.rb_class, rb_QScrollBar_alloc);
   qt6rb::register_ctor(cls_QScrollBar.rb_class, rb_QScrollBar_ctor);
   rb_include_module(cls_QScrollBar.rb_class, qt6rb::constructable_module());
@@ -101664,6 +102399,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "updateGeometries", RUBY_METHOD_FUNC(rb_QHeaderView_prot_update_geometries), -1);
   rb_define_method(cls_QHeaderView.rb_class, "scroll_contents_by", RUBY_METHOD_FUNC(rb_QHeaderView_prot_scroll_contents_by), -1);
   rb_define_method(cls_QHeaderView.rb_class, "scrollContentsBy", RUBY_METHOD_FUNC(rb_QHeaderView_prot_scroll_contents_by), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "data_changed", RUBY_METHOD_FUNC(rb_QHeaderView_prot_data_changed), -1);
+  rb_define_method(cls_QHeaderView.rb_class, "dataChanged", RUBY_METHOD_FUNC(rb_QHeaderView_prot_data_changed), -1);
   rb_define_method(cls_QHeaderView.rb_class, "rows_inserted", RUBY_METHOD_FUNC(rb_QHeaderView_prot_rows_inserted), -1);
   rb_define_method(cls_QHeaderView.rb_class, "rowsInserted", RUBY_METHOD_FUNC(rb_QHeaderView_prot_rows_inserted), -1);
   rb_define_method(cls_QHeaderView.rb_class, "visual_rect", RUBY_METHOD_FUNC(rb_QHeaderView_prot_visual_rect), -1);
@@ -101905,6 +102642,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSplitter.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QSplitter_size_hint), -1);
   rb_define_method(cls_QSplitter.rb_class, "minimum_size_hint", RUBY_METHOD_FUNC(rb_QSplitter_minimum_size_hint), -1);
   rb_define_method(cls_QSplitter.rb_class, "minimumSizeHint", RUBY_METHOD_FUNC(rb_QSplitter_minimum_size_hint), -1);
+  rb_define_method(cls_QSplitter.rb_class, "sizes", RUBY_METHOD_FUNC(rb_QSplitter_sizes), -1);
+  rb_define_method(cls_QSplitter.rb_class, "set_sizes", RUBY_METHOD_FUNC(rb_QSplitter_set_sizes), -1);
+  rb_define_method(cls_QSplitter.rb_class, "setSizes", RUBY_METHOD_FUNC(rb_QSplitter_set_sizes), -1);
+  rb_define_alias(cls_QSplitter.rb_class, "sizes=", "set_sizes");
   rb_define_method(cls_QSplitter.rb_class, "save_state", RUBY_METHOD_FUNC(rb_QSplitter_save_state), -1);
   rb_define_method(cls_QSplitter.rb_class, "saveState", RUBY_METHOD_FUNC(rb_QSplitter_save_state), -1);
   rb_define_method(cls_QSplitter.rb_class, "restore_state", RUBY_METHOD_FUNC(rb_QSplitter_restore_state), -1);
@@ -103518,6 +104259,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListView.rb_class, "event", RUBY_METHOD_FUNC(rb_QListView_prot_event), -1);
   rb_define_method(cls_QListView.rb_class, "scroll_contents_by", RUBY_METHOD_FUNC(rb_QListView_prot_scroll_contents_by), -1);
   rb_define_method(cls_QListView.rb_class, "scrollContentsBy", RUBY_METHOD_FUNC(rb_QListView_prot_scroll_contents_by), -1);
+  rb_define_method(cls_QListView.rb_class, "data_changed", RUBY_METHOD_FUNC(rb_QListView_prot_data_changed), -1);
+  rb_define_method(cls_QListView.rb_class, "dataChanged", RUBY_METHOD_FUNC(rb_QListView_prot_data_changed), -1);
   rb_define_method(cls_QListView.rb_class, "rows_inserted", RUBY_METHOD_FUNC(rb_QListView_prot_rows_inserted), -1);
   rb_define_method(cls_QListView.rb_class, "rowsInserted", RUBY_METHOD_FUNC(rb_QListView_prot_rows_inserted), -1);
   rb_define_method(cls_QListView.rb_class, "rows_about_to_be_removed", RUBY_METHOD_FUNC(rb_QListView_prot_rows_about_to_be_removed), -1);
@@ -105685,6 +106428,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "editorEvent", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_editor_event), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "handle_editor_event", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_handle_editor_event), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "handleEditorEvent", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_handle_editor_event), -1);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "painting_roles", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_painting_roles), -1);
+  rb_define_method(cls_QAbstractItemDelegate.rb_class, "paintingRoles", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_painting_roles), -1);
   rb_define_singleton_method(cls_QAbstractItemDelegate.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_s_tr), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_prot_timer_event), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "timerEvent", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_prot_timer_event), -1);
@@ -106944,6 +107689,14 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QTextOption.rb_class, "ShowDefaultIgnorables", INT2NUM(32));
   rb_define_const(cls_QTextOption.rb_class, "DisableEmojiParsing", INT2NUM(64));
   rb_define_const(cls_QTextOption.rb_class, "IncludeTrailingSpaces", INT2NUM(2147483648));
+  rb_define_const(cls_QTextLayout.rb_class, "RetrieveGlyphIndexes", INT2NUM(1));
+  rb_define_const(cls_QTextLayout.rb_class, "RetrieveGlyphPositions", INT2NUM(2));
+  rb_define_const(cls_QTextLayout.rb_class, "RetrieveStringIndexes", INT2NUM(4));
+  rb_define_const(cls_QTextLayout.rb_class, "RetrieveString", INT2NUM(8));
+  rb_define_const(cls_QTextLayout.rb_class, "DefaultRetrievalFlags", INT2NUM(3));
+  rb_define_const(cls_QTextLayout.rb_class, "RetrieveAll", INT2NUM(-1));
+  rb_define_const(cls_QTextLayout.rb_class, "SkipCharacters", INT2NUM(0));
+  rb_define_const(cls_QTextLayout.rb_class, "SkipWords", INT2NUM(1));
   rb_define_const(cls_QAbstractItemView.rb_class, "NoSelection", INT2NUM(0));
   rb_define_const(cls_QAbstractItemView.rb_class, "SingleSelection", INT2NUM(1));
   rb_define_const(cls_QAbstractItemView.rb_class, "MultiSelection", INT2NUM(2));

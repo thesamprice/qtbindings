@@ -92,6 +92,14 @@ CHAR_TYPES = {
                     "INT2NUM(static_cast<int>({}))"),
 }
 
+# Element types accepted inside QList<...>, i.e. those with a
+# qt6rb::num_to/num_from overload. char is deliberately absent: QList<char> is
+# a byte buffer in practice and QByteArray already covers that.
+NUMLIST_TYPES = {
+    "int", "unsigned int", "short", "unsigned short", "long", "unsigned long",
+    "long long", "unsigned long long", "float", "double",
+}
+
 # Guard expressions per type kind for overload dispatch ({0} = VALUE expr).
 # 'variant' accepts anything and must sort last among candidates.
 GUARDS = {
@@ -104,6 +112,7 @@ GUARDS = {
     "qbytearray": "RB_TYPE_P({0}, T_STRING)",
     "cstr": "RB_TYPE_P({0}, T_STRING)",
     "qstringlist": "RB_TYPE_P({0}, T_ARRAY)",
+    "numlist": "RB_TYPE_P({0}, T_ARRAY)",
     "objvallist": "RB_TYPE_P({0}, T_ARRAY)",
     "objptrlist": "RB_TYPE_P({0}, T_ARRAY)",
     "variant": "1",
@@ -226,6 +235,14 @@ def classify(t, generated):
     # QMenu::addActions) wraps them the same way a bare pointer would.
     if vspell.startswith("QList<") and vspell.endswith(">"):
         inner = vspell[len("QList<"):-1].strip()
+        # QList of a primitive numeric type <-> Ruby Array of Numerics
+        # (QSplitter::setSizes/sizes). qt6rb::num_to/num_from give each
+        # element type its own NUM2* macro, so elements range-check the same
+        # way a bare scalar parameter of that type does.
+        if inner in NUMLIST_TYPES:
+            return Type("numlist", f"QList<{inner}>",
+                        "qt6rb::to_numlist<%s>({})" % inner,
+                        "qt6rb::from_numlist<%s>({})" % inner)
         if inner.endswith("*"):
             elem = mangle(inner[:-1].strip())
             if elem in generated:

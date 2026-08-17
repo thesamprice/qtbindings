@@ -559,6 +559,92 @@ class Qt::Dialog
   end
 end
 
+# The static QFileDialog convenience functions build a QFileDialog in C++ and
+# call its exec() from there, so they never reach the Ruby-driven
+# Qt::Dialog#exec above and deadlock for exactly the reason it describes: the
+# nested C++ event loop holds the GVL for the dialog's whole lifetime, so no
+# Ruby thread is ever scheduled -- not a worker the caller is waiting on, and
+# not a timer that would dismiss the dialog, which is what makes these
+# unusable from a headless harness. Rebuild them in Ruby out of the very
+# dialog Qt would have used; going through #exec picks up the Ruby loop and
+# releases the GVL each pass.
+#
+# The bodies mirror Qt's own implementations (qfiledialog.cpp): the
+# constructor already applies caption, directory and filter -- including Qt's
+# rule that a `dir` naming a file pre-selects that file -- so only the accept
+# and file modes have to be set here. A cancelled dialog returns an empty
+# String, or an empty Array for the plural form, as Qt does.
+class Qt::FileDialog
+  unless respond_to?(:qt6rb_exec_file_dialog)
+    # Builds the dialog the way Qt's statics do, but through setters rather
+    # than the (parent, caption, directory, filter) constructor: app code is
+    # free to reopen Qt::Dialog#initialize with its own signature, and Cosmos
+    # does exactly that (gui/qt.rb gives it a (parent, flags) form), which
+    # every QDialog subclass -- QFileDialog included -- then inherits. Only
+    # the parent-only form can be relied on. `dir` follows Qt's rule of being
+    # either the directory to open in or a file to pre-select.
+    def self.qt6rb_new_file_dialog(parent, caption, dir, filter)
+      dialog = new(parent)
+      dialog.setWindowTitle(caption.to_s) unless caption.to_s.empty?
+      unless dir.to_s.empty?
+        if File.directory?(dir.to_s)
+          dialog.setDirectory(dir.to_s)
+        else
+          dialog.setDirectory(File.dirname(dir.to_s))
+          dialog.selectFile(dir.to_s)
+        end
+      end
+      dialog.setNameFilter(filter.to_s) unless filter.to_s.empty?
+      dialog
+    end
+    private_class_method :qt6rb_new_file_dialog
+
+    # Runs the dialog and yields it when the user accepted, so each
+    # convenience function below only has to say what it wants back.
+    def self.qt6rb_exec_file_dialog(dialog, cancelled)
+      accepted = dialog.exec == Qt::Dialog::Accepted
+      result = accepted ? yield(dialog) : cancelled
+      dialog.dispose
+      result
+    end
+
+    # Both spellings are generated for every method, so replacing only the
+    # camelCase one would leave the snake_case alias pointing at the blocking
+    # C++ static.
+    def self.qt6rb_define_static(camel, &body)
+      singleton_class.send(:define_method, camel, &body)
+      snake = camel.to_s.gsub(/([a-z0-9])([A-Z])/, '\1_\2').downcase.to_sym
+      singleton_class.send(:alias_method, snake, camel) unless snake == camel
+    end
+    private_class_method :qt6rb_define_static
+
+    qt6rb_define_static(:getOpenFileName) do |parent = nil, caption = '', dir = '', filter = '', *|
+      dialog = qt6rb_new_file_dialog(parent, caption, dir, filter)
+      dialog.setFileMode(Qt::FileDialog::ExistingFile)
+      qt6rb_exec_file_dialog(dialog, '') { |d| d.selectedFiles.first.to_s }
+    end
+
+    qt6rb_define_static(:getOpenFileNames) do |parent = nil, caption = '', dir = '', filter = '', *|
+      dialog = qt6rb_new_file_dialog(parent, caption, dir, filter)
+      dialog.setFileMode(Qt::FileDialog::ExistingFiles)
+      qt6rb_exec_file_dialog(dialog, []) { |d| d.selectedFiles }
+    end
+
+    qt6rb_define_static(:getSaveFileName) do |parent = nil, caption = '', dir = '', filter = '', *|
+      dialog = qt6rb_new_file_dialog(parent, caption, dir, filter)
+      dialog.setAcceptMode(Qt::FileDialog::AcceptSave)
+      qt6rb_exec_file_dialog(dialog, '') { |d| d.selectedFiles.first.to_s }
+    end
+
+    qt6rb_define_static(:getExistingDirectory) do |parent = nil, caption = '', dir = '', *|
+      dialog = qt6rb_new_file_dialog(parent, caption, dir, '')
+      dialog.setFileMode(Qt::FileDialog::Directory)
+      dialog.setOption(Qt::FileDialog::ShowDirsOnly, true)
+      qt6rb_exec_file_dialog(dialog, '') { |d| d.selectedFiles.first.to_s }
+    end
+  end
+end
+
 # QFontMetrics::width() was deprecated in Qt 5.11 and removed in Qt 6 in
 # favour of horizontalAdvance().
 class Qt::FontMetrics

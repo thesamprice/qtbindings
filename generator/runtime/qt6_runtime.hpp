@@ -104,6 +104,59 @@ VALUE from_qstringlist(const QStringList& list);
 QVariant to_qvariant(VALUE v);
 VALUE from_qvariant(const QVariant& v);
 
+// Scalar conversions backing the QList<primitive> marshallers below. Each
+// element type gets its own NUM2*/2NUM macro through this overload set, so a
+// list element is range-checked exactly like a bare scalar parameter of the
+// same type would be -- funnelling everything through NUM2LL would silently
+// accept out-of-range values for the narrower types.
+inline void num_to(VALUE v, int& out) { out = NUM2INT(v); }
+inline void num_to(VALUE v, unsigned int& out) { out = NUM2UINT(v); }
+inline void num_to(VALUE v, short& out) { out = NUM2SHORT(v); }
+inline void num_to(VALUE v, unsigned short& out) { out = NUM2USHORT(v); }
+inline void num_to(VALUE v, long& out) { out = NUM2LONG(v); }
+inline void num_to(VALUE v, unsigned long& out) { out = NUM2ULONG(v); }
+inline void num_to(VALUE v, long long& out) { out = NUM2LL(v); }
+inline void num_to(VALUE v, unsigned long long& out) { out = NUM2ULL(v); }
+inline void num_to(VALUE v, float& out) { out = static_cast<float>(NUM2DBL(v)); }
+inline void num_to(VALUE v, double& out) { out = NUM2DBL(v); }
+
+inline VALUE num_from(int v) { return INT2NUM(v); }
+inline VALUE num_from(unsigned int v) { return UINT2NUM(v); }
+inline VALUE num_from(short v) { return INT2NUM(v); }
+inline VALUE num_from(unsigned short v) { return UINT2NUM(v); }
+inline VALUE num_from(long v) { return LONG2NUM(v); }
+inline VALUE num_from(unsigned long v) { return ULONG2NUM(v); }
+inline VALUE num_from(long long v) { return LL2NUM(v); }
+inline VALUE num_from(unsigned long long v) { return ULL2NUM(v); }
+inline VALUE num_from(float v) { return DBL2NUM(static_cast<double>(v)); }
+inline VALUE num_from(double v) { return DBL2NUM(v); }
+
+// QList of a primitive numeric type <-> Ruby Array of Numerics
+// (QSplitter::setSizes/sizes, QHeaderView section sizes, ...). Values are
+// copied, so these are plain value semantics with no ownership question.
+template <typename T>
+QList<T> to_numlist(VALUE v) {
+  QList<T> list;
+  if (NIL_P(v)) return list;
+  Check_Type(v, T_ARRAY);
+  long n = RARRAY_LEN(v);
+  list.reserve(n);
+  for (long i = 0; i < n; ++i) {
+    T elem;
+    num_to(rb_ary_entry(v, i), elem);
+    list.append(elem);
+  }
+  return list;
+}
+
+template <typename T>
+VALUE from_numlist(const QList<T>& list) {
+  VALUE ary = rb_ary_new_capa(list.size());
+  for (T item : list)
+    rb_ary_push(ary, num_from(item));
+  return ary;
+}
+
 // QList of a generated value class <-> Ruby Array. Elements are copied in
 // both directions, matching Qt's by-value container semantics: mutating an
 // element after handing the list to Qt has no effect, exactly as in C++.

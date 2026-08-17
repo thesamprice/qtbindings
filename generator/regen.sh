@@ -17,7 +17,7 @@ CLASSES=(
   QRadioButton QButtonGroup QDialogButtonBox QCalendarWidget
   QTableWidget QTableWidgetItem QTreeWidget QTreeWidgetItem QTabWidget QTabBar QListWidget QListWidgetItem
   QTextCursor QTextDocument QTextDocumentFragment QTextCharFormat QSyntaxHighlighter QTextOption
-  QTextEdit::ExtraSelection QTextBlock
+  QTextEdit::ExtraSelection QTextBlock QTextLayout QTextLayout::FormatRange
   QScrollBar QAbstractItemView QHeaderView QGroupBox QSplitter QScrollArea QStatusBar
   QMenuBar QMenu QAction QActionGroup QToolBar QDesktopServices
   QValidator QIntValidator QDoubleValidator QKeySequence QSizePolicy QSettings QModelIndex
