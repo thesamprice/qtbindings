@@ -22,21 +22,4278 @@ static qt6rb::ClassInfo cls_QGridLayout = { "QGridLayout", Qnil, [](void* p) { d
 static qt6rb::ClassInfo cls_QSize = { "QSize", Qnil, [](void* p) { delete static_cast<QSize*>(p); }, false };
 static qt6rb::ClassInfo cls_QPoint = { "QPoint", Qnil, [](void* p) { delete static_cast<QPoint*>(p); }, false };
 static qt6rb::ClassInfo cls_QRect = { "QRect", Qnil, [](void* p) { delete static_cast<QRect*>(p); }, false };
+static qt6rb::ClassInfo cls_QPointF = { "QPointF", Qnil, [](void* p) { delete static_cast<QPointF*>(p); }, false };
+static qt6rb::ClassInfo cls_QSizeF = { "QSizeF", Qnil, [](void* p) { delete static_cast<QSizeF*>(p); }, false };
+static qt6rb::ClassInfo cls_QRectF = { "QRectF", Qnil, [](void* p) { delete static_cast<QRectF*>(p); }, false };
+static qt6rb::ClassInfo cls_QEvent = { "QEvent", Qnil, [](void* p) { delete static_cast<QEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QTimerEvent = { "QTimerEvent", Qnil, [](void* p) { delete static_cast<QTimerEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QChildEvent = { "QChildEvent", Qnil, [](void* p) { delete static_cast<QChildEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QCloseEvent = { "QCloseEvent", Qnil, [](void* p) { delete static_cast<QCloseEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QShowEvent = { "QShowEvent", Qnil, [](void* p) { delete static_cast<QShowEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QHideEvent = { "QHideEvent", Qnil, [](void* p) { delete static_cast<QHideEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QMoveEvent = { "QMoveEvent", Qnil, [](void* p) { delete static_cast<QMoveEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QResizeEvent = { "QResizeEvent", Qnil, [](void* p) { delete static_cast<QResizeEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QPaintEvent = { "QPaintEvent", Qnil, [](void* p) { delete static_cast<QPaintEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QKeyEvent = { "QKeyEvent", Qnil, [](void* p) { delete static_cast<QKeyEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QFocusEvent = { "QFocusEvent", Qnil, [](void* p) { delete static_cast<QFocusEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QEnterEvent = { "QEnterEvent", Qnil, [](void* p) { delete static_cast<QEnterEvent*>(p); }, false };
 static qt6rb::ClassInfo cls_QPaintDevice = { "QPaintDevice", Qnil, nullptr, false };
 static qt6rb::ClassInfo cls_QFrame = { "QFrame", Qnil, [](void* p) { delete static_cast<QFrame*>(p); }, true };
 static qt6rb::ClassInfo cls_QAbstractButton = { "QAbstractButton", Qnil, nullptr, true };
 static qt6rb::ClassInfo cls_QAbstractScrollArea = { "QAbstractScrollArea", Qnil, [](void* p) { delete static_cast<QAbstractScrollArea*>(p); }, true };
 static qt6rb::ClassInfo cls_QLayoutItem = { "QLayoutItem", Qnil, nullptr, false };
+static qt6rb::ClassInfo cls_QInputEvent = { "QInputEvent", Qnil, [](void* p) { delete static_cast<QInputEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QSinglePointEvent = { "QSinglePointEvent", Qnil, [](void* p) { delete static_cast<QSinglePointEvent*>(p); }, false };
+static qt6rb::ClassInfo cls_QPointerEvent = { "QPointerEvent", Qnil, [](void* p) { delete static_cast<QPointerEvent*>(p); }, false };
 
-static VALUE rb_QObject_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+class Rb_QObject : public QObject {
+public:
+  using QObject::QObject;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QObject() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QObject::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QObject::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QObject::customEvent(a0); }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QObject, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QObject::event(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QObject, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QObject::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QObject, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QObject::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QObject, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QObject::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QObject, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QObject::customEvent(a0);
+  }
+};
+
+class Rb_QTimer : public QTimer {
+public:
+  using QTimer::QTimer;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QTimer() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QTimer::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QTimer::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QTimer::customEvent(a0); }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTimer, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTimer::timerEvent(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTimer, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QTimer::event(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTimer, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QTimer::eventFilter(a0, a1);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTimer, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTimer::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTimer, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTimer::customEvent(a0);
+  }
+};
+
+class Rb_QWidget : public QWidget {
+public:
+  using QWidget::QWidget;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QWidget() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QWidget::event(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QWidget::keyPressEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QWidget::keyReleaseEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QWidget::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QWidget::focusOutEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QWidget::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QWidget::leaveEvent(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QWidget::paintEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QWidget::moveEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QWidget::resizeEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QWidget::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QWidget::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QWidget::hideEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QWidget::changeEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QWidget::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QWidget::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QWidget::focusNextPrevChild(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QWidget::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QWidget::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QWidget::customEvent(a0); }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QWidget::devType();
+  }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QWidget::sizeHint();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QWidget::minimumSizeHint();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QWidget::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QWidget::hasHeightForWidth();
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QWidget::event(a0);
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::keyPressEvent(a0);
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::keyReleaseEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::focusOutEvent(a0);
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::leaveEvent(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::paintEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::moveEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::resizeEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::hideEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::changeEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QWidget::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QWidget::redirected(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QWidget::inputMethodQuery(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QWidget::focusNextPrevChild(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QWidget::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QWidget, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWidget::customEvent(a0);
+  }
+};
+
+class Rb_QLabel : public QLabel {
+public:
+  using QLabel::QLabel;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QLabel() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QLabel::event(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QLabel::keyPressEvent(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QLabel::paintEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QLabel::changeEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QLabel::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QLabel::focusOutEvent(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QLabel::focusNextPrevChild(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QLabel::keyReleaseEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QLabel::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QLabel::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QLabel::moveEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QLabel::resizeEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QLabel::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QLabel::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QLabel::hideEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QLabel::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QLabel::redirected(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QLabel::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QLabel::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QLabel::customEvent(a0); }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QLabel::sizeHint();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QLabel::minimumSizeHint();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QLabel::heightForWidth(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLabel::event(a0);
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::keyPressEvent(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::paintEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::changeEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::focusOutEvent(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLabel::focusNextPrevChild(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QLabel::devType();
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLabel::hasHeightForWidth();
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::keyReleaseEvent(a0);
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::moveEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::resizeEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::hideEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QLabel::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QLabel::redirected(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QLabel::inputMethodQuery(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLabel::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLabel, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLabel::customEvent(a0);
+  }
+};
+
+class Rb_QPushButton : public QPushButton {
+public:
+  using QPushButton::QPushButton;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QPushButton() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QPushButton::event(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QPushButton::paintEvent(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QPushButton::keyPressEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QPushButton::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QPushButton::focusOutEvent(a0); }
+  bool qt6rb_base_hitButton(const QPoint & a0) { return QPushButton::hitButton(a0); }
+  void qt6rb_base_checkStateSet() { QPushButton::checkStateSet(); }
+  void qt6rb_base_nextCheckState() { QPushButton::nextCheckState(); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QPushButton::keyReleaseEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QPushButton::changeEvent(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QPushButton::timerEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QPushButton::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QPushButton::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QPushButton::moveEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QPushButton::resizeEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QPushButton::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QPushButton::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QPushButton::hideEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QPushButton::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QPushButton::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QPushButton::focusNextPrevChild(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QPushButton::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QPushButton::customEvent(a0); }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QPushButton::sizeHint();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QPushButton::minimumSizeHint();
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QPushButton::event(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::paintEvent(a0);
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::keyPressEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::focusOutEvent(a0);
+  }
+  bool hitButton(const QPoint & a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "hit_button")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QPoint(a0), &cls_QPoint, true) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "hit_button", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QPushButton::hitButton(a0);
+  }
+  void checkStateSet() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "check_state_set")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "check_state_set", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QPushButton::checkStateSet();
+  }
+  void nextCheckState() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "next_check_state")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "next_check_state", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QPushButton::nextCheckState();
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::keyReleaseEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::changeEvent(a0);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::timerEvent(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QPushButton::devType();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QPushButton::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QPushButton::hasHeightForWidth();
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::moveEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::resizeEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::hideEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QPushButton::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QPushButton::redirected(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QPushButton::inputMethodQuery(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QPushButton::focusNextPrevChild(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QPushButton::eventFilter(a0, a1);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPushButton, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPushButton::customEvent(a0);
+  }
+};
+
+class Rb_QCheckBox : public QCheckBox {
+public:
+  using QCheckBox::QCheckBox;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QCheckBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QCheckBox::event(a0); }
+  bool qt6rb_base_hitButton(const QPoint & a0) { return QCheckBox::hitButton(a0); }
+  void qt6rb_base_checkStateSet() { QCheckBox::checkStateSet(); }
+  void qt6rb_base_nextCheckState() { QCheckBox::nextCheckState(); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QCheckBox::paintEvent(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QCheckBox::keyPressEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QCheckBox::keyReleaseEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QCheckBox::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QCheckBox::focusOutEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QCheckBox::changeEvent(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QCheckBox::timerEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QCheckBox::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QCheckBox::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QCheckBox::moveEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QCheckBox::resizeEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QCheckBox::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QCheckBox::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QCheckBox::hideEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QCheckBox::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QCheckBox::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QCheckBox::focusNextPrevChild(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QCheckBox::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QCheckBox::customEvent(a0); }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QCheckBox::sizeHint();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QCheckBox::minimumSizeHint();
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QCheckBox::event(a0);
+  }
+  bool hitButton(const QPoint & a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "hit_button")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QPoint(a0), &cls_QPoint, true) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "hit_button", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QCheckBox::hitButton(a0);
+  }
+  void checkStateSet() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "check_state_set")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "check_state_set", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QCheckBox::checkStateSet();
+  }
+  void nextCheckState() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "next_check_state")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "next_check_state", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QCheckBox::nextCheckState();
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::paintEvent(a0);
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::keyPressEvent(a0);
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::keyReleaseEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::focusOutEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::changeEvent(a0);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::timerEvent(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QCheckBox::devType();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QCheckBox::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QCheckBox::hasHeightForWidth();
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::moveEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::resizeEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::hideEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QCheckBox::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QCheckBox::redirected(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QCheckBox::inputMethodQuery(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QCheckBox::focusNextPrevChild(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QCheckBox::eventFilter(a0, a1);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCheckBox, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCheckBox::customEvent(a0);
+  }
+};
+
+class Rb_QComboBox : public QComboBox {
+public:
+  using QComboBox::QComboBox;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QComboBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QComboBox::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QComboBox::focusOutEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QComboBox::changeEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QComboBox::resizeEvent(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QComboBox::paintEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QComboBox::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QComboBox::hideEvent(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QComboBox::keyPressEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QComboBox::keyReleaseEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QComboBox::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QComboBox::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QComboBox::moveEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QComboBox::closeEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QComboBox::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QComboBox::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QComboBox::focusNextPrevChild(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QComboBox::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QComboBox::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QComboBox::customEvent(a0); }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QComboBox::sizeHint();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QComboBox::minimumSizeHint();
+  }
+  void showPopup() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "show_popup")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_popup", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QComboBox::showPopup();
+  }
+  void hidePopup() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "hide_popup")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_popup", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QComboBox::hidePopup();
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QComboBox::event(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QComboBox::inputMethodQuery(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::focusOutEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::changeEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::resizeEvent(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::paintEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::hideEvent(a0);
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::keyPressEvent(a0);
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::keyReleaseEvent(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QComboBox::devType();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QComboBox::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QComboBox::hasHeightForWidth();
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::moveEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::closeEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QComboBox::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QComboBox::redirected(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QComboBox::focusNextPrevChild(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QComboBox::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QComboBox, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QComboBox::customEvent(a0);
+  }
+};
+
+class Rb_QLineEdit : public QLineEdit {
+public:
+  using QLineEdit::QLineEdit;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QLineEdit() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QLineEdit::keyPressEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QLineEdit::keyReleaseEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QLineEdit::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QLineEdit::focusOutEvent(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QLineEdit::paintEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QLineEdit::changeEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QLineEdit::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QLineEdit::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QLineEdit::moveEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QLineEdit::resizeEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QLineEdit::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QLineEdit::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QLineEdit::hideEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QLineEdit::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QLineEdit::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QLineEdit::focusNextPrevChild(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QLineEdit::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QLineEdit::customEvent(a0); }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QLineEdit::sizeHint();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QLineEdit::minimumSizeHint();
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::keyPressEvent(a0);
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::keyReleaseEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::focusOutEvent(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::paintEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::changeEvent(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QLineEdit::inputMethodQuery(a0);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::timerEvent(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLineEdit::event(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QLineEdit::devType();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QLineEdit::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLineEdit::hasHeightForWidth();
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::moveEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::resizeEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::hideEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QLineEdit::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QLineEdit::redirected(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLineEdit::focusNextPrevChild(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QLineEdit::eventFilter(a0, a1);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QLineEdit, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QLineEdit::customEvent(a0);
+  }
+};
+
+class Rb_QTextEdit : public QTextEdit {
+public:
+  using QTextEdit::QTextEdit;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QTextEdit() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QTextEdit::event(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QTextEdit::timerEvent(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QTextEdit::keyPressEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QTextEdit::keyReleaseEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QTextEdit::resizeEvent(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QTextEdit::paintEvent(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QTextEdit::focusNextPrevChild(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QTextEdit::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QTextEdit::focusOutEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QTextEdit::showEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QTextEdit::changeEvent(a0); }
+  void qt6rb_base_scrollContentsBy(int a0, int a1) { QTextEdit::scrollContentsBy(a0, a1); }
+  bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QTextEdit::eventFilter(a0, a1); }
+  bool qt6rb_base_viewportEvent(QEvent * a0) { return QTextEdit::viewportEvent(a0); }
+  QSize qt6rb_base_viewportSizeHint() { return QTextEdit::viewportSizeHint(); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QTextEdit::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QTextEdit::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QTextEdit::moveEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QTextEdit::closeEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QTextEdit::hideEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QTextEdit::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QTextEdit::redirected(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QTextEdit::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QTextEdit::customEvent(a0); }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QTextEdit::inputMethodQuery(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QTextEdit::event(a0);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::timerEvent(a0);
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::keyPressEvent(a0);
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::keyReleaseEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::resizeEvent(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::paintEvent(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QTextEdit::focusNextPrevChild(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::focusOutEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::showEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::changeEvent(a0);
+  }
+  void scrollContentsBy(int a0, int a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "scroll_contents_by")) {
+      VALUE rb_args[] = { INT2NUM(a0), INT2NUM(a1) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "scroll_contents_by", 2, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::scrollContentsBy(a0, a1);
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QTextEdit::minimumSizeHint();
+  }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QTextEdit::sizeHint();
+  }
+  void setupViewport(QWidget * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "setup_viewport")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "setup_viewport", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::setupViewport(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QTextEdit::eventFilter(a0, a1);
+  }
+  bool viewportEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "viewport_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "viewport_event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QTextEdit::viewportEvent(a0);
+  }
+  QSize viewportSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "viewport_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "viewport_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QTextEdit::viewportSizeHint();
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QTextEdit::devType();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QTextEdit::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QTextEdit::hasHeightForWidth();
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::moveEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::closeEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::hideEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QTextEdit::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QTextEdit::redirected(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTextEdit, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTextEdit::customEvent(a0);
+  }
+};
+
+class Rb_QMainWindow : public QMainWindow {
+public:
+  using QMainWindow::QMainWindow;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QMainWindow() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QMainWindow::event(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QMainWindow::keyPressEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QMainWindow::keyReleaseEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QMainWindow::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QMainWindow::focusOutEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QMainWindow::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QMainWindow::leaveEvent(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QMainWindow::paintEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QMainWindow::moveEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QMainWindow::resizeEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QMainWindow::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QMainWindow::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QMainWindow::hideEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QMainWindow::changeEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QMainWindow::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QMainWindow::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QMainWindow::focusNextPrevChild(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QMainWindow::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QMainWindow::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QMainWindow::customEvent(a0); }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QMainWindow::event(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QMainWindow::devType();
+  }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QMainWindow::sizeHint();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QMainWindow::minimumSizeHint();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QMainWindow::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QMainWindow::hasHeightForWidth();
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::keyPressEvent(a0);
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::keyReleaseEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::focusOutEvent(a0);
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::leaveEvent(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::paintEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::moveEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::resizeEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::hideEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::changeEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QMainWindow::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QMainWindow::redirected(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QMainWindow::inputMethodQuery(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QMainWindow::focusNextPrevChild(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QMainWindow::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMainWindow, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMainWindow::customEvent(a0);
+  }
+};
+
+class Rb_QBoxLayout : public QBoxLayout {
+public:
+  using QBoxLayout::QBoxLayout;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QBoxLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QBoxLayout::childEvent(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QBoxLayout::timerEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QBoxLayout::customEvent(a0); }
+  void addItem(QLayoutItem * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "add_item")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "add_item", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QBoxLayout::addItem(a0);
+  }
+  int spacing() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "spacing")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "spacing", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QBoxLayout::spacing();
+  }
+  void setSpacing(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "set_spacing")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_spacing", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QBoxLayout::setSpacing(a0);
+  }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QBoxLayout::sizeHint();
+  }
+  QSize minimumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "minimum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QBoxLayout::minimumSize();
+  }
+  QSize maximumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "maximum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "maximum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QBoxLayout::maximumSize();
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QBoxLayout::hasHeightForWidth();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QBoxLayout::heightForWidth(a0);
+  }
+  int minimumHeightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "minimum_height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QBoxLayout::minimumHeightForWidth(a0);
+  }
+  Qt::Orientations expandingDirections() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "expanding_directions")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "expanding_directions", 0, nullptr, &ok);
+      if (ok) return QFlags<Qt::Orientation>::fromInt(NUM2INT(r));
+    }
+    return QBoxLayout::expandingDirections();
+  }
+  void invalidate() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "invalidate")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "invalidate", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QBoxLayout::invalidate();
+  }
+  QLayoutItem * itemAt(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "item_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "item_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QBoxLayout::itemAt(a0);
+  }
+  QLayoutItem * takeAt(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "take_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "take_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QBoxLayout::takeAt(a0);
+  }
+  int count() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "count")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "count", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QBoxLayout::count();
+  }
+  void setGeometry(const QRect & a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "set_geometry")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_geometry", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QBoxLayout::setGeometry(a0);
+  }
+  QRect geometry() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "geometry")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "geometry", 0, nullptr, &ok);
+      if (ok) return *static_cast<QRect*>(qt6rb::unwrap_ref(r, &cls_QRect));
+    }
+    return QBoxLayout::geometry();
+  }
+  int indexOf(const QWidget * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QBoxLayout::indexOf(a0);
+  }
+  int indexOf(const QLayoutItem * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QBoxLayout::indexOf(a0);
+  }
+  bool isEmpty() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "is_empty")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "is_empty", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QBoxLayout::isEmpty();
+  }
+  QSizePolicy::ControlTypes controlTypes() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "control_types")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "control_types", 0, nullptr, &ok);
+      if (ok) return QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(r));
+    }
+    return QBoxLayout::controlTypes();
+  }
+  QLayoutItem * replaceWidget(QWidget * a0, QWidget * a1, Qt::FindChildOptions a2) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "replace_widget")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget), qt6rb::wrap_qobject((QObject*)(a1), &cls_QWidget), INT2NUM((a2).toInt()) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "replace_widget", 3, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QBoxLayout::replaceWidget(a0, a1, a2);
+  }
+  QLayout * layout() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "layout")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "layout", 0, nullptr, &ok);
+      if (ok) return static_cast<QLayout*>(qt6rb::unwrap(r, &cls_QLayout));
+    }
+    return QBoxLayout::layout();
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QBoxLayout::childEvent(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QBoxLayout::event(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QBoxLayout::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QBoxLayout::timerEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QBoxLayout::customEvent(a0);
+  }
+  QWidget * widget() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QBoxLayout, "widget")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "widget", 0, nullptr, &ok);
+      if (ok) return static_cast<QWidget*>(qt6rb::unwrap(r, &cls_QWidget));
+    }
+    return QBoxLayout::widget();
+  }
+};
+
+class Rb_QVBoxLayout : public QVBoxLayout {
+public:
+  using QVBoxLayout::QVBoxLayout;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QVBoxLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QVBoxLayout::childEvent(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QVBoxLayout::timerEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QVBoxLayout::customEvent(a0); }
+  void addItem(QLayoutItem * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "add_item")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "add_item", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QVBoxLayout::addItem(a0);
+  }
+  int spacing() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "spacing")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "spacing", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QVBoxLayout::spacing();
+  }
+  void setSpacing(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "set_spacing")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_spacing", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QVBoxLayout::setSpacing(a0);
+  }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QVBoxLayout::sizeHint();
+  }
+  QSize minimumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "minimum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QVBoxLayout::minimumSize();
+  }
+  QSize maximumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "maximum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "maximum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QVBoxLayout::maximumSize();
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QVBoxLayout::hasHeightForWidth();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QVBoxLayout::heightForWidth(a0);
+  }
+  int minimumHeightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "minimum_height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QVBoxLayout::minimumHeightForWidth(a0);
+  }
+  Qt::Orientations expandingDirections() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "expanding_directions")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "expanding_directions", 0, nullptr, &ok);
+      if (ok) return QFlags<Qt::Orientation>::fromInt(NUM2INT(r));
+    }
+    return QVBoxLayout::expandingDirections();
+  }
+  void invalidate() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "invalidate")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "invalidate", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QVBoxLayout::invalidate();
+  }
+  QLayoutItem * itemAt(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "item_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "item_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QVBoxLayout::itemAt(a0);
+  }
+  QLayoutItem * takeAt(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "take_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "take_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QVBoxLayout::takeAt(a0);
+  }
+  int count() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "count")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "count", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QVBoxLayout::count();
+  }
+  void setGeometry(const QRect & a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "set_geometry")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_geometry", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QVBoxLayout::setGeometry(a0);
+  }
+  QRect geometry() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "geometry")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "geometry", 0, nullptr, &ok);
+      if (ok) return *static_cast<QRect*>(qt6rb::unwrap_ref(r, &cls_QRect));
+    }
+    return QVBoxLayout::geometry();
+  }
+  int indexOf(const QWidget * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QVBoxLayout::indexOf(a0);
+  }
+  int indexOf(const QLayoutItem * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QVBoxLayout::indexOf(a0);
+  }
+  bool isEmpty() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "is_empty")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "is_empty", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QVBoxLayout::isEmpty();
+  }
+  QSizePolicy::ControlTypes controlTypes() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "control_types")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "control_types", 0, nullptr, &ok);
+      if (ok) return QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(r));
+    }
+    return QVBoxLayout::controlTypes();
+  }
+  QLayoutItem * replaceWidget(QWidget * a0, QWidget * a1, Qt::FindChildOptions a2) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "replace_widget")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget), qt6rb::wrap_qobject((QObject*)(a1), &cls_QWidget), INT2NUM((a2).toInt()) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "replace_widget", 3, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QVBoxLayout::replaceWidget(a0, a1, a2);
+  }
+  QLayout * layout() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "layout")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "layout", 0, nullptr, &ok);
+      if (ok) return static_cast<QLayout*>(qt6rb::unwrap(r, &cls_QLayout));
+    }
+    return QVBoxLayout::layout();
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QVBoxLayout::childEvent(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QVBoxLayout::event(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QVBoxLayout::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QVBoxLayout::timerEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QVBoxLayout::customEvent(a0);
+  }
+  QWidget * widget() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QVBoxLayout, "widget")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "widget", 0, nullptr, &ok);
+      if (ok) return static_cast<QWidget*>(qt6rb::unwrap(r, &cls_QWidget));
+    }
+    return QVBoxLayout::widget();
+  }
+};
+
+class Rb_QHBoxLayout : public QHBoxLayout {
+public:
+  using QHBoxLayout::QHBoxLayout;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QHBoxLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QHBoxLayout::childEvent(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QHBoxLayout::timerEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QHBoxLayout::customEvent(a0); }
+  void addItem(QLayoutItem * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "add_item")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "add_item", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QHBoxLayout::addItem(a0);
+  }
+  int spacing() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "spacing")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "spacing", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QHBoxLayout::spacing();
+  }
+  void setSpacing(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "set_spacing")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_spacing", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QHBoxLayout::setSpacing(a0);
+  }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QHBoxLayout::sizeHint();
+  }
+  QSize minimumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "minimum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QHBoxLayout::minimumSize();
+  }
+  QSize maximumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "maximum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "maximum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QHBoxLayout::maximumSize();
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QHBoxLayout::hasHeightForWidth();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QHBoxLayout::heightForWidth(a0);
+  }
+  int minimumHeightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "minimum_height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QHBoxLayout::minimumHeightForWidth(a0);
+  }
+  Qt::Orientations expandingDirections() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "expanding_directions")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "expanding_directions", 0, nullptr, &ok);
+      if (ok) return QFlags<Qt::Orientation>::fromInt(NUM2INT(r));
+    }
+    return QHBoxLayout::expandingDirections();
+  }
+  void invalidate() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "invalidate")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "invalidate", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QHBoxLayout::invalidate();
+  }
+  QLayoutItem * itemAt(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "item_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "item_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QHBoxLayout::itemAt(a0);
+  }
+  QLayoutItem * takeAt(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "take_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "take_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QHBoxLayout::takeAt(a0);
+  }
+  int count() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "count")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "count", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QHBoxLayout::count();
+  }
+  void setGeometry(const QRect & a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "set_geometry")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_geometry", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QHBoxLayout::setGeometry(a0);
+  }
+  QRect geometry() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "geometry")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "geometry", 0, nullptr, &ok);
+      if (ok) return *static_cast<QRect*>(qt6rb::unwrap_ref(r, &cls_QRect));
+    }
+    return QHBoxLayout::geometry();
+  }
+  int indexOf(const QWidget * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QHBoxLayout::indexOf(a0);
+  }
+  int indexOf(const QLayoutItem * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QHBoxLayout::indexOf(a0);
+  }
+  bool isEmpty() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "is_empty")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "is_empty", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QHBoxLayout::isEmpty();
+  }
+  QSizePolicy::ControlTypes controlTypes() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "control_types")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "control_types", 0, nullptr, &ok);
+      if (ok) return QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(r));
+    }
+    return QHBoxLayout::controlTypes();
+  }
+  QLayoutItem * replaceWidget(QWidget * a0, QWidget * a1, Qt::FindChildOptions a2) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "replace_widget")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget), qt6rb::wrap_qobject((QObject*)(a1), &cls_QWidget), INT2NUM((a2).toInt()) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "replace_widget", 3, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QHBoxLayout::replaceWidget(a0, a1, a2);
+  }
+  QLayout * layout() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "layout")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "layout", 0, nullptr, &ok);
+      if (ok) return static_cast<QLayout*>(qt6rb::unwrap(r, &cls_QLayout));
+    }
+    return QHBoxLayout::layout();
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QHBoxLayout::childEvent(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QHBoxLayout::event(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QHBoxLayout::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QHBoxLayout::timerEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QHBoxLayout::customEvent(a0);
+  }
+  QWidget * widget() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHBoxLayout, "widget")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "widget", 0, nullptr, &ok);
+      if (ok) return static_cast<QWidget*>(qt6rb::unwrap(r, &cls_QWidget));
+    }
+    return QHBoxLayout::widget();
+  }
+};
+
+class Rb_QGridLayout : public QGridLayout {
+public:
+  using QGridLayout::QGridLayout;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QGridLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void qt6rb_base_addItem(QLayoutItem * a0) { QGridLayout::addItem(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QGridLayout::childEvent(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QGridLayout::timerEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QGridLayout::customEvent(a0); }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QGridLayout::sizeHint();
+  }
+  QSize minimumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "minimum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QGridLayout::minimumSize();
+  }
+  QSize maximumSize() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "maximum_size")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "maximum_size", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QGridLayout::maximumSize();
+  }
+  void setSpacing(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "set_spacing")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_spacing", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QGridLayout::setSpacing(a0);
+  }
+  int spacing() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "spacing")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "spacing", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QGridLayout::spacing();
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QGridLayout::hasHeightForWidth();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QGridLayout::heightForWidth(a0);
+  }
+  int minimumHeightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "minimum_height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QGridLayout::minimumHeightForWidth(a0);
+  }
+  Qt::Orientations expandingDirections() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "expanding_directions")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "expanding_directions", 0, nullptr, &ok);
+      if (ok) return QFlags<Qt::Orientation>::fromInt(NUM2INT(r));
+    }
+    return QGridLayout::expandingDirections();
+  }
+  void invalidate() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "invalidate")) {
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "invalidate", 0, nullptr, &ok);
+      if (ok) return;
+    }
+    QGridLayout::invalidate();
+  }
+  QLayoutItem * itemAt(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "item_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "item_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QGridLayout::itemAt(a0);
+  }
+  QLayoutItem * takeAt(int a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "take_at")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "take_at", 1, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QGridLayout::takeAt(a0);
+  }
+  int count() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "count")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "count", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QGridLayout::count();
+  }
+  void setGeometry(const QRect & a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "set_geometry")) {
+      VALUE rb_args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_geometry", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QGridLayout::setGeometry(a0);
+  }
+  void addItem(QLayoutItem * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "add_item")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "add_item", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QGridLayout::addItem(a0);
+  }
+  QRect geometry() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "geometry")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "geometry", 0, nullptr, &ok);
+      if (ok) return *static_cast<QRect*>(qt6rb::unwrap_ref(r, &cls_QRect));
+    }
+    return QGridLayout::geometry();
+  }
+  int indexOf(const QWidget * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QGridLayout::indexOf(a0);
+  }
+  int indexOf(const QLayoutItem * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "index_of")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QLayoutItem, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "index_of", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QGridLayout::indexOf(a0);
+  }
+  bool isEmpty() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "is_empty")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "is_empty", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QGridLayout::isEmpty();
+  }
+  QSizePolicy::ControlTypes controlTypes() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "control_types")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "control_types", 0, nullptr, &ok);
+      if (ok) return QFlags<QSizePolicy::ControlType>::fromInt(NUM2INT(r));
+    }
+    return QGridLayout::controlTypes();
+  }
+  QLayoutItem * replaceWidget(QWidget * a0, QWidget * a1, Qt::FindChildOptions a2) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "replace_widget")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget), qt6rb::wrap_qobject((QObject*)(a1), &cls_QWidget), INT2NUM((a2).toInt()) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "replace_widget", 3, rb_args, &ok);
+      if (ok) return static_cast<QLayoutItem*>(qt6rb::unwrap(r, &cls_QLayoutItem));
+    }
+    return QGridLayout::replaceWidget(a0, a1, a2);
+  }
+  QLayout * layout() override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "layout")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "layout", 0, nullptr, &ok);
+      if (ok) return static_cast<QLayout*>(qt6rb::unwrap(r, &cls_QLayout));
+    }
+    return QGridLayout::layout();
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QGridLayout::childEvent(a0);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QGridLayout::event(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QGridLayout::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QGridLayout::timerEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QGridLayout::customEvent(a0);
+  }
+  QWidget * widget() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QGridLayout, "widget")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "widget", 0, nullptr, &ok);
+      if (ok) return static_cast<QWidget*>(qt6rb::unwrap(r, &cls_QWidget));
+    }
+    return QGridLayout::widget();
+  }
+};
+
+class Rb_QEvent : public QEvent {
+public:
+  using QEvent::QEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QEvent::setAccepted(a0);
+  }
+  QEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QEvent*>(qt6rb::unwrap(r, &cls_QEvent));
+    }
+    return QEvent::clone();
+  }
+};
+
+class Rb_QTimerEvent : public QTimerEvent {
+public:
+  using QTimerEvent::QTimerEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QTimerEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QTimerEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTimerEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QTimerEvent*>(qt6rb::unwrap(r, &cls_QTimerEvent));
+    }
+    return QTimerEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QTimerEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QTimerEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QChildEvent : public QChildEvent {
+public:
+  using QChildEvent::QChildEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QChildEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QChildEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QChildEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QChildEvent*>(qt6rb::unwrap(r, &cls_QChildEvent));
+    }
+    return QChildEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QChildEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QChildEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QCloseEvent : public QCloseEvent {
+public:
+  using QCloseEvent::QCloseEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QCloseEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QCloseEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCloseEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QCloseEvent*>(qt6rb::unwrap(r, &cls_QCloseEvent));
+    }
+    return QCloseEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QCloseEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QCloseEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QShowEvent : public QShowEvent {
+public:
+  using QShowEvent::QShowEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QShowEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QShowEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QShowEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QShowEvent*>(qt6rb::unwrap(r, &cls_QShowEvent));
+    }
+    return QShowEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QShowEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QShowEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QHideEvent : public QHideEvent {
+public:
+  using QHideEvent::QHideEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QHideEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QHideEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHideEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QHideEvent*>(qt6rb::unwrap(r, &cls_QHideEvent));
+    }
+    return QHideEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QHideEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QHideEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QMoveEvent : public QMoveEvent {
+public:
+  using QMoveEvent::QMoveEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QMoveEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QMoveEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMoveEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QMoveEvent*>(qt6rb::unwrap(r, &cls_QMoveEvent));
+    }
+    return QMoveEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QMoveEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMoveEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QResizeEvent : public QResizeEvent {
+public:
+  using QResizeEvent::QResizeEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QResizeEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QResizeEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QResizeEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QResizeEvent*>(qt6rb::unwrap(r, &cls_QResizeEvent));
+    }
+    return QResizeEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QResizeEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QResizeEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QPaintEvent : public QPaintEvent {
+public:
+  using QPaintEvent::QPaintEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QPaintEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QPaintEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPaintEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QPaintEvent*>(qt6rb::unwrap(r, &cls_QPaintEvent));
+    }
+    return QPaintEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QPaintEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QPaintEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QKeyEvent : public QKeyEvent {
+public:
+  using QKeyEvent::QKeyEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QKeyEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QKeyEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QKeyEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QKeyEvent*>(qt6rb::unwrap(r, &cls_QKeyEvent));
+    }
+    return QKeyEvent::clone();
+  }
+  void setTimestamp(quint64 a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QKeyEvent, "set_timestamp")) {
+      VALUE rb_args[] = { ULL2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_timestamp", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QKeyEvent::setTimestamp(a0);
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QKeyEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QKeyEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QFocusEvent : public QFocusEvent {
+public:
+  using QFocusEvent::QFocusEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QFocusEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QFocusEvent * clone() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFocusEvent, "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "clone", 0, nullptr, &ok);
+      if (ok) return static_cast<QFocusEvent*>(qt6rb::unwrap(r, &cls_QFocusEvent));
+    }
+    return QFocusEvent::clone();
+  }
+  void setAccepted(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFocusEvent, "set_accepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "set_accepted", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFocusEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QFrame : public QFrame {
+public:
+  using QFrame::QFrame;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QFrame() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_event(QEvent * a0) { return QFrame::event(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QFrame::paintEvent(a0); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QFrame::changeEvent(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QFrame::keyPressEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QFrame::keyReleaseEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QFrame::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QFrame::focusOutEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QFrame::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QFrame::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QFrame::moveEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QFrame::resizeEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QFrame::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QFrame::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QFrame::hideEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QFrame::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QFrame::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QFrame::focusNextPrevChild(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QFrame::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QFrame::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QFrame::customEvent(a0); }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QFrame::sizeHint();
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QFrame::event(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::paintEvent(a0);
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::changeEvent(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QFrame::devType();
+  }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QFrame::minimumSizeHint();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QFrame::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QFrame::hasHeightForWidth();
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::keyPressEvent(a0);
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::keyReleaseEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::focusOutEvent(a0);
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::moveEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::resizeEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::hideEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QFrame::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QFrame::redirected(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QFrame::inputMethodQuery(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QFrame::focusNextPrevChild(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QFrame::eventFilter(a0, a1);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QFrame, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QFrame::customEvent(a0);
+  }
+};
+
+class Rb_QAbstractScrollArea : public QAbstractScrollArea {
+public:
+  using QAbstractScrollArea::QAbstractScrollArea;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QAbstractScrollArea() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QAbstractScrollArea::eventFilter(a0, a1); }
+  bool qt6rb_base_event(QEvent * a0) { return QAbstractScrollArea::event(a0); }
+  bool qt6rb_base_viewportEvent(QEvent * a0) { return QAbstractScrollArea::viewportEvent(a0); }
+  void qt6rb_base_resizeEvent(QResizeEvent * a0) { QAbstractScrollArea::resizeEvent(a0); }
+  void qt6rb_base_paintEvent(QPaintEvent * a0) { QAbstractScrollArea::paintEvent(a0); }
+  void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QAbstractScrollArea::keyPressEvent(a0); }
+  void qt6rb_base_scrollContentsBy(int a0, int a1) { QAbstractScrollArea::scrollContentsBy(a0, a1); }
+  QSize qt6rb_base_viewportSizeHint() { return QAbstractScrollArea::viewportSizeHint(); }
+  void qt6rb_base_changeEvent(QEvent * a0) { QAbstractScrollArea::changeEvent(a0); }
+  void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QAbstractScrollArea::keyReleaseEvent(a0); }
+  void qt6rb_base_focusInEvent(QFocusEvent * a0) { QAbstractScrollArea::focusInEvent(a0); }
+  void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QAbstractScrollArea::focusOutEvent(a0); }
+  void qt6rb_base_enterEvent(QEnterEvent * a0) { QAbstractScrollArea::enterEvent(a0); }
+  void qt6rb_base_leaveEvent(QEvent * a0) { QAbstractScrollArea::leaveEvent(a0); }
+  void qt6rb_base_moveEvent(QMoveEvent * a0) { QAbstractScrollArea::moveEvent(a0); }
+  void qt6rb_base_closeEvent(QCloseEvent * a0) { QAbstractScrollArea::closeEvent(a0); }
+  void qt6rb_base_showEvent(QShowEvent * a0) { QAbstractScrollArea::showEvent(a0); }
+  void qt6rb_base_hideEvent(QHideEvent * a0) { QAbstractScrollArea::hideEvent(a0); }
+  int qt6rb_base_metric(PaintDeviceMetric a0) { return QAbstractScrollArea::metric(a0); }
+  QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QAbstractScrollArea::redirected(a0); }
+  bool qt6rb_base_focusNextPrevChild(bool a0) { return QAbstractScrollArea::focusNextPrevChild(a0); }
+  void qt6rb_base_timerEvent(QTimerEvent * a0) { QAbstractScrollArea::timerEvent(a0); }
+  void qt6rb_base_childEvent(QChildEvent * a0) { QAbstractScrollArea::childEvent(a0); }
+  void qt6rb_base_customEvent(QEvent * a0) { QAbstractScrollArea::customEvent(a0); }
+  QSize minimumSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "minimum_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "minimum_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QAbstractScrollArea::minimumSizeHint();
+  }
+  QSize sizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QAbstractScrollArea::sizeHint();
+  }
+  void setupViewport(QWidget * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "setup_viewport")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "setup_viewport", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::setupViewport(a0);
+  }
+  bool eventFilter(QObject * a0, QEvent * a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "event_filter")) {
+      VALUE rb_args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject), qt6rb::wrap((void*)(a1), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event_filter", 2, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QAbstractScrollArea::eventFilter(a0, a1);
+  }
+  bool event(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QAbstractScrollArea::event(a0);
+  }
+  bool viewportEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "viewport_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "viewport_event", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QAbstractScrollArea::viewportEvent(a0);
+  }
+  void resizeEvent(QResizeEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "resize_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QResizeEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "resize_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::resizeEvent(a0);
+  }
+  void paintEvent(QPaintEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "paint_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPaintEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "paint_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::paintEvent(a0);
+  }
+  void keyPressEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "key_press_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_press_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::keyPressEvent(a0);
+  }
+  void scrollContentsBy(int a0, int a1) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "scroll_contents_by")) {
+      VALUE rb_args[] = { INT2NUM(a0), INT2NUM(a1) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "scroll_contents_by", 2, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::scrollContentsBy(a0, a1);
+  }
+  QSize viewportSizeHint() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "viewport_size_hint")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "viewport_size_hint", 0, nullptr, &ok);
+      if (ok) return *static_cast<QSize*>(qt6rb::unwrap_ref(r, &cls_QSize));
+    }
+    return QAbstractScrollArea::viewportSizeHint();
+  }
+  void changeEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "change_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "change_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::changeEvent(a0);
+  }
+  int devType() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "dev_type")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "dev_type", 0, nullptr, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QAbstractScrollArea::devType();
+  }
+  int heightForWidth(int a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "height_for_width")) {
+      VALUE rb_args[] = { INT2NUM(a0) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "height_for_width", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QAbstractScrollArea::heightForWidth(a0);
+  }
+  bool hasHeightForWidth() const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "has_height_for_width")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "has_height_for_width", 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QAbstractScrollArea::hasHeightForWidth();
+  }
+  void keyReleaseEvent(QKeyEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "key_release_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QKeyEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "key_release_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::keyReleaseEvent(a0);
+  }
+  void focusInEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "focus_in_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_in_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::focusInEvent(a0);
+  }
+  void focusOutEvent(QFocusEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "focus_out_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QFocusEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "focus_out_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::focusOutEvent(a0);
+  }
+  void enterEvent(QEnterEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "enter_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEnterEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "enter_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::enterEvent(a0);
+  }
+  void leaveEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "leave_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "leave_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::leaveEvent(a0);
+  }
+  void moveEvent(QMoveEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "move_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QMoveEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "move_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::moveEvent(a0);
+  }
+  void closeEvent(QCloseEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "close_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QCloseEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "close_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::closeEvent(a0);
+  }
+  void showEvent(QShowEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "show_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QShowEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "show_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::showEvent(a0);
+  }
+  void hideEvent(QHideEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "hide_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QHideEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "hide_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::hideEvent(a0);
+  }
+  int metric(PaintDeviceMetric a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "metric")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "metric", 1, rb_args, &ok);
+      if (ok) return NUM2INT(r);
+    }
+    return QAbstractScrollArea::metric(a0);
+  }
+  QPaintDevice * redirected(QPoint * a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "redirected")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QPoint, false) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "redirected", 1, rb_args, &ok);
+      if (ok) return static_cast<QPaintDevice*>(qt6rb::unwrap(r, &cls_QPaintDevice));
+    }
+    return QAbstractScrollArea::redirected(a0);
+  }
+  QVariant inputMethodQuery(Qt::InputMethodQuery a0) const override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "input_method_query")) {
+      VALUE rb_args[] = { INT2NUM(static_cast<int>(a0)) };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "input_method_query", 1, rb_args, &ok);
+      if (ok) return qt6rb::to_qvariant(r);
+    }
+    return QAbstractScrollArea::inputMethodQuery(a0);
+  }
+  bool focusNextPrevChild(bool a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "focus_next_prev_child")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, "focus_next_prev_child", 1, rb_args, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QAbstractScrollArea::focusNextPrevChild(a0);
+  }
+  void timerEvent(QTimerEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "timer_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QTimerEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "timer_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::timerEvent(a0);
+  }
+  void childEvent(QChildEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "child_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QChildEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "child_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::childEvent(a0);
+  }
+  void customEvent(QEvent * a0) override {
+    if (qt6rb::has_override(qt6rb_self, &cls_QAbstractScrollArea, "custom_event")) {
+      VALUE rb_args[] = { qt6rb::wrap((void*)(a0), &cls_QEvent, false) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, "custom_event", 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QAbstractScrollArea::customEvent(a0);
+  }
+};
+
+static VALUE rb_QObject_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QObject(), &cls_QObject);
+    Rb_QObject* p = new Rb_QObject();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QObject(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject))), &cls_QObject);
+    Rb_QObject* p = new Rb_QObject(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QObject#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QObject#initialize (%d)", argc);
+}
+static VALUE rb_QObject_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QObject); }
+
+static VALUE rb_QObject_event(int argc, VALUE* argv, VALUE self) {
+  QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return ((dynamic_cast<Rb_QObject*>(o) ? o->QObject::event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent))) : o->event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent))))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QObject#event (%d)", argc);
+}
+
+static VALUE rb_QObject_event_filter(int argc, VALUE* argv, VALUE self) {
+  QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return ((dynamic_cast<Rb_QObject*>(o) ? o->QObject::eventFilter(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject)), static_cast<QEvent*>(qt6rb::unwrap(argv[1], &cls_QEvent))) : o->eventFilter(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject)), static_cast<QEvent*>(qt6rb::unwrap(argv[1], &cls_QEvent))))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QObject#event_filter (%d)", argc);
 }
 
 static VALUE rb_QObject_object_name(int argc, VALUE* argv, VALUE self) {
@@ -233,7 +4490,7 @@ static VALUE rb_QObject_parent(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->parent()), &cls_QObject);
+    return qt6rb::wrap_qobject((QObject*)(o->parent()), &cls_QObject);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#parent (%d)", argc);
 }
@@ -273,12 +4530,45 @@ static VALUE rb_QObject_s_disconnect(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#disconnect (%d)", argc);
 }
 
+static VALUE rb_QObject_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QObject* shim = dynamic_cast<Rb_QObject*>(static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QObject#timer_event (%d)", argc);
+}
+
+static VALUE rb_QObject_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QObject* shim = dynamic_cast<Rb_QObject*>(static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QObject#child_event (%d)", argc);
+}
+
+static VALUE rb_QObject_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QObject* shim = dynamic_cast<Rb_QObject*>(static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QObject#custom_event (%d)", argc);
+}
+
 static VALUE rb_QObject_on_destroyed(VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
   QObject::connect(o, &QObject::destroyed, o, [proc](QObject* a0) {
-    VALUE args[] = { qt6rb::wrap_qobject((a0), &cls_QObject) };
+    VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QObject) };
     qt6rb::call_proc(proc, 1, args);
   });
   return self;
@@ -295,16 +4585,23 @@ static VALUE rb_QObject_on_object_name_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTimer_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QTimer_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QTimer(), &cls_QTimer);
+    Rb_QTimer* p = new Rb_QTimer();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QTimer(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject))), &cls_QTimer);
+    Rb_QTimer* p = new Rb_QTimer(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTimer#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimer#initialize (%d)", argc);
 }
+static VALUE rb_QTimer_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QTimer); }
 
 static VALUE rb_QTimer_is_active(int argc, VALUE* argv, VALUE self) {
   QTimer* o = static_cast<QTimer*>(qt6rb::unwrap(self, &cls_QTimer));
@@ -444,6 +4741,39 @@ static VALUE rb_QTimer_s_single_shot(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTimer#single_shot (%d)", argc);
 }
 
+static VALUE rb_QTimer_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTimer* shim = dynamic_cast<Rb_QTimer*>(static_cast<QTimer*>(qt6rb::unwrap(self, &cls_QTimer)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimer#timer_event (%d)", argc);
+}
+
+static VALUE rb_QTimer_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTimer* shim = dynamic_cast<Rb_QTimer*>(static_cast<QTimer*>(qt6rb::unwrap(self, &cls_QTimer)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimer#child_event (%d)", argc);
+}
+
+static VALUE rb_QTimer_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTimer* shim = dynamic_cast<Rb_QTimer*>(static_cast<QTimer*>(qt6rb::unwrap(self, &cls_QTimer)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimer#custom_event (%d)", argc);
+}
+
 static VALUE rb_QTimer_on_timeout(VALUE self) {
   QTimer* o = static_cast<QTimer*>(qt6rb::unwrap(self, &cls_QTimer));
   VALUE proc = rb_block_proc();
@@ -454,25 +4784,35 @@ static VALUE rb_QTimer_on_timeout(VALUE self) {
   return self;
 }
 
-static VALUE rb_QWidget_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QWidget_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QWidget(), &cls_QWidget);
+    Rb_QWidget* p = new Rb_QWidget();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QWidget(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QWidget);
+    Rb_QWidget* p = new Rb_QWidget(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QWidget(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1]))), &cls_QWidget);
+    Rb_QWidget* p = new Rb_QWidget(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1])));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#initialize (%d)", argc);
 }
+static VALUE rb_QWidget_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QWidget); }
 
 static VALUE rb_QWidget_dev_type(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM(o->devType());
+    return INT2NUM((dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::devType() : o->devType()));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#dev_type (%d)", argc);
 }
@@ -922,7 +5262,13 @@ static VALUE rb_QWidget_map_to_global(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap(new QPoint(o->mapToGlobal(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+      return qt6rb::wrap(new QPointF(o->mapToGlobal(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+      return qt6rb::wrap(new QPoint(o->mapToGlobal(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#map_to_global for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#map_to_global (%d)", argc);
 }
@@ -931,7 +5277,13 @@ static VALUE rb_QWidget_map_from_global(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap(new QPoint(o->mapFromGlobal(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+      return qt6rb::wrap(new QPointF(o->mapFromGlobal(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+      return qt6rb::wrap(new QPoint(o->mapFromGlobal(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#map_from_global for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#map_from_global (%d)", argc);
 }
@@ -940,7 +5292,13 @@ static VALUE rb_QWidget_map_to_parent(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap(new QPoint(o->mapToParent(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+      return qt6rb::wrap(new QPointF(o->mapToParent(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+      return qt6rb::wrap(new QPoint(o->mapToParent(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#map_to_parent for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#map_to_parent (%d)", argc);
 }
@@ -949,7 +5307,13 @@ static VALUE rb_QWidget_map_from_parent(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap(new QPoint(o->mapFromParent(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+      return qt6rb::wrap(new QPointF(o->mapFromParent(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QPointF, true);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+      return qt6rb::wrap(new QPoint(o->mapFromParent(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QPoint, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#map_from_parent for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#map_from_parent (%d)", argc);
 }
@@ -958,7 +5322,13 @@ static VALUE rb_QWidget_map_to(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 2) {
-    return qt6rb::wrap(new QPoint(o->mapTo(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)))), &cls_QPoint, true);
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPointF.rb_class)) {
+      return qt6rb::wrap(new QPointF(o->mapTo(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)))), &cls_QPointF, true);
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+      return qt6rb::wrap(new QPoint(o->mapTo(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)))), &cls_QPoint, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#map_to for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#map_to (%d)", argc);
 }
@@ -967,7 +5337,13 @@ static VALUE rb_QWidget_map_from(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 2) {
-    return qt6rb::wrap(new QPoint(o->mapFrom(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)))), &cls_QPoint, true);
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPointF.rb_class)) {
+      return qt6rb::wrap(new QPointF(o->mapFrom(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)))), &cls_QPointF, true);
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+      return qt6rb::wrap(new QPoint(o->mapFrom(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)))), &cls_QPoint, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#map_from for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#map_from (%d)", argc);
 }
@@ -976,7 +5352,7 @@ static VALUE rb_QWidget_window(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->window()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->window()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#window (%d)", argc);
 }
@@ -985,7 +5361,7 @@ static VALUE rb_QWidget_native_parent_widget(int argc, VALUE* argv, VALUE self) 
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->nativeParentWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->nativeParentWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#native_parent_widget (%d)", argc);
 }
@@ -994,7 +5370,7 @@ static VALUE rb_QWidget_top_level_widget(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->topLevelWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->topLevelWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#top_level_widget (%d)", argc);
 }
@@ -1526,7 +5902,7 @@ static VALUE rb_QWidget_focus_proxy(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->focusProxy()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->focusProxy()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#focus_proxy (%d)", argc);
 }
@@ -1687,7 +6063,7 @@ static VALUE rb_QWidget_set_visible(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setVisible(RTEST(argv[0]));
+    (dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::setVisible(RTEST(argv[0])) : o->setVisible(RTEST(argv[0])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#set_visible (%d)", argc);
@@ -1959,7 +6335,7 @@ static VALUE rb_QWidget_size_hint(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#size_hint (%d)", argc);
 }
@@ -1968,7 +6344,7 @@ static VALUE rb_QWidget_minimum_size_hint(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#minimum_size_hint (%d)", argc);
 }
@@ -1987,7 +6363,7 @@ static VALUE rb_QWidget_height_for_width(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return INT2NUM(o->heightForWidth(NUM2INT(argv[0])));
+    return INT2NUM((dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::heightForWidth(NUM2INT(argv[0])) : o->heightForWidth(NUM2INT(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#height_for_width (%d)", argc);
 }
@@ -1996,7 +6372,7 @@ static VALUE rb_QWidget_has_height_for_width(int argc, VALUE* argv, VALUE self) 
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return (o->hasHeightForWidth()) ? Qtrue : Qfalse;
+    return ((dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::hasHeightForWidth() : o->hasHeightForWidth())) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#has_height_for_width (%d)", argc);
 }
@@ -2024,7 +6400,7 @@ static VALUE rb_QWidget_layout(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->layout()), &cls_QLayout);
+    return qt6rb::wrap_qobject((QObject*)(o->layout()), &cls_QLayout);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#layout (%d)", argc);
 }
@@ -2081,7 +6457,7 @@ static VALUE rb_QWidget_focus_widget(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->focusWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->focusWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#focus_widget (%d)", argc);
 }
@@ -2090,7 +6466,7 @@ static VALUE rb_QWidget_next_in_focus_chain(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->nextInFocusChain()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->nextInFocusChain()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#next_in_focus_chain (%d)", argc);
 }
@@ -2099,7 +6475,7 @@ static VALUE rb_QWidget_previous_in_focus_chain(int argc, VALUE* argv, VALUE sel
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->previousInFocusChain()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->previousInFocusChain()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#previous_in_focus_chain (%d)", argc);
 }
@@ -2127,7 +6503,7 @@ static VALUE rb_QWidget_parent_widget(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->parentWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->parentWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#parent_widget (%d)", argc);
 }
@@ -2188,10 +6564,16 @@ static VALUE rb_QWidget_child_at(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap_qobject((o->childAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QWidget);
+    if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->childAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QWidget);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->childAt(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QWidget);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#child_at for given argument types");
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject((o->childAt(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->childAt(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#child_at (%d)", argc);
 }
@@ -2261,7 +6643,7 @@ static VALUE rb_QWidget_input_method_query(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::from_qvariant(o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))));
+    return qt6rb::from_qvariant((dynamic_cast<Rb_QWidget*>(o) ? o->QWidget::inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))) : o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0])))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#input_method_query (%d)", argc);
 }
@@ -2305,7 +6687,7 @@ static VALUE rb_QWidget_s_set_tab_order(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QWidget_s_mouse_grabber(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((QWidget::mouseGrabber()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(QWidget::mouseGrabber()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#mouse_grabber (%d)", argc);
 }
@@ -2313,7 +6695,7 @@ static VALUE rb_QWidget_s_mouse_grabber(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QWidget_s_keyboard_grabber(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((QWidget::keyboardGrabber()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(QWidget::keyboardGrabber()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#keyboard_grabber (%d)", argc);
 }
@@ -2321,9 +6703,225 @@ static VALUE rb_QWidget_s_keyboard_grabber(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QWidget_s_find(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap_qobject((QWidget::find(NUM2ULL(argv[0]))), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(QWidget::find(NUM2ULL(argv[0]))), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#find (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#enter_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#leave_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#paint_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#move_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#resize_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#close_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#show_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#hide_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#change_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#metric (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#redirected (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#timer_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#child_event (%d)", argc);
+}
+
+static VALUE rb_QWidget_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#custom_event (%d)", argc);
 }
 
 static VALUE rb_QWidget_on_window_title_changed(VALUE self) {
@@ -2359,34 +6957,53 @@ static VALUE rb_QWidget_on_custom_context_menu_requested(VALUE self) {
   return self;
 }
 
-static VALUE rb_QLabel_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QLabel_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QLabel(), &cls_QLabel);
+    Rb_QLabel* p = new Rb_QLabel();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
-      return qt6rb::wrap_qobject(new QLabel(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QLabel);
+      Rb_QLabel* p = new Rb_QLabel(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap_qobject(new QLabel(qt6rb::to_qstring(argv[0])), &cls_QLabel);
+      Rb_QLabel* p = new Rb_QLabel(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
-    rb_raise(rb_eTypeError, "no matching overload of QLabel#new for given argument types");
+    rb_raise(rb_eTypeError, "no matching overload of QLabel#initialize for given argument types");
   }
   if (argc == 2) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
-      return qt6rb::wrap_qobject(new QLabel(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1]))), &cls_QLabel);
+      Rb_QLabel* p = new Rb_QLabel(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1])));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QWidget.rb_class))) {
-      return qt6rb::wrap_qobject(new QLabel(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget))), &cls_QLabel);
+      Rb_QLabel* p = new Rb_QLabel(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
-    rb_raise(rb_eTypeError, "no matching overload of QLabel#new for given argument types");
+    rb_raise(rb_eTypeError, "no matching overload of QLabel#initialize for given argument types");
   }
   if (argc == 3) {
-    return qt6rb::wrap_qobject(new QLabel(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[2]))), &cls_QLabel);
+    Rb_QLabel* p = new Rb_QLabel(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[2])));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#initialize (%d)", argc);
 }
+static VALUE rb_QLabel_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QLabel); }
 
 static VALUE rb_QLabel_text(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
@@ -2515,7 +7132,7 @@ static VALUE rb_QLabel_size_hint(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QLabel*>(o) ? o->QLabel::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#size_hint (%d)", argc);
 }
@@ -2524,7 +7141,7 @@ static VALUE rb_QLabel_minimum_size_hint(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QLabel*>(o) ? o->QLabel::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#minimum_size_hint (%d)", argc);
 }
@@ -2543,7 +7160,7 @@ static VALUE rb_QLabel_buddy(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->buddy()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->buddy()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#buddy (%d)", argc);
 }
@@ -2552,7 +7169,7 @@ static VALUE rb_QLabel_height_for_width(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   (void)argv; (void)self;
   if (argc == 1) {
-    return INT2NUM(o->heightForWidth(NUM2INT(argv[0])));
+    return INT2NUM((dynamic_cast<Rb_QLabel*>(o) ? o->QLabel::heightForWidth(NUM2INT(argv[0])) : o->heightForWidth(NUM2INT(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#height_for_width (%d)", argc);
 }
@@ -2677,6 +7294,222 @@ static VALUE rb_QLabel_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#tr (%d)", argc);
 }
 
+static VALUE rb_QLabel_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#paint_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#change_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#enter_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#leave_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#move_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#resize_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#close_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#show_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#hide_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#metric (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#redirected (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#timer_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#child_event (%d)", argc);
+}
+
+static VALUE rb_QLabel_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#custom_event (%d)", argc);
+}
+
 static VALUE rb_QLabel_on_link_activated(VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   VALUE proc = rb_block_proc();
@@ -2699,31 +7532,44 @@ static VALUE rb_QLabel_on_link_hovered(VALUE self) {
   return self;
 }
 
-static VALUE rb_QPushButton_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QPushButton_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QPushButton(), &cls_QPushButton);
+    Rb_QPushButton* p = new Rb_QPushButton();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
-      return qt6rb::wrap_qobject(new QPushButton(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QPushButton);
+      Rb_QPushButton* p = new Rb_QPushButton(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap_qobject(new QPushButton(qt6rb::to_qstring(argv[0])), &cls_QPushButton);
+      Rb_QPushButton* p = new Rb_QPushButton(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
-    rb_raise(rb_eTypeError, "no matching overload of QPushButton#new for given argument types");
+    rb_raise(rb_eTypeError, "no matching overload of QPushButton#initialize for given argument types");
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QPushButton(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget))), &cls_QPushButton);
+    Rb_QPushButton* p = new Rb_QPushButton(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#initialize (%d)", argc);
 }
+static VALUE rb_QPushButton_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QPushButton); }
 
 static VALUE rb_QPushButton_size_hint(int argc, VALUE* argv, VALUE self) {
   QPushButton* o = static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QPushButton*>(o) ? o->QPushButton::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#size_hint (%d)", argc);
 }
@@ -2732,7 +7578,7 @@ static VALUE rb_QPushButton_minimum_size_hint(int argc, VALUE* argv, VALUE self)
   QPushButton* o = static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QPushButton*>(o) ? o->QPushButton::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#minimum_size_hint (%d)", argc);
 }
@@ -2812,31 +7658,292 @@ static VALUE rb_QPushButton_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#tr (%d)", argc);
 }
 
-static VALUE rb_QCheckBox_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QPushButton_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#paint_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_hit_button(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "hit_button is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_hitButton(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#hit_button (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_check_state_set(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "check_state_set is protected; only callable on Ruby-created instances");
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QCheckBox(), &cls_QCheckBox);
+    shim->qt6rb_base_checkStateSet();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#check_state_set (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_next_check_state(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "next_check_state is protected; only callable on Ruby-created instances");
+  if (argc == 0) {
+    shim->qt6rb_base_nextCheckState();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#next_check_state (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#change_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#timer_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#enter_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#leave_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#move_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#resize_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#close_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#show_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#hide_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#metric (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#redirected (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#child_event (%d)", argc);
+}
+
+static VALUE rb_QPushButton_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#custom_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    Rb_QCheckBox* p = new Rb_QCheckBox();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
-      return qt6rb::wrap_qobject(new QCheckBox(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QCheckBox);
+      Rb_QCheckBox* p = new Rb_QCheckBox(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap_qobject(new QCheckBox(qt6rb::to_qstring(argv[0])), &cls_QCheckBox);
+      Rb_QCheckBox* p = new Rb_QCheckBox(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
-    rb_raise(rb_eTypeError, "no matching overload of QCheckBox#new for given argument types");
+    rb_raise(rb_eTypeError, "no matching overload of QCheckBox#initialize for given argument types");
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QCheckBox(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget))), &cls_QCheckBox);
+    Rb_QCheckBox* p = new Rb_QCheckBox(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#initialize (%d)", argc);
 }
+static VALUE rb_QCheckBox_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QCheckBox); }
 
 static VALUE rb_QCheckBox_size_hint(int argc, VALUE* argv, VALUE self) {
   QCheckBox* o = static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QCheckBox*>(o) ? o->QCheckBox::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#size_hint (%d)", argc);
 }
@@ -2845,7 +7952,7 @@ static VALUE rb_QCheckBox_minimum_size_hint(int argc, VALUE* argv, VALUE self) {
   QCheckBox* o = static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QCheckBox*>(o) ? o->QCheckBox::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#minimum_size_hint (%d)", argc);
 }
@@ -2900,6 +8007,254 @@ static VALUE rb_QCheckBox_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#tr (%d)", argc);
 }
 
+static VALUE rb_QCheckBox_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_hit_button(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "hit_button is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_hitButton(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#hit_button (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_check_state_set(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "check_state_set is protected; only callable on Ruby-created instances");
+  if (argc == 0) {
+    shim->qt6rb_base_checkStateSet();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#check_state_set (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_next_check_state(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "next_check_state is protected; only callable on Ruby-created instances");
+  if (argc == 0) {
+    shim->qt6rb_base_nextCheckState();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#next_check_state (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#paint_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#change_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#timer_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#enter_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#leave_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#move_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#resize_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#close_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#show_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#hide_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#metric (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#redirected (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#child_event (%d)", argc);
+}
+
+static VALUE rb_QCheckBox_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#custom_event (%d)", argc);
+}
+
 static VALUE rb_QCheckBox_on_state_changed(VALUE self) {
   QCheckBox* o = static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox));
   VALUE proc = rb_block_proc();
@@ -2922,16 +8277,23 @@ static VALUE rb_QCheckBox_on_check_state_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QComboBox_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QComboBox_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QComboBox(), &cls_QComboBox);
+    Rb_QComboBox* p = new Rb_QComboBox();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QComboBox(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QComboBox);
+    Rb_QComboBox* p = new Rb_QComboBox(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#initialize (%d)", argc);
 }
+static VALUE rb_QComboBox_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QComboBox); }
 
 static VALUE rb_QComboBox_max_visible_items(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
@@ -3173,7 +8535,7 @@ static VALUE rb_QComboBox_line_edit(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->lineEdit()), &cls_QLineEdit);
+    return qt6rb::wrap_qobject((QObject*)(o->lineEdit()), &cls_QLineEdit);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#line_edit (%d)", argc);
 }
@@ -3363,7 +8725,7 @@ static VALUE rb_QComboBox_size_hint(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QComboBox*>(o) ? o->QComboBox::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#size_hint (%d)", argc);
 }
@@ -3372,7 +8734,7 @@ static VALUE rb_QComboBox_minimum_size_hint(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QComboBox*>(o) ? o->QComboBox::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#minimum_size_hint (%d)", argc);
 }
@@ -3381,7 +8743,7 @@ static VALUE rb_QComboBox_show_popup(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   (void)argv; (void)self;
   if (argc == 0) {
-    o->showPopup();
+    (dynamic_cast<Rb_QComboBox*>(o) ? o->QComboBox::showPopup() : o->showPopup());
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#show_popup (%d)", argc);
@@ -3391,17 +8753,26 @@ static VALUE rb_QComboBox_hide_popup(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   (void)argv; (void)self;
   if (argc == 0) {
-    o->hidePopup();
+    (dynamic_cast<Rb_QComboBox*>(o) ? o->QComboBox::hidePopup() : o->hidePopup());
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#hide_popup (%d)", argc);
+}
+
+static VALUE rb_QComboBox_event(int argc, VALUE* argv, VALUE self) {
+  QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return ((dynamic_cast<Rb_QComboBox*>(o) ? o->QComboBox::event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent))) : o->event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent))))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#event (%d)", argc);
 }
 
 static VALUE rb_QComboBox_input_method_query(int argc, VALUE* argv, VALUE self) {
   QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::from_qvariant(o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))));
+    return qt6rb::from_qvariant((dynamic_cast<Rb_QComboBox*>(o) ? o->QComboBox::inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))) : o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0])))));
   }
   if (argc == 2) {
     return qt6rb::from_qvariant(o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0])), qt6rb::to_qvariant(argv[1])));
@@ -3465,6 +8836,212 @@ static VALUE rb_QComboBox_s_tr(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(QComboBox::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#tr (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#change_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#resize_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#paint_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#show_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#hide_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#enter_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#leave_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#move_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#close_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#metric (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#redirected (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#timer_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#child_event (%d)", argc);
+}
+
+static VALUE rb_QComboBox_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#custom_event (%d)", argc);
 }
 
 static VALUE rb_QComboBox_on_edit_text_changed(VALUE self) {
@@ -3544,25 +9121,38 @@ static VALUE rb_QComboBox_on_current_text_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QLineEdit_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QLineEdit_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QLineEdit(), &cls_QLineEdit);
+    Rb_QLineEdit* p = new Rb_QLineEdit();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
-      return qt6rb::wrap_qobject(new QLineEdit(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QLineEdit);
+      Rb_QLineEdit* p = new Rb_QLineEdit(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap_qobject(new QLineEdit(qt6rb::to_qstring(argv[0])), &cls_QLineEdit);
+      Rb_QLineEdit* p = new Rb_QLineEdit(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
-    rb_raise(rb_eTypeError, "no matching overload of QLineEdit#new for given argument types");
+    rb_raise(rb_eTypeError, "no matching overload of QLineEdit#initialize for given argument types");
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QLineEdit(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget))), &cls_QLineEdit);
+    Rb_QLineEdit* p = new Rb_QLineEdit(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#initialize (%d)", argc);
 }
+static VALUE rb_QLineEdit_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QLineEdit); }
 
 static VALUE rb_QLineEdit_text(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
@@ -3700,7 +9290,7 @@ static VALUE rb_QLineEdit_size_hint(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QLineEdit*>(o) ? o->QLineEdit::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#size_hint (%d)", argc);
 }
@@ -3709,7 +9299,7 @@ static VALUE rb_QLineEdit_minimum_size_hint(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QLineEdit*>(o) ? o->QLineEdit::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#minimum_size_hint (%d)", argc);
 }
@@ -4121,12 +9711,31 @@ static VALUE rb_QLineEdit_input_method_query(int argc, VALUE* argv, VALUE self) 
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::from_qvariant(o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))));
+    return qt6rb::from_qvariant((dynamic_cast<Rb_QLineEdit*>(o) ? o->QLineEdit::inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))) : o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0])))));
   }
   if (argc == 2) {
     return qt6rb::from_qvariant(o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0])), qt6rb::to_qvariant(argv[1])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#input_method_query (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_timer_event(int argc, VALUE* argv, VALUE self) {
+  QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    (dynamic_cast<Rb_QLineEdit*>(o) ? o->QLineEdit::timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent))) : o->timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent))));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#timer_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_event(int argc, VALUE* argv, VALUE self) {
+  QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return ((dynamic_cast<Rb_QLineEdit*>(o) ? o->QLineEdit::event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent))) : o->event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent))))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#event (%d)", argc);
 }
 
 static VALUE rb_QLineEdit_s_tr(int argc, VALUE* argv, VALUE self) {
@@ -4135,6 +9744,201 @@ static VALUE rb_QLineEdit_s_tr(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(QLineEdit::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#tr (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#paint_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#change_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#enter_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#leave_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#move_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#resize_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#close_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#show_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#hide_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#metric (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#redirected (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#child_event (%d)", argc);
+}
+
+static VALUE rb_QLineEdit_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#custom_event (%d)", argc);
 }
 
 static VALUE rb_QLineEdit_on_text_changed(VALUE self) {
@@ -4210,25 +10014,38 @@ static VALUE rb_QLineEdit_on_input_rejected(VALUE self) {
   return self;
 }
 
-static VALUE rb_QTextEdit_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QTextEdit_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QTextEdit(), &cls_QTextEdit);
+    Rb_QTextEdit* p = new Rb_QTextEdit();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
-      return qt6rb::wrap_qobject(new QTextEdit(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QTextEdit);
+      Rb_QTextEdit* p = new Rb_QTextEdit(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
     if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap_qobject(new QTextEdit(qt6rb::to_qstring(argv[0])), &cls_QTextEdit);
+      Rb_QTextEdit* p = new Rb_QTextEdit(qt6rb::to_qstring(argv[0]));
+      qt6rb::attach(self, p, false);
+      p->qt6rb_set_self(self);
+      return self;
     }
-    rb_raise(rb_eTypeError, "no matching overload of QTextEdit#new for given argument types");
+    rb_raise(rb_eTypeError, "no matching overload of QTextEdit#initialize for given argument types");
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QTextEdit(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget))), &cls_QTextEdit);
+    Rb_QTextEdit* p = new Rb_QTextEdit(qt6rb::to_qstring(argv[0]), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#initialize (%d)", argc);
 }
+static VALUE rb_QTextEdit_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QTextEdit); }
 
 static VALUE rb_QTextEdit_set_placeholder_text(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
@@ -4647,7 +10464,7 @@ static VALUE rb_QTextEdit_input_method_query(int argc, VALUE* argv, VALUE self) 
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::from_qvariant(o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))));
+    return qt6rb::from_qvariant((dynamic_cast<Rb_QTextEdit*>(o) ? o->QTextEdit::inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0]))) : o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0])))));
   }
   if (argc == 2) {
     return qt6rb::from_qvariant(o->inputMethodQuery(static_cast<Qt::InputMethodQuery>(NUM2INT(argv[0])), qt6rb::to_qvariant(argv[1])));
@@ -4901,6 +10718,263 @@ static VALUE rb_QTextEdit_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#tr (%d)", argc);
 }
 
+static VALUE rb_QTextEdit_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#timer_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#resize_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#paint_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#show_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#change_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_scroll_contents_by(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "scroll_contents_by is protected; only callable on Ruby-created instances");
+  if (argc == 2) {
+    shim->qt6rb_base_scrollContentsBy(NUM2INT(argv[0]), NUM2INT(argv[1]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#scroll_contents_by (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_event_filter(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "event_filter is protected; only callable on Ruby-created instances");
+  if (argc == 2) {
+    return (shim->qt6rb_base_eventFilter(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject)), static_cast<QEvent*>(qt6rb::unwrap(argv[1], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#event_filter (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_viewport_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "viewport_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_viewportEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#viewport_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_viewport_size_hint(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "viewport_size_hint is protected; only callable on Ruby-created instances");
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(shim->qt6rb_base_viewportSizeHint()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#viewport_size_hint (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#enter_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#leave_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#move_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#close_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#hide_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#metric (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#redirected (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#child_event (%d)", argc);
+}
+
+static VALUE rb_QTextEdit_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#custom_event (%d)", argc);
+}
+
 static VALUE rb_QTextEdit_on_text_changed(VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
@@ -4964,19 +11038,29 @@ static VALUE rb_QTextEdit_on_cursor_position_changed(VALUE self) {
   return self;
 }
 
-static VALUE rb_QMainWindow_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QMainWindow_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QMainWindow(), &cls_QMainWindow);
+    Rb_QMainWindow* p = new Rb_QMainWindow();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QMainWindow(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QMainWindow);
+    Rb_QMainWindow* p = new Rb_QMainWindow(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QMainWindow(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1]))), &cls_QMainWindow);
+    Rb_QMainWindow* p = new Rb_QMainWindow(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1])));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#initialize (%d)", argc);
 }
+static VALUE rb_QMainWindow_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QMainWindow); }
 
 static VALUE rb_QMainWindow_icon_size(int argc, VALUE* argv, VALUE self) {
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
@@ -5123,7 +11207,7 @@ static VALUE rb_QMainWindow_menu_widget(int argc, VALUE* argv, VALUE self) {
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->menuWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->menuWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#menu_widget (%d)", argc);
 }
@@ -5142,7 +11226,7 @@ static VALUE rb_QMainWindow_central_widget(int argc, VALUE* argv, VALUE self) {
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->centralWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->centralWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#central_widget (%d)", argc);
 }
@@ -5161,7 +11245,7 @@ static VALUE rb_QMainWindow_take_central_widget(int argc, VALUE* argv, VALUE sel
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->takeCentralWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->takeCentralWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#take_central_widget (%d)", argc);
 }
@@ -5268,6 +11352,222 @@ static VALUE rb_QMainWindow_s_tr(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(QMainWindow::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#tr (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#enter_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#leave_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#paint_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#move_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#resize_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#close_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#show_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#hide_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#change_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#metric (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#redirected (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#timer_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#child_event (%d)", argc);
+}
+
+static VALUE rb_QMainWindow_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#custom_event (%d)", argc);
 }
 
 static VALUE rb_QMainWindow_on_icon_size_changed(VALUE self) {
@@ -5436,7 +11736,7 @@ static VALUE rb_QLayout_menu_bar(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->menuBar()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->menuBar()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#menu_bar (%d)", argc);
 }
@@ -5445,7 +11745,7 @@ static VALUE rb_QLayout_parent_widget(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->parentWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->parentWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#parent_widget (%d)", argc);
 }
@@ -5508,6 +11808,16 @@ static VALUE rb_QLayout_remove_widget(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#remove_widget (%d)", argc);
 }
 
+static VALUE rb_QLayout_remove_item(int argc, VALUE* argv, VALUE self) {
+  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->removeItem(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#remove_item (%d)", argc);
+}
+
 static VALUE rb_QLayout_expanding_directions(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
@@ -5549,7 +11859,13 @@ static VALUE rb_QLayout_index_of(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    return INT2NUM(o->indexOf(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))));
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+      return INT2NUM(o->indexOf(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))));
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QLayoutItem.rb_class))) {
+      return INT2NUM(o->indexOf(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem))));
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QLayout#index_of for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#index_of (%d)", argc);
 }
@@ -5570,6 +11886,18 @@ static VALUE rb_QLayout_control_types(int argc, VALUE* argv, VALUE self) {
     return INT2NUM((o->controlTypes()).toInt());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#control_types (%d)", argc);
+}
+
+static VALUE rb_QLayout_replace_widget(int argc, VALUE* argv, VALUE self) {
+  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return qt6rb::wrap((void*)(o->replaceWidget(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)))), &cls_QLayoutItem, false);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap((void*)(o->replaceWidget(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)), QFlags<Qt::FindChildOption>::fromInt(NUM2INT(argv[2])))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#replace_widget (%d)", argc);
 }
 
 static VALUE rb_QLayout_total_minimum_height_for_width(int argc, VALUE* argv, VALUE self) {
@@ -5621,7 +11949,7 @@ static VALUE rb_QLayout_layout(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->layout()), &cls_QLayout);
+    return qt6rb::wrap_qobject((QObject*)(o->layout()), &cls_QLayout);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#layout (%d)", argc);
 }
@@ -5661,16 +11989,23 @@ static VALUE rb_QLayout_s_closest_acceptable_size(int argc, VALUE* argv, VALUE s
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#closest_acceptable_size (%d)", argc);
 }
 
-static VALUE rb_QBoxLayout_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QBoxLayout_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QBoxLayout(static_cast<QBoxLayout::Direction>(NUM2INT(argv[0]))), &cls_QBoxLayout);
+    Rb_QBoxLayout* p = new Rb_QBoxLayout(static_cast<QBoxLayout::Direction>(NUM2INT(argv[0])));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QBoxLayout(static_cast<QBoxLayout::Direction>(NUM2INT(argv[0])), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget))), &cls_QBoxLayout);
+    Rb_QBoxLayout* p = new Rb_QBoxLayout(static_cast<QBoxLayout::Direction>(NUM2INT(argv[0])), static_cast<QWidget*>(qt6rb::unwrap(argv[1], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#initialize (%d)", argc);
 }
+static VALUE rb_QBoxLayout_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QBoxLayout); }
 
 static VALUE rb_QBoxLayout_direction(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
@@ -5757,6 +12092,16 @@ static VALUE rb_QBoxLayout_add_strut(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#add_strut (%d)", argc);
 }
 
+static VALUE rb_QBoxLayout_add_item(int argc, VALUE* argv, VALUE self) {
+  QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    (dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::addItem(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem))) : o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem))));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#add_item (%d)", argc);
+}
+
 static VALUE rb_QBoxLayout_insert_spacing(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
@@ -5813,11 +12158,21 @@ static VALUE rb_QBoxLayout_insert_layout(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#insert_layout (%d)", argc);
 }
 
+static VALUE rb_QBoxLayout_insert_item(int argc, VALUE* argv, VALUE self) {
+  QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    o->insertItem(NUM2INT(argv[0]), static_cast<QLayoutItem*>(qt6rb::unwrap(argv[1], &cls_QLayoutItem)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#insert_item (%d)", argc);
+}
+
 static VALUE rb_QBoxLayout_spacing(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM(o->spacing());
+    return INT2NUM((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::spacing() : o->spacing()));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#spacing (%d)", argc);
 }
@@ -5826,7 +12181,7 @@ static VALUE rb_QBoxLayout_set_spacing(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setSpacing(NUM2INT(argv[0]));
+    (dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::setSpacing(NUM2INT(argv[0])) : o->setSpacing(NUM2INT(argv[0])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#set_spacing (%d)", argc);
@@ -5870,7 +12225,7 @@ static VALUE rb_QBoxLayout_size_hint(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#size_hint (%d)", argc);
 }
@@ -5879,7 +12234,7 @@ static VALUE rb_QBoxLayout_minimum_size(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSize()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::minimumSize() : o->minimumSize())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#minimum_size (%d)", argc);
 }
@@ -5888,7 +12243,7 @@ static VALUE rb_QBoxLayout_maximum_size(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->maximumSize()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::maximumSize() : o->maximumSize())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#maximum_size (%d)", argc);
 }
@@ -5897,7 +12252,7 @@ static VALUE rb_QBoxLayout_has_height_for_width(int argc, VALUE* argv, VALUE sel
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return (o->hasHeightForWidth()) ? Qtrue : Qfalse;
+    return ((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::hasHeightForWidth() : o->hasHeightForWidth())) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#has_height_for_width (%d)", argc);
 }
@@ -5906,7 +12261,7 @@ static VALUE rb_QBoxLayout_height_for_width(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    return INT2NUM(o->heightForWidth(NUM2INT(argv[0])));
+    return INT2NUM((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::heightForWidth(NUM2INT(argv[0])) : o->heightForWidth(NUM2INT(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#height_for_width (%d)", argc);
 }
@@ -5915,7 +12270,7 @@ static VALUE rb_QBoxLayout_minimum_height_for_width(int argc, VALUE* argv, VALUE
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    return INT2NUM(o->minimumHeightForWidth(NUM2INT(argv[0])));
+    return INT2NUM((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::minimumHeightForWidth(NUM2INT(argv[0])) : o->minimumHeightForWidth(NUM2INT(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#minimum_height_for_width (%d)", argc);
 }
@@ -5924,7 +12279,7 @@ static VALUE rb_QBoxLayout_expanding_directions(int argc, VALUE* argv, VALUE sel
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM((o->expandingDirections()).toInt());
+    return INT2NUM(((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::expandingDirections() : o->expandingDirections())).toInt());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#expanding_directions (%d)", argc);
 }
@@ -5933,17 +12288,35 @@ static VALUE rb_QBoxLayout_invalidate(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    o->invalidate();
+    (dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::invalidate() : o->invalidate());
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#invalidate (%d)", argc);
+}
+
+static VALUE rb_QBoxLayout_item_at(int argc, VALUE* argv, VALUE self) {
+  QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::itemAt(NUM2INT(argv[0])) : o->itemAt(NUM2INT(argv[0])))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#item_at (%d)", argc);
+}
+
+static VALUE rb_QBoxLayout_take_at(int argc, VALUE* argv, VALUE self) {
+  QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::takeAt(NUM2INT(argv[0])) : o->takeAt(NUM2INT(argv[0])))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#take_at (%d)", argc);
 }
 
 static VALUE rb_QBoxLayout_count(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM(o->count());
+    return INT2NUM((dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::count() : o->count()));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#count (%d)", argc);
 }
@@ -5952,7 +12325,7 @@ static VALUE rb_QBoxLayout_set_geometry(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+    (dynamic_cast<Rb_QBoxLayout*>(o) ? o->QBoxLayout::setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect))) : o->setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect))));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#set_geometry (%d)", argc);
@@ -5966,16 +12339,56 @@ static VALUE rb_QBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#tr (%d)", argc);
 }
 
-static VALUE rb_QVBoxLayout_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QBoxLayout_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QBoxLayout* shim = dynamic_cast<Rb_QBoxLayout*>(static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#child_event (%d)", argc);
+}
+
+static VALUE rb_QBoxLayout_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QBoxLayout* shim = dynamic_cast<Rb_QBoxLayout*>(static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#timer_event (%d)", argc);
+}
+
+static VALUE rb_QBoxLayout_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QBoxLayout* shim = dynamic_cast<Rb_QBoxLayout*>(static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QBoxLayout#custom_event (%d)", argc);
+}
+
+static VALUE rb_QVBoxLayout_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QVBoxLayout(), &cls_QVBoxLayout);
+    Rb_QVBoxLayout* p = new Rb_QVBoxLayout();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QVBoxLayout(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QVBoxLayout);
+    Rb_QVBoxLayout* p = new Rb_QVBoxLayout(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QVBoxLayout#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QVBoxLayout#initialize (%d)", argc);
 }
+static VALUE rb_QVBoxLayout_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QVBoxLayout); }
 
 static VALUE rb_QVBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
@@ -5985,16 +12398,56 @@ static VALUE rb_QVBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QVBoxLayout#tr (%d)", argc);
 }
 
-static VALUE rb_QHBoxLayout_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QVBoxLayout_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QVBoxLayout* shim = dynamic_cast<Rb_QVBoxLayout*>(static_cast<QVBoxLayout*>(qt6rb::unwrap(self, &cls_QVBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QVBoxLayout#child_event (%d)", argc);
+}
+
+static VALUE rb_QVBoxLayout_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QVBoxLayout* shim = dynamic_cast<Rb_QVBoxLayout*>(static_cast<QVBoxLayout*>(qt6rb::unwrap(self, &cls_QVBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QVBoxLayout#timer_event (%d)", argc);
+}
+
+static VALUE rb_QVBoxLayout_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QVBoxLayout* shim = dynamic_cast<Rb_QVBoxLayout*>(static_cast<QVBoxLayout*>(qt6rb::unwrap(self, &cls_QVBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QVBoxLayout#custom_event (%d)", argc);
+}
+
+static VALUE rb_QHBoxLayout_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QHBoxLayout(), &cls_QHBoxLayout);
+    Rb_QHBoxLayout* p = new Rb_QHBoxLayout();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QHBoxLayout(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QHBoxLayout);
+    Rb_QHBoxLayout* p = new Rb_QHBoxLayout(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QHBoxLayout#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QHBoxLayout#initialize (%d)", argc);
 }
+static VALUE rb_QHBoxLayout_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QHBoxLayout); }
 
 static VALUE rb_QHBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
@@ -6004,22 +12457,62 @@ static VALUE rb_QHBoxLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QHBoxLayout#tr (%d)", argc);
 }
 
-static VALUE rb_QGridLayout_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QHBoxLayout_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QHBoxLayout* shim = dynamic_cast<Rb_QHBoxLayout*>(static_cast<QHBoxLayout*>(qt6rb::unwrap(self, &cls_QHBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QHBoxLayout#child_event (%d)", argc);
+}
+
+static VALUE rb_QHBoxLayout_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QHBoxLayout* shim = dynamic_cast<Rb_QHBoxLayout*>(static_cast<QHBoxLayout*>(qt6rb::unwrap(self, &cls_QHBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QHBoxLayout#timer_event (%d)", argc);
+}
+
+static VALUE rb_QHBoxLayout_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QHBoxLayout* shim = dynamic_cast<Rb_QHBoxLayout*>(static_cast<QHBoxLayout*>(qt6rb::unwrap(self, &cls_QHBoxLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QHBoxLayout#custom_event (%d)", argc);
+}
+
+static VALUE rb_QGridLayout_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QGridLayout(), &cls_QGridLayout);
+    Rb_QGridLayout* p = new Rb_QGridLayout();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QGridLayout(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QGridLayout);
+    Rb_QGridLayout* p = new Rb_QGridLayout(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#initialize (%d)", argc);
 }
+static VALUE rb_QGridLayout_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QGridLayout); }
 
 static VALUE rb_QGridLayout_size_hint(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#size_hint (%d)", argc);
 }
@@ -6028,7 +12521,7 @@ static VALUE rb_QGridLayout_minimum_size(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSize()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::minimumSize() : o->minimumSize())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#minimum_size (%d)", argc);
 }
@@ -6037,7 +12530,7 @@ static VALUE rb_QGridLayout_maximum_size(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->maximumSize()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::maximumSize() : o->maximumSize())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#maximum_size (%d)", argc);
 }
@@ -6084,7 +12577,7 @@ static VALUE rb_QGridLayout_set_spacing(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setSpacing(NUM2INT(argv[0]));
+    (dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::setSpacing(NUM2INT(argv[0])) : o->setSpacing(NUM2INT(argv[0])));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#set_spacing (%d)", argc);
@@ -6094,7 +12587,7 @@ static VALUE rb_QGridLayout_spacing(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM(o->spacing());
+    return INT2NUM((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::spacing() : o->spacing()));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#spacing (%d)", argc);
 }
@@ -6206,7 +12699,7 @@ static VALUE rb_QGridLayout_has_height_for_width(int argc, VALUE* argv, VALUE se
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return (o->hasHeightForWidth()) ? Qtrue : Qfalse;
+    return ((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::hasHeightForWidth() : o->hasHeightForWidth())) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#has_height_for_width (%d)", argc);
 }
@@ -6215,7 +12708,7 @@ static VALUE rb_QGridLayout_height_for_width(int argc, VALUE* argv, VALUE self) 
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    return INT2NUM(o->heightForWidth(NUM2INT(argv[0])));
+    return INT2NUM((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::heightForWidth(NUM2INT(argv[0])) : o->heightForWidth(NUM2INT(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#height_for_width (%d)", argc);
 }
@@ -6224,7 +12717,7 @@ static VALUE rb_QGridLayout_minimum_height_for_width(int argc, VALUE* argv, VALU
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    return INT2NUM(o->minimumHeightForWidth(NUM2INT(argv[0])));
+    return INT2NUM((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::minimumHeightForWidth(NUM2INT(argv[0])) : o->minimumHeightForWidth(NUM2INT(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#minimum_height_for_width (%d)", argc);
 }
@@ -6233,7 +12726,7 @@ static VALUE rb_QGridLayout_expanding_directions(int argc, VALUE* argv, VALUE se
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM((o->expandingDirections()).toInt());
+    return INT2NUM(((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::expandingDirections() : o->expandingDirections())).toInt());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#expanding_directions (%d)", argc);
 }
@@ -6242,7 +12735,7 @@ static VALUE rb_QGridLayout_invalidate(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    o->invalidate();
+    (dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::invalidate() : o->invalidate());
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#invalidate (%d)", argc);
@@ -6315,11 +12808,38 @@ static VALUE rb_QGridLayout_origin_corner(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#origin_corner (%d)", argc);
 }
 
+static VALUE rb_QGridLayout_item_at(int argc, VALUE* argv, VALUE self) {
+  QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::itemAt(NUM2INT(argv[0])) : o->itemAt(NUM2INT(argv[0])))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#item_at (%d)", argc);
+}
+
+static VALUE rb_QGridLayout_item_at_position(int argc, VALUE* argv, VALUE self) {
+  QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return qt6rb::wrap((void*)(o->itemAtPosition(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#item_at_position (%d)", argc);
+}
+
+static VALUE rb_QGridLayout_take_at(int argc, VALUE* argv, VALUE self) {
+  QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::takeAt(NUM2INT(argv[0])) : o->takeAt(NUM2INT(argv[0])))), &cls_QLayoutItem, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#take_at (%d)", argc);
+}
+
 static VALUE rb_QGridLayout_count(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM(o->count());
+    return INT2NUM((dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::count() : o->count()));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#count (%d)", argc);
 }
@@ -6328,10 +12848,32 @@ static VALUE rb_QGridLayout_set_geometry(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+    (dynamic_cast<Rb_QGridLayout*>(o) ? o->QGridLayout::setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect))) : o->setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect))));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#set_geometry (%d)", argc);
+}
+
+static VALUE rb_QGridLayout_add_item(int argc, VALUE* argv, VALUE self) {
+  QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem)), NUM2INT(argv[1]), NUM2INT(argv[2]));
+    return Qnil;
+  }
+  if (argc == 4) {
+    o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem)), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]));
+    return Qnil;
+  }
+  if (argc == 5) {
+    o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem)), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]));
+    return Qnil;
+  }
+  if (argc == 6) {
+    o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap(argv[0], &cls_QLayoutItem)), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[5])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#add_item (%d)", argc);
 }
 
 static VALUE rb_QGridLayout_set_default_positioning(int argc, VALUE* argv, VALUE self) {
@@ -6352,16 +12894,54 @@ static VALUE rb_QGridLayout_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#tr (%d)", argc);
 }
 
-static VALUE rb_QSize_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QGridLayout_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QGridLayout* shim = dynamic_cast<Rb_QGridLayout*>(static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#child_event (%d)", argc);
+}
+
+static VALUE rb_QGridLayout_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QGridLayout* shim = dynamic_cast<Rb_QGridLayout*>(static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#timer_event (%d)", argc);
+}
+
+static VALUE rb_QGridLayout_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QGridLayout* shim = dynamic_cast<Rb_QGridLayout*>(static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGridLayout#custom_event (%d)", argc);
+}
+
+static VALUE rb_QSize_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(), &cls_QSize, true);
+    QSize* p = new QSize();
+    qt6rb::attach(self, p, true);
+    return self;
   }
   if (argc == 2) {
-    return qt6rb::wrap(new QSize(NUM2INT(argv[0]), NUM2INT(argv[1])), &cls_QSize, true);
+    QSize* p = new QSize(NUM2INT(argv[0]), NUM2INT(argv[1]));
+    qt6rb::attach(self, p, true);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSize#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QSize#initialize (%d)", argc);
 }
+static VALUE rb_QSize_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QSize); }
 
 static VALUE rb_QSize_is_null(int argc, VALUE* argv, VALUE self) {
   QSize* o = static_cast<QSize*>(qt6rb::unwrap(self, &cls_QSize));
@@ -6491,16 +13071,30 @@ static VALUE rb_QSize_bounded_to(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QSize#bounded_to (%d)", argc);
 }
 
-static VALUE rb_QPoint_s_new(int argc, VALUE* argv, VALUE self) {
+static VALUE rb_QSize_to_size_f(int argc, VALUE* argv, VALUE self) {
+  QSize* o = static_cast<QSize*>(qt6rb::unwrap(self, &cls_QSize));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QPoint(), &cls_QPoint, true);
+    return qt6rb::wrap(new QSizeF(o->toSizeF()), &cls_QSizeF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSize#to_size_f (%d)", argc);
+}
+
+static VALUE rb_QPoint_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    QPoint* p = new QPoint();
+    qt6rb::attach(self, p, true);
+    return self;
   }
   if (argc == 2) {
-    return qt6rb::wrap(new QPoint(NUM2INT(argv[0]), NUM2INT(argv[1])), &cls_QPoint, true);
+    QPoint* p = new QPoint(NUM2INT(argv[0]), NUM2INT(argv[1]));
+    qt6rb::attach(self, p, true);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPoint#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QPoint#initialize (%d)", argc);
 }
+static VALUE rb_QPoint_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QPoint); }
 
 static VALUE rb_QPoint_is_null(int argc, VALUE* argv, VALUE self) {
   QPoint* o = static_cast<QPoint*>(qt6rb::unwrap(self, &cls_QPoint));
@@ -6567,6 +13161,15 @@ static VALUE rb_QPoint_transposed(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPoint#transposed (%d)", argc);
 }
 
+static VALUE rb_QPoint_to_point_f(int argc, VALUE* argv, VALUE self) {
+  QPoint* o = static_cast<QPoint*>(qt6rb::unwrap(self, &cls_QPoint));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->toPointF()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPoint#to_point_f (%d)", argc);
+}
+
 static VALUE rb_QPoint_s_dot_product(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 2) {
@@ -6575,25 +13178,34 @@ static VALUE rb_QPoint_s_dot_product(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPoint#dot_product (%d)", argc);
 }
 
-static VALUE rb_QRect_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QRect_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap(new QRect(), &cls_QRect, true);
+    QRect* p = new QRect();
+    qt6rb::attach(self, p, true);
+    return self;
   }
   if (argc == 2) {
     if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
-      return qt6rb::wrap(new QRect(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint))), &cls_QRect, true);
+      QRect* p = new QRect(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
+      qt6rb::attach(self, p, true);
+      return self;
     }
     if (rb_obj_is_kind_of(argv[0], cls_QPoint.rb_class) && rb_obj_is_kind_of(argv[1], cls_QSize.rb_class)) {
-      return qt6rb::wrap(new QRect(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QSize*>(qt6rb::unwrap_ref(argv[1], &cls_QSize))), &cls_QRect, true);
+      QRect* p = new QRect(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QSize*>(qt6rb::unwrap_ref(argv[1], &cls_QSize)));
+      qt6rb::attach(self, p, true);
+      return self;
     }
-    rb_raise(rb_eTypeError, "no matching overload of QRect#new for given argument types");
+    rb_raise(rb_eTypeError, "no matching overload of QRect#initialize for given argument types");
   }
   if (argc == 4) {
-    return qt6rb::wrap(new QRect(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3])), &cls_QRect, true);
+    QRect* p = new QRect(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]));
+    qt6rb::attach(self, p, true);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QRect#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QRect#initialize (%d)", argc);
 }
+static VALUE rb_QRect_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QRect); }
 
 static VALUE rb_QRect_is_null(int argc, VALUE* argv, VALUE self) {
   QRect* o = static_cast<QRect*>(qt6rb::unwrap(self, &cls_QRect));
@@ -7122,12 +13734,1515 @@ static VALUE rb_QRect_intersects(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QRect#intersects (%d)", argc);
 }
 
+static VALUE rb_QRect_to_rect_f(int argc, VALUE* argv, VALUE self) {
+  QRect* o = static_cast<QRect*>(qt6rb::unwrap(self, &cls_QRect));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRectF(o->toRectF()), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRect#to_rect_f (%d)", argc);
+}
+
 static VALUE rb_QRect_s_span(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 2) {
     return qt6rb::wrap(new QRect(QRect::span(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)))), &cls_QRect, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QRect#span (%d)", argc);
+}
+
+static VALUE rb_QPointF_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    QPointF* p = new QPointF();
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 1) {
+    QPointF* p = new QPointF(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 2) {
+    QPointF* p = new QPointF(NUM2DBL(argv[0]), NUM2DBL(argv[1]));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#initialize (%d)", argc);
+}
+static VALUE rb_QPointF_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QPointF); }
+
+static VALUE rb_QPointF_manhattan_length(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->manhattanLength());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#manhattan_length (%d)", argc);
+}
+
+static VALUE rb_QPointF_is_null(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isNull()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#is_null (%d)", argc);
+}
+
+static VALUE rb_QPointF_x(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->x());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#x (%d)", argc);
+}
+
+static VALUE rb_QPointF_y(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->y());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#y (%d)", argc);
+}
+
+static VALUE rb_QPointF_set_x(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setX(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#set_x (%d)", argc);
+}
+
+static VALUE rb_QPointF_set_y(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setY(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#set_y (%d)", argc);
+}
+
+static VALUE rb_QPointF_transposed(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->transposed()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#transposed (%d)", argc);
+}
+
+static VALUE rb_QPointF_to_point(int argc, VALUE* argv, VALUE self) {
+  QPointF* o = static_cast<QPointF*>(qt6rb::unwrap(self, &cls_QPointF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPoint(o->toPoint()), &cls_QPoint, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#to_point (%d)", argc);
+}
+
+static VALUE rb_QPointF_s_dot_product(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return DBL2NUM(QPointF::dotProduct(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointF#dot_product (%d)", argc);
+}
+
+static VALUE rb_QSizeF_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    QSizeF* p = new QSizeF();
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 1) {
+    QSizeF* p = new QSizeF(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 2) {
+    QSizeF* p = new QSizeF(NUM2DBL(argv[0]), NUM2DBL(argv[1]));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#initialize (%d)", argc);
+}
+static VALUE rb_QSizeF_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QSizeF); }
+
+static VALUE rb_QSizeF_is_null(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isNull()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#is_null (%d)", argc);
+}
+
+static VALUE rb_QSizeF_is_empty(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isEmpty()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#is_empty (%d)", argc);
+}
+
+static VALUE rb_QSizeF_is_valid(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isValid()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#is_valid (%d)", argc);
+}
+
+static VALUE rb_QSizeF_width(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->width());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#width (%d)", argc);
+}
+
+static VALUE rb_QSizeF_height(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->height());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#height (%d)", argc);
+}
+
+static VALUE rb_QSizeF_set_width(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setWidth(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#set_width (%d)", argc);
+}
+
+static VALUE rb_QSizeF_set_height(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setHeight(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#set_height (%d)", argc);
+}
+
+static VALUE rb_QSizeF_transpose(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->transpose();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#transpose (%d)", argc);
+}
+
+static VALUE rb_QSizeF_transposed(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSizeF(o->transposed()), &cls_QSizeF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#transposed (%d)", argc);
+}
+
+static VALUE rb_QSizeF_scale(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    o->scale(*static_cast<QSizeF*>(qt6rb::unwrap_ref(argv[0], &cls_QSizeF)), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[1])));
+    return Qnil;
+  }
+  if (argc == 3) {
+    o->scale(NUM2DBL(argv[0]), NUM2DBL(argv[1]), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[2])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#scale (%d)", argc);
+}
+
+static VALUE rb_QSizeF_scaled(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return qt6rb::wrap(new QSizeF(o->scaled(*static_cast<QSizeF*>(qt6rb::unwrap_ref(argv[0], &cls_QSizeF)), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[1])))), &cls_QSizeF, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QSizeF(o->scaled(NUM2DBL(argv[0]), NUM2DBL(argv[1]), static_cast<Qt::AspectRatioMode>(NUM2INT(argv[2])))), &cls_QSizeF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#scaled (%d)", argc);
+}
+
+static VALUE rb_QSizeF_expanded_to(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QSizeF(o->expandedTo(*static_cast<QSizeF*>(qt6rb::unwrap_ref(argv[0], &cls_QSizeF)))), &cls_QSizeF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#expanded_to (%d)", argc);
+}
+
+static VALUE rb_QSizeF_bounded_to(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QSizeF(o->boundedTo(*static_cast<QSizeF*>(qt6rb::unwrap_ref(argv[0], &cls_QSizeF)))), &cls_QSizeF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#bounded_to (%d)", argc);
+}
+
+static VALUE rb_QSizeF_to_size(int argc, VALUE* argv, VALUE self) {
+  QSizeF* o = static_cast<QSizeF*>(qt6rb::unwrap(self, &cls_QSizeF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->toSize()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSizeF#to_size (%d)", argc);
+}
+
+static VALUE rb_QRectF_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    QRectF* p = new QRectF();
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 1) {
+    QRectF* p = new QRectF(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  if (argc == 2) {
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QSizeF.rb_class)) {
+      QRectF* p = new QRectF(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QSizeF*>(qt6rb::unwrap_ref(argv[1], &cls_QSizeF)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class) && rb_obj_is_kind_of(argv[1], cls_QPointF.rb_class)) {
+      QRectF* p = new QRectF(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QRectF#initialize for given argument types");
+  }
+  if (argc == 4) {
+    QRectF* p = new QRectF(NUM2DBL(argv[0]), NUM2DBL(argv[1]), NUM2DBL(argv[2]), NUM2DBL(argv[3]));
+    qt6rb::attach(self, p, true);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#initialize (%d)", argc);
+}
+static VALUE rb_QRectF_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QRectF); }
+
+static VALUE rb_QRectF_is_null(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isNull()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#is_null (%d)", argc);
+}
+
+static VALUE rb_QRectF_is_empty(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isEmpty()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#is_empty (%d)", argc);
+}
+
+static VALUE rb_QRectF_is_valid(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isValid()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#is_valid (%d)", argc);
+}
+
+static VALUE rb_QRectF_normalized(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRectF(o->normalized()), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#normalized (%d)", argc);
+}
+
+static VALUE rb_QRectF_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->left());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#left (%d)", argc);
+}
+
+static VALUE rb_QRectF_top(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->top());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#top (%d)", argc);
+}
+
+static VALUE rb_QRectF_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->right());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#right (%d)", argc);
+}
+
+static VALUE rb_QRectF_bottom(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->bottom());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#bottom (%d)", argc);
+}
+
+static VALUE rb_QRectF_x(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->x());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#x (%d)", argc);
+}
+
+static VALUE rb_QRectF_y(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->y());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#y (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setLeft(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_top(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setTop(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_top (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setRight(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_bottom(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setBottom(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_bottom (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_x(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setX(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_x (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_y(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setY(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_y (%d)", argc);
+}
+
+static VALUE rb_QRectF_top_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->topLeft()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#top_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_bottom_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->bottomRight()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#bottom_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_top_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->topRight()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#top_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_bottom_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->bottomLeft()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#bottom_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_center(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->center()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#center (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_top_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setTopLeft(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_top_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_bottom_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setBottomRight(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_bottom_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_top_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setTopRight(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_top_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_bottom_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setBottomLeft(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_bottom_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveLeft(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_top(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveTop(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_top (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveRight(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_bottom(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveBottom(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_bottom (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_top_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveTopLeft(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_top_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_bottom_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveBottomRight(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_bottom_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_top_right(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveTopRight(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_top_right (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_bottom_left(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveBottomLeft(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_bottom_left (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_center(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveCenter(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_center (%d)", argc);
+}
+
+static VALUE rb_QRectF_translate(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->translate(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  if (argc == 2) {
+    o->translate(NUM2DBL(argv[0]), NUM2DBL(argv[1]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#translate (%d)", argc);
+}
+
+static VALUE rb_QRectF_translated(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QRectF(o->translated(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QRectF, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QRectF(o->translated(NUM2DBL(argv[0]), NUM2DBL(argv[1]))), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#translated (%d)", argc);
+}
+
+static VALUE rb_QRectF_transposed(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRectF(o->transposed()), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#transposed (%d)", argc);
+}
+
+static VALUE rb_QRectF_move_to(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->moveTo(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)));
+    return Qnil;
+  }
+  if (argc == 2) {
+    o->moveTo(NUM2DBL(argv[0]), NUM2DBL(argv[1]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#move_to (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_rect(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 4) {
+    o->setRect(NUM2DBL(argv[0]), NUM2DBL(argv[1]), NUM2DBL(argv[2]), NUM2DBL(argv[3]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_rect (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_coords(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 4) {
+    o->setCoords(NUM2DBL(argv[0]), NUM2DBL(argv[1]), NUM2DBL(argv[2]), NUM2DBL(argv[3]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_coords (%d)", argc);
+}
+
+static VALUE rb_QRectF_adjust(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 4) {
+    o->adjust(NUM2DBL(argv[0]), NUM2DBL(argv[1]), NUM2DBL(argv[2]), NUM2DBL(argv[3]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#adjust (%d)", argc);
+}
+
+static VALUE rb_QRectF_adjusted(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 4) {
+    return qt6rb::wrap(new QRectF(o->adjusted(NUM2DBL(argv[0]), NUM2DBL(argv[1]), NUM2DBL(argv[2]), NUM2DBL(argv[3]))), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#adjusted (%d)", argc);
+}
+
+static VALUE rb_QRectF_size(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSizeF(o->size()), &cls_QSizeF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#size (%d)", argc);
+}
+
+static VALUE rb_QRectF_width(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->width());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#width (%d)", argc);
+}
+
+static VALUE rb_QRectF_height(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->height());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#height (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_width(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setWidth(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_width (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_height(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setHeight(NUM2DBL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_height (%d)", argc);
+}
+
+static VALUE rb_QRectF_set_size(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setSize(*static_cast<QSizeF*>(qt6rb::unwrap_ref(argv[0], &cls_QSizeF)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#set_size (%d)", argc);
+}
+
+static VALUE rb_QRectF_contains(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    if (rb_obj_is_kind_of(argv[0], cls_QRectF.rb_class)) {
+      return (o->contains(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)))) ? Qtrue : Qfalse;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPointF.rb_class)) {
+      return (o->contains(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))) ? Qtrue : Qfalse;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QRectF#contains for given argument types");
+  }
+  if (argc == 2) {
+    return (o->contains(NUM2DBL(argv[0]), NUM2DBL(argv[1]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#contains (%d)", argc);
+}
+
+static VALUE rb_QRectF_united(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QRectF(o->united(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)))), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#united (%d)", argc);
+}
+
+static VALUE rb_QRectF_intersected(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QRectF(o->intersected(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)))), &cls_QRectF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#intersected (%d)", argc);
+}
+
+static VALUE rb_QRectF_intersects(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->intersects(*static_cast<QRectF*>(qt6rb::unwrap_ref(argv[0], &cls_QRectF)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#intersects (%d)", argc);
+}
+
+static VALUE rb_QRectF_to_rect(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->toRect()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#to_rect (%d)", argc);
+}
+
+static VALUE rb_QRectF_to_aligned_rect(int argc, VALUE* argv, VALUE self) {
+  QRectF* o = static_cast<QRectF*>(qt6rb::unwrap(self, &cls_QRectF));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->toAlignedRect()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QRectF#to_aligned_rect (%d)", argc);
+}
+
+static VALUE rb_QEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 1) {
+    Rb_QEvent* p = new Rb_QEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#initialize (%d)", argc);
+}
+static VALUE rb_QEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QEvent); }
+
+static VALUE rb_QEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->qt_check_for_QGADGET_macro();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#qt_check_for_qgadget_macro (%d)", argc);
+}
+
+static VALUE rb_QEvent_type(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->type()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#type (%d)", argc);
+}
+
+static VALUE rb_QEvent_spontaneous(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->spontaneous()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#spontaneous (%d)", argc);
+}
+
+static VALUE rb_QEvent_set_accepted(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    (dynamic_cast<Rb_QEvent*>(o) ? o->QEvent::setAccepted(RTEST(argv[0])) : o->setAccepted(RTEST(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#set_accepted (%d)", argc);
+}
+
+static VALUE rb_QEvent_is_accepted(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isAccepted()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#is_accepted (%d)", argc);
+}
+
+static VALUE rb_QEvent_accept(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->accept();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#accept (%d)", argc);
+}
+
+static VALUE rb_QEvent_ignore(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->ignore();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#ignore (%d)", argc);
+}
+
+static VALUE rb_QEvent_is_input_event(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isInputEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#is_input_event (%d)", argc);
+}
+
+static VALUE rb_QEvent_is_pointer_event(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isPointerEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#is_pointer_event (%d)", argc);
+}
+
+static VALUE rb_QEvent_is_single_point_event(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isSinglePointEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#is_single_point_event (%d)", argc);
+}
+
+static VALUE rb_QEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QEvent*>(o) ? o->QEvent::clone() : o->clone())), &cls_QEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QEvent_s_register_event_type(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(QEvent::registerEventType());
+  }
+  if (argc == 1) {
+    return INT2NUM(QEvent::registerEventType(NUM2INT(argv[0])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#register_event_type (%d)", argc);
+}
+
+static VALUE rb_QTimerEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 1) {
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      Rb_QTimerEvent* p = new Rb_QTimerEvent(NUM2INT(argv[0]));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      Rb_QTimerEvent* p = new Rb_QTimerEvent(static_cast<Qt::TimerId>(NUM2INT(argv[0])));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTimerEvent#initialize for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#initialize (%d)", argc);
+}
+static VALUE rb_QTimerEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QTimerEvent); }
+
+static VALUE rb_QTimerEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QTimerEvent* o = static_cast<QTimerEvent*>(qt6rb::unwrap(self, &cls_QTimerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QTimerEvent*>(o) ? o->QTimerEvent::clone() : o->clone())), &cls_QTimerEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QTimerEvent_timer_id(int argc, VALUE* argv, VALUE self) {
+  QTimerEvent* o = static_cast<QTimerEvent*>(qt6rb::unwrap(self, &cls_QTimerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->timerId());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#timer_id (%d)", argc);
+}
+
+static VALUE rb_QTimerEvent_id(int argc, VALUE* argv, VALUE self) {
+  QTimerEvent* o = static_cast<QTimerEvent*>(qt6rb::unwrap(self, &cls_QTimerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->id()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#id (%d)", argc);
+}
+
+static VALUE rb_QChildEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 2) {
+    Rb_QChildEvent* p = new Rb_QChildEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), static_cast<QObject*>(qt6rb::unwrap(argv[1], &cls_QObject)));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QChildEvent#initialize (%d)", argc);
+}
+static VALUE rb_QChildEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QChildEvent); }
+
+static VALUE rb_QChildEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QChildEvent* o = static_cast<QChildEvent*>(qt6rb::unwrap(self, &cls_QChildEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QChildEvent*>(o) ? o->QChildEvent::clone() : o->clone())), &cls_QChildEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QChildEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QChildEvent_child(int argc, VALUE* argv, VALUE self) {
+  QChildEvent* o = static_cast<QChildEvent*>(qt6rb::unwrap(self, &cls_QChildEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->child()), &cls_QObject);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QChildEvent#child (%d)", argc);
+}
+
+static VALUE rb_QChildEvent_added(int argc, VALUE* argv, VALUE self) {
+  QChildEvent* o = static_cast<QChildEvent*>(qt6rb::unwrap(self, &cls_QChildEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->added()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QChildEvent#added (%d)", argc);
+}
+
+static VALUE rb_QChildEvent_polished(int argc, VALUE* argv, VALUE self) {
+  QChildEvent* o = static_cast<QChildEvent*>(qt6rb::unwrap(self, &cls_QChildEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->polished()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QChildEvent#polished (%d)", argc);
+}
+
+static VALUE rb_QChildEvent_removed(int argc, VALUE* argv, VALUE self) {
+  QChildEvent* o = static_cast<QChildEvent*>(qt6rb::unwrap(self, &cls_QChildEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->removed()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QChildEvent#removed (%d)", argc);
+}
+
+static VALUE rb_QCloseEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    Rb_QCloseEvent* p = new Rb_QCloseEvent();
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCloseEvent#initialize (%d)", argc);
+}
+static VALUE rb_QCloseEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QCloseEvent); }
+
+static VALUE rb_QCloseEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QCloseEvent* o = static_cast<QCloseEvent*>(qt6rb::unwrap(self, &cls_QCloseEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QCloseEvent*>(o) ? o->QCloseEvent::clone() : o->clone())), &cls_QCloseEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QCloseEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QShowEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    Rb_QShowEvent* p = new Rb_QShowEvent();
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShowEvent#initialize (%d)", argc);
+}
+static VALUE rb_QShowEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QShowEvent); }
+
+static VALUE rb_QShowEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QShowEvent* o = static_cast<QShowEvent*>(qt6rb::unwrap(self, &cls_QShowEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QShowEvent*>(o) ? o->QShowEvent::clone() : o->clone())), &cls_QShowEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QShowEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QHideEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 0) {
+    Rb_QHideEvent* p = new Rb_QHideEvent();
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QHideEvent#initialize (%d)", argc);
+}
+static VALUE rb_QHideEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QHideEvent); }
+
+static VALUE rb_QHideEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QHideEvent* o = static_cast<QHideEvent*>(qt6rb::unwrap(self, &cls_QHideEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QHideEvent*>(o) ? o->QHideEvent::clone() : o->clone())), &cls_QHideEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QHideEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QMoveEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 2) {
+    Rb_QMoveEvent* p = new Rb_QMoveEvent(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMoveEvent#initialize (%d)", argc);
+}
+static VALUE rb_QMoveEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QMoveEvent); }
+
+static VALUE rb_QMoveEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QMoveEvent* o = static_cast<QMoveEvent*>(qt6rb::unwrap(self, &cls_QMoveEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QMoveEvent*>(o) ? o->QMoveEvent::clone() : o->clone())), &cls_QMoveEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMoveEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QMoveEvent_pos(int argc, VALUE* argv, VALUE self) {
+  QMoveEvent* o = static_cast<QMoveEvent*>(qt6rb::unwrap(self, &cls_QMoveEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPoint(o->pos()), &cls_QPoint, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMoveEvent#pos (%d)", argc);
+}
+
+static VALUE rb_QMoveEvent_old_pos(int argc, VALUE* argv, VALUE self) {
+  QMoveEvent* o = static_cast<QMoveEvent*>(qt6rb::unwrap(self, &cls_QMoveEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPoint(o->oldPos()), &cls_QPoint, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMoveEvent#old_pos (%d)", argc);
+}
+
+static VALUE rb_QResizeEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 2) {
+    Rb_QResizeEvent* p = new Rb_QResizeEvent(*static_cast<QSize*>(qt6rb::unwrap_ref(argv[0], &cls_QSize)), *static_cast<QSize*>(qt6rb::unwrap_ref(argv[1], &cls_QSize)));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QResizeEvent#initialize (%d)", argc);
+}
+static VALUE rb_QResizeEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QResizeEvent); }
+
+static VALUE rb_QResizeEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QResizeEvent* o = static_cast<QResizeEvent*>(qt6rb::unwrap(self, &cls_QResizeEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QResizeEvent*>(o) ? o->QResizeEvent::clone() : o->clone())), &cls_QResizeEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QResizeEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QResizeEvent_size(int argc, VALUE* argv, VALUE self) {
+  QResizeEvent* o = static_cast<QResizeEvent*>(qt6rb::unwrap(self, &cls_QResizeEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->size()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QResizeEvent#size (%d)", argc);
+}
+
+static VALUE rb_QResizeEvent_old_size(int argc, VALUE* argv, VALUE self) {
+  QResizeEvent* o = static_cast<QResizeEvent*>(qt6rb::unwrap(self, &cls_QResizeEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->oldSize()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QResizeEvent#old_size (%d)", argc);
+}
+
+static VALUE rb_QPaintEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 1) {
+    Rb_QPaintEvent* p = new Rb_QPaintEvent(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEvent#initialize (%d)", argc);
+}
+static VALUE rb_QPaintEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QPaintEvent); }
+
+static VALUE rb_QPaintEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QPaintEvent* o = static_cast<QPaintEvent*>(qt6rb::unwrap(self, &cls_QPaintEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QPaintEvent*>(o) ? o->QPaintEvent::clone() : o->clone())), &cls_QPaintEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QPaintEvent_rect(int argc, VALUE* argv, VALUE self) {
+  QPaintEvent* o = static_cast<QPaintEvent*>(qt6rb::unwrap(self, &cls_QPaintEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->rect()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEvent#rect (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 3) {
+    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 4) {
+    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), qt6rb::to_qstring(argv[3]));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 5) {
+    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), qt6rb::to_qstring(argv[3]), RTEST(argv[4]));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 6) {
+    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), qt6rb::to_qstring(argv[3]), RTEST(argv[4]), NUM2USHORT(argv[5]));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#initialize (%d)", argc);
+}
+static VALUE rb_QKeyEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QKeyEvent); }
+
+static VALUE rb_QKeyEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QKeyEvent*>(o) ? o->QKeyEvent::clone() : o->clone())), &cls_QKeyEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_key(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->key());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#key (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_matches(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->matches(static_cast<QKeySequence::StandardKey>(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#matches (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_modifiers(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM((o->modifiers()).toInt());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#modifiers (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_text(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->text());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#text (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_is_auto_repeat(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isAutoRepeat()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#is_auto_repeat (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_count(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->count());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#count (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_native_scan_code(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return UINT2NUM(o->nativeScanCode());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#native_scan_code (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_native_virtual_key(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return UINT2NUM(o->nativeVirtualKey());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#native_virtual_key (%d)", argc);
+}
+
+static VALUE rb_QKeyEvent_native_modifiers(int argc, VALUE* argv, VALUE self) {
+  QKeyEvent* o = static_cast<QKeyEvent*>(qt6rb::unwrap(self, &cls_QKeyEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return UINT2NUM(o->nativeModifiers());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#native_modifiers (%d)", argc);
+}
+
+static VALUE rb_QFocusEvent_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 1) {
+    Rb_QFocusEvent* p = new Rb_QFocusEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 2) {
+    Rb_QFocusEvent* p = new Rb_QFocusEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), static_cast<Qt::FocusReason>(NUM2INT(argv[1])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFocusEvent#initialize (%d)", argc);
+}
+static VALUE rb_QFocusEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QFocusEvent); }
+
+static VALUE rb_QFocusEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QFocusEvent* o = static_cast<QFocusEvent*>(qt6rb::unwrap(self, &cls_QFocusEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QFocusEvent*>(o) ? o->QFocusEvent::clone() : o->clone())), &cls_QFocusEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFocusEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QFocusEvent_got_focus(int argc, VALUE* argv, VALUE self) {
+  QFocusEvent* o = static_cast<QFocusEvent*>(qt6rb::unwrap(self, &cls_QFocusEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->gotFocus()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFocusEvent#got_focus (%d)", argc);
+}
+
+static VALUE rb_QFocusEvent_lost_focus(int argc, VALUE* argv, VALUE self) {
+  QFocusEvent* o = static_cast<QFocusEvent*>(qt6rb::unwrap(self, &cls_QFocusEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->lostFocus()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFocusEvent#lost_focus (%d)", argc);
+}
+
+static VALUE rb_QFocusEvent_reason(int argc, VALUE* argv, VALUE self) {
+  QFocusEvent* o = static_cast<QFocusEvent*>(qt6rb::unwrap(self, &cls_QFocusEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->reason()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFocusEvent#reason (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->clone()), &cls_QEnterEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_pos(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPoint(o->pos()), &cls_QPoint, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#pos (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_global_pos(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPoint(o->globalPos()), &cls_QPoint, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#global_pos (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_x(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->x());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#x (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_y(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->y());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#y (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_global_x(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->globalX());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#global_x (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_global_y(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->globalY());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#global_y (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_local_pos(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->localPos()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#local_pos (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_window_pos(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->windowPos()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#window_pos (%d)", argc);
+}
+
+static VALUE rb_QEnterEvent_screen_pos(int argc, VALUE* argv, VALUE self) {
+  QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->screenPos()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#screen_pos (%d)", argc);
 }
 
 static VALUE rb_QPaintDevice_dev_type(int argc, VALUE* argv, VALUE self) {
@@ -7272,19 +15387,29 @@ static VALUE rb_QPaintDevice_s_encode_metric_f(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#encode_metric_f (%d)", argc);
 }
 
-static VALUE rb_QFrame_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QFrame_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QFrame(), &cls_QFrame);
+    Rb_QFrame* p = new Rb_QFrame();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QFrame(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QFrame);
+    Rb_QFrame* p = new Rb_QFrame(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 2) {
-    return qt6rb::wrap_qobject(new QFrame(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1]))), &cls_QFrame);
+    Rb_QFrame* p = new Rb_QFrame(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1])));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#initialize (%d)", argc);
 }
+static VALUE rb_QFrame_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QFrame); }
 
 static VALUE rb_QFrame_frame_style(int argc, VALUE* argv, VALUE self) {
   QFrame* o = static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame));
@@ -7318,7 +15443,7 @@ static VALUE rb_QFrame_size_hint(int argc, VALUE* argv, VALUE self) {
   QFrame* o = static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QFrame*>(o) ? o->QFrame::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFrame#size_hint (%d)", argc);
 }
@@ -7424,6 +15549,222 @@ static VALUE rb_QFrame_s_tr(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(QFrame::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFrame#tr (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#paint_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#change_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#enter_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#leave_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#move_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#resize_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#close_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#show_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#hide_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#metric (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#redirected (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#timer_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#child_event (%d)", argc);
+}
+
+static VALUE rb_QFrame_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#custom_event (%d)", argc);
 }
 
 static VALUE rb_QAbstractButton_set_text(int argc, VALUE* argv, VALUE self) {
@@ -7677,16 +16018,23 @@ static VALUE rb_QAbstractButton_on_toggled(VALUE self) {
   return self;
 }
 
-static VALUE rb_QAbstractScrollArea_s_new(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
+static VALUE rb_QAbstractScrollArea_initialize(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
   if (argc == 0) {
-    return qt6rb::wrap_qobject(new QAbstractScrollArea(), &cls_QAbstractScrollArea);
+    Rb_QAbstractScrollArea* p = new Rb_QAbstractScrollArea();
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
   if (argc == 1) {
-    return qt6rb::wrap_qobject(new QAbstractScrollArea(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))), &cls_QAbstractScrollArea);
+    Rb_QAbstractScrollArea* p = new Rb_QAbstractScrollArea(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    qt6rb::attach(self, p, false);
+    p->qt6rb_set_self(self);
+    return self;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#new (%d)", argc);
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#initialize (%d)", argc);
 }
+static VALUE rb_QAbstractScrollArea_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QAbstractScrollArea); }
 
 static VALUE rb_QAbstractScrollArea_vertical_scroll_bar_policy(int argc, VALUE* argv, VALUE self) {
   QAbstractScrollArea* o = static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea));
@@ -7730,7 +16078,7 @@ static VALUE rb_QAbstractScrollArea_corner_widget(int argc, VALUE* argv, VALUE s
   QAbstractScrollArea* o = static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->cornerWidget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->cornerWidget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#corner_widget (%d)", argc);
 }
@@ -7759,7 +16107,7 @@ static VALUE rb_QAbstractScrollArea_viewport(int argc, VALUE* argv, VALUE self) 
   QAbstractScrollArea* o = static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->viewport()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->viewport()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#viewport (%d)", argc);
 }
@@ -7787,7 +16135,7 @@ static VALUE rb_QAbstractScrollArea_minimum_size_hint(int argc, VALUE* argv, VAL
   QAbstractScrollArea* o = static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->minimumSizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QAbstractScrollArea*>(o) ? o->QAbstractScrollArea::minimumSizeHint() : o->minimumSizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#minimum_size_hint (%d)", argc);
 }
@@ -7796,7 +16144,7 @@ static VALUE rb_QAbstractScrollArea_size_hint(int argc, VALUE* argv, VALUE self)
   QAbstractScrollArea* o = static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
+    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QAbstractScrollArea*>(o) ? o->QAbstractScrollArea::sizeHint() : o->sizeHint())), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#size_hint (%d)", argc);
 }
@@ -7805,7 +16153,7 @@ static VALUE rb_QAbstractScrollArea_setup_viewport(int argc, VALUE* argv, VALUE 
   QAbstractScrollArea* o = static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setupViewport(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget)));
+    (dynamic_cast<Rb_QAbstractScrollArea*>(o) ? o->QAbstractScrollArea::setupViewport(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))) : o->setupViewport(static_cast<QWidget*>(qt6rb::unwrap(argv[0], &cls_QWidget))));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#setup_viewport (%d)", argc);
@@ -7836,6 +16184,263 @@ static VALUE rb_QAbstractScrollArea_s_tr(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(QAbstractScrollArea::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#tr (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_event_filter(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "event_filter is protected; only callable on Ruby-created instances");
+  if (argc == 2) {
+    return (shim->qt6rb_base_eventFilter(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject)), static_cast<QEvent*>(qt6rb::unwrap(argv[1], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#event_filter (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_event(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_viewport_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "viewport_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_viewportEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#viewport_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_resize_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "resize_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_resizeEvent(static_cast<QResizeEvent*>(qt6rb::unwrap(argv[0], &cls_QResizeEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#resize_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_paint_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "paint_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_paintEvent(static_cast<QPaintEvent*>(qt6rb::unwrap(argv[0], &cls_QPaintEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#paint_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "key_press_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyPressEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#key_press_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_scroll_contents_by(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "scroll_contents_by is protected; only callable on Ruby-created instances");
+  if (argc == 2) {
+    shim->qt6rb_base_scrollContentsBy(NUM2INT(argv[0]), NUM2INT(argv[1]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#scroll_contents_by (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_viewport_size_hint(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "viewport_size_hint is protected; only callable on Ruby-created instances");
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(shim->qt6rb_base_viewportSizeHint()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#viewport_size_hint (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_change_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "change_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_changeEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#change_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_key_release_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "key_release_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_keyReleaseEvent(static_cast<QKeyEvent*>(qt6rb::unwrap(argv[0], &cls_QKeyEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#key_release_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_focus_in_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_in_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusInEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#focus_in_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_focus_out_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_out_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_focusOutEvent(static_cast<QFocusEvent*>(qt6rb::unwrap(argv[0], &cls_QFocusEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#focus_out_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_enter_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "enter_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_enterEvent(static_cast<QEnterEvent*>(qt6rb::unwrap(argv[0], &cls_QEnterEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#enter_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_leave_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "leave_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_leaveEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#leave_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_move_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "move_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_moveEvent(static_cast<QMoveEvent*>(qt6rb::unwrap(argv[0], &cls_QMoveEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#move_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_close_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "close_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_closeEvent(static_cast<QCloseEvent*>(qt6rb::unwrap(argv[0], &cls_QCloseEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#close_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_show_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "show_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_showEvent(static_cast<QShowEvent*>(qt6rb::unwrap(argv[0], &cls_QShowEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#show_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_hide_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "hide_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_hideEvent(static_cast<QHideEvent*>(qt6rb::unwrap(argv[0], &cls_QHideEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#hide_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_metric(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "metric is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return INT2NUM(shim->qt6rb_base_metric(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#metric (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_redirected(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "redirected is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return qt6rb::wrap((void*)(shim->qt6rb_base_redirected(static_cast<QPoint*>(qt6rb::unwrap(argv[0], &cls_QPoint)))), &cls_QPaintDevice, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#redirected (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_focus_next_prev_child(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "focus_next_prev_child is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    return (shim->qt6rb_base_focusNextPrevChild(RTEST(argv[0]))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#focus_next_prev_child (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_timer_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "timer_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_timerEvent(static_cast<QTimerEvent*>(qt6rb::unwrap(argv[0], &cls_QTimerEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#timer_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_child_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "child_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_childEvent(static_cast<QChildEvent*>(qt6rb::unwrap(argv[0], &cls_QChildEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#child_event (%d)", argc);
+}
+
+static VALUE rb_QAbstractScrollArea_prot_custom_event(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
+  if (!shim) rb_raise(rb_eTypeError, "custom_event is protected; only callable on Ruby-created instances");
+  if (argc == 1) {
+    shim->qt6rb_base_customEvent(static_cast<QEvent*>(qt6rb::unwrap(argv[0], &cls_QEvent)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#custom_event (%d)", argc);
 }
 
 static VALUE rb_QLayoutItem_has_height_for_width(int argc, VALUE* argv, VALUE self) {
@@ -7879,7 +16484,7 @@ static VALUE rb_QLayoutItem_widget(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->widget()), &cls_QWidget);
+    return qt6rb::wrap_qobject((QObject*)(o->widget()), &cls_QWidget);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#widget (%d)", argc);
 }
@@ -7888,7 +16493,7 @@ static VALUE rb_QLayoutItem_layout(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap_qobject((o->layout()), &cls_QLayout);
+    return qt6rb::wrap_qobject((QObject*)(o->layout()), &cls_QLayout);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#layout (%d)", argc);
 }
@@ -7921,56 +16526,322 @@ static VALUE rb_QLayoutItem_control_types(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#control_types (%d)", argc);
 }
 
+static VALUE rb_QInputEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QInputEvent* o = static_cast<QInputEvent*>(qt6rb::unwrap(self, &cls_QInputEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->clone()), &cls_QInputEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QInputEvent_device_type(int argc, VALUE* argv, VALUE self) {
+  QInputEvent* o = static_cast<QInputEvent*>(qt6rb::unwrap(self, &cls_QInputEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->deviceType()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#device_type (%d)", argc);
+}
+
+static VALUE rb_QInputEvent_modifiers(int argc, VALUE* argv, VALUE self) {
+  QInputEvent* o = static_cast<QInputEvent*>(qt6rb::unwrap(self, &cls_QInputEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM((o->modifiers()).toInt());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#modifiers (%d)", argc);
+}
+
+static VALUE rb_QInputEvent_set_modifiers(int argc, VALUE* argv, VALUE self) {
+  QInputEvent* o = static_cast<QInputEvent*>(qt6rb::unwrap(self, &cls_QInputEvent));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setModifiers(QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[0])));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#set_modifiers (%d)", argc);
+}
+
+static VALUE rb_QInputEvent_timestamp(int argc, VALUE* argv, VALUE self) {
+  QInputEvent* o = static_cast<QInputEvent*>(qt6rb::unwrap(self, &cls_QInputEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return ULL2NUM(o->timestamp());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#timestamp (%d)", argc);
+}
+
+static VALUE rb_QInputEvent_set_timestamp(int argc, VALUE* argv, VALUE self) {
+  QInputEvent* o = static_cast<QInputEvent*>(qt6rb::unwrap(self, &cls_QInputEvent));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setTimestamp(NUM2ULL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#set_timestamp (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->qt_check_for_QGADGET_macro();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#qt_check_for_qgadget_macro (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->clone()), &cls_QSinglePointEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_button(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->button()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#button (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_buttons(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM((o->buttons()).toInt());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#buttons (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_position(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->position()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#position (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_scene_position(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->scenePosition()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#scene_position (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_global_position(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPointF(o->globalPosition()), &cls_QPointF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#global_position (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_is_begin_event(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isBeginEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#is_begin_event (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_is_update_event(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isUpdateEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#is_update_event (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_is_end_event(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isEndEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#is_end_event (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_exclusive_point_grabber(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->exclusivePointGrabber()), &cls_QObject);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#exclusive_point_grabber (%d)", argc);
+}
+
+static VALUE rb_QSinglePointEvent_set_exclusive_point_grabber(int argc, VALUE* argv, VALUE self) {
+  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setExclusivePointGrabber(static_cast<QObject*>(qt6rb::unwrap(argv[0], &cls_QObject)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#set_exclusive_point_grabber (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    o->qt_check_for_QGADGET_macro();
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#qt_check_for_qgadget_macro (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_clone(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap((void*)(o->clone()), &cls_QPointerEvent, false);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#clone (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_pointer_type(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->pointerType()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#pointer_type (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_set_timestamp(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setTimestamp(NUM2ULL(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#set_timestamp (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_point_count(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return LL2NUM(o->pointCount());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#point_count (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_all_points_grabbed(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->allPointsGrabbed()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#all_points_grabbed (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_is_begin_event(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isBeginEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#is_begin_event (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_is_update_event(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isUpdateEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#is_update_event (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_is_end_event(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->isEndEvent()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#is_end_event (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_all_points_accepted(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->allPointsAccepted()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#all_points_accepted (%d)", argc);
+}
+
+static VALUE rb_QPointerEvent_set_accepted(int argc, VALUE* argv, VALUE self) {
+  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setAccepted(RTEST(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#set_accepted (%d)", argc);
+}
+
 extern "C" void Init_qt6() {
   VALUE mQt = qt6rb::module_qt();
   qt6rb::init_core(mQt);
   qt6rb::define_class(&cls_QObject, "Object", Qnil);
-  rb_undef_alloc_func(cls_QObject.rb_class);
   qt6rb::define_class(&cls_QTimer, "Timer", cls_QObject.rb_class);
-  rb_undef_alloc_func(cls_QTimer.rb_class);
   qt6rb::define_class(&cls_QPaintDevice, "PaintDevice", Qnil);
-  rb_undef_alloc_func(cls_QPaintDevice.rb_class);
   qt6rb::define_class(&cls_QWidget, "Widget", cls_QObject.rb_class);
-  rb_undef_alloc_func(cls_QWidget.rb_class);
   qt6rb::define_class(&cls_QFrame, "Frame", cls_QWidget.rb_class);
-  rb_undef_alloc_func(cls_QFrame.rb_class);
   qt6rb::define_class(&cls_QLabel, "Label", cls_QFrame.rb_class);
-  rb_undef_alloc_func(cls_QLabel.rb_class);
   qt6rb::define_class(&cls_QAbstractButton, "AbstractButton", cls_QWidget.rb_class);
-  rb_undef_alloc_func(cls_QAbstractButton.rb_class);
   qt6rb::define_class(&cls_QPushButton, "PushButton", cls_QAbstractButton.rb_class);
-  rb_undef_alloc_func(cls_QPushButton.rb_class);
   qt6rb::define_class(&cls_QCheckBox, "CheckBox", cls_QAbstractButton.rb_class);
-  rb_undef_alloc_func(cls_QCheckBox.rb_class);
   qt6rb::define_class(&cls_QComboBox, "ComboBox", cls_QWidget.rb_class);
-  rb_undef_alloc_func(cls_QComboBox.rb_class);
   qt6rb::define_class(&cls_QLineEdit, "LineEdit", cls_QWidget.rb_class);
-  rb_undef_alloc_func(cls_QLineEdit.rb_class);
   qt6rb::define_class(&cls_QAbstractScrollArea, "AbstractScrollArea", cls_QFrame.rb_class);
-  rb_undef_alloc_func(cls_QAbstractScrollArea.rb_class);
   qt6rb::define_class(&cls_QTextEdit, "TextEdit", cls_QAbstractScrollArea.rb_class);
-  rb_undef_alloc_func(cls_QTextEdit.rb_class);
   qt6rb::define_class(&cls_QMainWindow, "MainWindow", cls_QWidget.rb_class);
-  rb_undef_alloc_func(cls_QMainWindow.rb_class);
   qt6rb::define_class(&cls_QLayoutItem, "LayoutItem", Qnil);
-  rb_undef_alloc_func(cls_QLayoutItem.rb_class);
   qt6rb::define_class(&cls_QLayout, "Layout", cls_QObject.rb_class);
-  rb_undef_alloc_func(cls_QLayout.rb_class);
   qt6rb::define_class(&cls_QBoxLayout, "BoxLayout", cls_QLayout.rb_class);
-  rb_undef_alloc_func(cls_QBoxLayout.rb_class);
   qt6rb::define_class(&cls_QVBoxLayout, "VBoxLayout", cls_QBoxLayout.rb_class);
-  rb_undef_alloc_func(cls_QVBoxLayout.rb_class);
   qt6rb::define_class(&cls_QHBoxLayout, "HBoxLayout", cls_QBoxLayout.rb_class);
-  rb_undef_alloc_func(cls_QHBoxLayout.rb_class);
   qt6rb::define_class(&cls_QGridLayout, "GridLayout", cls_QLayout.rb_class);
-  rb_undef_alloc_func(cls_QGridLayout.rb_class);
   qt6rb::define_class(&cls_QSize, "Size", Qnil);
-  rb_undef_alloc_func(cls_QSize.rb_class);
   qt6rb::define_class(&cls_QPoint, "Point", Qnil);
-  rb_undef_alloc_func(cls_QPoint.rb_class);
   qt6rb::define_class(&cls_QRect, "Rect", Qnil);
-  rb_undef_alloc_func(cls_QRect.rb_class);
-  rb_define_singleton_method(cls_QObject.rb_class, "new", RUBY_METHOD_FUNC(rb_QObject_s_new), -1);
+  qt6rb::define_class(&cls_QPointF, "PointF", Qnil);
+  qt6rb::define_class(&cls_QSizeF, "SizeF", Qnil);
+  qt6rb::define_class(&cls_QRectF, "RectF", Qnil);
+  qt6rb::define_class(&cls_QEvent, "Event", Qnil);
+  qt6rb::define_class(&cls_QTimerEvent, "TimerEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QChildEvent, "ChildEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QCloseEvent, "CloseEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QShowEvent, "ShowEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QHideEvent, "HideEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QMoveEvent, "MoveEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QResizeEvent, "ResizeEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QPaintEvent, "PaintEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QInputEvent, "InputEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QKeyEvent, "KeyEvent", cls_QInputEvent.rb_class);
+  qt6rb::define_class(&cls_QFocusEvent, "FocusEvent", cls_QEvent.rb_class);
+  qt6rb::define_class(&cls_QPointerEvent, "PointerEvent", cls_QInputEvent.rb_class);
+  qt6rb::define_class(&cls_QSinglePointEvent, "SinglePointEvent", cls_QPointerEvent.rb_class);
+  qt6rb::define_class(&cls_QEnterEvent, "EnterEvent", cls_QSinglePointEvent.rb_class);
+  rb_define_alloc_func(cls_QObject.rb_class, rb_QObject_alloc);
+  rb_define_method(cls_QObject.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QObject_initialize), -1);
+  rb_define_method(cls_QObject.rb_class, "event", RUBY_METHOD_FUNC(rb_QObject_event), -1);
+  rb_define_method(cls_QObject.rb_class, "event_filter", RUBY_METHOD_FUNC(rb_QObject_event_filter), -1);
   rb_define_method(cls_QObject.rb_class, "object_name", RUBY_METHOD_FUNC(rb_QObject_object_name), -1);
   rb_define_method(cls_QObject.rb_class, "is_widget_type", RUBY_METHOD_FUNC(rb_QObject_is_widget_type), -1);
   rb_define_alias(cls_QObject.rb_class, "widget_type?", "is_widget_type");
@@ -7999,9 +16870,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QObject.rb_class, "delete_later", RUBY_METHOD_FUNC(rb_QObject_delete_later), -1);
   rb_define_singleton_method(cls_QObject.rb_class, "tr", RUBY_METHOD_FUNC(rb_QObject_s_tr), -1);
   rb_define_singleton_method(cls_QObject.rb_class, "disconnect", RUBY_METHOD_FUNC(rb_QObject_s_disconnect), -1);
+  rb_define_method(cls_QObject.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QObject_prot_timer_event), -1);
+  rb_define_method(cls_QObject.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QObject_prot_child_event), -1);
+  rb_define_method(cls_QObject.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QObject_prot_custom_event), -1);
   rb_define_method(cls_QObject.rb_class, "on_destroyed", RUBY_METHOD_FUNC(rb_QObject_on_destroyed), 0);
   rb_define_method(cls_QObject.rb_class, "on_object_name_changed", RUBY_METHOD_FUNC(rb_QObject_on_object_name_changed), 0);
-  rb_define_singleton_method(cls_QTimer.rb_class, "new", RUBY_METHOD_FUNC(rb_QTimer_s_new), -1);
+  rb_define_alloc_func(cls_QTimer.rb_class, rb_QTimer_alloc);
+  rb_define_method(cls_QTimer.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QTimer_initialize), -1);
   rb_define_method(cls_QTimer.rb_class, "is_active", RUBY_METHOD_FUNC(rb_QTimer_is_active), -1);
   rb_define_alias(cls_QTimer.rb_class, "active?", "is_active");
   rb_define_method(cls_QTimer.rb_class, "timer_id", RUBY_METHOD_FUNC(rb_QTimer_timer_id), -1);
@@ -8021,8 +16896,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTimer.rb_class, "stop", RUBY_METHOD_FUNC(rb_QTimer_stop), -1);
   rb_define_singleton_method(cls_QTimer.rb_class, "tr", RUBY_METHOD_FUNC(rb_QTimer_s_tr), -1);
   rb_define_singleton_method(cls_QTimer.rb_class, "single_shot", RUBY_METHOD_FUNC(rb_QTimer_s_single_shot), -1);
+  rb_define_method(cls_QTimer.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QTimer_prot_timer_event), -1);
+  rb_define_method(cls_QTimer.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QTimer_prot_child_event), -1);
+  rb_define_method(cls_QTimer.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTimer_prot_custom_event), -1);
   rb_define_method(cls_QTimer.rb_class, "on_timeout", RUBY_METHOD_FUNC(rb_QTimer_on_timeout), 0);
-  rb_define_singleton_method(cls_QWidget.rb_class, "new", RUBY_METHOD_FUNC(rb_QWidget_s_new), -1);
+  rb_define_alloc_func(cls_QWidget.rb_class, rb_QWidget_alloc);
+  rb_define_method(cls_QWidget.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QWidget_initialize), -1);
   rb_define_method(cls_QWidget.rb_class, "dev_type", RUBY_METHOD_FUNC(rb_QWidget_dev_type), -1);
   rb_define_method(cls_QWidget.rb_class, "win_id", RUBY_METHOD_FUNC(rb_QWidget_win_id), -1);
   rb_define_method(cls_QWidget.rb_class, "create_win_id", RUBY_METHOD_FUNC(rb_QWidget_create_win_id), -1);
@@ -8278,10 +17157,31 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QWidget.rb_class, "mouse_grabber", RUBY_METHOD_FUNC(rb_QWidget_s_mouse_grabber), -1);
   rb_define_singleton_method(cls_QWidget.rb_class, "keyboard_grabber", RUBY_METHOD_FUNC(rb_QWidget_s_keyboard_grabber), -1);
   rb_define_singleton_method(cls_QWidget.rb_class, "find", RUBY_METHOD_FUNC(rb_QWidget_s_find), -1);
+  rb_define_method(cls_QWidget.rb_class, "event", RUBY_METHOD_FUNC(rb_QWidget_prot_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QWidget_prot_key_press_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QWidget_prot_key_release_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QWidget_prot_focus_in_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QWidget_prot_focus_out_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QWidget_prot_enter_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QWidget_prot_leave_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QWidget_prot_paint_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QWidget_prot_move_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QWidget_prot_resize_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QWidget_prot_close_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QWidget_prot_show_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QWidget_prot_hide_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QWidget_prot_change_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "metric", RUBY_METHOD_FUNC(rb_QWidget_prot_metric), -1);
+  rb_define_method(cls_QWidget.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QWidget_prot_redirected), -1);
+  rb_define_method(cls_QWidget.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QWidget_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QWidget.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QWidget_prot_timer_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QWidget_prot_child_event), -1);
+  rb_define_method(cls_QWidget.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QWidget_prot_custom_event), -1);
   rb_define_method(cls_QWidget.rb_class, "on_window_title_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_title_changed), 0);
   rb_define_method(cls_QWidget.rb_class, "on_window_icon_text_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_icon_text_changed), 0);
   rb_define_method(cls_QWidget.rb_class, "on_custom_context_menu_requested", RUBY_METHOD_FUNC(rb_QWidget_on_custom_context_menu_requested), 0);
-  rb_define_singleton_method(cls_QLabel.rb_class, "new", RUBY_METHOD_FUNC(rb_QLabel_s_new), -1);
+  rb_define_alloc_func(cls_QLabel.rb_class, rb_QLabel_alloc);
+  rb_define_method(cls_QLabel.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QLabel_initialize), -1);
   rb_define_method(cls_QLabel.rb_class, "text", RUBY_METHOD_FUNC(rb_QLabel_text), -1);
   rb_define_method(cls_QLabel.rb_class, "text_format", RUBY_METHOD_FUNC(rb_QLabel_text_format), -1);
   rb_define_method(cls_QLabel.rb_class, "set_text_format", RUBY_METHOD_FUNC(rb_QLabel_set_text_format), -1);
@@ -8324,9 +17224,30 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QLabel.rb_class, "num=", "set_num");
   rb_define_method(cls_QLabel.rb_class, "clear", RUBY_METHOD_FUNC(rb_QLabel_clear), -1);
   rb_define_singleton_method(cls_QLabel.rb_class, "tr", RUBY_METHOD_FUNC(rb_QLabel_s_tr), -1);
+  rb_define_method(cls_QLabel.rb_class, "event", RUBY_METHOD_FUNC(rb_QLabel_prot_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QLabel_prot_key_press_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QLabel_prot_paint_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QLabel_prot_change_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QLabel_prot_focus_in_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QLabel_prot_focus_out_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QLabel_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QLabel.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QLabel_prot_key_release_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QLabel_prot_enter_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QLabel_prot_leave_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QLabel_prot_move_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QLabel_prot_resize_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QLabel_prot_close_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QLabel_prot_show_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QLabel_prot_hide_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "metric", RUBY_METHOD_FUNC(rb_QLabel_prot_metric), -1);
+  rb_define_method(cls_QLabel.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QLabel_prot_redirected), -1);
+  rb_define_method(cls_QLabel.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QLabel_prot_timer_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QLabel_prot_child_event), -1);
+  rb_define_method(cls_QLabel.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QLabel_prot_custom_event), -1);
   rb_define_method(cls_QLabel.rb_class, "on_link_activated", RUBY_METHOD_FUNC(rb_QLabel_on_link_activated), 0);
   rb_define_method(cls_QLabel.rb_class, "on_link_hovered", RUBY_METHOD_FUNC(rb_QLabel_on_link_hovered), 0);
-  rb_define_singleton_method(cls_QPushButton.rb_class, "new", RUBY_METHOD_FUNC(rb_QPushButton_s_new), -1);
+  rb_define_alloc_func(cls_QPushButton.rb_class, rb_QPushButton_alloc);
+  rb_define_method(cls_QPushButton.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QPushButton_initialize), -1);
   rb_define_method(cls_QPushButton.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QPushButton_size_hint), -1);
   rb_define_method(cls_QPushButton.rb_class, "minimum_size_hint", RUBY_METHOD_FUNC(rb_QPushButton_minimum_size_hint), -1);
   rb_define_method(cls_QPushButton.rb_class, "auto_default", RUBY_METHOD_FUNC(rb_QPushButton_auto_default), -1);
@@ -8342,7 +17263,31 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QPushButton.rb_class, "flat?", "is_flat");
   rb_define_method(cls_QPushButton.rb_class, "show_menu", RUBY_METHOD_FUNC(rb_QPushButton_show_menu), -1);
   rb_define_singleton_method(cls_QPushButton.rb_class, "tr", RUBY_METHOD_FUNC(rb_QPushButton_s_tr), -1);
-  rb_define_singleton_method(cls_QCheckBox.rb_class, "new", RUBY_METHOD_FUNC(rb_QCheckBox_s_new), -1);
+  rb_define_method(cls_QPushButton.rb_class, "event", RUBY_METHOD_FUNC(rb_QPushButton_prot_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_paint_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_key_press_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_focus_in_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_focus_out_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "hit_button", RUBY_METHOD_FUNC(rb_QPushButton_prot_hit_button), -1);
+  rb_define_method(cls_QPushButton.rb_class, "check_state_set", RUBY_METHOD_FUNC(rb_QPushButton_prot_check_state_set), -1);
+  rb_define_method(cls_QPushButton.rb_class, "next_check_state", RUBY_METHOD_FUNC(rb_QPushButton_prot_next_check_state), -1);
+  rb_define_method(cls_QPushButton.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_key_release_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_change_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_timer_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_enter_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_leave_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_move_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_resize_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_close_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_show_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_hide_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "metric", RUBY_METHOD_FUNC(rb_QPushButton_prot_metric), -1);
+  rb_define_method(cls_QPushButton.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QPushButton_prot_redirected), -1);
+  rb_define_method(cls_QPushButton.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QPushButton_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QPushButton.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_child_event), -1);
+  rb_define_method(cls_QPushButton.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QPushButton_prot_custom_event), -1);
+  rb_define_alloc_func(cls_QCheckBox.rb_class, rb_QCheckBox_alloc);
+  rb_define_method(cls_QCheckBox.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QCheckBox_initialize), -1);
   rb_define_method(cls_QCheckBox.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QCheckBox_size_hint), -1);
   rb_define_method(cls_QCheckBox.rb_class, "minimum_size_hint", RUBY_METHOD_FUNC(rb_QCheckBox_minimum_size_hint), -1);
   rb_define_method(cls_QCheckBox.rb_class, "set_tristate", RUBY_METHOD_FUNC(rb_QCheckBox_set_tristate), -1);
@@ -8353,9 +17298,33 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCheckBox.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QCheckBox_set_check_state), -1);
   rb_define_alias(cls_QCheckBox.rb_class, "check_state=", "set_check_state");
   rb_define_singleton_method(cls_QCheckBox.rb_class, "tr", RUBY_METHOD_FUNC(rb_QCheckBox_s_tr), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "hit_button", RUBY_METHOD_FUNC(rb_QCheckBox_prot_hit_button), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "check_state_set", RUBY_METHOD_FUNC(rb_QCheckBox_prot_check_state_set), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "next_check_state", RUBY_METHOD_FUNC(rb_QCheckBox_prot_next_check_state), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_paint_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_key_press_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_key_release_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_focus_in_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_focus_out_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_change_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_timer_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_enter_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_leave_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_move_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_resize_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_close_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_show_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_hide_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "metric", RUBY_METHOD_FUNC(rb_QCheckBox_prot_metric), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QCheckBox_prot_redirected), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QCheckBox_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_child_event), -1);
+  rb_define_method(cls_QCheckBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_custom_event), -1);
   rb_define_method(cls_QCheckBox.rb_class, "on_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_state_changed), 0);
   rb_define_method(cls_QCheckBox.rb_class, "on_check_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_check_state_changed), 0);
-  rb_define_singleton_method(cls_QComboBox.rb_class, "new", RUBY_METHOD_FUNC(rb_QComboBox_s_new), -1);
+  rb_define_alloc_func(cls_QComboBox.rb_class, rb_QComboBox_alloc);
+  rb_define_method(cls_QComboBox.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QComboBox_initialize), -1);
   rb_define_method(cls_QComboBox.rb_class, "max_visible_items", RUBY_METHOD_FUNC(rb_QComboBox_max_visible_items), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_max_visible_items", RUBY_METHOD_FUNC(rb_QComboBox_set_max_visible_items), -1);
   rb_define_alias(cls_QComboBox.rb_class, "max_visible_items=", "set_max_visible_items");
@@ -8418,6 +17387,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "minimum_size_hint", RUBY_METHOD_FUNC(rb_QComboBox_minimum_size_hint), -1);
   rb_define_method(cls_QComboBox.rb_class, "show_popup", RUBY_METHOD_FUNC(rb_QComboBox_show_popup), -1);
   rb_define_method(cls_QComboBox.rb_class, "hide_popup", RUBY_METHOD_FUNC(rb_QComboBox_hide_popup), -1);
+  rb_define_method(cls_QComboBox.rb_class, "event", RUBY_METHOD_FUNC(rb_QComboBox_event), -1);
   rb_define_method(cls_QComboBox.rb_class, "input_method_query", RUBY_METHOD_FUNC(rb_QComboBox_input_method_query), -1);
   rb_define_method(cls_QComboBox.rb_class, "clear", RUBY_METHOD_FUNC(rb_QComboBox_clear), -1);
   rb_define_method(cls_QComboBox.rb_class, "clear_edit_text", RUBY_METHOD_FUNC(rb_QComboBox_clear_edit_text), -1);
@@ -8428,6 +17398,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_current_text", RUBY_METHOD_FUNC(rb_QComboBox_set_current_text), -1);
   rb_define_alias(cls_QComboBox.rb_class, "current_text=", "set_current_text");
   rb_define_singleton_method(cls_QComboBox.rb_class, "tr", RUBY_METHOD_FUNC(rb_QComboBox_s_tr), -1);
+  rb_define_method(cls_QComboBox.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_focus_in_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_focus_out_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_change_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_resize_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_paint_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_show_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_hide_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_key_press_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_key_release_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_enter_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_leave_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_move_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_close_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "metric", RUBY_METHOD_FUNC(rb_QComboBox_prot_metric), -1);
+  rb_define_method(cls_QComboBox.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QComboBox_prot_redirected), -1);
+  rb_define_method(cls_QComboBox.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QComboBox_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QComboBox.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_timer_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_child_event), -1);
+  rb_define_method(cls_QComboBox.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_custom_event), -1);
   rb_define_method(cls_QComboBox.rb_class, "on_edit_text_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_edit_text_changed), 0);
   rb_define_method(cls_QComboBox.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_activated), 0);
   rb_define_method(cls_QComboBox.rb_class, "on_text_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_text_activated), 0);
@@ -8435,7 +17424,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "on_text_highlighted", RUBY_METHOD_FUNC(rb_QComboBox_on_text_highlighted), 0);
   rb_define_method(cls_QComboBox.rb_class, "on_current_index_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_current_index_changed), 0);
   rb_define_method(cls_QComboBox.rb_class, "on_current_text_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_current_text_changed), 0);
-  rb_define_singleton_method(cls_QLineEdit.rb_class, "new", RUBY_METHOD_FUNC(rb_QLineEdit_s_new), -1);
+  rb_define_alloc_func(cls_QLineEdit.rb_class, rb_QLineEdit_alloc);
+  rb_define_method(cls_QLineEdit.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QLineEdit_initialize), -1);
   rb_define_method(cls_QLineEdit.rb_class, "text", RUBY_METHOD_FUNC(rb_QLineEdit_text), -1);
   rb_define_method(cls_QLineEdit.rb_class, "display_text", RUBY_METHOD_FUNC(rb_QLineEdit_display_text), -1);
   rb_define_method(cls_QLineEdit.rb_class, "placeholder_text", RUBY_METHOD_FUNC(rb_QLineEdit_placeholder_text), -1);
@@ -8514,7 +17504,27 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "deselect", RUBY_METHOD_FUNC(rb_QLineEdit_deselect), -1);
   rb_define_method(cls_QLineEdit.rb_class, "insert", RUBY_METHOD_FUNC(rb_QLineEdit_insert), -1);
   rb_define_method(cls_QLineEdit.rb_class, "input_method_query", RUBY_METHOD_FUNC(rb_QLineEdit_input_method_query), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QLineEdit_timer_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "event", RUBY_METHOD_FUNC(rb_QLineEdit_event), -1);
   rb_define_singleton_method(cls_QLineEdit.rb_class, "tr", RUBY_METHOD_FUNC(rb_QLineEdit_s_tr), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_key_press_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_key_release_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_focus_in_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_focus_out_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_paint_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_change_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_enter_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_leave_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_move_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_resize_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_close_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_show_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_hide_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "metric", RUBY_METHOD_FUNC(rb_QLineEdit_prot_metric), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QLineEdit_prot_redirected), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QLineEdit_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_child_event), -1);
+  rb_define_method(cls_QLineEdit.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QLineEdit_prot_custom_event), -1);
   rb_define_method(cls_QLineEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_changed), 0);
   rb_define_method(cls_QLineEdit.rb_class, "on_text_edited", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_edited), 0);
   rb_define_method(cls_QLineEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_cursor_position_changed), 0);
@@ -8522,7 +17532,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "on_editing_finished", RUBY_METHOD_FUNC(rb_QLineEdit_on_editing_finished), 0);
   rb_define_method(cls_QLineEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_selection_changed), 0);
   rb_define_method(cls_QLineEdit.rb_class, "on_input_rejected", RUBY_METHOD_FUNC(rb_QLineEdit_on_input_rejected), 0);
-  rb_define_singleton_method(cls_QTextEdit.rb_class, "new", RUBY_METHOD_FUNC(rb_QTextEdit_s_new), -1);
+  rb_define_alloc_func(cls_QTextEdit.rb_class, rb_QTextEdit_alloc);
+  rb_define_method(cls_QTextEdit.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QTextEdit_initialize), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_placeholder_text", RUBY_METHOD_FUNC(rb_QTextEdit_set_placeholder_text), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "placeholder_text=", "set_placeholder_text");
   rb_define_method(cls_QTextEdit.rb_class, "placeholder_text", RUBY_METHOD_FUNC(rb_QTextEdit_placeholder_text), -1);
@@ -8617,13 +17628,38 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "zoom_in", RUBY_METHOD_FUNC(rb_QTextEdit_zoom_in), -1);
   rb_define_method(cls_QTextEdit.rb_class, "zoom_out", RUBY_METHOD_FUNC(rb_QTextEdit_zoom_out), -1);
   rb_define_singleton_method(cls_QTextEdit.rb_class, "tr", RUBY_METHOD_FUNC(rb_QTextEdit_s_tr), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_timer_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_key_press_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_key_release_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_resize_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_paint_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QTextEdit_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_focus_in_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_focus_out_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_show_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_change_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "scroll_contents_by", RUBY_METHOD_FUNC(rb_QTextEdit_prot_scroll_contents_by), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "event_filter", RUBY_METHOD_FUNC(rb_QTextEdit_prot_event_filter), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "viewport_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_viewport_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "viewport_size_hint", RUBY_METHOD_FUNC(rb_QTextEdit_prot_viewport_size_hint), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_enter_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_leave_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_move_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_close_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_hide_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "metric", RUBY_METHOD_FUNC(rb_QTextEdit_prot_metric), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QTextEdit_prot_redirected), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_child_event), -1);
+  rb_define_method(cls_QTextEdit.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QTextEdit_prot_custom_event), -1);
   rb_define_method(cls_QTextEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_text_changed), 0);
   rb_define_method(cls_QTextEdit.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_undo_available), 0);
   rb_define_method(cls_QTextEdit.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_redo_available), 0);
   rb_define_method(cls_QTextEdit.rb_class, "on_copy_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_copy_available), 0);
   rb_define_method(cls_QTextEdit.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_selection_changed), 0);
   rb_define_method(cls_QTextEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_cursor_position_changed), 0);
-  rb_define_singleton_method(cls_QMainWindow.rb_class, "new", RUBY_METHOD_FUNC(rb_QMainWindow_s_new), -1);
+  rb_define_alloc_func(cls_QMainWindow.rb_class, rb_QMainWindow_alloc);
+  rb_define_method(cls_QMainWindow.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QMainWindow_initialize), -1);
   rb_define_method(cls_QMainWindow.rb_class, "icon_size", RUBY_METHOD_FUNC(rb_QMainWindow_icon_size), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QMainWindow_set_icon_size), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "icon_size=", "set_icon_size");
@@ -8668,8 +17704,29 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMainWindow.rb_class, "set_unified_title_and_tool_bar_on_mac", RUBY_METHOD_FUNC(rb_QMainWindow_set_unified_title_and_tool_bar_on_mac), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "unified_title_and_tool_bar_on_mac=", "set_unified_title_and_tool_bar_on_mac");
   rb_define_singleton_method(cls_QMainWindow.rb_class, "tr", RUBY_METHOD_FUNC(rb_QMainWindow_s_tr), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_key_press_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_key_release_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_focus_in_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_focus_out_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_enter_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_leave_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_paint_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_move_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_resize_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_close_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_show_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_hide_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_change_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "metric", RUBY_METHOD_FUNC(rb_QMainWindow_prot_metric), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QMainWindow_prot_redirected), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QMainWindow_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_timer_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_child_event), -1);
+  rb_define_method(cls_QMainWindow.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_custom_event), -1);
   rb_define_method(cls_QMainWindow.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_icon_size_changed), 0);
   rb_define_method(cls_QMainWindow.rb_class, "on_tool_button_style_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_tool_button_style_changed), 0);
+  rb_undef_alloc_func(cls_QLayout.rb_class);
   rb_define_method(cls_QLayout.rb_class, "spacing", RUBY_METHOD_FUNC(rb_QLayout_spacing), -1);
   rb_define_method(cls_QLayout.rb_class, "set_spacing", RUBY_METHOD_FUNC(rb_QLayout_set_spacing), -1);
   rb_define_alias(cls_QLayout.rb_class, "spacing=", "set_spacing");
@@ -8700,6 +17757,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLayout.rb_class, "update", RUBY_METHOD_FUNC(rb_QLayout_update), -1);
   rb_define_method(cls_QLayout.rb_class, "add_widget", RUBY_METHOD_FUNC(rb_QLayout_add_widget), -1);
   rb_define_method(cls_QLayout.rb_class, "remove_widget", RUBY_METHOD_FUNC(rb_QLayout_remove_widget), -1);
+  rb_define_method(cls_QLayout.rb_class, "remove_item", RUBY_METHOD_FUNC(rb_QLayout_remove_item), -1);
   rb_define_method(cls_QLayout.rb_class, "expanding_directions", RUBY_METHOD_FUNC(rb_QLayout_expanding_directions), -1);
   rb_define_method(cls_QLayout.rb_class, "minimum_size", RUBY_METHOD_FUNC(rb_QLayout_minimum_size), -1);
   rb_define_method(cls_QLayout.rb_class, "maximum_size", RUBY_METHOD_FUNC(rb_QLayout_maximum_size), -1);
@@ -8709,6 +17767,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLayout.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QLayout_is_empty), -1);
   rb_define_alias(cls_QLayout.rb_class, "empty?", "is_empty");
   rb_define_method(cls_QLayout.rb_class, "control_types", RUBY_METHOD_FUNC(rb_QLayout_control_types), -1);
+  rb_define_method(cls_QLayout.rb_class, "replace_widget", RUBY_METHOD_FUNC(rb_QLayout_replace_widget), -1);
   rb_define_method(cls_QLayout.rb_class, "total_minimum_height_for_width", RUBY_METHOD_FUNC(rb_QLayout_total_minimum_height_for_width), -1);
   rb_define_method(cls_QLayout.rb_class, "total_height_for_width", RUBY_METHOD_FUNC(rb_QLayout_total_height_for_width), -1);
   rb_define_method(cls_QLayout.rb_class, "total_minimum_size", RUBY_METHOD_FUNC(rb_QLayout_total_minimum_size), -1);
@@ -8721,7 +17780,8 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QLayout.rb_class, "enabled?", "is_enabled");
   rb_define_singleton_method(cls_QLayout.rb_class, "tr", RUBY_METHOD_FUNC(rb_QLayout_s_tr), -1);
   rb_define_singleton_method(cls_QLayout.rb_class, "closest_acceptable_size", RUBY_METHOD_FUNC(rb_QLayout_s_closest_acceptable_size), -1);
-  rb_define_singleton_method(cls_QBoxLayout.rb_class, "new", RUBY_METHOD_FUNC(rb_QBoxLayout_s_new), -1);
+  rb_define_alloc_func(cls_QBoxLayout.rb_class, rb_QBoxLayout_alloc);
+  rb_define_method(cls_QBoxLayout.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QBoxLayout_initialize), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "direction", RUBY_METHOD_FUNC(rb_QBoxLayout_direction), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "set_direction", RUBY_METHOD_FUNC(rb_QBoxLayout_set_direction), -1);
   rb_define_alias(cls_QBoxLayout.rb_class, "direction=", "set_direction");
@@ -8730,10 +17790,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QBoxLayout.rb_class, "add_widget", RUBY_METHOD_FUNC(rb_QBoxLayout_add_widget), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "add_layout", RUBY_METHOD_FUNC(rb_QBoxLayout_add_layout), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "add_strut", RUBY_METHOD_FUNC(rb_QBoxLayout_add_strut), -1);
+  rb_define_method(cls_QBoxLayout.rb_class, "add_item", RUBY_METHOD_FUNC(rb_QBoxLayout_add_item), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "insert_spacing", RUBY_METHOD_FUNC(rb_QBoxLayout_insert_spacing), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "insert_stretch", RUBY_METHOD_FUNC(rb_QBoxLayout_insert_stretch), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "insert_widget", RUBY_METHOD_FUNC(rb_QBoxLayout_insert_widget), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "insert_layout", RUBY_METHOD_FUNC(rb_QBoxLayout_insert_layout), -1);
+  rb_define_method(cls_QBoxLayout.rb_class, "insert_item", RUBY_METHOD_FUNC(rb_QBoxLayout_insert_item), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "spacing", RUBY_METHOD_FUNC(rb_QBoxLayout_spacing), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "set_spacing", RUBY_METHOD_FUNC(rb_QBoxLayout_set_spacing), -1);
   rb_define_alias(cls_QBoxLayout.rb_class, "spacing=", "set_spacing");
@@ -8750,15 +17812,29 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QBoxLayout.rb_class, "minimum_height_for_width", RUBY_METHOD_FUNC(rb_QBoxLayout_minimum_height_for_width), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "expanding_directions", RUBY_METHOD_FUNC(rb_QBoxLayout_expanding_directions), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "invalidate", RUBY_METHOD_FUNC(rb_QBoxLayout_invalidate), -1);
+  rb_define_method(cls_QBoxLayout.rb_class, "item_at", RUBY_METHOD_FUNC(rb_QBoxLayout_item_at), -1);
+  rb_define_method(cls_QBoxLayout.rb_class, "take_at", RUBY_METHOD_FUNC(rb_QBoxLayout_take_at), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "count", RUBY_METHOD_FUNC(rb_QBoxLayout_count), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "set_geometry", RUBY_METHOD_FUNC(rb_QBoxLayout_set_geometry), -1);
   rb_define_alias(cls_QBoxLayout.rb_class, "geometry=", "set_geometry");
   rb_define_singleton_method(cls_QBoxLayout.rb_class, "tr", RUBY_METHOD_FUNC(rb_QBoxLayout_s_tr), -1);
-  rb_define_singleton_method(cls_QVBoxLayout.rb_class, "new", RUBY_METHOD_FUNC(rb_QVBoxLayout_s_new), -1);
+  rb_define_method(cls_QBoxLayout.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QBoxLayout_prot_child_event), -1);
+  rb_define_method(cls_QBoxLayout.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QBoxLayout_prot_timer_event), -1);
+  rb_define_method(cls_QBoxLayout.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QBoxLayout_prot_custom_event), -1);
+  rb_define_alloc_func(cls_QVBoxLayout.rb_class, rb_QVBoxLayout_alloc);
+  rb_define_method(cls_QVBoxLayout.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QVBoxLayout_initialize), -1);
   rb_define_singleton_method(cls_QVBoxLayout.rb_class, "tr", RUBY_METHOD_FUNC(rb_QVBoxLayout_s_tr), -1);
-  rb_define_singleton_method(cls_QHBoxLayout.rb_class, "new", RUBY_METHOD_FUNC(rb_QHBoxLayout_s_new), -1);
+  rb_define_method(cls_QVBoxLayout.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QVBoxLayout_prot_child_event), -1);
+  rb_define_method(cls_QVBoxLayout.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QVBoxLayout_prot_timer_event), -1);
+  rb_define_method(cls_QVBoxLayout.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QVBoxLayout_prot_custom_event), -1);
+  rb_define_alloc_func(cls_QHBoxLayout.rb_class, rb_QHBoxLayout_alloc);
+  rb_define_method(cls_QHBoxLayout.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QHBoxLayout_initialize), -1);
   rb_define_singleton_method(cls_QHBoxLayout.rb_class, "tr", RUBY_METHOD_FUNC(rb_QHBoxLayout_s_tr), -1);
-  rb_define_singleton_method(cls_QGridLayout.rb_class, "new", RUBY_METHOD_FUNC(rb_QGridLayout_s_new), -1);
+  rb_define_method(cls_QHBoxLayout.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QHBoxLayout_prot_child_event), -1);
+  rb_define_method(cls_QHBoxLayout.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QHBoxLayout_prot_timer_event), -1);
+  rb_define_method(cls_QHBoxLayout.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QHBoxLayout_prot_custom_event), -1);
+  rb_define_alloc_func(cls_QGridLayout.rb_class, rb_QGridLayout_alloc);
+  rb_define_method(cls_QGridLayout.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QGridLayout_initialize), -1);
   rb_define_method(cls_QGridLayout.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QGridLayout_size_hint), -1);
   rb_define_method(cls_QGridLayout.rb_class, "minimum_size", RUBY_METHOD_FUNC(rb_QGridLayout_minimum_size), -1);
   rb_define_method(cls_QGridLayout.rb_class, "maximum_size", RUBY_METHOD_FUNC(rb_QGridLayout_maximum_size), -1);
@@ -8796,13 +17872,21 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGridLayout.rb_class, "set_origin_corner", RUBY_METHOD_FUNC(rb_QGridLayout_set_origin_corner), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "origin_corner=", "set_origin_corner");
   rb_define_method(cls_QGridLayout.rb_class, "origin_corner", RUBY_METHOD_FUNC(rb_QGridLayout_origin_corner), -1);
+  rb_define_method(cls_QGridLayout.rb_class, "item_at", RUBY_METHOD_FUNC(rb_QGridLayout_item_at), -1);
+  rb_define_method(cls_QGridLayout.rb_class, "item_at_position", RUBY_METHOD_FUNC(rb_QGridLayout_item_at_position), -1);
+  rb_define_method(cls_QGridLayout.rb_class, "take_at", RUBY_METHOD_FUNC(rb_QGridLayout_take_at), -1);
   rb_define_method(cls_QGridLayout.rb_class, "count", RUBY_METHOD_FUNC(rb_QGridLayout_count), -1);
   rb_define_method(cls_QGridLayout.rb_class, "set_geometry", RUBY_METHOD_FUNC(rb_QGridLayout_set_geometry), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "geometry=", "set_geometry");
+  rb_define_method(cls_QGridLayout.rb_class, "add_item", RUBY_METHOD_FUNC(rb_QGridLayout_add_item), -1);
   rb_define_method(cls_QGridLayout.rb_class, "set_default_positioning", RUBY_METHOD_FUNC(rb_QGridLayout_set_default_positioning), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "default_positioning=", "set_default_positioning");
   rb_define_singleton_method(cls_QGridLayout.rb_class, "tr", RUBY_METHOD_FUNC(rb_QGridLayout_s_tr), -1);
-  rb_define_singleton_method(cls_QSize.rb_class, "new", RUBY_METHOD_FUNC(rb_QSize_s_new), -1);
+  rb_define_method(cls_QGridLayout.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QGridLayout_prot_child_event), -1);
+  rb_define_method(cls_QGridLayout.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QGridLayout_prot_timer_event), -1);
+  rb_define_method(cls_QGridLayout.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QGridLayout_prot_custom_event), -1);
+  rb_define_alloc_func(cls_QSize.rb_class, rb_QSize_alloc);
+  rb_define_method(cls_QSize.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QSize_initialize), -1);
   rb_define_method(cls_QSize.rb_class, "is_null", RUBY_METHOD_FUNC(rb_QSize_is_null), -1);
   rb_define_alias(cls_QSize.rb_class, "null?", "is_null");
   rb_define_method(cls_QSize.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QSize_is_empty), -1);
@@ -8821,7 +17905,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSize.rb_class, "scaled", RUBY_METHOD_FUNC(rb_QSize_scaled), -1);
   rb_define_method(cls_QSize.rb_class, "expanded_to", RUBY_METHOD_FUNC(rb_QSize_expanded_to), -1);
   rb_define_method(cls_QSize.rb_class, "bounded_to", RUBY_METHOD_FUNC(rb_QSize_bounded_to), -1);
-  rb_define_singleton_method(cls_QPoint.rb_class, "new", RUBY_METHOD_FUNC(rb_QPoint_s_new), -1);
+  rb_define_method(cls_QSize.rb_class, "to_size_f", RUBY_METHOD_FUNC(rb_QSize_to_size_f), -1);
+  rb_define_alloc_func(cls_QPoint.rb_class, rb_QPoint_alloc);
+  rb_define_method(cls_QPoint.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QPoint_initialize), -1);
   rb_define_method(cls_QPoint.rb_class, "is_null", RUBY_METHOD_FUNC(rb_QPoint_is_null), -1);
   rb_define_alias(cls_QPoint.rb_class, "null?", "is_null");
   rb_define_method(cls_QPoint.rb_class, "x", RUBY_METHOD_FUNC(rb_QPoint_x), -1);
@@ -8832,8 +17918,10 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QPoint.rb_class, "y=", "set_y");
   rb_define_method(cls_QPoint.rb_class, "manhattan_length", RUBY_METHOD_FUNC(rb_QPoint_manhattan_length), -1);
   rb_define_method(cls_QPoint.rb_class, "transposed", RUBY_METHOD_FUNC(rb_QPoint_transposed), -1);
+  rb_define_method(cls_QPoint.rb_class, "to_point_f", RUBY_METHOD_FUNC(rb_QPoint_to_point_f), -1);
   rb_define_singleton_method(cls_QPoint.rb_class, "dot_product", RUBY_METHOD_FUNC(rb_QPoint_s_dot_product), -1);
-  rb_define_singleton_method(cls_QRect.rb_class, "new", RUBY_METHOD_FUNC(rb_QRect_s_new), -1);
+  rb_define_alloc_func(cls_QRect.rb_class, rb_QRect_alloc);
+  rb_define_method(cls_QRect.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QRect_initialize), -1);
   rb_define_method(cls_QRect.rb_class, "is_null", RUBY_METHOD_FUNC(rb_QRect_is_null), -1);
   rb_define_alias(cls_QRect.rb_class, "null?", "is_null");
   rb_define_method(cls_QRect.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QRect_is_empty), -1);
@@ -8904,7 +17992,202 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QRect.rb_class, "united", RUBY_METHOD_FUNC(rb_QRect_united), -1);
   rb_define_method(cls_QRect.rb_class, "intersected", RUBY_METHOD_FUNC(rb_QRect_intersected), -1);
   rb_define_method(cls_QRect.rb_class, "intersects", RUBY_METHOD_FUNC(rb_QRect_intersects), -1);
+  rb_define_method(cls_QRect.rb_class, "to_rect_f", RUBY_METHOD_FUNC(rb_QRect_to_rect_f), -1);
   rb_define_singleton_method(cls_QRect.rb_class, "span", RUBY_METHOD_FUNC(rb_QRect_s_span), -1);
+  rb_define_alloc_func(cls_QPointF.rb_class, rb_QPointF_alloc);
+  rb_define_method(cls_QPointF.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QPointF_initialize), -1);
+  rb_define_method(cls_QPointF.rb_class, "manhattan_length", RUBY_METHOD_FUNC(rb_QPointF_manhattan_length), -1);
+  rb_define_method(cls_QPointF.rb_class, "is_null", RUBY_METHOD_FUNC(rb_QPointF_is_null), -1);
+  rb_define_alias(cls_QPointF.rb_class, "null?", "is_null");
+  rb_define_method(cls_QPointF.rb_class, "x", RUBY_METHOD_FUNC(rb_QPointF_x), -1);
+  rb_define_method(cls_QPointF.rb_class, "y", RUBY_METHOD_FUNC(rb_QPointF_y), -1);
+  rb_define_method(cls_QPointF.rb_class, "set_x", RUBY_METHOD_FUNC(rb_QPointF_set_x), -1);
+  rb_define_alias(cls_QPointF.rb_class, "x=", "set_x");
+  rb_define_method(cls_QPointF.rb_class, "set_y", RUBY_METHOD_FUNC(rb_QPointF_set_y), -1);
+  rb_define_alias(cls_QPointF.rb_class, "y=", "set_y");
+  rb_define_method(cls_QPointF.rb_class, "transposed", RUBY_METHOD_FUNC(rb_QPointF_transposed), -1);
+  rb_define_method(cls_QPointF.rb_class, "to_point", RUBY_METHOD_FUNC(rb_QPointF_to_point), -1);
+  rb_define_singleton_method(cls_QPointF.rb_class, "dot_product", RUBY_METHOD_FUNC(rb_QPointF_s_dot_product), -1);
+  rb_define_alloc_func(cls_QSizeF.rb_class, rb_QSizeF_alloc);
+  rb_define_method(cls_QSizeF.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QSizeF_initialize), -1);
+  rb_define_method(cls_QSizeF.rb_class, "is_null", RUBY_METHOD_FUNC(rb_QSizeF_is_null), -1);
+  rb_define_alias(cls_QSizeF.rb_class, "null?", "is_null");
+  rb_define_method(cls_QSizeF.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QSizeF_is_empty), -1);
+  rb_define_alias(cls_QSizeF.rb_class, "empty?", "is_empty");
+  rb_define_method(cls_QSizeF.rb_class, "is_valid", RUBY_METHOD_FUNC(rb_QSizeF_is_valid), -1);
+  rb_define_alias(cls_QSizeF.rb_class, "valid?", "is_valid");
+  rb_define_method(cls_QSizeF.rb_class, "width", RUBY_METHOD_FUNC(rb_QSizeF_width), -1);
+  rb_define_method(cls_QSizeF.rb_class, "height", RUBY_METHOD_FUNC(rb_QSizeF_height), -1);
+  rb_define_method(cls_QSizeF.rb_class, "set_width", RUBY_METHOD_FUNC(rb_QSizeF_set_width), -1);
+  rb_define_alias(cls_QSizeF.rb_class, "width=", "set_width");
+  rb_define_method(cls_QSizeF.rb_class, "set_height", RUBY_METHOD_FUNC(rb_QSizeF_set_height), -1);
+  rb_define_alias(cls_QSizeF.rb_class, "height=", "set_height");
+  rb_define_method(cls_QSizeF.rb_class, "transpose", RUBY_METHOD_FUNC(rb_QSizeF_transpose), -1);
+  rb_define_method(cls_QSizeF.rb_class, "transposed", RUBY_METHOD_FUNC(rb_QSizeF_transposed), -1);
+  rb_define_method(cls_QSizeF.rb_class, "scale", RUBY_METHOD_FUNC(rb_QSizeF_scale), -1);
+  rb_define_method(cls_QSizeF.rb_class, "scaled", RUBY_METHOD_FUNC(rb_QSizeF_scaled), -1);
+  rb_define_method(cls_QSizeF.rb_class, "expanded_to", RUBY_METHOD_FUNC(rb_QSizeF_expanded_to), -1);
+  rb_define_method(cls_QSizeF.rb_class, "bounded_to", RUBY_METHOD_FUNC(rb_QSizeF_bounded_to), -1);
+  rb_define_method(cls_QSizeF.rb_class, "to_size", RUBY_METHOD_FUNC(rb_QSizeF_to_size), -1);
+  rb_define_alloc_func(cls_QRectF.rb_class, rb_QRectF_alloc);
+  rb_define_method(cls_QRectF.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QRectF_initialize), -1);
+  rb_define_method(cls_QRectF.rb_class, "is_null", RUBY_METHOD_FUNC(rb_QRectF_is_null), -1);
+  rb_define_alias(cls_QRectF.rb_class, "null?", "is_null");
+  rb_define_method(cls_QRectF.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QRectF_is_empty), -1);
+  rb_define_alias(cls_QRectF.rb_class, "empty?", "is_empty");
+  rb_define_method(cls_QRectF.rb_class, "is_valid", RUBY_METHOD_FUNC(rb_QRectF_is_valid), -1);
+  rb_define_alias(cls_QRectF.rb_class, "valid?", "is_valid");
+  rb_define_method(cls_QRectF.rb_class, "normalized", RUBY_METHOD_FUNC(rb_QRectF_normalized), -1);
+  rb_define_method(cls_QRectF.rb_class, "left", RUBY_METHOD_FUNC(rb_QRectF_left), -1);
+  rb_define_method(cls_QRectF.rb_class, "top", RUBY_METHOD_FUNC(rb_QRectF_top), -1);
+  rb_define_method(cls_QRectF.rb_class, "right", RUBY_METHOD_FUNC(rb_QRectF_right), -1);
+  rb_define_method(cls_QRectF.rb_class, "bottom", RUBY_METHOD_FUNC(rb_QRectF_bottom), -1);
+  rb_define_method(cls_QRectF.rb_class, "x", RUBY_METHOD_FUNC(rb_QRectF_x), -1);
+  rb_define_method(cls_QRectF.rb_class, "y", RUBY_METHOD_FUNC(rb_QRectF_y), -1);
+  rb_define_method(cls_QRectF.rb_class, "set_left", RUBY_METHOD_FUNC(rb_QRectF_set_left), -1);
+  rb_define_alias(cls_QRectF.rb_class, "left=", "set_left");
+  rb_define_method(cls_QRectF.rb_class, "set_top", RUBY_METHOD_FUNC(rb_QRectF_set_top), -1);
+  rb_define_alias(cls_QRectF.rb_class, "top=", "set_top");
+  rb_define_method(cls_QRectF.rb_class, "set_right", RUBY_METHOD_FUNC(rb_QRectF_set_right), -1);
+  rb_define_alias(cls_QRectF.rb_class, "right=", "set_right");
+  rb_define_method(cls_QRectF.rb_class, "set_bottom", RUBY_METHOD_FUNC(rb_QRectF_set_bottom), -1);
+  rb_define_alias(cls_QRectF.rb_class, "bottom=", "set_bottom");
+  rb_define_method(cls_QRectF.rb_class, "set_x", RUBY_METHOD_FUNC(rb_QRectF_set_x), -1);
+  rb_define_alias(cls_QRectF.rb_class, "x=", "set_x");
+  rb_define_method(cls_QRectF.rb_class, "set_y", RUBY_METHOD_FUNC(rb_QRectF_set_y), -1);
+  rb_define_alias(cls_QRectF.rb_class, "y=", "set_y");
+  rb_define_method(cls_QRectF.rb_class, "top_left", RUBY_METHOD_FUNC(rb_QRectF_top_left), -1);
+  rb_define_method(cls_QRectF.rb_class, "bottom_right", RUBY_METHOD_FUNC(rb_QRectF_bottom_right), -1);
+  rb_define_method(cls_QRectF.rb_class, "top_right", RUBY_METHOD_FUNC(rb_QRectF_top_right), -1);
+  rb_define_method(cls_QRectF.rb_class, "bottom_left", RUBY_METHOD_FUNC(rb_QRectF_bottom_left), -1);
+  rb_define_method(cls_QRectF.rb_class, "center", RUBY_METHOD_FUNC(rb_QRectF_center), -1);
+  rb_define_method(cls_QRectF.rb_class, "set_top_left", RUBY_METHOD_FUNC(rb_QRectF_set_top_left), -1);
+  rb_define_alias(cls_QRectF.rb_class, "top_left=", "set_top_left");
+  rb_define_method(cls_QRectF.rb_class, "set_bottom_right", RUBY_METHOD_FUNC(rb_QRectF_set_bottom_right), -1);
+  rb_define_alias(cls_QRectF.rb_class, "bottom_right=", "set_bottom_right");
+  rb_define_method(cls_QRectF.rb_class, "set_top_right", RUBY_METHOD_FUNC(rb_QRectF_set_top_right), -1);
+  rb_define_alias(cls_QRectF.rb_class, "top_right=", "set_top_right");
+  rb_define_method(cls_QRectF.rb_class, "set_bottom_left", RUBY_METHOD_FUNC(rb_QRectF_set_bottom_left), -1);
+  rb_define_alias(cls_QRectF.rb_class, "bottom_left=", "set_bottom_left");
+  rb_define_method(cls_QRectF.rb_class, "move_left", RUBY_METHOD_FUNC(rb_QRectF_move_left), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_top", RUBY_METHOD_FUNC(rb_QRectF_move_top), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_right", RUBY_METHOD_FUNC(rb_QRectF_move_right), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_bottom", RUBY_METHOD_FUNC(rb_QRectF_move_bottom), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_top_left", RUBY_METHOD_FUNC(rb_QRectF_move_top_left), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_bottom_right", RUBY_METHOD_FUNC(rb_QRectF_move_bottom_right), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_top_right", RUBY_METHOD_FUNC(rb_QRectF_move_top_right), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_bottom_left", RUBY_METHOD_FUNC(rb_QRectF_move_bottom_left), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_center", RUBY_METHOD_FUNC(rb_QRectF_move_center), -1);
+  rb_define_method(cls_QRectF.rb_class, "translate", RUBY_METHOD_FUNC(rb_QRectF_translate), -1);
+  rb_define_method(cls_QRectF.rb_class, "translated", RUBY_METHOD_FUNC(rb_QRectF_translated), -1);
+  rb_define_method(cls_QRectF.rb_class, "transposed", RUBY_METHOD_FUNC(rb_QRectF_transposed), -1);
+  rb_define_method(cls_QRectF.rb_class, "move_to", RUBY_METHOD_FUNC(rb_QRectF_move_to), -1);
+  rb_define_method(cls_QRectF.rb_class, "set_rect", RUBY_METHOD_FUNC(rb_QRectF_set_rect), -1);
+  rb_define_alias(cls_QRectF.rb_class, "rect=", "set_rect");
+  rb_define_method(cls_QRectF.rb_class, "set_coords", RUBY_METHOD_FUNC(rb_QRectF_set_coords), -1);
+  rb_define_alias(cls_QRectF.rb_class, "coords=", "set_coords");
+  rb_define_method(cls_QRectF.rb_class, "adjust", RUBY_METHOD_FUNC(rb_QRectF_adjust), -1);
+  rb_define_method(cls_QRectF.rb_class, "adjusted", RUBY_METHOD_FUNC(rb_QRectF_adjusted), -1);
+  rb_define_method(cls_QRectF.rb_class, "size", RUBY_METHOD_FUNC(rb_QRectF_size), -1);
+  rb_define_method(cls_QRectF.rb_class, "width", RUBY_METHOD_FUNC(rb_QRectF_width), -1);
+  rb_define_method(cls_QRectF.rb_class, "height", RUBY_METHOD_FUNC(rb_QRectF_height), -1);
+  rb_define_method(cls_QRectF.rb_class, "set_width", RUBY_METHOD_FUNC(rb_QRectF_set_width), -1);
+  rb_define_alias(cls_QRectF.rb_class, "width=", "set_width");
+  rb_define_method(cls_QRectF.rb_class, "set_height", RUBY_METHOD_FUNC(rb_QRectF_set_height), -1);
+  rb_define_alias(cls_QRectF.rb_class, "height=", "set_height");
+  rb_define_method(cls_QRectF.rb_class, "set_size", RUBY_METHOD_FUNC(rb_QRectF_set_size), -1);
+  rb_define_alias(cls_QRectF.rb_class, "size=", "set_size");
+  rb_define_method(cls_QRectF.rb_class, "contains", RUBY_METHOD_FUNC(rb_QRectF_contains), -1);
+  rb_define_method(cls_QRectF.rb_class, "united", RUBY_METHOD_FUNC(rb_QRectF_united), -1);
+  rb_define_method(cls_QRectF.rb_class, "intersected", RUBY_METHOD_FUNC(rb_QRectF_intersected), -1);
+  rb_define_method(cls_QRectF.rb_class, "intersects", RUBY_METHOD_FUNC(rb_QRectF_intersects), -1);
+  rb_define_method(cls_QRectF.rb_class, "to_rect", RUBY_METHOD_FUNC(rb_QRectF_to_rect), -1);
+  rb_define_method(cls_QRectF.rb_class, "to_aligned_rect", RUBY_METHOD_FUNC(rb_QRectF_to_aligned_rect), -1);
+  rb_define_alloc_func(cls_QEvent.rb_class, rb_QEvent_alloc);
+  rb_define_method(cls_QEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QEvent_initialize), -1);
+  rb_define_method(cls_QEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QEvent_qt_check_for_qgadget_macro), -1);
+  rb_define_method(cls_QEvent.rb_class, "type", RUBY_METHOD_FUNC(rb_QEvent_type), -1);
+  rb_define_method(cls_QEvent.rb_class, "spontaneous", RUBY_METHOD_FUNC(rb_QEvent_spontaneous), -1);
+  rb_define_method(cls_QEvent.rb_class, "set_accepted", RUBY_METHOD_FUNC(rb_QEvent_set_accepted), -1);
+  rb_define_alias(cls_QEvent.rb_class, "accepted=", "set_accepted");
+  rb_define_method(cls_QEvent.rb_class, "is_accepted", RUBY_METHOD_FUNC(rb_QEvent_is_accepted), -1);
+  rb_define_alias(cls_QEvent.rb_class, "accepted?", "is_accepted");
+  rb_define_method(cls_QEvent.rb_class, "accept", RUBY_METHOD_FUNC(rb_QEvent_accept), -1);
+  rb_define_method(cls_QEvent.rb_class, "ignore", RUBY_METHOD_FUNC(rb_QEvent_ignore), -1);
+  rb_define_method(cls_QEvent.rb_class, "is_input_event", RUBY_METHOD_FUNC(rb_QEvent_is_input_event), -1);
+  rb_define_alias(cls_QEvent.rb_class, "input_event?", "is_input_event");
+  rb_define_method(cls_QEvent.rb_class, "is_pointer_event", RUBY_METHOD_FUNC(rb_QEvent_is_pointer_event), -1);
+  rb_define_alias(cls_QEvent.rb_class, "pointer_event?", "is_pointer_event");
+  rb_define_method(cls_QEvent.rb_class, "is_single_point_event", RUBY_METHOD_FUNC(rb_QEvent_is_single_point_event), -1);
+  rb_define_alias(cls_QEvent.rb_class, "single_point_event?", "is_single_point_event");
+  rb_define_method(cls_QEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QEvent_clone), -1);
+  rb_define_singleton_method(cls_QEvent.rb_class, "register_event_type", RUBY_METHOD_FUNC(rb_QEvent_s_register_event_type), -1);
+  rb_define_alloc_func(cls_QTimerEvent.rb_class, rb_QTimerEvent_alloc);
+  rb_define_method(cls_QTimerEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QTimerEvent_initialize), -1);
+  rb_define_method(cls_QTimerEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QTimerEvent_clone), -1);
+  rb_define_method(cls_QTimerEvent.rb_class, "timer_id", RUBY_METHOD_FUNC(rb_QTimerEvent_timer_id), -1);
+  rb_define_method(cls_QTimerEvent.rb_class, "id", RUBY_METHOD_FUNC(rb_QTimerEvent_id), -1);
+  rb_define_alloc_func(cls_QChildEvent.rb_class, rb_QChildEvent_alloc);
+  rb_define_method(cls_QChildEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QChildEvent_initialize), -1);
+  rb_define_method(cls_QChildEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QChildEvent_clone), -1);
+  rb_define_method(cls_QChildEvent.rb_class, "child", RUBY_METHOD_FUNC(rb_QChildEvent_child), -1);
+  rb_define_method(cls_QChildEvent.rb_class, "added", RUBY_METHOD_FUNC(rb_QChildEvent_added), -1);
+  rb_define_method(cls_QChildEvent.rb_class, "polished", RUBY_METHOD_FUNC(rb_QChildEvent_polished), -1);
+  rb_define_method(cls_QChildEvent.rb_class, "removed", RUBY_METHOD_FUNC(rb_QChildEvent_removed), -1);
+  rb_define_alloc_func(cls_QCloseEvent.rb_class, rb_QCloseEvent_alloc);
+  rb_define_method(cls_QCloseEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QCloseEvent_initialize), -1);
+  rb_define_method(cls_QCloseEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QCloseEvent_clone), -1);
+  rb_define_alloc_func(cls_QShowEvent.rb_class, rb_QShowEvent_alloc);
+  rb_define_method(cls_QShowEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QShowEvent_initialize), -1);
+  rb_define_method(cls_QShowEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QShowEvent_clone), -1);
+  rb_define_alloc_func(cls_QHideEvent.rb_class, rb_QHideEvent_alloc);
+  rb_define_method(cls_QHideEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QHideEvent_initialize), -1);
+  rb_define_method(cls_QHideEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QHideEvent_clone), -1);
+  rb_define_alloc_func(cls_QMoveEvent.rb_class, rb_QMoveEvent_alloc);
+  rb_define_method(cls_QMoveEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QMoveEvent_initialize), -1);
+  rb_define_method(cls_QMoveEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QMoveEvent_clone), -1);
+  rb_define_method(cls_QMoveEvent.rb_class, "pos", RUBY_METHOD_FUNC(rb_QMoveEvent_pos), -1);
+  rb_define_method(cls_QMoveEvent.rb_class, "old_pos", RUBY_METHOD_FUNC(rb_QMoveEvent_old_pos), -1);
+  rb_define_alloc_func(cls_QResizeEvent.rb_class, rb_QResizeEvent_alloc);
+  rb_define_method(cls_QResizeEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QResizeEvent_initialize), -1);
+  rb_define_method(cls_QResizeEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QResizeEvent_clone), -1);
+  rb_define_method(cls_QResizeEvent.rb_class, "size", RUBY_METHOD_FUNC(rb_QResizeEvent_size), -1);
+  rb_define_method(cls_QResizeEvent.rb_class, "old_size", RUBY_METHOD_FUNC(rb_QResizeEvent_old_size), -1);
+  rb_define_alloc_func(cls_QPaintEvent.rb_class, rb_QPaintEvent_alloc);
+  rb_define_method(cls_QPaintEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QPaintEvent_initialize), -1);
+  rb_define_method(cls_QPaintEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QPaintEvent_clone), -1);
+  rb_define_method(cls_QPaintEvent.rb_class, "rect", RUBY_METHOD_FUNC(rb_QPaintEvent_rect), -1);
+  rb_define_alloc_func(cls_QKeyEvent.rb_class, rb_QKeyEvent_alloc);
+  rb_define_method(cls_QKeyEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QKeyEvent_initialize), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QKeyEvent_clone), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "key", RUBY_METHOD_FUNC(rb_QKeyEvent_key), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "matches", RUBY_METHOD_FUNC(rb_QKeyEvent_matches), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "modifiers", RUBY_METHOD_FUNC(rb_QKeyEvent_modifiers), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "text", RUBY_METHOD_FUNC(rb_QKeyEvent_text), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "is_auto_repeat", RUBY_METHOD_FUNC(rb_QKeyEvent_is_auto_repeat), -1);
+  rb_define_alias(cls_QKeyEvent.rb_class, "auto_repeat?", "is_auto_repeat");
+  rb_define_method(cls_QKeyEvent.rb_class, "count", RUBY_METHOD_FUNC(rb_QKeyEvent_count), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "native_scan_code", RUBY_METHOD_FUNC(rb_QKeyEvent_native_scan_code), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "native_virtual_key", RUBY_METHOD_FUNC(rb_QKeyEvent_native_virtual_key), -1);
+  rb_define_method(cls_QKeyEvent.rb_class, "native_modifiers", RUBY_METHOD_FUNC(rb_QKeyEvent_native_modifiers), -1);
+  rb_define_alloc_func(cls_QFocusEvent.rb_class, rb_QFocusEvent_alloc);
+  rb_define_method(cls_QFocusEvent.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QFocusEvent_initialize), -1);
+  rb_define_method(cls_QFocusEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QFocusEvent_clone), -1);
+  rb_define_method(cls_QFocusEvent.rb_class, "got_focus", RUBY_METHOD_FUNC(rb_QFocusEvent_got_focus), -1);
+  rb_define_method(cls_QFocusEvent.rb_class, "lost_focus", RUBY_METHOD_FUNC(rb_QFocusEvent_lost_focus), -1);
+  rb_define_method(cls_QFocusEvent.rb_class, "reason", RUBY_METHOD_FUNC(rb_QFocusEvent_reason), -1);
+  rb_undef_alloc_func(cls_QEnterEvent.rb_class);
+  rb_define_method(cls_QEnterEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QEnterEvent_clone), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "pos", RUBY_METHOD_FUNC(rb_QEnterEvent_pos), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "global_pos", RUBY_METHOD_FUNC(rb_QEnterEvent_global_pos), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "x", RUBY_METHOD_FUNC(rb_QEnterEvent_x), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "y", RUBY_METHOD_FUNC(rb_QEnterEvent_y), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "global_x", RUBY_METHOD_FUNC(rb_QEnterEvent_global_x), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "global_y", RUBY_METHOD_FUNC(rb_QEnterEvent_global_y), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "local_pos", RUBY_METHOD_FUNC(rb_QEnterEvent_local_pos), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "window_pos", RUBY_METHOD_FUNC(rb_QEnterEvent_window_pos), -1);
+  rb_define_method(cls_QEnterEvent.rb_class, "screen_pos", RUBY_METHOD_FUNC(rb_QEnterEvent_screen_pos), -1);
+  rb_undef_alloc_func(cls_QPaintDevice.rb_class);
   rb_define_method(cls_QPaintDevice.rb_class, "dev_type", RUBY_METHOD_FUNC(rb_QPaintDevice_dev_type), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "painting_active", RUBY_METHOD_FUNC(rb_QPaintDevice_painting_active), -1);
   rb_define_method(cls_QPaintDevice.rb_class, "width", RUBY_METHOD_FUNC(rb_QPaintDevice_width), -1);
@@ -8921,7 +18204,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPaintDevice.rb_class, "depth", RUBY_METHOD_FUNC(rb_QPaintDevice_depth), -1);
   rb_define_singleton_method(cls_QPaintDevice.rb_class, "device_pixel_ratio_f_scale", RUBY_METHOD_FUNC(rb_QPaintDevice_s_device_pixel_ratio_f_scale), -1);
   rb_define_singleton_method(cls_QPaintDevice.rb_class, "encode_metric_f", RUBY_METHOD_FUNC(rb_QPaintDevice_s_encode_metric_f), -1);
-  rb_define_singleton_method(cls_QFrame.rb_class, "new", RUBY_METHOD_FUNC(rb_QFrame_s_new), -1);
+  rb_define_alloc_func(cls_QFrame.rb_class, rb_QFrame_alloc);
+  rb_define_method(cls_QFrame.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QFrame_initialize), -1);
   rb_define_method(cls_QFrame.rb_class, "frame_style", RUBY_METHOD_FUNC(rb_QFrame_frame_style), -1);
   rb_define_method(cls_QFrame.rb_class, "set_frame_style", RUBY_METHOD_FUNC(rb_QFrame_set_frame_style), -1);
   rb_define_alias(cls_QFrame.rb_class, "frame_style=", "set_frame_style");
@@ -8943,6 +18227,27 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFrame.rb_class, "set_frame_rect", RUBY_METHOD_FUNC(rb_QFrame_set_frame_rect), -1);
   rb_define_alias(cls_QFrame.rb_class, "frame_rect=", "set_frame_rect");
   rb_define_singleton_method(cls_QFrame.rb_class, "tr", RUBY_METHOD_FUNC(rb_QFrame_s_tr), -1);
+  rb_define_method(cls_QFrame.rb_class, "event", RUBY_METHOD_FUNC(rb_QFrame_prot_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QFrame_prot_paint_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QFrame_prot_change_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QFrame_prot_key_press_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QFrame_prot_key_release_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QFrame_prot_focus_in_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QFrame_prot_focus_out_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QFrame_prot_enter_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QFrame_prot_leave_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QFrame_prot_move_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QFrame_prot_resize_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QFrame_prot_close_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QFrame_prot_show_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QFrame_prot_hide_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "metric", RUBY_METHOD_FUNC(rb_QFrame_prot_metric), -1);
+  rb_define_method(cls_QFrame.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QFrame_prot_redirected), -1);
+  rb_define_method(cls_QFrame.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QFrame_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QFrame.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QFrame_prot_timer_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QFrame_prot_child_event), -1);
+  rb_define_method(cls_QFrame.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QFrame_prot_custom_event), -1);
+  rb_undef_alloc_func(cls_QAbstractButton.rb_class);
   rb_define_method(cls_QAbstractButton.rb_class, "set_text", RUBY_METHOD_FUNC(rb_QAbstractButton_set_text), -1);
   rb_define_alias(cls_QAbstractButton.rb_class, "text=", "set_text");
   rb_define_method(cls_QAbstractButton.rb_class, "text", RUBY_METHOD_FUNC(rb_QAbstractButton_text), -1);
@@ -8981,7 +18286,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractButton.rb_class, "on_released", RUBY_METHOD_FUNC(rb_QAbstractButton_on_released), 0);
   rb_define_method(cls_QAbstractButton.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QAbstractButton_on_clicked), 0);
   rb_define_method(cls_QAbstractButton.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QAbstractButton_on_toggled), 0);
-  rb_define_singleton_method(cls_QAbstractScrollArea.rb_class, "new", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_s_new), -1);
+  rb_define_alloc_func(cls_QAbstractScrollArea.rb_class, rb_QAbstractScrollArea_alloc);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "initialize", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_initialize), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "vertical_scroll_bar_policy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_vertical_scroll_bar_policy), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_vertical_scroll_bar_policy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_vertical_scroll_bar_policy), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "vertical_scroll_bar_policy=", "set_vertical_scroll_bar_policy");
@@ -9003,6 +18309,31 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_size_adjust_policy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_size_adjust_policy), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "size_adjust_policy=", "set_size_adjust_policy");
   rb_define_singleton_method(cls_QAbstractScrollArea.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_s_tr), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "event_filter", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_event_filter), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "viewport_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_viewport_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "resize_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_resize_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_paint_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_key_press_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "scroll_contents_by", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_scroll_contents_by), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "viewport_size_hint", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_viewport_size_hint), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_change_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "key_release_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_key_release_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_focus_in_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "focus_out_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_focus_out_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "enter_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_enter_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "leave_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_leave_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "move_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_move_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_close_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "show_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_show_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "hide_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_hide_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "metric", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_metric), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_redirected), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_focus_next_prev_child), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_timer_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_child_event), -1);
+  rb_define_method(cls_QAbstractScrollArea.rb_class, "custom_event", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_custom_event), -1);
+  rb_undef_alloc_func(cls_QLayoutItem.rb_class);
   rb_define_method(cls_QLayoutItem.rb_class, "has_height_for_width", RUBY_METHOD_FUNC(rb_QLayoutItem_has_height_for_width), -1);
   rb_define_method(cls_QLayoutItem.rb_class, "height_for_width", RUBY_METHOD_FUNC(rb_QLayoutItem_height_for_width), -1);
   rb_define_method(cls_QLayoutItem.rb_class, "minimum_height_for_width", RUBY_METHOD_FUNC(rb_QLayoutItem_minimum_height_for_width), -1);
@@ -9013,6 +18344,49 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLayoutItem.rb_class, "set_alignment", RUBY_METHOD_FUNC(rb_QLayoutItem_set_alignment), -1);
   rb_define_alias(cls_QLayoutItem.rb_class, "alignment=", "set_alignment");
   rb_define_method(cls_QLayoutItem.rb_class, "control_types", RUBY_METHOD_FUNC(rb_QLayoutItem_control_types), -1);
+  rb_undef_alloc_func(cls_QInputEvent.rb_class);
+  rb_define_method(cls_QInputEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QInputEvent_clone), -1);
+  rb_define_method(cls_QInputEvent.rb_class, "device_type", RUBY_METHOD_FUNC(rb_QInputEvent_device_type), -1);
+  rb_define_method(cls_QInputEvent.rb_class, "modifiers", RUBY_METHOD_FUNC(rb_QInputEvent_modifiers), -1);
+  rb_define_method(cls_QInputEvent.rb_class, "set_modifiers", RUBY_METHOD_FUNC(rb_QInputEvent_set_modifiers), -1);
+  rb_define_alias(cls_QInputEvent.rb_class, "modifiers=", "set_modifiers");
+  rb_define_method(cls_QInputEvent.rb_class, "timestamp", RUBY_METHOD_FUNC(rb_QInputEvent_timestamp), -1);
+  rb_define_method(cls_QInputEvent.rb_class, "set_timestamp", RUBY_METHOD_FUNC(rb_QInputEvent_set_timestamp), -1);
+  rb_define_alias(cls_QInputEvent.rb_class, "timestamp=", "set_timestamp");
+  rb_undef_alloc_func(cls_QSinglePointEvent.rb_class);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QSinglePointEvent_qt_check_for_qgadget_macro), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QSinglePointEvent_clone), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "button", RUBY_METHOD_FUNC(rb_QSinglePointEvent_button), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "buttons", RUBY_METHOD_FUNC(rb_QSinglePointEvent_buttons), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "position", RUBY_METHOD_FUNC(rb_QSinglePointEvent_position), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "scene_position", RUBY_METHOD_FUNC(rb_QSinglePointEvent_scene_position), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "global_position", RUBY_METHOD_FUNC(rb_QSinglePointEvent_global_position), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "is_begin_event", RUBY_METHOD_FUNC(rb_QSinglePointEvent_is_begin_event), -1);
+  rb_define_alias(cls_QSinglePointEvent.rb_class, "begin_event?", "is_begin_event");
+  rb_define_method(cls_QSinglePointEvent.rb_class, "is_update_event", RUBY_METHOD_FUNC(rb_QSinglePointEvent_is_update_event), -1);
+  rb_define_alias(cls_QSinglePointEvent.rb_class, "update_event?", "is_update_event");
+  rb_define_method(cls_QSinglePointEvent.rb_class, "is_end_event", RUBY_METHOD_FUNC(rb_QSinglePointEvent_is_end_event), -1);
+  rb_define_alias(cls_QSinglePointEvent.rb_class, "end_event?", "is_end_event");
+  rb_define_method(cls_QSinglePointEvent.rb_class, "exclusive_point_grabber", RUBY_METHOD_FUNC(rb_QSinglePointEvent_exclusive_point_grabber), -1);
+  rb_define_method(cls_QSinglePointEvent.rb_class, "set_exclusive_point_grabber", RUBY_METHOD_FUNC(rb_QSinglePointEvent_set_exclusive_point_grabber), -1);
+  rb_define_alias(cls_QSinglePointEvent.rb_class, "exclusive_point_grabber=", "set_exclusive_point_grabber");
+  rb_undef_alloc_func(cls_QPointerEvent.rb_class);
+  rb_define_method(cls_QPointerEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QPointerEvent_qt_check_for_qgadget_macro), -1);
+  rb_define_method(cls_QPointerEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QPointerEvent_clone), -1);
+  rb_define_method(cls_QPointerEvent.rb_class, "pointer_type", RUBY_METHOD_FUNC(rb_QPointerEvent_pointer_type), -1);
+  rb_define_method(cls_QPointerEvent.rb_class, "set_timestamp", RUBY_METHOD_FUNC(rb_QPointerEvent_set_timestamp), -1);
+  rb_define_alias(cls_QPointerEvent.rb_class, "timestamp=", "set_timestamp");
+  rb_define_method(cls_QPointerEvent.rb_class, "point_count", RUBY_METHOD_FUNC(rb_QPointerEvent_point_count), -1);
+  rb_define_method(cls_QPointerEvent.rb_class, "all_points_grabbed", RUBY_METHOD_FUNC(rb_QPointerEvent_all_points_grabbed), -1);
+  rb_define_method(cls_QPointerEvent.rb_class, "is_begin_event", RUBY_METHOD_FUNC(rb_QPointerEvent_is_begin_event), -1);
+  rb_define_alias(cls_QPointerEvent.rb_class, "begin_event?", "is_begin_event");
+  rb_define_method(cls_QPointerEvent.rb_class, "is_update_event", RUBY_METHOD_FUNC(rb_QPointerEvent_is_update_event), -1);
+  rb_define_alias(cls_QPointerEvent.rb_class, "update_event?", "is_update_event");
+  rb_define_method(cls_QPointerEvent.rb_class, "is_end_event", RUBY_METHOD_FUNC(rb_QPointerEvent_is_end_event), -1);
+  rb_define_alias(cls_QPointerEvent.rb_class, "end_event?", "is_end_event");
+  rb_define_method(cls_QPointerEvent.rb_class, "all_points_accepted", RUBY_METHOD_FUNC(rb_QPointerEvent_all_points_accepted), -1);
+  rb_define_method(cls_QPointerEvent.rb_class, "set_accepted", RUBY_METHOD_FUNC(rb_QPointerEvent_set_accepted), -1);
+  rb_define_alias(cls_QPointerEvent.rb_class, "accepted=", "set_accepted");
   rb_define_const(cls_QWidget.rb_class, "DrawWindowBackground", INT2NUM(1));
   rb_define_const(cls_QWidget.rb_class, "DrawChildren", INT2NUM(2));
   rb_define_const(cls_QWidget.rb_class, "IgnoreMask", INT2NUM(4));
@@ -9059,6 +18433,185 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QBoxLayout.rb_class, "BottomToTop", INT2NUM(3));
   rb_define_const(cls_QBoxLayout.rb_class, "Down", INT2NUM(2));
   rb_define_const(cls_QBoxLayout.rb_class, "Up", INT2NUM(3));
+  rb_define_const(cls_QEvent.rb_class, "None", INT2NUM(0));
+  rb_define_const(cls_QEvent.rb_class, "Timer", INT2NUM(1));
+  rb_define_const(cls_QEvent.rb_class, "MouseButtonPress", INT2NUM(2));
+  rb_define_const(cls_QEvent.rb_class, "MouseButtonRelease", INT2NUM(3));
+  rb_define_const(cls_QEvent.rb_class, "MouseButtonDblClick", INT2NUM(4));
+  rb_define_const(cls_QEvent.rb_class, "MouseMove", INT2NUM(5));
+  rb_define_const(cls_QEvent.rb_class, "KeyPress", INT2NUM(6));
+  rb_define_const(cls_QEvent.rb_class, "KeyRelease", INT2NUM(7));
+  rb_define_const(cls_QEvent.rb_class, "FocusIn", INT2NUM(8));
+  rb_define_const(cls_QEvent.rb_class, "FocusOut", INT2NUM(9));
+  rb_define_const(cls_QEvent.rb_class, "FocusAboutToChange", INT2NUM(23));
+  rb_define_const(cls_QEvent.rb_class, "Enter", INT2NUM(10));
+  rb_define_const(cls_QEvent.rb_class, "Leave", INT2NUM(11));
+  rb_define_const(cls_QEvent.rb_class, "Paint", INT2NUM(12));
+  rb_define_const(cls_QEvent.rb_class, "Move", INT2NUM(13));
+  rb_define_const(cls_QEvent.rb_class, "Resize", INT2NUM(14));
+  rb_define_const(cls_QEvent.rb_class, "Create", INT2NUM(15));
+  rb_define_const(cls_QEvent.rb_class, "Destroy", INT2NUM(16));
+  rb_define_const(cls_QEvent.rb_class, "Show", INT2NUM(17));
+  rb_define_const(cls_QEvent.rb_class, "Hide", INT2NUM(18));
+  rb_define_const(cls_QEvent.rb_class, "Close", INT2NUM(19));
+  rb_define_const(cls_QEvent.rb_class, "Quit", INT2NUM(20));
+  rb_define_const(cls_QEvent.rb_class, "ParentChange", INT2NUM(21));
+  rb_define_const(cls_QEvent.rb_class, "ParentAboutToChange", INT2NUM(131));
+  rb_define_const(cls_QEvent.rb_class, "ThreadChange", INT2NUM(22));
+  rb_define_const(cls_QEvent.rb_class, "WindowActivate", INT2NUM(24));
+  rb_define_const(cls_QEvent.rb_class, "WindowDeactivate", INT2NUM(25));
+  rb_define_const(cls_QEvent.rb_class, "ShowToParent", INT2NUM(26));
+  rb_define_const(cls_QEvent.rb_class, "HideToParent", INT2NUM(27));
+  rb_define_const(cls_QEvent.rb_class, "Wheel", INT2NUM(31));
+  rb_define_const(cls_QEvent.rb_class, "WindowTitleChange", INT2NUM(33));
+  rb_define_const(cls_QEvent.rb_class, "WindowIconChange", INT2NUM(34));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationWindowIconChange", INT2NUM(35));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationFontChange", INT2NUM(36));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationLayoutDirectionChange", INT2NUM(37));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationPaletteChange", INT2NUM(38));
+  rb_define_const(cls_QEvent.rb_class, "PaletteChange", INT2NUM(39));
+  rb_define_const(cls_QEvent.rb_class, "Clipboard", INT2NUM(40));
+  rb_define_const(cls_QEvent.rb_class, "Speech", INT2NUM(42));
+  rb_define_const(cls_QEvent.rb_class, "MetaCall", INT2NUM(43));
+  rb_define_const(cls_QEvent.rb_class, "SockAct", INT2NUM(50));
+  rb_define_const(cls_QEvent.rb_class, "WinEventAct", INT2NUM(132));
+  rb_define_const(cls_QEvent.rb_class, "DeferredDelete", INT2NUM(52));
+  rb_define_const(cls_QEvent.rb_class, "DragEnter", INT2NUM(60));
+  rb_define_const(cls_QEvent.rb_class, "DragMove", INT2NUM(61));
+  rb_define_const(cls_QEvent.rb_class, "DragLeave", INT2NUM(62));
+  rb_define_const(cls_QEvent.rb_class, "Drop", INT2NUM(63));
+  rb_define_const(cls_QEvent.rb_class, "DragResponse", INT2NUM(64));
+  rb_define_const(cls_QEvent.rb_class, "ChildAdded", INT2NUM(68));
+  rb_define_const(cls_QEvent.rb_class, "ChildPolished", INT2NUM(69));
+  rb_define_const(cls_QEvent.rb_class, "ChildRemoved", INT2NUM(71));
+  rb_define_const(cls_QEvent.rb_class, "ShowWindowRequest", INT2NUM(73));
+  rb_define_const(cls_QEvent.rb_class, "PolishRequest", INT2NUM(74));
+  rb_define_const(cls_QEvent.rb_class, "Polish", INT2NUM(75));
+  rb_define_const(cls_QEvent.rb_class, "LayoutRequest", INT2NUM(76));
+  rb_define_const(cls_QEvent.rb_class, "UpdateRequest", INT2NUM(77));
+  rb_define_const(cls_QEvent.rb_class, "UpdateLater", INT2NUM(78));
+  rb_define_const(cls_QEvent.rb_class, "EmbeddingControl", INT2NUM(79));
+  rb_define_const(cls_QEvent.rb_class, "ActivateControl", INT2NUM(80));
+  rb_define_const(cls_QEvent.rb_class, "DeactivateControl", INT2NUM(81));
+  rb_define_const(cls_QEvent.rb_class, "ContextMenu", INT2NUM(82));
+  rb_define_const(cls_QEvent.rb_class, "InputMethod", INT2NUM(83));
+  rb_define_const(cls_QEvent.rb_class, "TabletMove", INT2NUM(87));
+  rb_define_const(cls_QEvent.rb_class, "LocaleChange", INT2NUM(88));
+  rb_define_const(cls_QEvent.rb_class, "LanguageChange", INT2NUM(89));
+  rb_define_const(cls_QEvent.rb_class, "LayoutDirectionChange", INT2NUM(90));
+  rb_define_const(cls_QEvent.rb_class, "Style", INT2NUM(91));
+  rb_define_const(cls_QEvent.rb_class, "TabletPress", INT2NUM(92));
+  rb_define_const(cls_QEvent.rb_class, "TabletRelease", INT2NUM(93));
+  rb_define_const(cls_QEvent.rb_class, "OkRequest", INT2NUM(94));
+  rb_define_const(cls_QEvent.rb_class, "HelpRequest", INT2NUM(95));
+  rb_define_const(cls_QEvent.rb_class, "IconDrag", INT2NUM(96));
+  rb_define_const(cls_QEvent.rb_class, "FontChange", INT2NUM(97));
+  rb_define_const(cls_QEvent.rb_class, "EnabledChange", INT2NUM(98));
+  rb_define_const(cls_QEvent.rb_class, "ActivationChange", INT2NUM(99));
+  rb_define_const(cls_QEvent.rb_class, "StyleChange", INT2NUM(100));
+  rb_define_const(cls_QEvent.rb_class, "IconTextChange", INT2NUM(101));
+  rb_define_const(cls_QEvent.rb_class, "ModifiedChange", INT2NUM(102));
+  rb_define_const(cls_QEvent.rb_class, "MouseTrackingChange", INT2NUM(109));
+  rb_define_const(cls_QEvent.rb_class, "WindowBlocked", INT2NUM(103));
+  rb_define_const(cls_QEvent.rb_class, "WindowUnblocked", INT2NUM(104));
+  rb_define_const(cls_QEvent.rb_class, "WindowStateChange", INT2NUM(105));
+  rb_define_const(cls_QEvent.rb_class, "ReadOnlyChange", INT2NUM(106));
+  rb_define_const(cls_QEvent.rb_class, "ToolTip", INT2NUM(110));
+  rb_define_const(cls_QEvent.rb_class, "WhatsThis", INT2NUM(111));
+  rb_define_const(cls_QEvent.rb_class, "StatusTip", INT2NUM(112));
+  rb_define_const(cls_QEvent.rb_class, "ActionChanged", INT2NUM(113));
+  rb_define_const(cls_QEvent.rb_class, "ActionAdded", INT2NUM(114));
+  rb_define_const(cls_QEvent.rb_class, "ActionRemoved", INT2NUM(115));
+  rb_define_const(cls_QEvent.rb_class, "FileOpen", INT2NUM(116));
+  rb_define_const(cls_QEvent.rb_class, "Shortcut", INT2NUM(117));
+  rb_define_const(cls_QEvent.rb_class, "ShortcutOverride", INT2NUM(51));
+  rb_define_const(cls_QEvent.rb_class, "WhatsThisClicked", INT2NUM(118));
+  rb_define_const(cls_QEvent.rb_class, "ToolBarChange", INT2NUM(120));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationActivate", INT2NUM(121));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationActivated", INT2NUM(121));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationDeactivate", INT2NUM(122));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationDeactivated", INT2NUM(122));
+  rb_define_const(cls_QEvent.rb_class, "QueryWhatsThis", INT2NUM(123));
+  rb_define_const(cls_QEvent.rb_class, "EnterWhatsThisMode", INT2NUM(124));
+  rb_define_const(cls_QEvent.rb_class, "LeaveWhatsThisMode", INT2NUM(125));
+  rb_define_const(cls_QEvent.rb_class, "ZOrderChange", INT2NUM(126));
+  rb_define_const(cls_QEvent.rb_class, "HoverEnter", INT2NUM(127));
+  rb_define_const(cls_QEvent.rb_class, "HoverLeave", INT2NUM(128));
+  rb_define_const(cls_QEvent.rb_class, "HoverMove", INT2NUM(129));
+  rb_define_const(cls_QEvent.rb_class, "AcceptDropsChange", INT2NUM(152));
+  rb_define_const(cls_QEvent.rb_class, "ZeroTimerEvent", INT2NUM(154));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneMouseMove", INT2NUM(155));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneMousePress", INT2NUM(156));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneMouseRelease", INT2NUM(157));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneMouseDoubleClick", INT2NUM(158));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneContextMenu", INT2NUM(159));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneHoverEnter", INT2NUM(160));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneHoverMove", INT2NUM(161));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneHoverLeave", INT2NUM(162));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneHelp", INT2NUM(163));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneDragEnter", INT2NUM(164));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneDragMove", INT2NUM(165));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneDragLeave", INT2NUM(166));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneDrop", INT2NUM(167));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneWheel", INT2NUM(168));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneLeave", INT2NUM(220));
+  rb_define_const(cls_QEvent.rb_class, "KeyboardLayoutChange", INT2NUM(169));
+  rb_define_const(cls_QEvent.rb_class, "DynamicPropertyChange", INT2NUM(170));
+  rb_define_const(cls_QEvent.rb_class, "TabletEnterProximity", INT2NUM(171));
+  rb_define_const(cls_QEvent.rb_class, "TabletLeaveProximity", INT2NUM(172));
+  rb_define_const(cls_QEvent.rb_class, "NonClientAreaMouseMove", INT2NUM(173));
+  rb_define_const(cls_QEvent.rb_class, "NonClientAreaMouseButtonPress", INT2NUM(174));
+  rb_define_const(cls_QEvent.rb_class, "NonClientAreaMouseButtonRelease", INT2NUM(175));
+  rb_define_const(cls_QEvent.rb_class, "NonClientAreaMouseButtonDblClick", INT2NUM(176));
+  rb_define_const(cls_QEvent.rb_class, "MacSizeChange", INT2NUM(177));
+  rb_define_const(cls_QEvent.rb_class, "ContentsRectChange", INT2NUM(178));
+  rb_define_const(cls_QEvent.rb_class, "MacGLWindowChange", INT2NUM(179));
+  rb_define_const(cls_QEvent.rb_class, "FutureCallOut", INT2NUM(180));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneResize", INT2NUM(181));
+  rb_define_const(cls_QEvent.rb_class, "GraphicsSceneMove", INT2NUM(182));
+  rb_define_const(cls_QEvent.rb_class, "CursorChange", INT2NUM(183));
+  rb_define_const(cls_QEvent.rb_class, "ToolTipChange", INT2NUM(184));
+  rb_define_const(cls_QEvent.rb_class, "NetworkReplyUpdated", INT2NUM(185));
+  rb_define_const(cls_QEvent.rb_class, "GrabMouse", INT2NUM(186));
+  rb_define_const(cls_QEvent.rb_class, "UngrabMouse", INT2NUM(187));
+  rb_define_const(cls_QEvent.rb_class, "GrabKeyboard", INT2NUM(188));
+  rb_define_const(cls_QEvent.rb_class, "UngrabKeyboard", INT2NUM(189));
+  rb_define_const(cls_QEvent.rb_class, "StateMachineSignal", INT2NUM(192));
+  rb_define_const(cls_QEvent.rb_class, "StateMachineWrapped", INT2NUM(193));
+  rb_define_const(cls_QEvent.rb_class, "TouchBegin", INT2NUM(194));
+  rb_define_const(cls_QEvent.rb_class, "TouchUpdate", INT2NUM(195));
+  rb_define_const(cls_QEvent.rb_class, "TouchEnd", INT2NUM(196));
+  rb_define_const(cls_QEvent.rb_class, "NativeGesture", INT2NUM(197));
+  rb_define_const(cls_QEvent.rb_class, "RequestSoftwareInputPanel", INT2NUM(199));
+  rb_define_const(cls_QEvent.rb_class, "CloseSoftwareInputPanel", INT2NUM(200));
+  rb_define_const(cls_QEvent.rb_class, "WinIdChange", INT2NUM(203));
+  rb_define_const(cls_QEvent.rb_class, "Gesture", INT2NUM(198));
+  rb_define_const(cls_QEvent.rb_class, "GestureOverride", INT2NUM(202));
+  rb_define_const(cls_QEvent.rb_class, "ScrollPrepare", INT2NUM(204));
+  rb_define_const(cls_QEvent.rb_class, "Scroll", INT2NUM(205));
+  rb_define_const(cls_QEvent.rb_class, "Expose", INT2NUM(206));
+  rb_define_const(cls_QEvent.rb_class, "InputMethodQuery", INT2NUM(207));
+  rb_define_const(cls_QEvent.rb_class, "OrientationChange", INT2NUM(208));
+  rb_define_const(cls_QEvent.rb_class, "TouchCancel", INT2NUM(209));
+  rb_define_const(cls_QEvent.rb_class, "ThemeChange", INT2NUM(210));
+  rb_define_const(cls_QEvent.rb_class, "SockClose", INT2NUM(211));
+  rb_define_const(cls_QEvent.rb_class, "PlatformPanel", INT2NUM(212));
+  rb_define_const(cls_QEvent.rb_class, "StyleAnimationUpdate", INT2NUM(213));
+  rb_define_const(cls_QEvent.rb_class, "ApplicationStateChange", INT2NUM(214));
+  rb_define_const(cls_QEvent.rb_class, "WindowChangeInternal", INT2NUM(215));
+  rb_define_const(cls_QEvent.rb_class, "ScreenChangeInternal", INT2NUM(216));
+  rb_define_const(cls_QEvent.rb_class, "PlatformSurface", INT2NUM(217));
+  rb_define_const(cls_QEvent.rb_class, "Pointer", INT2NUM(218));
+  rb_define_const(cls_QEvent.rb_class, "TabletTrackingChange", INT2NUM(219));
+  rb_define_const(cls_QEvent.rb_class, "WindowAboutToChangeInternal", INT2NUM(221));
+  rb_define_const(cls_QEvent.rb_class, "DevicePixelRatioChange", INT2NUM(222));
+  rb_define_const(cls_QEvent.rb_class, "ChildWindowAdded", INT2NUM(223));
+  rb_define_const(cls_QEvent.rb_class, "ChildWindowRemoved", INT2NUM(224));
+  rb_define_const(cls_QEvent.rb_class, "ParentWindowAboutToChange", INT2NUM(225));
+  rb_define_const(cls_QEvent.rb_class, "ParentWindowChange", INT2NUM(226));
+  rb_define_const(cls_QEvent.rb_class, "SafeAreaMarginsChange", INT2NUM(227));
+  rb_define_const(cls_QEvent.rb_class, "User", INT2NUM(1000));
+  rb_define_const(cls_QEvent.rb_class, "MaxUser", INT2NUM(65535));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmWidth", INT2NUM(1));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmHeight", INT2NUM(2));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmWidthMM", INT2NUM(3));

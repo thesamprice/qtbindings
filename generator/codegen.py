@@ -8,13 +8,28 @@ runtime type checks), enums as constants, and signals as `on_<signal> { }`
 methods implemented with compile-time member-pointer QObject::connect — no
 moc involved.
 
+Virtual override hooks: each instantiable class gets a C++ shim subclass
+(Rb_QWidget : QWidget) overriding every supported virtual (public and
+protected, collected transitively from base classes). Overrides dispatch to
+the Ruby method (snake_cased) when the instance's Ruby class defines one,
+else call the base implementation. Construction goes through allocate +
+#initialize so idiomatic Ruby subclassing works:
+
+    class MyWidget < Qt::Widget
+      def initialize(parent = nil)
+        super(parent)          # constructs the C++ object
+      end
+      def size_hint            # called from C++ layout machinery
+        Qt::Size.new(123, 45)
+      end
+      def close_event(event)   # protected virtual hook
+        event.accept
+        super(event)           # calls QWidget::closeEvent
+      end
+    end
+
 Base classes of requested classes are pulled in automatically so inheritance
 chains (QLabel < QFrame < QWidget < QObject) stay intact.
-
-Marshalling: bool/ints/floats/enums, QFlags<> (as Integer), QString,
-QByteArray, QStringList (Array), QVariant (native Ruby values), pointers to
-generated QObject classes, and by-value/const& use of generated value classes
-(QSize, QPoint, ...).
 
 Usage:
     python3 codegen.py --qt-prefix /opt/homebrew/opt/qt \
@@ -24,6 +39,7 @@ Usage:
 """
 
 import argparse
+import copy
 import re
 import sys
 from pathlib import Path
@@ -108,10 +124,16 @@ def classify(t, generated):
         if pspell == "char" and pointee.is_const_qualified():
             return Type("cstr", "const char*",
                         "StringValueCStr({})", "rb_str_new_cstr({})")
-        if pspell in generated and generated[pspell]:
+        if pspell in generated:
+            if generated[pspell]:  # QObject-derived
+                return Type("objptr", f"{pspell}*",
+                            "static_cast<%s*>(qt6rb::unwrap({}, &cls_%s))" % (pspell, pspell),
+                            "qt6rb::wrap_qobject((QObject*)({}), &cls_%s)" % pspell,
+                            cls=pspell)
+            # Polymorphic non-QObject (events etc.): never owned by Ruby
             return Type("objptr", f"{pspell}*",
                         "static_cast<%s*>(qt6rb::unwrap({}, &cls_%s))" % (pspell, pspell),
-                        "qt6rb::wrap_qobject(({}), &cls_%s)" % pspell,
+                        "qt6rb::wrap((void*)({}), &cls_%s, false)" % pspell,
                         cls=pspell)
         return Type("unsupported", spelling)
 
@@ -149,23 +171,32 @@ def classify(t, generated):
     return Type("unsupported", spelling)
 
 
+def is_final(cursor):
+    return any(c.kind == CursorKind.CXX_FINAL_ATTR for c in cursor.get_children())
+
+
 class Method:
     def __init__(self, cursor, generated):
         self.cursor = cursor
         self.name = cursor.spelling
-        self.static = (cursor.is_static_method()
-                       if cursor.kind == CursorKind.CXX_METHOD else False)
-        self.result = (classify(cursor.result_type, generated)
-                       if cursor.kind == CursorKind.CXX_METHOD else None)
+        is_cxx = cursor.kind == CursorKind.CXX_METHOD
+        self.static = cursor.is_static_method() if is_cxx else False
+        self.virtual = cursor.is_virtual_method() if is_cxx else False
+        self.const = cursor.is_const_method() if is_cxx else False
+        self.access = cursor.access_specifier
+        self.result = classify(cursor.result_type, generated) if is_cxx else None
+        self.result_decl = cursor.result_type.spelling if is_cxx else None
         args = [a for a in cursor.get_arguments()
                 if not a.type.spelling.endswith("QPrivateSignal")]
         self.params = [classify(a.type, generated) for a in args]
+        self.param_decls = [a.type.spelling for a in args]
         self.min_args = 0
         for a in args:
             tokens = [t.spelling for t in a.get_tokens()]
             if "=" in tokens:
                 break
             self.min_args += 1
+        self.dispatch_min = self.min_args
         self.supported = all(p.kind not in ("unsupported", "void") for p in self.params) \
             and (self.result is None or self.result.kind != "unsupported")
 
@@ -179,6 +210,8 @@ class Klass:
         self.signals = []
         self.ctors = []
         self.enums = []
+        self.virtuals = []      # hookable virtuals (own + inherited)
+        self.shim = False
         self.skipped = 0
         self.dtor_public = True
         self.abstract = False
@@ -192,6 +225,42 @@ def base_cursors(cursor):
             if decl is not None and decl.kind in (CursorKind.CLASS_DECL,
                                                   CursorKind.STRUCT_DECL):
                 yield decl
+
+
+def collect_virtuals(klass, classes, generated):
+    """Hookable virtuals for klass: own + inherited, nearest declaration
+    wins; a nearest-but-unhookable declaration blocks the signature."""
+    sigs = {}
+
+    def visit(name):
+        k = classes.get(name)
+        if k is None:
+            return
+        for child in k.cursor.get_children():
+            if child.kind != CursorKind.CXX_METHOD:
+                continue
+            if not child.is_virtual_method():
+                continue
+            if child.access_specifier == AccessSpecifier.PRIVATE:
+                continue
+            if child.spelling.startswith("operator"):
+                continue
+            key = (child.spelling,
+                   tuple(a.type.get_canonical().spelling
+                         for a in child.get_arguments()))
+            if key in sigs:
+                continue
+            if child.is_pure_virtual_method() or is_final(child) \
+                    or collect_annotations(child):
+                sigs[key] = None
+                continue
+            m = Method(child, generated)
+            sigs[key] = m if m.supported else None
+        for b in k.bases:
+            visit(b)
+
+    visit(klass.name)
+    return [m for m in sigs.values() if m]
 
 
 def harvest(tu, qt_prefix, wanted):
@@ -280,6 +349,11 @@ def harvest(tu, qt_prefix, wanted):
             elif child.kind == CursorKind.ENUM_DECL and child.spelling:
                 if child.access_specifier == AccessSpecifier.PUBLIC:
                     k.enums.append(child)
+
+    for k in classes.values():
+        if k.ctors and not k.abstract:
+            k.virtuals = collect_virtuals(k, classes, generated)
+            k.shim = bool(k.virtuals)
     return classes, missing
 
 
@@ -307,25 +381,34 @@ def const_name(name):
     return name[0].upper() + name[1:] if name else name
 
 
-def emit_overload(out, m, klass, n, indent):
-    """Emit the call for overload m invoked with n args."""
-    args = ", ".join(m.params[i].to_cxx.format(f"argv[{i}]") for i in range(n))
-    if m.cursor.kind == CursorKind.CONSTRUCTOR:
-        call = f"new {klass.name}({args})"
-        if klass.is_qobject:
-            out.append(f"{indent}return qt6rb::wrap_qobject({call}, &cls_{klass.name});")
+def emit_dispatch(out, overloads, error_name, body):
+    """Shared arity + type-guard dispatcher. body(m, n, indent) emits the
+    per-overload code."""
+    arities = sorted({n for m in overloads
+                      for n in range(m.dispatch_min, len(m.params) + 1)})
+    for n in arities:
+        candidates = [m for m in overloads
+                      if m.dispatch_min <= n <= len(m.params)]
+        # Most-specific first: overloads with catch-all variant params last
+        candidates.sort(key=lambda m: sum(1 for p in m.params[:n]
+                                          if p.kind == "variant"))
+        out.append(f"  if (argc == {n}) {{")
+        if len(candidates) == 1:
+            body(candidates[0], n, "    ")
         else:
-            out.append(f"{indent}return qt6rb::wrap({call}, &cls_{klass.name}, true);")
-        return
-    if m.static:
-        call = f"{klass.name}::{m.name}({args})"
-    else:
-        call = f"o->{m.name}({args})"
-    if m.result.kind == "void":
-        out.append(f"{indent}{call};")
-        out.append(f"{indent}return Qnil;")
-    else:
-        out.append(f"{indent}return {m.result.to_rb.format(call)};")
+            for m in candidates:
+                guards = " && ".join(m.params[i].guard(f"argv[{i}]")
+                                     for i in range(n)) or "1"
+                out.append(f"    if ({guards}) {{")
+                body(m, n, "      ")
+                out.append("    }")
+            out.append(f'    rb_raise(rb_eTypeError, "no matching overload of {error_name} for given argument types");')
+        out.append("  }")
+    out.append(f'  rb_raise(rb_eArgError, "wrong number of arguments for {error_name} (%d)", argc);')
+
+
+def conv_args(m, n):
+    return ", ".join(m.params[i].to_cxx.format(f"argv[{i}]") for i in range(n))
 
 
 def emit_method_group(out, klass, ruby_name, overloads, static):
@@ -336,29 +419,132 @@ def emit_method_group(out, klass, ruby_name, overloads, static):
         out.append(f"  {klass.name}* o = static_cast<{klass.name}*>(qt6rb::unwrap(self, &cls_{klass.name}));")
     out.append("  (void)argv; (void)self;")
 
-    arities = sorted({n for m in overloads
-                      for n in range(m.min_args, len(m.params) + 1)})
-    for n in arities:
-        candidates = [m for m in overloads if m.min_args <= n <= len(m.params)]
-        # Most-specific first: overloads with catch-all variant params last
-        candidates.sort(key=lambda m: sum(1 for p in m.params[:n]
-                                          if p.kind == "variant"))
-        out.append(f"  if (argc == {n}) {{")
-        if len(candidates) == 1:
-            emit_overload(out, candidates[0], klass, n, "    ")
+    def body(m, n, indent):
+        args = conv_args(m, n)
+        if m.static:
+            call = f"{klass.name}::{m.name}({args})"
+        elif m.virtual and klass.shim:
+            # For Ruby-created objects call this class's implementation
+            # non-virtually so a Ruby override calling super doesn't recurse
+            call = (f"(dynamic_cast<Rb_{klass.name}*>(o)"
+                    f" ? o->{klass.name}::{m.name}({args})"
+                    f" : o->{m.name}({args}))")
         else:
-            for m in candidates:
-                guards = " && ".join(m.params[i].guard(f"argv[{i}]")
-                                     for i in range(n)) or "1"
-                out.append(f"    if ({guards}) {{")
-                emit_overload(out, m, klass, n, "      ")
-                out.append("    }")
-            out.append(f'    rb_raise(rb_eTypeError, "no matching overload of {klass.name}#{ruby_name} for given argument types");')
-        out.append("  }")
-    out.append(f'  rb_raise(rb_eArgError, "wrong number of arguments for {klass.name}#{ruby_name} (%d)", argc);')
+            call = f"o->{m.name}({args})"
+        if m.result.kind == "void":
+            out.append(f"{indent}{call};")
+            out.append(f"{indent}return Qnil;")
+        else:
+            out.append(f"{indent}return {m.result.to_rb.format(call)};")
+
+    emit_dispatch(out, overloads, f"{klass.name}#{ruby_name}", body)
     out.append("}")
     out.append("")
     return cname
+
+
+def emit_initialize(out, klass):
+    cname = f"rb_{klass.name}_initialize"
+    cxx = f"Rb_{klass.name}" if klass.shim else klass.name
+    owned = "false" if klass.is_qobject else "true"
+    out.append(f"static VALUE {cname}(int argc, VALUE* argv, VALUE self) {{")
+    out.append("  (void)argv;")
+
+    def body(m, n, indent):
+        out.append(f"{indent}{cxx}* p = new {cxx}({conv_args(m, n)});")
+        out.append(f"{indent}qt6rb::attach(self, p, {owned});")
+        if klass.shim:
+            out.append(f"{indent}p->qt6rb_set_self(self);")
+        out.append(f"{indent}return self;")
+
+    emit_dispatch(out, klass.ctors, f"{klass.name}#initialize", body)
+    out.append("}")
+    out.append(f"static VALUE rb_{klass.name}_alloc(VALUE klass) {{ return qt6rb::alloc_wrapper(klass, &cls_{klass.name}); }}")
+    out.append("")
+    return cname
+
+
+def emit_shim(out, klass):
+    shim = f"Rb_{klass.name}"
+    out.append(f"class {shim} : public {klass.name} {{")
+    out.append("public:")
+    out.append(f"  using {klass.name}::{klass.name};")
+    out.append("  VALUE qt6rb_self = Qnil;")
+    out.append("  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }")
+    out.append(f"  ~{shim}() override {{ if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }}")
+    # Public forwarders so protected base implementations are callable
+    for m in klass.virtuals:
+        if m.access != AccessSpecifier.PROTECTED:
+            continue
+        params = ", ".join(f"{d} a{i}" for i, d in enumerate(m.param_decls))
+        args = ", ".join(f"a{i}" for i in range(len(m.params)))
+        ret = "" if m.result.kind == "void" else "return "
+        out.append(f"  {m.result_decl} qt6rb_base_{m.name}({params}) {{ {ret}{klass.name}::{m.name}({args}); }}")
+    # Overrides dispatching to Ruby when the user's class defines the method
+    for m in klass.virtuals:
+        rname = snake(m.name)
+        params = ", ".join(f"{d} a{i}" for i, d in enumerate(m.param_decls))
+        constq = " const" if m.const else ""
+        args = ", ".join(f"a{i}" for i in range(len(m.params)))
+        out.append(f"  {m.result_decl} {m.name}({params}){constq} override {{")
+        out.append(f'    if (qt6rb::has_override(qt6rb_self, &cls_{klass.name}, "{rname}")) {{')
+        if m.params:
+            conv = ", ".join(t.to_rb.format(f"a{i}") for i, t in enumerate(m.params))
+            out.append(f"      VALUE rb_args[] = {{ {conv} }};")
+            argse = f"{len(m.params)}, rb_args"
+        else:
+            argse = "0, nullptr"
+        out.append("      bool ok = true;")
+        if m.result.kind == "void":
+            out.append(f'      qt6rb::call_method(qt6rb_self, "{rname}", {argse}, &ok);')
+            out.append("      if (ok) return;")
+        else:
+            out.append(f'      VALUE r = qt6rb::call_method(qt6rb_self, "{rname}", {argse}, &ok);')
+            out.append(f"      if (ok) return {m.result.to_cxx.format('r')};")
+        out.append("    }")
+        ret = "" if m.result.kind == "void" else "return "
+        out.append(f"    {ret}{klass.name}::{m.name}({args});")
+        out.append("  }")
+    out.append("};")
+    out.append("")
+
+
+def emit_protected_callers(out, klass):
+    """Ruby methods exposing protected virtual base implementations, so
+    `super(event)` works inside Ruby overrides."""
+    existing = {snake(m.name) for m in klass.methods}
+    groups = {}
+    for m in klass.virtuals:
+        if m.access != AccessSpecifier.PROTECTED:
+            continue
+        rname = snake(m.name)
+        if rname in existing:
+            continue
+        # Base forwarders take the full parameter list (no default args)
+        m = copy.copy(m)
+        m.dispatch_min = len(m.params)
+        groups.setdefault(rname, []).append(m)
+    result = []
+    for rname, overloads in groups.items():
+        cname = f"rb_{klass.name}_prot_{rname}"
+        out.append(f"static VALUE {cname}(int argc, VALUE* argv, VALUE self) {{")
+        out.append("  (void)argv;")
+        out.append(f"  Rb_{klass.name}* shim = dynamic_cast<Rb_{klass.name}*>(static_cast<{klass.name}*>(qt6rb::unwrap(self, &cls_{klass.name})));")
+        out.append(f'  if (!shim) rb_raise(rb_eTypeError, "{rname} is protected; only callable on Ruby-created instances");')
+
+        def body(m, n, indent):
+            call = f"shim->qt6rb_base_{m.name}({conv_args(m, n)})"
+            if m.result.kind == "void":
+                out.append(f"{indent}{call};")
+                out.append(f"{indent}return Qnil;")
+            else:
+                out.append(f"{indent}return {m.result.to_rb.format(call)};")
+
+        emit_dispatch(out, overloads, f"{klass.name}#{rname}", body)
+        out.append("}")
+        out.append("")
+        result.append((rname, cname))
+    return result
 
 
 def emit_signal(out, klass, sig):
@@ -399,12 +585,21 @@ def generate(classes, modules, ns_constants):
         out.append(f'static qt6rb::ClassInfo cls_{k.name} = {{ "{k.name}", Qnil, {deleter}, {qobj} }};')
     out.append("")
 
+    for k in classes.values():
+        if k.shim:
+            emit_shim(out, k)
+
     registrations = []
     for k in classes.values():
         if k.ctors and not k.abstract:
-            cname = emit_method_group(out, k, "new", k.ctors, static=True)
+            cname = emit_initialize(out, k)
             registrations.append(
-                f'  rb_define_singleton_method(cls_{k.name}.rb_class, "new", RUBY_METHOD_FUNC({cname}), -1);')
+                f"  rb_define_alloc_func(cls_{k.name}.rb_class, rb_{k.name}_alloc);")
+            registrations.append(
+                f'  rb_define_method(cls_{k.name}.rb_class, "initialize", RUBY_METHOD_FUNC({cname}), -1);')
+        else:
+            registrations.append(
+                f"  rb_undef_alloc_func(cls_{k.name}.rb_class);")
         for static in (False, True):
             groups = {}
             for m in k.methods:
@@ -427,6 +622,10 @@ def generate(classes, modules, ns_constants):
                             and all(m.result.kind == "bool" for m in overloads):
                         registrations.append(
                             f'  rb_define_alias({target}, "{rname[3:]}?", "{rname}");')
+        if k.shim:
+            for rname, cname in emit_protected_callers(out, k):
+                registrations.append(
+                    f'  rb_define_method(cls_{k.name}.rb_class, "{rname}", RUBY_METHOD_FUNC({cname}), -1);')
         # Signals (skip overloaded ones -- member pointer would be ambiguous)
         sig_counts = {}
         for s in k.signals:
@@ -451,7 +650,6 @@ def generate(classes, modules, ns_constants):
         rb_name = k.name[1:] if k.name.startswith("Q") else k.name
         super_expr = f"cls_{k.bases[0]}.rb_class" if k.bases else "Qnil"
         out.append(f'  qt6rb::define_class(&cls_{k.name}, "{rb_name}", {super_expr});')
-        out.append(f"  rb_undef_alloc_func(cls_{k.name}.rb_class);")
         emitted.add(k.name)
 
     for k in classes.values():
@@ -497,7 +695,8 @@ def main():
     opts.output.write_text(generate(classes, opts.modules, ns_constants))
     for k in classes.values():
         print(f"{k.name}: {len(k.ctors)} ctors, {len(k.methods)} methods, "
-              f"{len(k.signals)} signals, {k.skipped} skipped"
+              f"{len(k.signals)} signals, {len(k.virtuals)} virtual hooks, "
+              f"{k.skipped} skipped"
               f"{' (QObject)' if k.is_qobject else ''}")
     if ns_constants:
         print(f"Qt namespace constants: {len(ns_constants)}")

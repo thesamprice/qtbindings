@@ -51,9 +51,39 @@ cd ext/qt6 && ruby extconf.rb && make
 ruby examples/qt6_widgets_demo.rb   # headless (offscreen platform)
 ```
 
+## Virtual override hooks
+
+Each instantiable class gets a C++ shim subclass (`Rb_QWidget : QWidget`)
+overriding every supported virtual — public and protected, collected
+transitively from base classes. An override dispatches to the snake_cased
+Ruby method when the instance's Ruby class defines one (cached per class),
+else calls the base implementation. Construction goes through
+`allocate` + `#initialize`, so idiomatic Ruby subclassing works:
+
+```ruby
+class MyWidget < Qt::Widget
+  def initialize(parent = nil)
+    super(parent)          # constructs the C++ object
+  end
+  def size_hint            # called by C++ layout machinery
+    Qt::Size.new(123, 45)
+  end
+  def close_event(event)   # protected virtual hook
+    event.accept
+    super(event)           # calls QWidget::closeEvent (no recursion)
+  end
+end
+```
+
+`super` from an override is safe in both directions: protected virtuals get
+base-caller bindings that go through a shim forwarder, and public-virtual
+bindings call the C++ implementation non-virtually on Ruby-created objects.
+Exceptions raised in overrides are reported to stderr (rb_protect) and fall
+back to the base implementation instead of crashing the event loop. See
+`examples/qt6_override_demo.rb`.
+
 ## Known limitations (next steps)
 
-- Ruby subclasses cannot override C++ virtuals yet (no override hooks)
 - QObject wrappers never delete on GC (Qt parentage or app teardown owns
   them; proper `destroyed()` tracking is future work)
 - Multiple-inheritance pointer casts assume the QObject branch is the

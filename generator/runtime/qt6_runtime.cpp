@@ -62,7 +62,86 @@ void* unwrap(VALUE obj, ClassInfo* cls) {
     rb_raise(rb_eTypeError, "expected %s but got %s",
              cls->cxx_name, rb_obj_classname(obj));
   }
+  if (!w->ptr) {
+    rb_raise(rb_eRuntimeError,
+             "%s used before construction (did initialize call super?)",
+             rb_obj_classname(obj));
+  }
   return w->ptr;
+}
+
+VALUE alloc_wrapper(VALUE klass, ClassInfo* cls) {
+  Wrapper* w = static_cast<Wrapper*>(xmalloc(sizeof(Wrapper)));
+  w->ptr = nullptr;
+  w->owned = false;
+  w->cls = cls;
+  return TypedData_Wrap_Struct(klass, &wrapper_type, w);
+}
+
+void attach(VALUE self, void* ptr, bool owned) {
+  Wrapper* w;
+  TypedData_Get_Struct(self, Wrapper, &wrapper_type, w);
+  if (w->ptr) {
+    rb_raise(rb_eRuntimeError, "%s already constructed (super called twice?)",
+             rb_obj_classname(self));
+  }
+  w->ptr = ptr;
+  w->owned = owned;
+}
+
+bool has_override(VALUE self, ClassInfo* cls, const char* name) {
+  if (NIL_P(self)) return false;
+  VALUE klass = rb_obj_class(self);
+  if (klass == cls->rb_class) return false;
+  static ID id_cache = 0;
+  if (!id_cache) id_cache = rb_intern("__qt6rb_overrides__");
+  ID mid = rb_intern(name);
+  VALUE key = ID2SYM(mid);
+  VALUE cache = rb_ivar_get(klass, id_cache);
+  if (NIL_P(cache)) {
+    cache = rb_hash_new();
+    rb_ivar_set(klass, id_cache, cache);
+  }
+  VALUE cached = rb_hash_aref(cache, key);
+  if (!NIL_P(cached)) return RTEST(cached);
+  bool result = false;
+  if (rb_respond_to(self, mid)) {
+    VALUE meth = rb_obj_method(self, key);
+    VALUE owner = rb_funcall(meth, rb_intern("owner"), 0);
+    VALUE ancestors = rb_mod_ancestors(klass);
+    long io = -1, ic = -1;
+    for (long i = 0; i < RARRAY_LEN(ancestors); i++) {
+      VALUE a = rb_ary_entry(ancestors, i);
+      if (io < 0 && a == owner) io = i;
+      if (ic < 0 && a == cls->rb_class) ic = i;
+    }
+    result = (io >= 0 && ic >= 0 && io < ic);
+  }
+  rb_hash_aset(cache, key, result ? Qtrue : Qfalse);
+  return result;
+}
+
+struct MethodCall { VALUE self; ID mid; int argc; const VALUE* argv; };
+
+static VALUE call_method_body(VALUE arg) {
+  MethodCall* mc = reinterpret_cast<MethodCall*>(arg);
+  return rb_funcallv(mc->self, mc->mid, mc->argc, mc->argv);
+}
+
+VALUE call_method(VALUE self, const char* name, int argc, const VALUE* argv, bool* ok) {
+  MethodCall mc = { self, rb_intern(name), argc, argv };
+  int state = 0;
+  VALUE result = rb_protect(call_method_body, reinterpret_cast<VALUE>(&mc), &state);
+  if (state) {
+    VALUE err = rb_errinfo();
+    rb_set_errinfo(Qnil);
+    VALUE msg = rb_funcall(err, rb_intern("full_message"), 0);
+    fprintf(stderr, "Qt virtual override raised:\n%s\n", StringValueCStr(msg));
+    if (ok) *ok = false;
+    return Qnil;
+  }
+  if (ok) *ok = true;
+  return result;
 }
 
 void* unwrap_ref(VALUE obj, ClassInfo* cls) {

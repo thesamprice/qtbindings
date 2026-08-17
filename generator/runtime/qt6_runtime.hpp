@@ -41,6 +41,13 @@ VALUE define_class(ClassInfo* info, const char* name, VALUE superclass);
 // Wrap a C++ object. If owned, the wrapper deletes it on GC.
 VALUE wrap(void* ptr, ClassInfo* cls, bool owned);
 
+// Allocate an empty (unconstructed) wrapper for klass; #initialize attaches
+// the C++ object. Enables idiomatic Ruby subclassing with super().
+VALUE alloc_wrapper(VALUE klass, ClassInfo* cls);
+
+// Attach a freshly constructed C++ object to an allocated wrapper
+void attach(VALUE self, void* ptr, bool owned);
+
 // Fetch the C++ pointer from a wrapped object, checking it is a `cls`
 // (or raise). Returns nullptr for nil.
 void* unwrap(VALUE obj, ClassInfo* cls);
@@ -62,6 +69,14 @@ QStringList to_qstringlist(VALUE v);
 VALUE from_qstringlist(const QStringList& list);
 QVariant to_qvariant(VALUE v);
 VALUE from_qvariant(const QVariant& v);
+
+// True when the Ruby instance's class overrides `name` below the generated
+// class cls (i.e. a user-defined virtual override). Cached per class.
+bool has_override(VALUE self, ClassInfo* cls, const char* name);
+
+// Call a Ruby method under rb_protect; reports exceptions to stderr.
+// Sets *ok=false (and returns Qnil) if the call raised.
+VALUE call_method(VALUE self, const char* name, int argc, const VALUE* argv, bool* ok);
 
 // Keep a Ruby proc alive for the lifetime of the process (signal handlers)
 void retain_proc(VALUE proc);
