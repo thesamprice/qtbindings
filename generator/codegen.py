@@ -664,9 +664,13 @@ def emit_dispatch(out, overloads, error_name, body, fallback=None):
                 out.append(f"    if ({guards}) {{")
                 body(m, n, "      ")
                 out.append("    }")
-            out.append(f'    rb_raise(rb_eTypeError, "no matching overload of {error_name} for given argument types");')
+            out.append(fallback or
+                       f'    rb_raise(rb_eTypeError, "no matching overload of '
+                       f'{error_name} for given argument types");')
         out.append("  }")
-    out.append(f'  rb_raise(rb_eArgError, "wrong number of arguments for {error_name} (%d)", argc);')
+    out.append(fallback or
+               f'  rb_raise(rb_eArgError, "wrong number of arguments for '
+               f'{error_name} (%d)", argc);')
 
 
 # C++ methods whose Ruby name shadows a core method: on arity/type mismatch
@@ -1080,7 +1084,8 @@ def generate(classes, modules, ns_constants):
                 continue
             getter, setter = emit_field(out, k, fname, ftype, writable)
             target = f"cls_{k.name}.rb_class"
-            for rname in {fname, snake(fname)}:
+            # sorted for deterministic generator output
+            for rname in sorted({fname, snake(fname)}):
                 registrations.append(
                     f'  rb_define_method({target}, "{rname}", RUBY_METHOD_FUNC({getter}), 0);')
                 if setter:

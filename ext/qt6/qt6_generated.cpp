@@ -26861,7 +26861,7 @@ static VALUE rb_QWidget_raise(int argc, VALUE* argv, VALUE self) {
     o->raise();
     return Qnil;
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#raise (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QWidget_lower(int argc, VALUE* argv, VALUE self) {
@@ -42191,7 +42191,7 @@ static VALUE rb_QEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QEvent*>(o) ? o->QEvent::clone() : o->clone())), &cls_QEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QEvent_s_register_event_type(int argc, VALUE* argv, VALUE self) {
@@ -42232,7 +42232,7 @@ static VALUE rb_QTimerEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QTimerEvent*>(o) ? o->QTimerEvent::clone() : o->clone())), &cls_QTimerEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QTimerEvent_timer_id(int argc, VALUE* argv, VALUE self) {
@@ -42271,7 +42271,7 @@ static VALUE rb_QChildEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QChildEvent*>(o) ? o->QChildEvent::clone() : o->clone())), &cls_QChildEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QChildEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QChildEvent_child(int argc, VALUE* argv, VALUE self) {
@@ -42328,7 +42328,7 @@ static VALUE rb_QCloseEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QCloseEvent*>(o) ? o->QCloseEvent::clone() : o->clone())), &cls_QCloseEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QCloseEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QShowEvent_ctor(int argc, VALUE* argv, VALUE self) {
@@ -42349,7 +42349,7 @@ static VALUE rb_QShowEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QShowEvent*>(o) ? o->QShowEvent::clone() : o->clone())), &cls_QShowEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QShowEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QHideEvent_ctor(int argc, VALUE* argv, VALUE self) {
@@ -42370,7 +42370,7 @@ static VALUE rb_QHideEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QHideEvent*>(o) ? o->QHideEvent::clone() : o->clone())), &cls_QHideEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QHideEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QMoveEvent_ctor(int argc, VALUE* argv, VALUE self) {
@@ -42391,7 +42391,7 @@ static VALUE rb_QMoveEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QMoveEvent*>(o) ? o->QMoveEvent::clone() : o->clone())), &cls_QMoveEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMoveEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QMoveEvent_pos(int argc, VALUE* argv, VALUE self) {
@@ -42430,7 +42430,7 @@ static VALUE rb_QResizeEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QResizeEvent*>(o) ? o->QResizeEvent::clone() : o->clone())), &cls_QResizeEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QResizeEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QResizeEvent_size(int argc, VALUE* argv, VALUE self) {
@@ -42469,7 +42469,7 @@ static VALUE rb_QPaintEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QPaintEvent*>(o) ? o->QPaintEvent::clone() : o->clone())), &cls_QPaintEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QPaintEvent_rect(int argc, VALUE* argv, VALUE self) {
@@ -42544,7 +42544,7 @@ static VALUE rb_QKeyEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QKeyEvent*>(o) ? o->QKeyEvent::clone() : o->clone())), &cls_QKeyEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QKeyEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QKeyEvent_key(int argc, VALUE* argv, VALUE self) {
@@ -42652,7 +42652,7 @@ static VALUE rb_QFocusEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QFocusEvent*>(o) ? o->QFocusEvent::clone() : o->clone())), &cls_QFocusEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QFocusEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QFocusEvent_got_focus(int argc, VALUE* argv, VALUE self) {
@@ -42700,7 +42700,7 @@ static VALUE rb_QEnterEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QEnterEvent*>(o) ? o->QEnterEvent::clone() : o->clone())), &cls_QEnterEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QEnterEvent_pos(int argc, VALUE* argv, VALUE self) {
@@ -42820,7 +42820,7 @@ static VALUE rb_QMouseEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QMouseEvent*>(o) ? o->QMouseEvent::clone() : o->clone())), &cls_QMouseEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMouseEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QMouseEvent_pos(int argc, VALUE* argv, VALUE self) {
@@ -42956,7 +42956,7 @@ static VALUE rb_QWheelEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QWheelEvent*>(o) ? o->QWheelEvent::clone() : o->clone())), &cls_QWheelEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QWheelEvent_pixel_delta(int argc, VALUE* argv, VALUE self) {
@@ -46775,7 +46775,7 @@ static VALUE rb_QImage_format(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return INT2NUM(static_cast<int>(o->format()));
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QImage#format (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QImage_convert_to_format(int argc, VALUE* argv, VALUE self) {
@@ -53498,7 +53498,7 @@ static VALUE rb_QProgressBar_format(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::from_qstring(o->format());
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QProgressBar#format (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QProgressBar_reset(int argc, VALUE* argv, VALUE self) {
@@ -59683,7 +59683,7 @@ static VALUE rb_QTableWidgetItem_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QTableWidgetItem*>(o) ? o->QTableWidgetItem::clone() : o->clone())), &cls_QTableWidgetItem, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTableWidgetItem#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QTableWidgetItem_table_widget(int argc, VALUE* argv, VALUE self) {
@@ -61485,7 +61485,7 @@ static VALUE rb_QTreeWidgetItem_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QTreeWidgetItem*>(o) ? o->QTreeWidgetItem::clone() : o->clone())), &cls_QTreeWidgetItem, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidgetItem#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QTreeWidgetItem_tree_widget(int argc, VALUE* argv, VALUE self) {
@@ -65381,7 +65381,7 @@ static VALUE rb_QListWidgetItem_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)((dynamic_cast<Rb_QListWidgetItem*>(o) ? o->QListWidgetItem::clone() : o->clone())), &cls_QListWidgetItem, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QListWidgetItem#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QListWidgetItem_list_widget(int argc, VALUE* argv, VALUE self) {
@@ -66243,7 +66243,7 @@ static VALUE rb_QTextDocument_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 1) {
     return qt6rb::wrap_qobject((QObject*)(o->clone(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)))), &cls_QTextDocument);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTextDocument#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QTextDocument_is_empty(int argc, VALUE* argv, VALUE self) {
@@ -78256,7 +78256,7 @@ static VALUE rb_QSettings_format(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return INT2NUM(static_cast<int>(o->format()));
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSettings#format (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QSettings_scope(int argc, VALUE* argv, VALUE self) {
@@ -84159,7 +84159,7 @@ static VALUE rb_QMovie_format(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::from_qbytearray(o->format());
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMovie#format (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QMovie_set_background_color(int argc, VALUE* argv, VALUE self) {
@@ -88167,7 +88167,7 @@ static VALUE rb_QInputEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)(o->clone()), &cls_QInputEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QInputEvent_device_type(int argc, VALUE* argv, VALUE self) {
@@ -88233,7 +88233,7 @@ static VALUE rb_QSinglePointEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)(o->clone()), &cls_QSinglePointEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QSinglePointEvent_button(int argc, VALUE* argv, VALUE self) {
@@ -92162,7 +92162,7 @@ static VALUE rb_QPointerEvent_clone(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap((void*)(o->clone()), &cls_QPointerEvent, false);
   }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#clone (%d)", argc);
+  return rb_call_super(argc, argv);
 }
 
 static VALUE rb_QPointerEvent_pointer_type(int argc, VALUE* argv, VALUE self) {
@@ -104234,10 +104234,10 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QStyleOptionViewItem.rb_class, rb_QStyleOptionViewItem_alloc);
   qt6rb::register_ctor(cls_QStyleOptionViewItem.rb_class, rb_QStyleOptionViewItem_ctor);
   rb_include_module(cls_QStyleOptionViewItem.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "displayAlignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "display_alignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_display_alignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_display_alignment_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationAlignment", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationAlignment=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_alignment_set), 1);
@@ -104249,23 +104249,23 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "text_elide_mode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "text_elide_mode=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_text_elide_mode", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_text_elide_mode_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationPosition=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_position=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_decoration_position", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_position_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationSize", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "decorationSize=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "decoration_size=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_decoration_size", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_decoration_size_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "font", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "font=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_font_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "showDecorationSelected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "showDecorationSelected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "show_decoration_selected=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_show_decoration_selected", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_show_decoration_selected_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "features", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_features), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "features=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_features_set), 1);
@@ -104276,10 +104276,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "index", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "index=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_index", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_index_set), 1);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
-  rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "checkState=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state), 0);
+  rb_define_method(cls_QStyleOptionViewItem.rb_class, "check_state=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_check_state_set), 1);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "icon", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_icon), 0);
   rb_define_method(cls_QStyleOptionViewItem.rb_class, "icon=", RUBY_METHOD_FUNC(rb_QStyleOptionViewItem_field_icon_set), 1);
@@ -104309,10 +104309,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOptionButton.rb_class, "icon", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon), 0);
   rb_define_method(cls_QStyleOptionButton.rb_class, "icon=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_set), 1);
   rb_define_method(cls_QStyleOptionButton.rb_class, "set_icon", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_set), 1);
-  rb_define_method(cls_QStyleOptionButton.rb_class, "icon_size", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size), 0);
-  rb_define_method(cls_QStyleOptionButton.rb_class, "icon_size=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size_set), 1);
   rb_define_method(cls_QStyleOptionButton.rb_class, "iconSize", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size), 0);
   rb_define_method(cls_QStyleOptionButton.rb_class, "iconSize=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size_set), 1);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "icon_size", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size), 0);
+  rb_define_method(cls_QStyleOptionButton.rb_class, "icon_size=", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size_set), 1);
   rb_define_method(cls_QStyleOptionButton.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QStyleOptionButton_field_icon_size_set), 1);
   rb_define_alloc_func(cls_QFrame.rb_class, rb_QFrame_alloc);
   qt6rb::register_ctor(cls_QFrame.rb_class, rb_QFrame_ctor);
@@ -105727,10 +105727,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOption.rb_class, "palette", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette), 0);
   rb_define_method(cls_QStyleOption.rb_class, "palette=", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "set_palette", RUBY_METHOD_FUNC(rb_QStyleOption_field_palette_set), 1);
-  rb_define_method(cls_QStyleOption.rb_class, "style_object", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object), 0);
-  rb_define_method(cls_QStyleOption.rb_class, "style_object=", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "styleObject", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object), 0);
   rb_define_method(cls_QStyleOption.rb_class, "styleObject=", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
+  rb_define_method(cls_QStyleOption.rb_class, "style_object", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object), 0);
+  rb_define_method(cls_QStyleOption.rb_class, "style_object=", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "set_style_object", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
   rb_undef_alloc_func(cls_QPointerEvent.rb_class);
   rb_define_method(cls_QPointerEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QPointerEvent_qt_check_for_qgadget_macro), -1);
