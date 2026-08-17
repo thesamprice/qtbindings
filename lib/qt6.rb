@@ -148,8 +148,20 @@ module Qt
       end
       active[key] = true
       begin
-        return __send__(name, *args, &block) if respond_to?(name)
+        # qtbindings' method_missing dispatched straight into the C++ method
+        # table, so an explicit call reached the *Qt* method even when a Ruby
+        # subclass defined one of the same name. COSMOS relies on that:
+        # LineGraph#graph is `method_missing(:update)` because
+        # LinegraphPlotGuiObject defines its own #update(redraw_needed) and
+        # QWidget::update is still what graph() wants (plain __send__ here
+        # recurses update -> auto_scale_y -> graph -> update). Prefer the
+        # generated implementation, then fall back to ordinary dispatch.
+        meth = qt6rb_binding_method(name)
         snake = Qt.underscore(name)
+        meth ||= qt6rb_binding_method(snake.to_sym) if snake != name.to_s
+        return meth.bind(self).call(*args, &block) if meth
+
+        return __send__(name, *args, &block) if respond_to?(name)
         return __send__(snake, *args, &block) if snake != name.to_s && respond_to?(snake)
       ensure
         active.delete(key)
@@ -157,6 +169,20 @@ module Qt
       super
     end
     public :method_missing
+
+    # The nearest ancestor implementation of +name+ that the bindings define
+    # in C (Ruby-defined methods report a source_location, generated ones do
+    # not), or nil when every implementation is Ruby-level.
+    def qt6rb_binding_method(name)
+      self.class.ancestors.each do |mod|
+        next unless mod.method_defined?(name, false) ||
+                    mod.private_method_defined?(name, false)
+        meth = mod.instance_method(name)
+        return meth if meth.source_location.nil?
+      end
+      nil
+    end
+    private :qt6rb_binding_method
 
     def dispose
       Qt._dispose(self)
@@ -192,10 +218,13 @@ module Qt
 
     private
 
+    # Qt slots are frequently declared under `protected` in qtbindings-era
+    # classes (OverviewTabbedPlots#handle_tab_change and friends), so the
+    # lookup has to see non-public methods -- Object#method can call them.
     def resolve_method(receiver, name)
-      return name if receiver.respond_to?(name)
+      return name if receiver.respond_to?(name, true)
       snake = Qt.underscore(name)
-      return snake if receiver.respond_to?(snake)
+      return snake if receiver.respond_to?(snake, true)
       Kernel.raise NoMethodError, "no slot #{name} on #{receiver.class}"
     end
 

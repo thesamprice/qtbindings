@@ -552,7 +552,21 @@ static VALUE qt_dispose(VALUE mod, VALUE obj) {
     if (w->owned && w->cls && w->cls->deleter) {
       w->cls->deleter(w->ptr);
     } else if (w->cls && w->cls->is_qobject) {
-      static_cast<QObject*>(w->ptr)->deleteLater();
+      QObject* qobj = static_cast<QObject*>(w->ptr);
+      // deleteLater() defers destruction to the next event loop pass, so Qt
+      // can still deliver events (a QWidget keeps getting paintEvent) to a
+      // shim whose wrapper no longer holds a pointer. Dispatching those into
+      // Ruby means the override runs against a detached wrapper -- e.g.
+      // LineGraph#paintEvent doing Qt::Painter.new(self) raises "expected
+      // QPaintDevice". Drop the peer link so virtuals fall back to the C++
+      // base implementations for the object's remaining lifetime.
+      if (RubyPeer* peer = dynamic_cast<RubyPeer*>(qobj)) {
+        if (!NIL_P(peer->qt6rb_self)) {
+          rb_gc_unregister_address(&peer->qt6rb_self);
+          peer->qt6rb_self = Qnil;
+        }
+      }
+      qobj->deleteLater();
     }
     w->ptr = nullptr;
     w->owned = false;
