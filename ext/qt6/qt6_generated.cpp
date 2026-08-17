@@ -9,6 +9,7 @@ static qt6rb::ClassInfo cls_QTimer = { "QTimer", Qnil, [](void* p) { delete stat
 static qt6rb::ClassInfo cls_QCoreApplication = { "QCoreApplication", Qnil, [](void* p) { delete static_cast<QCoreApplication*>(p); }, true };
 static qt6rb::ClassInfo cls_QGuiApplication = { "QGuiApplication", Qnil, [](void* p) { delete static_cast<QGuiApplication*>(p); }, true };
 static qt6rb::ClassInfo cls_QApplication = { "QApplication", Qnil, [](void* p) { delete static_cast<QApplication*>(p); }, true };
+static qt6rb::ClassInfo cls_QScreen = { "QScreen", Qnil, [](void* p) { delete static_cast<QScreen*>(p); }, true };
 static qt6rb::ClassInfo cls_QWidget = { "QWidget", Qnil, [](void* p) { delete static_cast<QWidget*>(p); }, true };
 static qt6rb::ClassInfo cls_QLabel = { "QLabel", Qnil, [](void* p) { delete static_cast<QLabel*>(p); }, true };
 static qt6rb::ClassInfo cls_QPushButton = { "QPushButton", Qnil, [](void* p) { delete static_cast<QPushButton*>(p); }, true };
@@ -99,6 +100,7 @@ static qt6rb::ClassInfo cls_QMenu = { "QMenu", Qnil, [](void* p) { delete static
 static qt6rb::ClassInfo cls_QAction = { "QAction", Qnil, [](void* p) { delete static_cast<QAction*>(p); }, true };
 static qt6rb::ClassInfo cls_QActionGroup = { "QActionGroup", Qnil, [](void* p) { delete static_cast<QActionGroup*>(p); }, true };
 static qt6rb::ClassInfo cls_QToolBar = { "QToolBar", Qnil, [](void* p) { delete static_cast<QToolBar*>(p); }, true };
+static qt6rb::ClassInfo cls_QDesktopServices = { "QDesktopServices", Qnil, [](void* p) { delete static_cast<QDesktopServices*>(p); }, false };
 static qt6rb::ClassInfo cls_QValidator = { "QValidator", Qnil, nullptr, true };
 static qt6rb::ClassInfo cls_QIntValidator = { "QIntValidator", Qnil, [](void* p) { delete static_cast<QIntValidator*>(p); }, true };
 static qt6rb::ClassInfo cls_QDoubleValidator = { "QDoubleValidator", Qnil, [](void* p) { delete static_cast<QDoubleValidator*>(p); }, true };
@@ -140,7 +142,7 @@ public:
   using QObject::QObject;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QObject() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QObject() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QObject::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QObject::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QObject::customEvent(a0); }
@@ -196,7 +198,7 @@ public:
   using QTimer::QTimer;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTimer() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTimer() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QTimer::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QTimer::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QTimer::customEvent(a0); }
@@ -252,7 +254,7 @@ public:
   using QWidget::QWidget;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QWidget() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QWidget::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QWidget::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QWidget::mouseReleaseEvent(a0); }
@@ -588,7 +590,7 @@ public:
   using QLabel::QLabel;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QLabel() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QLabel() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QLabel::event(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QLabel::keyPressEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QLabel::paintEvent(a0); }
@@ -924,7 +926,7 @@ public:
   using QPushButton::QPushButton;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPushButton() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QPushButton() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QPushButton::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QPushButton::paintEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QPushButton::keyPressEvent(a0); }
@@ -1298,7 +1300,7 @@ public:
   using QCheckBox::QCheckBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCheckBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QCheckBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QCheckBox::event(a0); }
   bool qt6rb_base_hitButton(const QPoint & a0) { return QCheckBox::hitButton(a0); }
   void qt6rb_base_checkStateSet() { QCheckBox::checkStateSet(); }
@@ -1672,7 +1674,7 @@ public:
   using QComboBox::QComboBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QComboBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QComboBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_focusInEvent(QFocusEvent * a0) { QComboBox::focusInEvent(a0); }
   void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QComboBox::focusOutEvent(a0); }
   void qt6rb_base_changeEvent(QEvent * a0) { QComboBox::changeEvent(a0); }
@@ -2032,7 +2034,7 @@ public:
   using QLineEdit::QLineEdit;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QLineEdit() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QLineEdit() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QLineEdit::mousePressEvent(a0); }
   void qt6rb_base_mouseMoveEvent(QMouseEvent * a0) { QLineEdit::mouseMoveEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QLineEdit::mouseReleaseEvent(a0); }
@@ -2366,7 +2368,7 @@ public:
   using QTextEdit::QTextEdit;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTextEdit() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTextEdit() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QTextEdit::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QTextEdit::timerEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QTextEdit::keyPressEvent(a0); }
@@ -2789,7 +2791,7 @@ public:
   using QPlainTextEdit::QPlainTextEdit;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPlainTextEdit() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QPlainTextEdit() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QPlainTextEdit::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QPlainTextEdit::timerEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QPlainTextEdit::keyPressEvent(a0); }
@@ -3212,7 +3214,7 @@ public:
   using QMainWindow::QMainWindow;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMainWindow() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QMainWindow() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QMainWindow::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QMainWindow::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMainWindow::mouseReleaseEvent(a0); }
@@ -3556,7 +3558,7 @@ public:
   using QBoxLayout::QBoxLayout;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QBoxLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QBoxLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QBoxLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QBoxLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QBoxLayout::customEvent(a0); }
@@ -3814,7 +3816,7 @@ public:
   using QVBoxLayout::QVBoxLayout;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QVBoxLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QVBoxLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QVBoxLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QVBoxLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QVBoxLayout::customEvent(a0); }
@@ -4072,7 +4074,7 @@ public:
   using QHBoxLayout::QHBoxLayout;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QHBoxLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QHBoxLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QHBoxLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QHBoxLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QHBoxLayout::customEvent(a0); }
@@ -4330,7 +4332,7 @@ public:
   using QGridLayout::QGridLayout;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QGridLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QGridLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_addItem(QLayoutItem * a0) { QGridLayout::addItem(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QGridLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QGridLayout::timerEvent(a0); }
@@ -4589,7 +4591,7 @@ public:
   using QFormLayout::QFormLayout;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFormLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QFormLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QFormLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QFormLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QFormLayout::customEvent(a0); }
@@ -4847,7 +4849,7 @@ public:
   using QStackedLayout::QStackedLayout;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStackedLayout() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QStackedLayout() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QStackedLayout::childEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QStackedLayout::timerEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QStackedLayout::customEvent(a0); }
@@ -5105,7 +5107,7 @@ public:
   using QSpacerItem::QSpacerItem;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSpacerItem() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QSpacerItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QSize sizeHint() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QSpacerItem, "size_hint", "sizeHint")) {
       bool ok = true;
@@ -5236,7 +5238,7 @@ public:
   using QEvent::QEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void setAccepted(bool a0) override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEvent, "set_accepted", "setAccepted")) {
       VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
@@ -5261,7 +5263,7 @@ public:
   using QTimerEvent::QTimerEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTimerEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTimerEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QTimerEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTimerEvent, "clone", "clone")) {
       bool ok = true;
@@ -5286,7 +5288,7 @@ public:
   using QChildEvent::QChildEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QChildEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QChildEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QChildEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QChildEvent, "clone", "clone")) {
       bool ok = true;
@@ -5311,7 +5313,7 @@ public:
   using QCloseEvent::QCloseEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCloseEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QCloseEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QCloseEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QCloseEvent, "clone", "clone")) {
       bool ok = true;
@@ -5336,7 +5338,7 @@ public:
   using QShowEvent::QShowEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QShowEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QShowEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QShowEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QShowEvent, "clone", "clone")) {
       bool ok = true;
@@ -5361,7 +5363,7 @@ public:
   using QHideEvent::QHideEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QHideEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QHideEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QHideEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QHideEvent, "clone", "clone")) {
       bool ok = true;
@@ -5386,7 +5388,7 @@ public:
   using QMoveEvent::QMoveEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMoveEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QMoveEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QMoveEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMoveEvent, "clone", "clone")) {
       bool ok = true;
@@ -5411,7 +5413,7 @@ public:
   using QResizeEvent::QResizeEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QResizeEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QResizeEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QResizeEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QResizeEvent, "clone", "clone")) {
       bool ok = true;
@@ -5436,7 +5438,7 @@ public:
   using QPaintEvent::QPaintEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPaintEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QPaintEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QPaintEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QPaintEvent, "clone", "clone")) {
       bool ok = true;
@@ -5461,7 +5463,7 @@ public:
   using QKeyEvent::QKeyEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QKeyEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QKeyEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QKeyEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QKeyEvent, "clone", "clone")) {
       bool ok = true;
@@ -5495,7 +5497,7 @@ public:
   using QFocusEvent::QFocusEvent;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFocusEvent() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QFocusEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QFocusEvent * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QFocusEvent, "clone", "clone")) {
       bool ok = true;
@@ -5515,12 +5517,186 @@ public:
   }
 };
 
+class Rb_QEnterEvent : public QEnterEvent {
+public:
+  using QEnterEvent::QEnterEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QEnterEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QEnterEvent * clone() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEnterEvent, "clone", "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QEnterEvent*>(qt6rb::unwrap_release(r, &cls_QEnterEvent));
+    }
+    return QEnterEvent::clone();
+  }
+  bool isBeginEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEnterEvent, "is_begin_event", "isBeginEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QEnterEvent::isBeginEvent();
+  }
+  bool isUpdateEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEnterEvent, "is_update_event", "isUpdateEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QEnterEvent::isUpdateEvent();
+  }
+  bool isEndEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEnterEvent, "is_end_event", "isEndEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QEnterEvent::isEndEvent();
+  }
+  void setTimestamp(quint64 a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEnterEvent, "set_timestamp", "setTimestamp")) {
+      VALUE rb_args[] = { ULL2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QEnterEvent::setTimestamp(a0);
+  }
+  void setAccepted(bool a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QEnterEvent, "set_accepted", "setAccepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QEnterEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QMouseEvent : public QMouseEvent {
+public:
+  using QMouseEvent::QMouseEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QMouseEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QMouseEvent * clone() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMouseEvent, "clone", "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QMouseEvent*>(qt6rb::unwrap_release(r, &cls_QMouseEvent));
+    }
+    return QMouseEvent::clone();
+  }
+  bool isBeginEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMouseEvent, "is_begin_event", "isBeginEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QMouseEvent::isBeginEvent();
+  }
+  bool isUpdateEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMouseEvent, "is_update_event", "isUpdateEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QMouseEvent::isUpdateEvent();
+  }
+  bool isEndEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMouseEvent, "is_end_event", "isEndEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QMouseEvent::isEndEvent();
+  }
+  void setTimestamp(quint64 a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMouseEvent, "set_timestamp", "setTimestamp")) {
+      VALUE rb_args[] = { ULL2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMouseEvent::setTimestamp(a0);
+  }
+  void setAccepted(bool a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QMouseEvent, "set_accepted", "setAccepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QMouseEvent::setAccepted(a0);
+  }
+};
+
+class Rb_QWheelEvent : public QWheelEvent {
+public:
+  using QWheelEvent::QWheelEvent;
+  VALUE qt6rb_self = Qnil;
+  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
+  ~Rb_QWheelEvent() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  QWheelEvent * clone() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWheelEvent, "clone", "clone")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return static_cast<QWheelEvent*>(qt6rb::unwrap_release(r, &cls_QWheelEvent));
+    }
+    return QWheelEvent::clone();
+  }
+  bool isBeginEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWheelEvent, "is_begin_event", "isBeginEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QWheelEvent::isBeginEvent();
+  }
+  bool isUpdateEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWheelEvent, "is_update_event", "isUpdateEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QWheelEvent::isUpdateEvent();
+  }
+  bool isEndEvent() const override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWheelEvent, "is_end_event", "isEndEvent")) {
+      bool ok = true;
+      VALUE r = qt6rb::call_method(qt6rb_self, rbname, 0, nullptr, &ok);
+      if (ok) return RTEST(r);
+    }
+    return QWheelEvent::isEndEvent();
+  }
+  void setTimestamp(quint64 a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWheelEvent, "set_timestamp", "setTimestamp")) {
+      VALUE rb_args[] = { ULL2NUM(a0) };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWheelEvent::setTimestamp(a0);
+  }
+  void setAccepted(bool a0) override {
+    if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QWheelEvent, "set_accepted", "setAccepted")) {
+      VALUE rb_args[] = { (a0) ? Qtrue : Qfalse };
+      bool ok = true;
+      qt6rb::call_method(qt6rb_self, rbname, 1, rb_args, &ok);
+      if (ok) return;
+    }
+    QWheelEvent::setAccepted(a0);
+  }
+};
+
 class Rb_QPixmap : public QPixmap {
 public:
   using QPixmap::QPixmap;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QPixmap() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QPixmap() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   int qt6rb_base_metric(PaintDeviceMetric a0) { return QPixmap::metric(a0); }
   void qt6rb_base_initPainter(QPainter * a0) { QPixmap::initPainter(a0); }
   QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QPixmap::redirected(a0); }
@@ -5575,7 +5751,7 @@ public:
   using QImage::QImage;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QImage() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QImage() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   int qt6rb_base_metric(PaintDeviceMetric a0) { return QImage::metric(a0); }
   void qt6rb_base_initPainter(QPainter * a0) { QImage::initPainter(a0); }
   QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QImage::redirected(a0); }
@@ -5630,7 +5806,7 @@ public:
   using QMessageBox::QMessageBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMessageBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QMessageBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QMessageBox::event(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QMessageBox::resizeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QMessageBox::showEvent(a0); }
@@ -5976,7 +6152,7 @@ public:
   using QDialog::QDialog;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDialog() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QDialog() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QDialog::keyPressEvent(a0); }
   void qt6rb_base_closeEvent(QCloseEvent * a0) { QDialog::closeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QDialog::showEvent(a0); }
@@ -6322,7 +6498,7 @@ public:
   using QFileDialog::QFileDialog;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFileDialog() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QFileDialog() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_done(int a0) { QFileDialog::done(a0); }
   void qt6rb_base_accept() { QFileDialog::accept(); }
   void qt6rb_base_changeEvent(QEvent * a0) { QFileDialog::changeEvent(a0); }
@@ -6687,7 +6863,7 @@ public:
   using QInputDialog::QInputDialog;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QInputDialog() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QInputDialog() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QInputDialog::keyPressEvent(a0); }
   void qt6rb_base_closeEvent(QCloseEvent * a0) { QInputDialog::closeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QInputDialog::showEvent(a0); }
@@ -7042,7 +7218,7 @@ public:
   using QProgressBar::QProgressBar;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QProgressBar() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QProgressBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QProgressBar::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QProgressBar::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QProgressBar::mousePressEvent(a0); }
@@ -7386,7 +7562,7 @@ public:
   using QSlider::QSlider;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSlider() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QSlider() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QSlider::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QSlider::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QSlider::mouseReleaseEvent(a0); }
@@ -7721,7 +7897,7 @@ public:
   using QSpinBox::QSpinBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSpinBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QSpinBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QSpinBox::event(a0); }
   int qt6rb_base_valueFromText(const QString & a0) { return QSpinBox::valueFromText(a0); }
   QString qt6rb_base_textFromValue(int a0) { return QSpinBox::textFromValue(a0); }
@@ -8095,7 +8271,7 @@ public:
   using QDoubleSpinBox::QDoubleSpinBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDoubleSpinBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QDoubleSpinBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QDoubleSpinBox::resizeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QDoubleSpinBox::keyPressEvent(a0); }
   void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QDoubleSpinBox::keyReleaseEvent(a0); }
@@ -8466,7 +8642,7 @@ public:
   using QRadioButton::QRadioButton;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QRadioButton() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QRadioButton() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QRadioButton::event(a0); }
   bool qt6rb_base_hitButton(const QPoint & a0) { return QRadioButton::hitButton(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QRadioButton::paintEvent(a0); }
@@ -8840,7 +9016,7 @@ public:
   using QButtonGroup::QButtonGroup;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QButtonGroup() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QButtonGroup() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QButtonGroup::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QButtonGroup::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QButtonGroup::customEvent(a0); }
@@ -8896,7 +9072,7 @@ public:
   using QDialogButtonBox::QDialogButtonBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDialogButtonBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QDialogButtonBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QDialogButtonBox::changeEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QDialogButtonBox::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QDialogButtonBox::mousePressEvent(a0); }
@@ -9232,7 +9408,7 @@ public:
   using QCalendarWidget::QCalendarWidget;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCalendarWidget() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QCalendarWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QCalendarWidget::event(a0); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QCalendarWidget::eventFilter(a0, a1); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QCalendarWidget::mousePressEvent(a0); }
@@ -9579,7 +9755,7 @@ public:
   using QTableWidget::QTableWidget;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTableWidget() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTableWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QTableWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QTableWidget::mimeTypes(); }
   bool qt6rb_base_dropMimeData(int a0, int a1, const QMimeData * a2, Qt::DropAction a3) { return QTableWidget::dropMimeData(a0, a1, a2, a3); }
@@ -10181,7 +10357,7 @@ public:
   using QTableWidgetItem::QTableWidgetItem;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTableWidgetItem() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTableWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QTableWidgetItem * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTableWidgetItem, "clone", "clone")) {
       bool ok = true;
@@ -10215,7 +10391,7 @@ public:
   using QTreeWidget::QTreeWidget;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTreeWidget() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTreeWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QTreeWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QTreeWidget::mimeTypes(); }
   bool qt6rb_base_dropMimeData(QTreeWidgetItem * a0, int a1, const QMimeData * a2, Qt::DropAction a3) { return QTreeWidget::dropMimeData(a0, a1, a2, a3); }
@@ -10862,7 +11038,7 @@ public:
   using QTreeWidgetItem::QTreeWidgetItem;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTreeWidgetItem() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTreeWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QTreeWidgetItem * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QTreeWidgetItem, "clone", "clone")) {
       bool ok = true;
@@ -10896,7 +11072,7 @@ public:
   using QTabWidget::QTabWidget;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTabWidget() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTabWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_tabInserted(int a0) { QTabWidget::tabInserted(a0); }
   void qt6rb_base_tabRemoved(int a0) { QTabWidget::tabRemoved(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QTabWidget::showEvent(a0); }
@@ -11252,7 +11428,7 @@ public:
   using QListWidget::QListWidget;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QListWidget() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QListWidget() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QListWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QListWidget::mimeTypes(); }
   bool qt6rb_base_dropMimeData(int a0, const QMimeData * a1, Qt::DropAction a2) { return QListWidget::dropMimeData(a0, a1, a2); }
@@ -11860,7 +12036,7 @@ public:
   using QListWidgetItem::QListWidgetItem;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QListWidgetItem() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QListWidgetItem() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QListWidgetItem * clone() const override {
     if (const char* rbname = qt6rb::pick_override(qt6rb_self, &cls_QListWidgetItem, "clone", "clone")) {
       bool ok = true;
@@ -11894,7 +12070,7 @@ public:
   using QTextDocument::QTextDocument;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTextDocument() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTextDocument() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   QVariant qt6rb_base_loadResource(int a0, const QUrl & a1) { return QTextDocument::loadResource(a0, a1); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QTextDocument::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QTextDocument::childEvent(a0); }
@@ -11968,7 +12144,7 @@ public:
   using QScrollBar::QScrollBar;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QScrollBar() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QScrollBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_wheelEvent(QWheelEvent * a0) { QScrollBar::wheelEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QScrollBar::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QScrollBar::mousePressEvent(a0); }
@@ -12303,7 +12479,7 @@ public:
   using QHeaderView::QHeaderView;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QHeaderView() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QHeaderView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_currentChanged(const QModelIndex & a0, const QModelIndex & a1) { QHeaderView::currentChanged(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QHeaderView::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QHeaderView::paintEvent(a0); }
@@ -12905,7 +13081,7 @@ public:
   using QGroupBox::QGroupBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QGroupBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QGroupBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QGroupBox::event(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QGroupBox::childEvent(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QGroupBox::resizeEvent(a0); }
@@ -13241,7 +13417,7 @@ public:
   using QSplitter::QSplitter;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSplitter() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QSplitter() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QSplitter::childEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QSplitter::event(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QSplitter::resizeEvent(a0); }
@@ -13577,7 +13753,7 @@ public:
   using QScrollArea::QScrollArea;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QScrollArea() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QScrollArea() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QScrollArea::event(a0); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QScrollArea::eventFilter(a0, a1); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QScrollArea::resizeEvent(a0); }
@@ -13951,7 +14127,7 @@ public:
   using QStatusBar::QStatusBar;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStatusBar() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QStatusBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QStatusBar::showEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QStatusBar::paintEvent(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QStatusBar::resizeEvent(a0); }
@@ -14287,7 +14463,7 @@ public:
   using QMenuBar::QMenuBar;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMenuBar() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QMenuBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QMenuBar::changeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QMenuBar::keyPressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMenuBar::mouseReleaseEvent(a0); }
@@ -14624,7 +14800,7 @@ public:
   using QMenu::QMenu;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMenu() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QMenu() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QMenu::changeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QMenu::keyPressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMenu::mouseReleaseEvent(a0); }
@@ -14960,7 +15136,7 @@ public:
   using QAction::QAction;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAction() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QAction() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QAction::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QAction::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QAction::childEvent(a0); }
@@ -15017,7 +15193,7 @@ public:
   using QActionGroup::QActionGroup;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QActionGroup() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QActionGroup() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QActionGroup::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QActionGroup::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QActionGroup::customEvent(a0); }
@@ -15073,7 +15249,7 @@ public:
   using QToolBar::QToolBar;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QToolBar() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QToolBar() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_changeEvent(QEvent * a0) { QToolBar::changeEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QToolBar::paintEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QToolBar::event(a0); }
@@ -15409,7 +15585,7 @@ public:
   using QIntValidator::QIntValidator;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QIntValidator() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QIntValidator() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QIntValidator::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QIntValidator::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QIntValidator::customEvent(a0); }
@@ -15465,7 +15641,7 @@ public:
   using QDoubleValidator::QDoubleValidator;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QDoubleValidator() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QDoubleValidator() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QDoubleValidator::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QDoubleValidator::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QDoubleValidator::customEvent(a0); }
@@ -15521,7 +15697,7 @@ public:
   using QSettings::QSettings;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QSettings() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QSettings() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QSettings::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QSettings::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QSettings::childEvent(a0); }
@@ -15578,7 +15754,7 @@ public:
   using QStringListModel::QStringListModel;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStringListModel() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QStringListModel() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QStringListModel::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QStringListModel::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QStringListModel::customEvent(a0); }
@@ -15856,7 +16032,7 @@ public:
   using QFileSystemModel::QFileSystemModel;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFileSystemModel() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QFileSystemModel() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QFileSystemModel::timerEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QFileSystemModel::event(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QFileSystemModel::childEvent(a0); }
@@ -16162,7 +16338,7 @@ public:
   using QListView::QListView;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QListView() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QListView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QListView::event(a0); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QListView::scrollContentsBy(a0, a1); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QListView::rowsInserted(a0, a1, a2); }
@@ -16751,7 +16927,7 @@ public:
   using QTreeView::QTreeView;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTreeView() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTreeView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QTreeView::scrollContentsBy(a0, a1); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QTreeView::rowsInserted(a0, a1, a2); }
   void qt6rb_base_rowsAboutToBeRemoved(const QModelIndex & a0, int a1, int a2) { QTreeView::rowsAboutToBeRemoved(a0, a1, a2); }
@@ -17379,7 +17555,7 @@ public:
   using QCompleter::QCompleter;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QCompleter() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QCompleter() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QCompleter::eventFilter(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QCompleter::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QCompleter::timerEvent(a0); }
@@ -17455,7 +17631,7 @@ public:
   using QEventLoop::QEventLoop;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QEventLoop() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QEventLoop() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QEventLoop::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QEventLoop::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QEventLoop::customEvent(a0); }
@@ -17511,7 +17687,7 @@ public:
   using QMimeData::QMimeData;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMimeData() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QMimeData() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QMimeData::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QMimeData::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QMimeData::customEvent(a0); }
@@ -17584,7 +17760,7 @@ public:
   using QMovie::QMovie;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QMovie() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QMovie() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QMovie::timerEvent(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QMovie::childEvent(a0); }
   void qt6rb_base_customEvent(QEvent * a0) { QMovie::customEvent(a0); }
@@ -17640,7 +17816,7 @@ public:
   using QStyledItemDelegate::QStyledItemDelegate;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QStyledItemDelegate() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QStyledItemDelegate() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_initStyleOption(QStyleOptionViewItem * a0, const QModelIndex & a1) { QStyledItemDelegate::initStyleOption(a0, a1); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QStyledItemDelegate::eventFilter(a0, a1); }
   bool qt6rb_base_editorEvent(QEvent * a0, QAbstractItemModel * a1, const QStyleOptionViewItem & a2, const QModelIndex & a3) { return QStyledItemDelegate::editorEvent(a0, a1, a2, a3); }
@@ -17780,7 +17956,7 @@ public:
   using QFrame::QFrame;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QFrame() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QFrame() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QFrame::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QFrame::paintEvent(a0); }
   void qt6rb_base_changeEvent(QEvent * a0) { QFrame::changeEvent(a0); }
@@ -18116,7 +18292,7 @@ public:
   using QAbstractScrollArea::QAbstractScrollArea;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAbstractScrollArea() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QAbstractScrollArea() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QAbstractScrollArea::eventFilter(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QAbstractScrollArea::event(a0); }
   bool qt6rb_base_viewportEvent(QEvent * a0) { return QAbstractScrollArea::viewportEvent(a0); }
@@ -18491,7 +18667,7 @@ public:
   using QAbstractSlider::QAbstractSlider;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAbstractSlider() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QAbstractSlider() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   bool qt6rb_base_event(QEvent * a0) { return QAbstractSlider::event(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QAbstractSlider::keyPressEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QAbstractSlider::timerEvent(a0); }
@@ -18827,7 +19003,7 @@ public:
   using QAbstractSpinBox::QAbstractSpinBox;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QAbstractSpinBox() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QAbstractSpinBox() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QAbstractSpinBox::resizeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QAbstractSpinBox::keyPressEvent(a0); }
   void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QAbstractSpinBox::keyReleaseEvent(a0); }
@@ -19180,7 +19356,7 @@ public:
   using QTableView::QTableView;
   VALUE qt6rb_self = Qnil;
   void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }
-  ~Rb_QTableView() override { if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
+  ~Rb_QTableView() override { if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QTableView::scrollContentsBy(a0, a1); }
   void qt6rb_base_initViewItemOption(QStyleOptionViewItem * a0) { QTableView::initViewItemOption(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QTableView::paintEvent(a0); }
@@ -20846,6 +21022,22 @@ static VALUE rb_QGuiApplication_s_focus_object(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QGuiApplication#focus_object (%d)", argc);
 }
 
+static VALUE rb_QGuiApplication_s_primary_screen(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(QGuiApplication::primaryScreen()), &cls_QScreen);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGuiApplication#primary_screen (%d)", argc);
+}
+
+static VALUE rb_QGuiApplication_s_screen_at(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap_qobject((QObject*)(QGuiApplication::screenAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QScreen);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QGuiApplication#screen_at (%d)", argc);
+}
+
 static VALUE rb_QGuiApplication_s_override_cursor(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 0) {
@@ -21058,6 +21250,39 @@ static VALUE rb_QGuiApplication_on_font_database_changed(VALUE self) {
   return self;
 }
 
+static VALUE rb_QGuiApplication_on_screen_added(VALUE self) {
+  QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QGuiApplication::screenAdded, o, [proc](QScreen* a0) {
+    VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QScreen) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QGuiApplication_on_screen_removed(VALUE self) {
+  QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QGuiApplication::screenRemoved, o, [proc](QScreen* a0) {
+    VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QScreen) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QGuiApplication_on_primary_screen_changed(VALUE self) {
+  QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QGuiApplication::primaryScreenChanged, o, [proc](QScreen* a0) {
+    VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QScreen) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
 static VALUE rb_QGuiApplication_on_last_window_closed(VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
   VALUE proc = rb_block_proc();
@@ -21202,6 +21427,9 @@ static VALUE rb_QApplication_s_tr(int argc, VALUE* argv, VALUE self) {
 
 static VALUE rb_QApplication_s_palette(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPalette(QGuiApplication::palette()), &cls_QPalette, true);
+  }
   if (argc == 1) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
       return qt6rb::wrap(new QPalette(QApplication::palette(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)))), &cls_QPalette, true);
@@ -21217,8 +21445,15 @@ static VALUE rb_QApplication_s_palette(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QApplication_s_set_palette(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    QApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)));
-    return Qnil;
+    if (rb_obj_is_kind_of(argv[0], cls_QPalette.rb_class)) {
+      QApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QPalette.rb_class)) {
+      QGuiApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QApplication#set_palette for given argument types");
   }
   if (argc == 2) {
     QApplication::setPalette(*static_cast<QPalette*>(qt6rb::unwrap_ref(argv[0], &cls_QPalette)), StringValueCStr(argv[1]));
@@ -21247,8 +21482,15 @@ static VALUE rb_QApplication_s_font(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QApplication_s_set_font(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    QApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
-    return Qnil;
+    if (rb_obj_is_kind_of(argv[0], cls_QFont.rb_class)) {
+      QApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QFont.rb_class)) {
+      QGuiApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QApplication#set_font for given argument types");
   }
   if (argc == 2) {
     QApplication::setFont(*static_cast<QFont*>(qt6rb::unwrap_ref(argv[0], &cls_QFont)), StringValueCStr(argv[1]));
@@ -21506,6 +21748,407 @@ static VALUE rb_QApplication_on_focus_changed(VALUE self) {
   QObject::connect(o, &QApplication::focusChanged, o, [proc](QWidget* a0, QWidget* a1) {
     VALUE args[] = { qt6rb::wrap_qobject((QObject*)(a0), &cls_QWidget), qt6rb::wrap_qobject((QObject*)(a1), &cls_QWidget) };
     qt6rb::call_proc(proc, 2, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_name(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->name());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#name (%d)", argc);
+}
+
+static VALUE rb_QScreen_manufacturer(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->manufacturer());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#manufacturer (%d)", argc);
+}
+
+static VALUE rb_QScreen_model(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->model());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#model (%d)", argc);
+}
+
+static VALUE rb_QScreen_serial_number(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->serialNumber());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#serial_number (%d)", argc);
+}
+
+static VALUE rb_QScreen_depth(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->depth());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#depth (%d)", argc);
+}
+
+static VALUE rb_QScreen_size(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->size()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#size (%d)", argc);
+}
+
+static VALUE rb_QScreen_geometry(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->geometry()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#geometry (%d)", argc);
+}
+
+static VALUE rb_QScreen_physical_size(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSizeF(o->physicalSize()), &cls_QSizeF, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#physical_size (%d)", argc);
+}
+
+static VALUE rb_QScreen_physical_dots_per_inch_x(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->physicalDotsPerInchX());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#physical_dots_per_inch_x (%d)", argc);
+}
+
+static VALUE rb_QScreen_physical_dots_per_inch_y(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->physicalDotsPerInchY());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#physical_dots_per_inch_y (%d)", argc);
+}
+
+static VALUE rb_QScreen_physical_dots_per_inch(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->physicalDotsPerInch());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#physical_dots_per_inch (%d)", argc);
+}
+
+static VALUE rb_QScreen_logical_dots_per_inch_x(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->logicalDotsPerInchX());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#logical_dots_per_inch_x (%d)", argc);
+}
+
+static VALUE rb_QScreen_logical_dots_per_inch_y(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->logicalDotsPerInchY());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#logical_dots_per_inch_y (%d)", argc);
+}
+
+static VALUE rb_QScreen_logical_dots_per_inch(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->logicalDotsPerInch());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#logical_dots_per_inch (%d)", argc);
+}
+
+static VALUE rb_QScreen_device_pixel_ratio(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->devicePixelRatio());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#device_pixel_ratio (%d)", argc);
+}
+
+static VALUE rb_QScreen_available_size(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->availableSize()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#available_size (%d)", argc);
+}
+
+static VALUE rb_QScreen_available_geometry(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->availableGeometry()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#available_geometry (%d)", argc);
+}
+
+static VALUE rb_QScreen_virtual_sibling_at(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap_qobject((QObject*)(o->virtualSiblingAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QScreen);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#virtual_sibling_at (%d)", argc);
+}
+
+static VALUE rb_QScreen_virtual_size(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->virtualSize()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#virtual_size (%d)", argc);
+}
+
+static VALUE rb_QScreen_virtual_geometry(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->virtualGeometry()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#virtual_geometry (%d)", argc);
+}
+
+static VALUE rb_QScreen_available_virtual_size(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QSize(o->availableVirtualSize()), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#available_virtual_size (%d)", argc);
+}
+
+static VALUE rb_QScreen_available_virtual_geometry(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QRect(o->availableVirtualGeometry()), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#available_virtual_geometry (%d)", argc);
+}
+
+static VALUE rb_QScreen_primary_orientation(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->primaryOrientation()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#primary_orientation (%d)", argc);
+}
+
+static VALUE rb_QScreen_orientation(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->orientation()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#orientation (%d)", argc);
+}
+
+static VALUE rb_QScreen_native_orientation(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(static_cast<int>(o->nativeOrientation()));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#native_orientation (%d)", argc);
+}
+
+static VALUE rb_QScreen_angle_between(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return INT2NUM(o->angleBetween(static_cast<Qt::ScreenOrientation>(NUM2INT(argv[0])), static_cast<Qt::ScreenOrientation>(NUM2INT(argv[1]))));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#angle_between (%d)", argc);
+}
+
+static VALUE rb_QScreen_map_between(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::wrap(new QRect(o->mapBetween(static_cast<Qt::ScreenOrientation>(NUM2INT(argv[0])), static_cast<Qt::ScreenOrientation>(NUM2INT(argv[1])), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)))), &cls_QRect, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#map_between (%d)", argc);
+}
+
+static VALUE rb_QScreen_is_portrait(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->isPortrait(static_cast<Qt::ScreenOrientation>(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#is_portrait (%d)", argc);
+}
+
+static VALUE rb_QScreen_is_landscape(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (o->isLandscape(static_cast<Qt::ScreenOrientation>(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#is_landscape (%d)", argc);
+}
+
+static VALUE rb_QScreen_grab_window(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QPixmap(o->grabWindow()), &cls_QPixmap, true);
+  }
+  if (argc == 1) {
+    return qt6rb::wrap(new QPixmap(o->grabWindow(NUM2ULL(argv[0]))), &cls_QPixmap, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QPixmap(o->grabWindow(NUM2ULL(argv[0]), NUM2INT(argv[1]))), &cls_QPixmap, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QPixmap(o->grabWindow(NUM2ULL(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]))), &cls_QPixmap, true);
+  }
+  if (argc == 4) {
+    return qt6rb::wrap(new QPixmap(o->grabWindow(NUM2ULL(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]))), &cls_QPixmap, true);
+  }
+  if (argc == 5) {
+    return qt6rb::wrap(new QPixmap(o->grabWindow(NUM2ULL(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]))), &cls_QPixmap, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#grab_window (%d)", argc);
+}
+
+static VALUE rb_QScreen_refresh_rate(int argc, VALUE* argv, VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return DBL2NUM(o->refreshRate());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#refresh_rate (%d)", argc);
+}
+
+static VALUE rb_QScreen_s_tr(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::from_qstring(QScreen::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QScreen#tr (%d)", argc);
+}
+
+static VALUE rb_QScreen_on_geometry_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::geometryChanged, o, [proc](QRect a0) {
+    VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_available_geometry_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::availableGeometryChanged, o, [proc](QRect a0) {
+    VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_physical_size_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::physicalSizeChanged, o, [proc](QSizeF a0) {
+    VALUE args[] = { qt6rb::wrap(new QSizeF(a0), &cls_QSizeF, true) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_physical_dots_per_inch_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::physicalDotsPerInchChanged, o, [proc](double a0) {
+    VALUE args[] = { DBL2NUM(a0) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_logical_dots_per_inch_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::logicalDotsPerInchChanged, o, [proc](double a0) {
+    VALUE args[] = { DBL2NUM(a0) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_virtual_geometry_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::virtualGeometryChanged, o, [proc](QRect a0) {
+    VALUE args[] = { qt6rb::wrap(new QRect(a0), &cls_QRect, true) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_primary_orientation_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::primaryOrientationChanged, o, [proc](Qt::ScreenOrientation a0) {
+    VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_orientation_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::orientationChanged, o, [proc](Qt::ScreenOrientation a0) {
+    VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
+    qt6rb::call_proc(proc, 1, args);
+  });
+  return self;
+}
+
+static VALUE rb_QScreen_on_refresh_rate_changed(VALUE self) {
+  QScreen* o = static_cast<QScreen*>(qt6rb::unwrap(self, &cls_QScreen));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QScreen::refreshRateChanged, o, [proc](double a0) {
+    VALUE args[] = { DBL2NUM(a0) };
+    qt6rb::call_proc(proc, 1, args);
   });
   return self;
 }
@@ -22270,6 +22913,34 @@ static VALUE rb_QWidget_clear_mask(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#clear_mask (%d)", argc);
+}
+
+static VALUE rb_QWidget_render(int argc, VALUE* argv, VALUE self) {
+  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPaintDevice.rb_class))) {
+      o->render(static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[0], &cls_QPaintDevice)));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPainter.rb_class))) {
+      o->render(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#render for given argument types");
+  }
+  if (argc == 2) {
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPaintDevice.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+      o->render(static_cast<QPaintDevice*>(qt6rb::unwrap_release(argv[0], &cls_QPaintDevice)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QPainter.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+      o->render(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#render for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#render (%d)", argc);
 }
 
 static VALUE rb_QWidget_grab(int argc, VALUE* argv, VALUE self) {
@@ -23281,8 +23952,15 @@ static VALUE rb_QWidget_set_parent(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->setParent(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+      o->setParent(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QObject.rb_class))) {
+      o->QObject::setParent(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QWidget#set_parent for given argument types");
   }
   if (argc == 2) {
     o->setParent(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), QFlags<Qt::WindowType>::fromInt(NUM2INT(argv[1])));
@@ -23570,6 +24248,25 @@ static VALUE rb_QWidget_set_auto_fill_background(int argc, VALUE* argv, VALUE se
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#set_auto_fill_background (%d)", argc);
+}
+
+static VALUE rb_QWidget_screen(int argc, VALUE* argv, VALUE self) {
+  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->screen()), &cls_QScreen);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#screen (%d)", argc);
+}
+
+static VALUE rb_QWidget_set_screen(int argc, VALUE* argv, VALUE self) {
+  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
+  (void)argv; (void)self;
+  if (argc == 1) {
+    o->setScreen(static_cast<QScreen*>(qt6rb::unwrap_release(argv[0], &cls_QScreen)));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#set_screen (%d)", argc);
 }
 
 static VALUE rb_QWidget_input_method_query(int argc, VALUE* argv, VALUE self) {
@@ -27224,6 +27921,16 @@ static VALUE rb_QLineEdit_set_text_margins(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QLineEdit_add_action(int argc, VALUE* argv, VALUE self) {
   QLineEdit* o = static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit));
   (void)argv; (void)self;
+  if (argc == 1) {
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class))) {
+      o->QWidget::addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)));
+      return Qnil;
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
+  }
   if (argc == 2) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
       o->addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)), static_cast<QLineEdit::ActionPosition>(NUM2INT(argv[1])));
@@ -27232,7 +27939,49 @@ static VALUE rb_QLineEdit_add_action(int argc, VALUE* argv, VALUE self) {
     if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), static_cast<QLineEdit::ActionPosition>(NUM2INT(argv[1])))), &cls_QAction);
     }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]))), &cls_QAction);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)))), &cls_QAction);
+    }
     rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
+  }
+  if (argc == 3) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]))), &cls_QAction);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
+  }
+  if (argc == 4) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
+  }
+  if (argc == 5) {
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QObject.rb_class)) && RB_TYPE_P(argv[4], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QLineEdit#add_action for given argument types");
+  }
+  if (argc == 6) {
+    return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#add_action (%d)", argc);
 }
@@ -30964,6 +31713,10 @@ static VALUE rb_QLayout_contents_rect(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QLayout_set_alignment(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
+  if (argc == 1) {
+    o->QLayoutItem::setAlignment(QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[0])));
+    return Qnil;
+  }
   if (argc == 2) {
     if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class)) && RB_INTEGER_TYPE_P(argv[1])) {
       return (o->setAlignment(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), QFlags<Qt::AlignmentFlag>::fromInt(NUM2INT(argv[1])))) ? Qtrue : Qfalse;
@@ -31385,8 +32138,15 @@ static VALUE rb_QBoxLayout_add_widget(int argc, VALUE* argv, VALUE self) {
   QBoxLayout* o = static_cast<QBoxLayout*>(qt6rb::unwrap(self, &cls_QBoxLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->addWidget(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+      o->addWidget(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QWidget.rb_class))) {
+      o->QLayout::addWidget(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QBoxLayout#add_widget for given argument types");
   }
   if (argc == 2) {
     o->addWidget(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), NUM2INT(argv[1]));
@@ -32817,6 +33577,9 @@ static VALUE rb_QStackedLayout_current_index(int argc, VALUE* argv, VALUE self) 
 static VALUE rb_QStackedLayout_widget(int argc, VALUE* argv, VALUE self) {
   QStackedLayout* o = static_cast<QStackedLayout*>(qt6rb::unwrap(self, &cls_QStackedLayout));
   (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->QLayoutItem::widget()), &cls_QWidget);
+  }
   if (argc == 1) {
     return qt6rb::wrap_qobject((QObject*)(o->widget(NUM2INT(argv[0]))), &cls_QWidget);
   }
@@ -34892,6 +35655,15 @@ static VALUE rb_QDate_days_in_year(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QDate#days_in_year (%d)", argc);
 }
 
+static VALUE rb_QDate_week_number(int argc, VALUE* argv, VALUE self) {
+  QDate* o = static_cast<QDate*>(qt6rb::unwrap(self, &cls_QDate));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return INT2NUM(o->weekNumber());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QDate#week_number (%d)", argc);
+}
+
 static VALUE rb_QDate_to_string(int argc, VALUE* argv, VALUE self) {
   QDate* o = static_cast<QDate*>(qt6rb::unwrap(self, &cls_QDate));
   (void)argv; (void)self;
@@ -35049,6 +35821,42 @@ static VALUE rb_QUrl_set_url(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QUrl#set_url (%d)", argc);
+}
+
+static VALUE rb_QUrl_url(int argc, VALUE* argv, VALUE self) {
+  QUrl* o = static_cast<QUrl*>(qt6rb::unwrap(self, &cls_QUrl));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->url());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QUrl#url (%d)", argc);
+}
+
+static VALUE rb_QUrl_to_string(int argc, VALUE* argv, VALUE self) {
+  QUrl* o = static_cast<QUrl*>(qt6rb::unwrap(self, &cls_QUrl));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->toString());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QUrl#to_string (%d)", argc);
+}
+
+static VALUE rb_QUrl_to_display_string(int argc, VALUE* argv, VALUE self) {
+  QUrl* o = static_cast<QUrl*>(qt6rb::unwrap(self, &cls_QUrl));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(o->toDisplayString());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QUrl#to_display_string (%d)", argc);
+}
+
+static VALUE rb_QUrl_to_encoded(int argc, VALUE* argv, VALUE self) {
+  QUrl* o = static_cast<QUrl*>(qt6rb::unwrap(self, &cls_QUrl));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qbytearray(o->toEncoded());
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QUrl#to_encoded (%d)", argc);
 }
 
 static VALUE rb_QUrl_is_valid(int argc, VALUE* argv, VALUE self) {
@@ -35937,7 +36745,34 @@ static VALUE rb_QKeyEvent_ctor(int argc, VALUE* argv, VALUE self) {
     return self;
   }
   if (argc == 6) {
-    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), qt6rb::to_qstring(argv[3]), RTEST(argv[4]), NUM2USHORT(argv[5]));
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_TYPE_P(argv[3], T_STRING) && ((argv[4]) == Qtrue || (argv[4]) == Qfalse) && RB_INTEGER_TYPE_P(argv[5])) {
+      Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), qt6rb::to_qstring(argv[3]), RTEST(argv[4]), NUM2USHORT(argv[5]));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1]) && RB_INTEGER_TYPE_P(argv[2]) && RB_INTEGER_TYPE_P(argv[3]) && RB_INTEGER_TYPE_P(argv[4]) && RB_INTEGER_TYPE_P(argv[5])) {
+      Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), NUM2UINT(argv[3]), NUM2UINT(argv[4]), NUM2UINT(argv[5]));
+      qt6rb::attach(self, p, true);
+      p->qt6rb_set_self(self);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QKeyEvent#initialize for given argument types");
+  }
+  if (argc == 7) {
+    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), NUM2UINT(argv[3]), NUM2UINT(argv[4]), NUM2UINT(argv[5]), qt6rb::to_qstring(argv[6]));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 8) {
+    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), NUM2UINT(argv[3]), NUM2UINT(argv[4]), NUM2UINT(argv[5]), qt6rb::to_qstring(argv[6]), RTEST(argv[7]));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 9) {
+    Rb_QKeyEvent* p = new Rb_QKeyEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), NUM2INT(argv[1]), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[2])), NUM2UINT(argv[3]), NUM2UINT(argv[4]), NUM2UINT(argv[5]), qt6rb::to_qstring(argv[6]), RTEST(argv[7]), NUM2USHORT(argv[8]));
     qt6rb::attach(self, p, true);
     p->qt6rb_set_self(self);
     return self;
@@ -36090,11 +36925,23 @@ static VALUE rb_QFocusEvent_reason(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QFocusEvent#reason (%d)", argc);
 }
 
+static VALUE rb_QEnterEvent_ctor(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 3) {
+    Rb_QEnterEvent* p = new Rb_QEnterEvent(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[2], &cls_QPointF)));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#initialize (%d)", argc);
+}
+static VALUE rb_QEnterEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QEnterEvent); }
+
 static VALUE rb_QEnterEvent_clone(int argc, VALUE* argv, VALUE self) {
   QEnterEvent* o = static_cast<QEnterEvent*>(qt6rb::unwrap(self, &cls_QEnterEvent));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap((void*)(o->clone()), &cls_QEnterEvent, false);
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QEnterEvent*>(o) ? o->QEnterEvent::clone() : o->clone())), &cls_QEnterEvent, false);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#clone (%d)", argc);
 }
@@ -36180,11 +37027,41 @@ static VALUE rb_QEnterEvent_screen_pos(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QEnterEvent#screen_pos (%d)", argc);
 }
 
+static VALUE rb_QMouseEvent_ctor(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 5) {
+    Rb_QMouseEvent* p = new Rb_QMouseEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), static_cast<Qt::MouseButton>(NUM2INT(argv[2])), QFlags<Qt::MouseButton>::fromInt(NUM2INT(argv[3])), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[4])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 6) {
+    Rb_QMouseEvent* p = new Rb_QMouseEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[2], &cls_QPointF)), static_cast<Qt::MouseButton>(NUM2INT(argv[3])), QFlags<Qt::MouseButton>::fromInt(NUM2INT(argv[4])), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[5])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 7) {
+    Rb_QMouseEvent* p = new Rb_QMouseEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[2], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[3], &cls_QPointF)), static_cast<Qt::MouseButton>(NUM2INT(argv[4])), QFlags<Qt::MouseButton>::fromInt(NUM2INT(argv[5])), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[6])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 8) {
+    Rb_QMouseEvent* p = new Rb_QMouseEvent(static_cast<QEvent::Type>(NUM2INT(argv[0])), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[2], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[3], &cls_QPointF)), static_cast<Qt::MouseButton>(NUM2INT(argv[4])), QFlags<Qt::MouseButton>::fromInt(NUM2INT(argv[5])), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[6])), static_cast<Qt::MouseEventSource>(NUM2INT(argv[7])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QMouseEvent#initialize (%d)", argc);
+}
+static VALUE rb_QMouseEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QMouseEvent); }
+
 static VALUE rb_QMouseEvent_clone(int argc, VALUE* argv, VALUE self) {
   QMouseEvent* o = static_cast<QMouseEvent*>(qt6rb::unwrap(self, &cls_QMouseEvent));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap((void*)(o->clone()), &cls_QMouseEvent, false);
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QMouseEvent*>(o) ? o->QMouseEvent::clone() : o->clone())), &cls_QMouseEvent, false);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMouseEvent#clone (%d)", argc);
 }
@@ -36288,6 +37165,24 @@ static VALUE rb_QMouseEvent_flags(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMouseEvent#flags (%d)", argc);
 }
 
+static VALUE rb_QWheelEvent_ctor(int argc, VALUE* argv, VALUE self) {
+  (void)argv;
+  if (argc == 8) {
+    Rb_QWheelEvent* p = new Rb_QWheelEvent(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[2], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[3], &cls_QPoint)), QFlags<Qt::MouseButton>::fromInt(NUM2INT(argv[4])), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[5])), static_cast<Qt::ScrollPhase>(NUM2INT(argv[6])), RTEST(argv[7]));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  if (argc == 9) {
+    Rb_QWheelEvent* p = new Rb_QWheelEvent(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)), *static_cast<QPointF*>(qt6rb::unwrap_ref(argv[1], &cls_QPointF)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[2], &cls_QPoint)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[3], &cls_QPoint)), QFlags<Qt::MouseButton>::fromInt(NUM2INT(argv[4])), QFlags<Qt::KeyboardModifier>::fromInt(NUM2INT(argv[5])), static_cast<Qt::ScrollPhase>(NUM2INT(argv[6])), RTEST(argv[7]), static_cast<Qt::MouseEventSource>(NUM2INT(argv[8])));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#initialize (%d)", argc);
+}
+static VALUE rb_QWheelEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QWheelEvent); }
+
 static VALUE rb_QWheelEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
   QWheelEvent* o = static_cast<QWheelEvent*>(qt6rb::unwrap(self, &cls_QWheelEvent));
   (void)argv; (void)self;
@@ -36302,7 +37197,7 @@ static VALUE rb_QWheelEvent_clone(int argc, VALUE* argv, VALUE self) {
   QWheelEvent* o = static_cast<QWheelEvent*>(qt6rb::unwrap(self, &cls_QWheelEvent));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap((void*)(o->clone()), &cls_QWheelEvent, false);
+    return qt6rb::wrap((void*)((dynamic_cast<Rb_QWheelEvent*>(o) ? o->QWheelEvent::clone() : o->clone())), &cls_QWheelEvent, false);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#clone (%d)", argc);
 }
@@ -36365,7 +37260,7 @@ static VALUE rb_QWheelEvent_is_begin_event(int argc, VALUE* argv, VALUE self) {
   QWheelEvent* o = static_cast<QWheelEvent*>(qt6rb::unwrap(self, &cls_QWheelEvent));
   (void)argv; (void)self;
   if (argc == 0) {
-    return (o->isBeginEvent()) ? Qtrue : Qfalse;
+    return ((dynamic_cast<Rb_QWheelEvent*>(o) ? o->QWheelEvent::isBeginEvent() : o->isBeginEvent())) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#is_begin_event (%d)", argc);
 }
@@ -36374,7 +37269,7 @@ static VALUE rb_QWheelEvent_is_update_event(int argc, VALUE* argv, VALUE self) {
   QWheelEvent* o = static_cast<QWheelEvent*>(qt6rb::unwrap(self, &cls_QWheelEvent));
   (void)argv; (void)self;
   if (argc == 0) {
-    return (o->isUpdateEvent()) ? Qtrue : Qfalse;
+    return ((dynamic_cast<Rb_QWheelEvent*>(o) ? o->QWheelEvent::isUpdateEvent() : o->isUpdateEvent())) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#is_update_event (%d)", argc);
 }
@@ -36383,7 +37278,7 @@ static VALUE rb_QWheelEvent_is_end_event(int argc, VALUE* argv, VALUE self) {
   QWheelEvent* o = static_cast<QWheelEvent*>(qt6rb::unwrap(self, &cls_QWheelEvent));
   (void)argv; (void)self;
   if (argc == 0) {
-    return (o->isEndEvent()) ? Qtrue : Qfalse;
+    return ((dynamic_cast<Rb_QWheelEvent*>(o) ? o->QWheelEvent::isEndEvent() : o->isEndEvent())) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#is_end_event (%d)", argc);
 }
@@ -38883,7 +39778,31 @@ static VALUE rb_QFontMetrics_bounding_rect(int argc, VALUE* argv, VALUE self) {
   if (argc == 2) {
     return qt6rb::wrap(new QRect(o->boundingRect(qt6rb::to_qstring(argv[0]), *static_cast<QTextOption*>(qt6rb::unwrap_ref(argv[1], &cls_QTextOption)))), &cls_QRect, true);
   }
+  if (argc == 3) {
+    return qt6rb::wrap(new QRect(o->boundingRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]))), &cls_QRect, true);
+  }
+  if (argc == 4) {
+    return qt6rb::wrap(new QRect(o->boundingRect(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)), NUM2INT(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]))), &cls_QRect, true);
+  }
+  if (argc == 6) {
+    return qt6rb::wrap(new QRect(o->boundingRect(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), qt6rb::to_qstring(argv[5]))), &cls_QRect, true);
+  }
+  if (argc == 7) {
+    return qt6rb::wrap(new QRect(o->boundingRect(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), qt6rb::to_qstring(argv[5]), NUM2INT(argv[6]))), &cls_QRect, true);
+  }
   rb_raise(rb_eArgError, "wrong number of arguments for QFontMetrics#bounding_rect (%d)", argc);
+}
+
+static VALUE rb_QFontMetrics_size(int argc, VALUE* argv, VALUE self) {
+  QFontMetrics* o = static_cast<QFontMetrics*>(qt6rb::unwrap(self, &cls_QFontMetrics));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    return qt6rb::wrap(new QSize(o->size(NUM2INT(argv[0]), qt6rb::to_qstring(argv[1]))), &cls_QSize, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QSize(o->size(NUM2INT(argv[0]), qt6rb::to_qstring(argv[1]), NUM2INT(argv[2]))), &cls_QSize, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFontMetrics#size (%d)", argc);
 }
 
 static VALUE rb_QFontMetrics_tight_bounding_rect(int argc, VALUE* argv, VALUE self) {
@@ -39031,6 +39950,9 @@ static VALUE rb_QCursor_s_pos(int argc, VALUE* argv, VALUE self) {
   if (argc == 0) {
     return qt6rb::wrap(new QPoint(QCursor::pos()), &cls_QPoint, true);
   }
+  if (argc == 1) {
+    return qt6rb::wrap(new QPoint(QCursor::pos(static_cast<QScreen*>(qt6rb::unwrap_release(argv[0], &cls_QScreen)))), &cls_QPoint, true);
+  }
   rb_raise(rb_eArgError, "wrong number of arguments for QCursor#pos (%d)", argc);
 }
 
@@ -39041,7 +39963,18 @@ static VALUE rb_QCursor_s_set_pos(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   if (argc == 2) {
-    QCursor::setPos(NUM2INT(argv[0]), NUM2INT(argv[1]));
+    if (RB_INTEGER_TYPE_P(argv[0]) && RB_INTEGER_TYPE_P(argv[1])) {
+      QCursor::setPos(NUM2INT(argv[0]), NUM2INT(argv[1]));
+      return Qnil;
+    }
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QScreen.rb_class)) && rb_obj_is_kind_of(argv[1], cls_QPoint.rb_class)) {
+      QCursor::setPos(static_cast<QScreen*>(qt6rb::unwrap_release(argv[0], &cls_QScreen)), *static_cast<QPoint*>(qt6rb::unwrap_ref(argv[1], &cls_QPoint)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QCursor#set_pos for given argument types");
+  }
+  if (argc == 3) {
+    QCursor::setPos(static_cast<QScreen*>(qt6rb::unwrap_release(argv[0], &cls_QScreen)), NUM2INT(argv[1]), NUM2INT(argv[2]));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCursor#set_pos (%d)", argc);
@@ -39705,6 +40638,20 @@ static VALUE rb_QPixmap_copy(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QPixmap(o->copy(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]))), &cls_QPixmap, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#copy (%d)", argc);
+}
+
+static VALUE rb_QPixmap_scroll(int argc, VALUE* argv, VALUE self) {
+  QPixmap* o = static_cast<QPixmap*>(qt6rb::unwrap(self, &cls_QPixmap));
+  (void)argv; (void)self;
+  if (argc == 3) {
+    o->scroll(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QRect*>(qt6rb::unwrap_ref(argv[2], &cls_QRect)));
+    return Qnil;
+  }
+  if (argc == 6) {
+    o->scroll(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#scroll (%d)", argc);
 }
 
 static VALUE rb_QPixmap_cache_key(int argc, VALUE* argv, VALUE self) {
@@ -42400,6 +43347,10 @@ static VALUE rb_QMessageBox_remove_button(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QMessageBox_open(int argc, VALUE* argv, VALUE self) {
   QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
   (void)argv; (void)self;
+  if (argc == 0) {
+    o->QDialog::open();
+    return Qnil;
+  }
   if (argc == 2) {
     o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]));
     return Qnil;
@@ -44208,6 +45159,10 @@ static VALUE rb_QFileDialog_options(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QFileDialog_open(int argc, VALUE* argv, VALUE self) {
   QFileDialog* o = static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog));
   (void)argv; (void)self;
+  if (argc == 0) {
+    o->QDialog::open();
+    return Qnil;
+  }
   if (argc == 2) {
     o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]));
     return Qnil;
@@ -44231,6 +45186,86 @@ static VALUE rb_QFileDialog_s_tr(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(QFileDialog::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#tr (%d)", argc);
+}
+
+static VALUE rb_QFileDialog_s_get_open_file_name(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(QFileDialog::getOpenFileName());
+  }
+  if (argc == 1) {
+    return qt6rb::from_qstring(QFileDialog::getOpenFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget))));
+  }
+  if (argc == 2) {
+    return qt6rb::from_qstring(QFileDialog::getOpenFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1])));
+  }
+  if (argc == 3) {
+    return qt6rb::from_qstring(QFileDialog::getOpenFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2])));
+  }
+  if (argc == 4) {
+    return qt6rb::from_qstring(QFileDialog::getOpenFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#get_open_file_name (%d)", argc);
+}
+
+static VALUE rb_QFileDialog_s_get_open_file_url(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getOpenFileUrl()), &cls_QUrl, true);
+  }
+  if (argc == 1) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getOpenFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)))), &cls_QUrl, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getOpenFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]))), &cls_QUrl, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getOpenFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), *static_cast<QUrl*>(qt6rb::unwrap_ref(argv[2], &cls_QUrl)))), &cls_QUrl, true);
+  }
+  if (argc == 4) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getOpenFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), *static_cast<QUrl*>(qt6rb::unwrap_ref(argv[2], &cls_QUrl)), qt6rb::to_qstring(argv[3]))), &cls_QUrl, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#get_open_file_url (%d)", argc);
+}
+
+static VALUE rb_QFileDialog_s_get_save_file_name(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstring(QFileDialog::getSaveFileName());
+  }
+  if (argc == 1) {
+    return qt6rb::from_qstring(QFileDialog::getSaveFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget))));
+  }
+  if (argc == 2) {
+    return qt6rb::from_qstring(QFileDialog::getSaveFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1])));
+  }
+  if (argc == 3) {
+    return qt6rb::from_qstring(QFileDialog::getSaveFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2])));
+  }
+  if (argc == 4) {
+    return qt6rb::from_qstring(QFileDialog::getSaveFileName(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#get_save_file_name (%d)", argc);
+}
+
+static VALUE rb_QFileDialog_s_get_save_file_url(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getSaveFileUrl()), &cls_QUrl, true);
+  }
+  if (argc == 1) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getSaveFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)))), &cls_QUrl, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getSaveFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]))), &cls_QUrl, true);
+  }
+  if (argc == 3) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getSaveFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), *static_cast<QUrl*>(qt6rb::unwrap_ref(argv[2], &cls_QUrl)))), &cls_QUrl, true);
+  }
+  if (argc == 4) {
+    return qt6rb::wrap(new QUrl(QFileDialog::getSaveFileUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), *static_cast<QUrl*>(qt6rb::unwrap_ref(argv[2], &cls_QUrl)), qt6rb::to_qstring(argv[3]))), &cls_QUrl, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#get_save_file_url (%d)", argc);
 }
 
 static VALUE rb_QFileDialog_s_get_existing_directory(int argc, VALUE* argv, VALUE self) {
@@ -44274,6 +45309,26 @@ static VALUE rb_QFileDialog_s_get_existing_directory_url(int argc, VALUE* argv, 
     return qt6rb::wrap(new QUrl(QFileDialog::getExistingDirectoryUrl(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), *static_cast<QUrl*>(qt6rb::unwrap_ref(argv[2], &cls_QUrl)), QFlags<QFileDialog::Option>::fromInt(NUM2INT(argv[3])), qt6rb::to_qstringlist(argv[4]))), &cls_QUrl, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#get_existing_directory_url (%d)", argc);
+}
+
+static VALUE rb_QFileDialog_s_get_open_file_names(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::from_qstringlist(QFileDialog::getOpenFileNames());
+  }
+  if (argc == 1) {
+    return qt6rb::from_qstringlist(QFileDialog::getOpenFileNames(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget))));
+  }
+  if (argc == 2) {
+    return qt6rb::from_qstringlist(QFileDialog::getOpenFileNames(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1])));
+  }
+  if (argc == 3) {
+    return qt6rb::from_qstringlist(QFileDialog::getOpenFileNames(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2])));
+  }
+  if (argc == 4) {
+    return qt6rb::from_qstringlist(QFileDialog::getOpenFileNames(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#get_open_file_names (%d)", argc);
 }
 
 static VALUE rb_QFileDialog_s_save_file_content(int argc, VALUE* argv, VALUE self) {
@@ -45094,6 +46149,10 @@ static VALUE rb_QInputDialog_cancel_button_text(int argc, VALUE* argv, VALUE sel
 static VALUE rb_QInputDialog_open(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   (void)argv; (void)self;
+  if (argc == 0) {
+    o->QDialog::open();
+    return Qnil;
+  }
   if (argc == 2) {
     o->open(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), StringValueCStr(argv[1]));
     return Qnil;
@@ -45164,6 +46223,85 @@ static VALUE rb_QInputDialog_s_tr(int argc, VALUE* argv, VALUE self) {
     return qt6rb::from_qstring(QInputDialog::tr(StringValueCStr(argv[0]), StringValueCStr(argv[1]), NUM2INT(argv[2])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#tr (%d)", argc);
+}
+
+static VALUE rb_QInputDialog_s_get_text(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::from_qstring(QInputDialog::getText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2])));
+  }
+  if (argc == 4) {
+    return qt6rb::from_qstring(QInputDialog::getText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QLineEdit::EchoMode>(NUM2INT(argv[3]))));
+  }
+  if (argc == 5) {
+    return qt6rb::from_qstring(QInputDialog::getText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), static_cast<QLineEdit::EchoMode>(NUM2INT(argv[3])), qt6rb::to_qstring(argv[4])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_text (%d)", argc);
+}
+
+static VALUE rb_QInputDialog_s_get_multi_line_text(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return qt6rb::from_qstring(QInputDialog::getMultiLineText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2])));
+  }
+  if (argc == 4) {
+    return qt6rb::from_qstring(QInputDialog::getMultiLineText(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstring(argv[3])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_multi_line_text (%d)", argc);
+}
+
+static VALUE rb_QInputDialog_s_get_item(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 4) {
+    return qt6rb::from_qstring(QInputDialog::getItem(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstringlist(argv[3])));
+  }
+  if (argc == 5) {
+    return qt6rb::from_qstring(QInputDialog::getItem(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstringlist(argv[3]), NUM2INT(argv[4])));
+  }
+  if (argc == 6) {
+    return qt6rb::from_qstring(QInputDialog::getItem(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), qt6rb::to_qstringlist(argv[3]), NUM2INT(argv[4]), RTEST(argv[5])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_item (%d)", argc);
+}
+
+static VALUE rb_QInputDialog_s_get_int(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2])));
+  }
+  if (argc == 4) {
+    return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3])));
+  }
+  if (argc == 5) {
+    return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4])));
+  }
+  if (argc == 6) {
+    return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5])));
+  }
+  if (argc == 7) {
+    return INT2NUM(QInputDialog::getInt(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2INT(argv[3]), NUM2INT(argv[4]), NUM2INT(argv[5]), NUM2INT(argv[6])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_int (%d)", argc);
+}
+
+static VALUE rb_QInputDialog_s_get_double(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2])));
+  }
+  if (argc == 4) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3])));
+  }
+  if (argc == 5) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3]), NUM2DBL(argv[4])));
+  }
+  if (argc == 6) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3]), NUM2DBL(argv[4]), NUM2DBL(argv[5])));
+  }
+  if (argc == 7) {
+    return DBL2NUM(QInputDialog::getDouble(static_cast<QWidget*>(qt6rb::unwrap_release(argv[0], &cls_QWidget)), qt6rb::to_qstring(argv[1]), qt6rb::to_qstring(argv[2]), NUM2DBL(argv[3]), NUM2DBL(argv[4]), NUM2DBL(argv[5]), NUM2INT(argv[6])));
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_double (%d)", argc);
 }
 
 static VALUE rb_QInputDialog_prot_key_press_event(int argc, VALUE* argv, VALUE self) {
@@ -49797,8 +50935,15 @@ static VALUE rb_QTableWidget_open_persistent_editor(int argc, VALUE* argv, VALUE
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->openPersistentEditor(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTableWidgetItem.rb_class))) {
+      o->openPersistentEditor(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      o->QAbstractItemView::openPersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTableWidget#open_persistent_editor for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#open_persistent_editor (%d)", argc);
 }
@@ -49807,8 +50952,15 @@ static VALUE rb_QTableWidget_close_persistent_editor(int argc, VALUE* argv, VALU
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->closePersistentEditor(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTableWidgetItem.rb_class))) {
+      o->closePersistentEditor(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      o->QAbstractItemView::closePersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTableWidget#close_persistent_editor for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#close_persistent_editor (%d)", argc);
 }
@@ -49817,7 +50969,13 @@ static VALUE rb_QTableWidget_is_persistent_editor_open(int argc, VALUE* argv, VA
   QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return (o->isPersistentEditorOpen(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)))) ? Qtrue : Qfalse;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTableWidgetItem.rb_class))) {
+      return (o->isPersistentEditorOpen(static_cast<QTableWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTableWidgetItem)))) ? Qtrue : Qfalse;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      return (o->QAbstractItemView::isPersistentEditorOpen(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))) ? Qtrue : Qfalse;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTableWidget#is_persistent_editor_open for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#is_persistent_editor_open (%d)", argc);
 }
@@ -51289,8 +52447,15 @@ static VALUE rb_QTreeWidget_open_persistent_editor(int argc, VALUE* argv, VALUE 
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->openPersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class))) {
+      o->openPersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      o->QAbstractItemView::openPersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTreeWidget#open_persistent_editor for given argument types");
   }
   if (argc == 2) {
     o->openPersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), NUM2INT(argv[1]));
@@ -51303,8 +52468,15 @@ static VALUE rb_QTreeWidget_close_persistent_editor(int argc, VALUE* argv, VALUE
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->closePersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class))) {
+      o->closePersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      o->QAbstractItemView::closePersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTreeWidget#close_persistent_editor for given argument types");
   }
   if (argc == 2) {
     o->closePersistentEditor(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), NUM2INT(argv[1]));
@@ -51317,7 +52489,13 @@ static VALUE rb_QTreeWidget_is_persistent_editor_open(int argc, VALUE* argv, VAL
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return (o->isPersistentEditorOpen(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)))) ? Qtrue : Qfalse;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QTreeWidgetItem.rb_class))) {
+      return (o->isPersistentEditorOpen(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)))) ? Qtrue : Qfalse;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      return (o->QAbstractItemView::isPersistentEditorOpen(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))) ? Qtrue : Qfalse;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QTreeWidget#is_persistent_editor_open for given argument types");
   }
   if (argc == 2) {
     return (o->isPersistentEditorOpen(static_cast<QTreeWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QTreeWidgetItem)), NUM2INT(argv[1]))) ? Qtrue : Qfalse;
@@ -53772,8 +54950,15 @@ static VALUE rb_QListWidget_open_persistent_editor(int argc, VALUE* argv, VALUE 
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->openPersistentEditor(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidgetItem.rb_class))) {
+      o->openPersistentEditor(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      o->QAbstractItemView::openPersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QListWidget#open_persistent_editor for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#open_persistent_editor (%d)", argc);
 }
@@ -53782,8 +54967,15 @@ static VALUE rb_QListWidget_close_persistent_editor(int argc, VALUE* argv, VALUE
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->closePersistentEditor(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)));
-    return Qnil;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidgetItem.rb_class))) {
+      o->closePersistentEditor(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      o->QAbstractItemView::closePersistentEditor(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QListWidget#close_persistent_editor for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#close_persistent_editor (%d)", argc);
 }
@@ -53792,7 +54984,13 @@ static VALUE rb_QListWidget_is_persistent_editor_open(int argc, VALUE* argv, VAL
   QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    return (o->isPersistentEditorOpen(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)))) ? Qtrue : Qfalse;
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QListWidgetItem.rb_class))) {
+      return (o->isPersistentEditorOpen(static_cast<QListWidgetItem*>(qt6rb::unwrap_release(argv[0], &cls_QListWidgetItem)))) ? Qtrue : Qfalse;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      return (o->QAbstractItemView::isPersistentEditorOpen(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))) ? Qtrue : Qfalse;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QListWidget#is_persistent_editor_open for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#is_persistent_editor_open (%d)", argc);
 }
@@ -58158,8 +59356,23 @@ static VALUE rb_QAbstractItemView_scroll_to_bottom(int argc, VALUE* argv, VALUE 
 static VALUE rb_QAbstractItemView_update(int argc, VALUE* argv, VALUE self) {
   QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
   (void)argv; (void)self;
+  if (argc == 0) {
+    o->QWidget::update();
+    return Qnil;
+  }
   if (argc == 1) {
-    o->update(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+    if (rb_obj_is_kind_of(argv[0], cls_QModelIndex.rb_class)) {
+      o->update(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)));
+      return Qnil;
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QRect.rb_class)) {
+      o->QWidget::update(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
+      return Qnil;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QAbstractItemView#update for given argument types");
+  }
+  if (argc == 4) {
+    o->QWidget::update(NUM2INT(argv[0]), NUM2INT(argv[1]), NUM2INT(argv[2]), NUM2INT(argv[3]));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#update (%d)", argc);
@@ -62048,11 +63261,66 @@ static VALUE rb_QMenu_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &c
 static VALUE rb_QMenu_add_action(int argc, VALUE* argv, VALUE self) {
   QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
   (void)argv; (void)self;
+  if (argc == 1) {
+    if ((NIL_P(argv[0]) || rb_obj_is_kind_of(argv[0], cls_QAction.rb_class))) {
+      o->QWidget::addAction(static_cast<QAction*>(qt6rb::unwrap_release(argv[0], &cls_QAction)));
+      return Qnil;
+    }
+    if (RB_TYPE_P(argv[0], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
+  }
+  if (argc == 2) {
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]))), &cls_QAction);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
+  }
+  if (argc == 3) {
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]))), &cls_QAction);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
+  }
   if (argc == 4) {
-    return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[3], &cls_QKeySequence)))), &cls_QAction);
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING) && rb_obj_is_kind_of(argv[3], cls_QKeySequence.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[3], &cls_QKeySequence)))), &cls_QAction);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && (NIL_P(argv[1]) || rb_obj_is_kind_of(argv[1], cls_QObject.rb_class)) && RB_TYPE_P(argv[2], T_STRING) && RB_INTEGER_TYPE_P(argv[3])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]), static_cast<Qt::ConnectionType>(NUM2INT(argv[3])))), &cls_QAction);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
   }
   if (argc == 5) {
-    return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[4], &cls_QKeySequence)))), &cls_QAction);
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && rb_obj_is_kind_of(argv[4], cls_QKeySequence.rb_class)) {
+      return qt6rb::wrap_qobject((QObject*)(o->addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[4], &cls_QKeySequence)))), &cls_QAction);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    }
+    if (RB_TYPE_P(argv[0], T_STRING) && rb_obj_is_kind_of(argv[1], cls_QKeySequence.rb_class) && (NIL_P(argv[2]) || rb_obj_is_kind_of(argv[2], cls_QObject.rb_class)) && RB_TYPE_P(argv[3], T_STRING) && RB_INTEGER_TYPE_P(argv[4])) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(qt6rb::to_qstring(argv[0]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[1], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[2], &cls_QObject)), StringValueCStr(argv[3]), static_cast<Qt::ConnectionType>(NUM2INT(argv[4])))), &cls_QAction);
+    }
+    if (rb_obj_is_kind_of(argv[0], cls_QIcon.rb_class) && RB_TYPE_P(argv[1], T_STRING) && rb_obj_is_kind_of(argv[2], cls_QKeySequence.rb_class) && (NIL_P(argv[3]) || rb_obj_is_kind_of(argv[3], cls_QObject.rb_class)) && RB_TYPE_P(argv[4], T_STRING)) {
+      return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]))), &cls_QAction);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QMenu#add_action for given argument types");
+  }
+  if (argc == 6) {
+    return qt6rb::wrap_qobject((QObject*)(o->QWidget::addAction(*static_cast<QIcon*>(qt6rb::unwrap_ref(argv[0], &cls_QIcon)), qt6rb::to_qstring(argv[1]), *static_cast<QKeySequence*>(qt6rb::unwrap_ref(argv[2], &cls_QKeySequence)), static_cast<QObject*>(qt6rb::unwrap_release(argv[3], &cls_QObject)), StringValueCStr(argv[4]), static_cast<Qt::ConnectionType>(NUM2INT(argv[5])))), &cls_QAction);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMenu#add_action (%d)", argc);
 }
@@ -64236,6 +65504,32 @@ static VALUE rb_QToolBar_on_visibility_changed(VALUE self) {
   return self;
 }
 
+static VALUE rb_QDesktopServices_s_open_url(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return (QDesktopServices::openUrl(*static_cast<QUrl*>(qt6rb::unwrap_ref(argv[0], &cls_QUrl)))) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QDesktopServices#open_url (%d)", argc);
+}
+
+static VALUE rb_QDesktopServices_s_set_url_handler(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 3) {
+    QDesktopServices::setUrlHandler(qt6rb::to_qstring(argv[0]), static_cast<QObject*>(qt6rb::unwrap_release(argv[1], &cls_QObject)), StringValueCStr(argv[2]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QDesktopServices#set_url_handler (%d)", argc);
+}
+
+static VALUE rb_QDesktopServices_s_unset_url_handler(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 1) {
+    QDesktopServices::unsetUrlHandler(qt6rb::to_qstring(argv[0]));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QDesktopServices#unset_url_handler (%d)", argc);
+}
+
 static VALUE rb_QValidator_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
@@ -65991,6 +67285,17 @@ static VALUE rb_QAbstractItemModel_s_tr(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#tr (%d)", argc);
 }
 
+static VALUE rb_QAbstractItemModel_on_data_changed(VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QAbstractItemModel::dataChanged, o, [proc](QModelIndex a0, QModelIndex a1) {
+    VALUE args[] = { qt6rb::wrap(new QModelIndex(a0), &cls_QModelIndex, true), qt6rb::wrap(new QModelIndex(a1), &cls_QModelIndex, true) };
+    qt6rb::call_proc(proc, 2, args);
+  });
+  return self;
+}
+
 static VALUE rb_QAbstractItemModel_on_header_data_changed(VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   VALUE proc = rb_block_proc();
@@ -65998,6 +67303,26 @@ static VALUE rb_QAbstractItemModel_on_header_data_changed(VALUE self) {
   QObject::connect(o, &QAbstractItemModel::headerDataChanged, o, [proc](Qt::Orientation a0, int a1, int a2) {
     VALUE args[] = { INT2NUM(static_cast<int>(a0)), INT2NUM(a1), INT2NUM(a2) };
     qt6rb::call_proc(proc, 3, args);
+  });
+  return self;
+}
+
+static VALUE rb_QAbstractItemModel_on_layout_changed(VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QAbstractItemModel::layoutChanged, o, [proc]() {
+    qt6rb::call_proc(proc, 0, nullptr);
+  });
+  return self;
+}
+
+static VALUE rb_QAbstractItemModel_on_layout_about_to_be_changed(VALUE self) {
+  QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
+  VALUE proc = rb_block_proc();
+  qt6rb::retain_proc(proc);
+  QObject::connect(o, &QAbstractItemModel::layoutAboutToBeChanged, o, [proc]() {
+    qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
 }
@@ -66196,6 +67521,9 @@ static VALUE rb_QFileSystemModel_index(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QFileSystemModel_parent(int argc, VALUE* argv, VALUE self) {
   QFileSystemModel* o = static_cast<QFileSystemModel*>(qt6rb::unwrap(self, &cls_QFileSystemModel));
   (void)argv; (void)self;
+  if (argc == 0) {
+    return qt6rb::wrap_qobject((QObject*)(o->QObject::parent()), &cls_QObject);
+  }
   if (argc == 1) {
     return qt6rb::wrap(new QModelIndex((dynamic_cast<Rb_QFileSystemModel*>(o) ? o->QFileSystemModel::parent(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))) : o->parent(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))))), &cls_QModelIndex, true);
   }
@@ -68022,6 +69350,16 @@ static VALUE rb_QTreeView_reset(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeView#reset (%d)", argc);
+}
+
+static VALUE rb_QTreeView_data_changed(int argc, VALUE* argv, VALUE self) {
+  QTreeView* o = static_cast<QTreeView*>(qt6rb::unwrap(self, &cls_QTreeView));
+  (void)argv; (void)self;
+  if (argc == 2) {
+    (dynamic_cast<Rb_QTreeView*>(o) ? o->QTreeView::dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex))) : o->dataChanged(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex))));
+    return Qnil;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QTreeView#data_changed (%d)", argc);
 }
 
 static VALUE rb_QTreeView_select_all(int argc, VALUE* argv, VALUE self) {
@@ -74718,6 +76056,7 @@ extern "C" void Init_qt6() {
   qt6rb::define_class(&cls_QCoreApplication, "CoreApplication", cls_QObject.rb_class);
   qt6rb::define_class(&cls_QGuiApplication, "GuiApplication", cls_QCoreApplication.rb_class);
   qt6rb::define_class(&cls_QApplication, "Application", cls_QGuiApplication.rb_class);
+  qt6rb::define_class(&cls_QScreen, "Screen", cls_QObject.rb_class);
   qt6rb::define_class(&cls_QPaintDevice, "PaintDevice", Qnil);
   qt6rb::define_class(&cls_QWidget, "Widget", cls_QObject.rb_class);
   qt6rb::define_class(&cls_QFrame, "Frame", cls_QWidget.rb_class);
@@ -74823,6 +76162,7 @@ extern "C" void Init_qt6() {
   qt6rb::define_class(&cls_QAction, "Action", cls_QObject.rb_class);
   qt6rb::define_class(&cls_QActionGroup, "ActionGroup", cls_QObject.rb_class);
   qt6rb::define_class(&cls_QToolBar, "ToolBar", cls_QWidget.rb_class);
+  qt6rb::define_class(&cls_QDesktopServices, "DesktopServices", Qnil);
   qt6rb::define_class(&cls_QValidator, "Validator", cls_QObject.rb_class);
   qt6rb::define_class(&cls_QIntValidator, "IntValidator", cls_QValidator.rb_class);
   qt6rb::define_class(&cls_QDoubleValidator, "DoubleValidator", cls_QValidator.rb_class);
@@ -74919,11 +76259,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTimer.rb_class, "set_timer_type", RUBY_METHOD_FUNC(rb_QTimer_set_timer_type), -1);
   rb_define_method(cls_QTimer.rb_class, "setTimerType", RUBY_METHOD_FUNC(rb_QTimer_set_timer_type), -1);
   rb_define_alias(cls_QTimer.rb_class, "timer_type=", "set_timer_type");
+  rb_define_alias(cls_QTimer.rb_class, "timerType=", "set_timer_type");
   rb_define_method(cls_QTimer.rb_class, "timer_type", RUBY_METHOD_FUNC(rb_QTimer_timer_type), -1);
   rb_define_method(cls_QTimer.rb_class, "timerType", RUBY_METHOD_FUNC(rb_QTimer_timer_type), -1);
   rb_define_method(cls_QTimer.rb_class, "set_single_shot", RUBY_METHOD_FUNC(rb_QTimer_set_single_shot), -1);
   rb_define_method(cls_QTimer.rb_class, "setSingleShot", RUBY_METHOD_FUNC(rb_QTimer_set_single_shot), -1);
   rb_define_alias(cls_QTimer.rb_class, "single_shot=", "set_single_shot");
+  rb_define_alias(cls_QTimer.rb_class, "singleShot=", "set_single_shot");
   rb_define_method(cls_QTimer.rb_class, "is_single_shot", RUBY_METHOD_FUNC(rb_QTimer_is_single_shot), -1);
   rb_define_method(cls_QTimer.rb_class, "isSingleShot", RUBY_METHOD_FUNC(rb_QTimer_is_single_shot), -1);
   rb_define_alias(cls_QTimer.rb_class, "single_shot?", "is_single_shot");
@@ -75019,6 +76361,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGuiApplication.rb_class, "set_badge_number", RUBY_METHOD_FUNC(rb_QGuiApplication_set_badge_number), -1);
   rb_define_method(cls_QGuiApplication.rb_class, "setBadgeNumber", RUBY_METHOD_FUNC(rb_QGuiApplication_set_badge_number), -1);
   rb_define_alias(cls_QGuiApplication.rb_class, "badge_number=", "set_badge_number");
+  rb_define_alias(cls_QGuiApplication.rb_class, "badgeNumber=", "set_badge_number");
   rb_define_method(cls_QGuiApplication.rb_class, "device_pixel_ratio", RUBY_METHOD_FUNC(rb_QGuiApplication_device_pixel_ratio), -1);
   rb_define_method(cls_QGuiApplication.rb_class, "devicePixelRatio", RUBY_METHOD_FUNC(rb_QGuiApplication_device_pixel_ratio), -1);
   rb_define_method(cls_QGuiApplication.rb_class, "notify", RUBY_METHOD_FUNC(rb_QGuiApplication_notify), -1);
@@ -75049,6 +76392,10 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "platformName", RUBY_METHOD_FUNC(rb_QGuiApplication_s_platform_name), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "focus_object", RUBY_METHOD_FUNC(rb_QGuiApplication_s_focus_object), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "focusObject", RUBY_METHOD_FUNC(rb_QGuiApplication_s_focus_object), -1);
+  rb_define_singleton_method(cls_QGuiApplication.rb_class, "primary_screen", RUBY_METHOD_FUNC(rb_QGuiApplication_s_primary_screen), -1);
+  rb_define_singleton_method(cls_QGuiApplication.rb_class, "primaryScreen", RUBY_METHOD_FUNC(rb_QGuiApplication_s_primary_screen), -1);
+  rb_define_singleton_method(cls_QGuiApplication.rb_class, "screen_at", RUBY_METHOD_FUNC(rb_QGuiApplication_s_screen_at), -1);
+  rb_define_singleton_method(cls_QGuiApplication.rb_class, "screenAt", RUBY_METHOD_FUNC(rb_QGuiApplication_s_screen_at), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "override_cursor", RUBY_METHOD_FUNC(rb_QGuiApplication_s_override_cursor), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "overrideCursor", RUBY_METHOD_FUNC(rb_QGuiApplication_s_override_cursor), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "set_override_cursor", RUBY_METHOD_FUNC(rb_QGuiApplication_s_set_override_cursor), -1);
@@ -75094,6 +76441,9 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "exec", RUBY_METHOD_FUNC(rb_QGuiApplication_s_exec), -1);
   rb_define_singleton_method(cls_QGuiApplication.rb_class, "sync", RUBY_METHOD_FUNC(rb_QGuiApplication_s_sync), -1);
   rb_define_method(cls_QGuiApplication.rb_class, "on_font_database_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_font_database_changed), 0);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_screen_added", RUBY_METHOD_FUNC(rb_QGuiApplication_on_screen_added), 0);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_screen_removed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_screen_removed), 0);
+  rb_define_method(cls_QGuiApplication.rb_class, "on_primary_screen_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_primary_screen_changed), 0);
   rb_define_method(cls_QGuiApplication.rb_class, "on_last_window_closed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_last_window_closed), 0);
   rb_define_method(cls_QGuiApplication.rb_class, "on_focus_object_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_focus_object_changed), 0);
   rb_define_method(cls_QGuiApplication.rb_class, "on_application_state_changed", RUBY_METHOD_FUNC(rb_QGuiApplication_on_application_state_changed), 0);
@@ -75112,9 +76462,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QApplication.rb_class, "set_style_sheet", RUBY_METHOD_FUNC(rb_QApplication_set_style_sheet), -1);
   rb_define_method(cls_QApplication.rb_class, "setStyleSheet", RUBY_METHOD_FUNC(rb_QApplication_set_style_sheet), -1);
   rb_define_alias(cls_QApplication.rb_class, "style_sheet=", "set_style_sheet");
+  rb_define_alias(cls_QApplication.rb_class, "styleSheet=", "set_style_sheet");
   rb_define_method(cls_QApplication.rb_class, "set_auto_sip_enabled", RUBY_METHOD_FUNC(rb_QApplication_set_auto_sip_enabled), -1);
   rb_define_method(cls_QApplication.rb_class, "setAutoSipEnabled", RUBY_METHOD_FUNC(rb_QApplication_set_auto_sip_enabled), -1);
   rb_define_alias(cls_QApplication.rb_class, "auto_sip_enabled=", "set_auto_sip_enabled");
+  rb_define_alias(cls_QApplication.rb_class, "autoSipEnabled=", "set_auto_sip_enabled");
   rb_define_singleton_method(cls_QApplication.rb_class, "tr", RUBY_METHOD_FUNC(rb_QApplication_s_tr), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "palette", RUBY_METHOD_FUNC(rb_QApplication_s_palette), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "set_palette", RUBY_METHOD_FUNC(rb_QApplication_s_set_palette), -1);
@@ -75174,6 +76526,72 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QApplication.rb_class, "about_qt", RUBY_METHOD_FUNC(rb_QApplication_s_about_qt), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "aboutQt", RUBY_METHOD_FUNC(rb_QApplication_s_about_qt), -1);
   rb_define_method(cls_QApplication.rb_class, "on_focus_changed", RUBY_METHOD_FUNC(rb_QApplication_on_focus_changed), 0);
+  rb_undef_alloc_func(cls_QScreen.rb_class);
+  rb_define_method(cls_QScreen.rb_class, "name", RUBY_METHOD_FUNC(rb_QScreen_name), -1);
+  rb_define_method(cls_QScreen.rb_class, "manufacturer", RUBY_METHOD_FUNC(rb_QScreen_manufacturer), -1);
+  rb_define_method(cls_QScreen.rb_class, "model", RUBY_METHOD_FUNC(rb_QScreen_model), -1);
+  rb_define_method(cls_QScreen.rb_class, "serial_number", RUBY_METHOD_FUNC(rb_QScreen_serial_number), -1);
+  rb_define_method(cls_QScreen.rb_class, "serialNumber", RUBY_METHOD_FUNC(rb_QScreen_serial_number), -1);
+  rb_define_method(cls_QScreen.rb_class, "depth", RUBY_METHOD_FUNC(rb_QScreen_depth), -1);
+  rb_define_method(cls_QScreen.rb_class, "size", RUBY_METHOD_FUNC(rb_QScreen_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "geometry", RUBY_METHOD_FUNC(rb_QScreen_geometry), -1);
+  rb_define_method(cls_QScreen.rb_class, "physical_size", RUBY_METHOD_FUNC(rb_QScreen_physical_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "physicalSize", RUBY_METHOD_FUNC(rb_QScreen_physical_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "physical_dots_per_inch_x", RUBY_METHOD_FUNC(rb_QScreen_physical_dots_per_inch_x), -1);
+  rb_define_method(cls_QScreen.rb_class, "physicalDotsPerInchX", RUBY_METHOD_FUNC(rb_QScreen_physical_dots_per_inch_x), -1);
+  rb_define_method(cls_QScreen.rb_class, "physical_dots_per_inch_y", RUBY_METHOD_FUNC(rb_QScreen_physical_dots_per_inch_y), -1);
+  rb_define_method(cls_QScreen.rb_class, "physicalDotsPerInchY", RUBY_METHOD_FUNC(rb_QScreen_physical_dots_per_inch_y), -1);
+  rb_define_method(cls_QScreen.rb_class, "physical_dots_per_inch", RUBY_METHOD_FUNC(rb_QScreen_physical_dots_per_inch), -1);
+  rb_define_method(cls_QScreen.rb_class, "physicalDotsPerInch", RUBY_METHOD_FUNC(rb_QScreen_physical_dots_per_inch), -1);
+  rb_define_method(cls_QScreen.rb_class, "logical_dots_per_inch_x", RUBY_METHOD_FUNC(rb_QScreen_logical_dots_per_inch_x), -1);
+  rb_define_method(cls_QScreen.rb_class, "logicalDotsPerInchX", RUBY_METHOD_FUNC(rb_QScreen_logical_dots_per_inch_x), -1);
+  rb_define_method(cls_QScreen.rb_class, "logical_dots_per_inch_y", RUBY_METHOD_FUNC(rb_QScreen_logical_dots_per_inch_y), -1);
+  rb_define_method(cls_QScreen.rb_class, "logicalDotsPerInchY", RUBY_METHOD_FUNC(rb_QScreen_logical_dots_per_inch_y), -1);
+  rb_define_method(cls_QScreen.rb_class, "logical_dots_per_inch", RUBY_METHOD_FUNC(rb_QScreen_logical_dots_per_inch), -1);
+  rb_define_method(cls_QScreen.rb_class, "logicalDotsPerInch", RUBY_METHOD_FUNC(rb_QScreen_logical_dots_per_inch), -1);
+  rb_define_method(cls_QScreen.rb_class, "device_pixel_ratio", RUBY_METHOD_FUNC(rb_QScreen_device_pixel_ratio), -1);
+  rb_define_method(cls_QScreen.rb_class, "devicePixelRatio", RUBY_METHOD_FUNC(rb_QScreen_device_pixel_ratio), -1);
+  rb_define_method(cls_QScreen.rb_class, "available_size", RUBY_METHOD_FUNC(rb_QScreen_available_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "availableSize", RUBY_METHOD_FUNC(rb_QScreen_available_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "available_geometry", RUBY_METHOD_FUNC(rb_QScreen_available_geometry), -1);
+  rb_define_method(cls_QScreen.rb_class, "availableGeometry", RUBY_METHOD_FUNC(rb_QScreen_available_geometry), -1);
+  rb_define_method(cls_QScreen.rb_class, "virtual_sibling_at", RUBY_METHOD_FUNC(rb_QScreen_virtual_sibling_at), -1);
+  rb_define_method(cls_QScreen.rb_class, "virtualSiblingAt", RUBY_METHOD_FUNC(rb_QScreen_virtual_sibling_at), -1);
+  rb_define_method(cls_QScreen.rb_class, "virtual_size", RUBY_METHOD_FUNC(rb_QScreen_virtual_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "virtualSize", RUBY_METHOD_FUNC(rb_QScreen_virtual_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "virtual_geometry", RUBY_METHOD_FUNC(rb_QScreen_virtual_geometry), -1);
+  rb_define_method(cls_QScreen.rb_class, "virtualGeometry", RUBY_METHOD_FUNC(rb_QScreen_virtual_geometry), -1);
+  rb_define_method(cls_QScreen.rb_class, "available_virtual_size", RUBY_METHOD_FUNC(rb_QScreen_available_virtual_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "availableVirtualSize", RUBY_METHOD_FUNC(rb_QScreen_available_virtual_size), -1);
+  rb_define_method(cls_QScreen.rb_class, "available_virtual_geometry", RUBY_METHOD_FUNC(rb_QScreen_available_virtual_geometry), -1);
+  rb_define_method(cls_QScreen.rb_class, "availableVirtualGeometry", RUBY_METHOD_FUNC(rb_QScreen_available_virtual_geometry), -1);
+  rb_define_method(cls_QScreen.rb_class, "primary_orientation", RUBY_METHOD_FUNC(rb_QScreen_primary_orientation), -1);
+  rb_define_method(cls_QScreen.rb_class, "primaryOrientation", RUBY_METHOD_FUNC(rb_QScreen_primary_orientation), -1);
+  rb_define_method(cls_QScreen.rb_class, "orientation", RUBY_METHOD_FUNC(rb_QScreen_orientation), -1);
+  rb_define_method(cls_QScreen.rb_class, "native_orientation", RUBY_METHOD_FUNC(rb_QScreen_native_orientation), -1);
+  rb_define_method(cls_QScreen.rb_class, "nativeOrientation", RUBY_METHOD_FUNC(rb_QScreen_native_orientation), -1);
+  rb_define_method(cls_QScreen.rb_class, "angle_between", RUBY_METHOD_FUNC(rb_QScreen_angle_between), -1);
+  rb_define_method(cls_QScreen.rb_class, "angleBetween", RUBY_METHOD_FUNC(rb_QScreen_angle_between), -1);
+  rb_define_method(cls_QScreen.rb_class, "map_between", RUBY_METHOD_FUNC(rb_QScreen_map_between), -1);
+  rb_define_method(cls_QScreen.rb_class, "mapBetween", RUBY_METHOD_FUNC(rb_QScreen_map_between), -1);
+  rb_define_method(cls_QScreen.rb_class, "is_portrait", RUBY_METHOD_FUNC(rb_QScreen_is_portrait), -1);
+  rb_define_method(cls_QScreen.rb_class, "isPortrait", RUBY_METHOD_FUNC(rb_QScreen_is_portrait), -1);
+  rb_define_method(cls_QScreen.rb_class, "is_landscape", RUBY_METHOD_FUNC(rb_QScreen_is_landscape), -1);
+  rb_define_method(cls_QScreen.rb_class, "isLandscape", RUBY_METHOD_FUNC(rb_QScreen_is_landscape), -1);
+  rb_define_method(cls_QScreen.rb_class, "grab_window", RUBY_METHOD_FUNC(rb_QScreen_grab_window), -1);
+  rb_define_method(cls_QScreen.rb_class, "grabWindow", RUBY_METHOD_FUNC(rb_QScreen_grab_window), -1);
+  rb_define_method(cls_QScreen.rb_class, "refresh_rate", RUBY_METHOD_FUNC(rb_QScreen_refresh_rate), -1);
+  rb_define_method(cls_QScreen.rb_class, "refreshRate", RUBY_METHOD_FUNC(rb_QScreen_refresh_rate), -1);
+  rb_define_singleton_method(cls_QScreen.rb_class, "tr", RUBY_METHOD_FUNC(rb_QScreen_s_tr), -1);
+  rb_define_method(cls_QScreen.rb_class, "on_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_geometry_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_available_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_available_geometry_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_physical_size_changed", RUBY_METHOD_FUNC(rb_QScreen_on_physical_size_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_physical_dots_per_inch_changed", RUBY_METHOD_FUNC(rb_QScreen_on_physical_dots_per_inch_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_logical_dots_per_inch_changed", RUBY_METHOD_FUNC(rb_QScreen_on_logical_dots_per_inch_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_virtual_geometry_changed", RUBY_METHOD_FUNC(rb_QScreen_on_virtual_geometry_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_primary_orientation_changed", RUBY_METHOD_FUNC(rb_QScreen_on_primary_orientation_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_orientation_changed", RUBY_METHOD_FUNC(rb_QScreen_on_orientation_changed), 0);
+  rb_define_method(cls_QScreen.rb_class, "on_refresh_rate_changed", RUBY_METHOD_FUNC(rb_QScreen_on_refresh_rate_changed), 0);
   rb_define_alloc_func(cls_QWidget.rb_class, rb_QWidget_alloc);
   qt6rb::register_ctor(cls_QWidget.rb_class, rb_QWidget_ctor);
   rb_include_module(cls_QWidget.rb_class, qt6rb::constructable_module());
@@ -75201,6 +76619,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_window_modality", RUBY_METHOD_FUNC(rb_QWidget_set_window_modality), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowModality", RUBY_METHOD_FUNC(rb_QWidget_set_window_modality), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_modality=", "set_window_modality");
+  rb_define_alias(cls_QWidget.rb_class, "windowModality=", "set_window_modality");
   rb_define_method(cls_QWidget.rb_class, "is_enabled", RUBY_METHOD_FUNC(rb_QWidget_is_enabled), -1);
   rb_define_method(cls_QWidget.rb_class, "isEnabled", RUBY_METHOD_FUNC(rb_QWidget_is_enabled), -1);
   rb_define_alias(cls_QWidget.rb_class, "enabled?", "is_enabled");
@@ -75215,6 +76634,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_window_modified", RUBY_METHOD_FUNC(rb_QWidget_set_window_modified), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowModified", RUBY_METHOD_FUNC(rb_QWidget_set_window_modified), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_modified=", "set_window_modified");
+  rb_define_alias(cls_QWidget.rb_class, "windowModified=", "set_window_modified");
   rb_define_method(cls_QWidget.rb_class, "frame_geometry", RUBY_METHOD_FUNC(rb_QWidget_frame_geometry), -1);
   rb_define_method(cls_QWidget.rb_class, "frameGeometry", RUBY_METHOD_FUNC(rb_QWidget_frame_geometry), -1);
   rb_define_method(cls_QWidget.rb_class, "geometry", RUBY_METHOD_FUNC(rb_QWidget_geometry), -1);
@@ -75246,40 +76666,51 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_minimum_size", RUBY_METHOD_FUNC(rb_QWidget_set_minimum_size), -1);
   rb_define_method(cls_QWidget.rb_class, "setMinimumSize", RUBY_METHOD_FUNC(rb_QWidget_set_minimum_size), -1);
   rb_define_alias(cls_QWidget.rb_class, "minimum_size=", "set_minimum_size");
+  rb_define_alias(cls_QWidget.rb_class, "minimumSize=", "set_minimum_size");
   rb_define_method(cls_QWidget.rb_class, "set_maximum_size", RUBY_METHOD_FUNC(rb_QWidget_set_maximum_size), -1);
   rb_define_method(cls_QWidget.rb_class, "setMaximumSize", RUBY_METHOD_FUNC(rb_QWidget_set_maximum_size), -1);
   rb_define_alias(cls_QWidget.rb_class, "maximum_size=", "set_maximum_size");
+  rb_define_alias(cls_QWidget.rb_class, "maximumSize=", "set_maximum_size");
   rb_define_method(cls_QWidget.rb_class, "set_minimum_width", RUBY_METHOD_FUNC(rb_QWidget_set_minimum_width), -1);
   rb_define_method(cls_QWidget.rb_class, "setMinimumWidth", RUBY_METHOD_FUNC(rb_QWidget_set_minimum_width), -1);
   rb_define_alias(cls_QWidget.rb_class, "minimum_width=", "set_minimum_width");
+  rb_define_alias(cls_QWidget.rb_class, "minimumWidth=", "set_minimum_width");
   rb_define_method(cls_QWidget.rb_class, "set_minimum_height", RUBY_METHOD_FUNC(rb_QWidget_set_minimum_height), -1);
   rb_define_method(cls_QWidget.rb_class, "setMinimumHeight", RUBY_METHOD_FUNC(rb_QWidget_set_minimum_height), -1);
   rb_define_alias(cls_QWidget.rb_class, "minimum_height=", "set_minimum_height");
+  rb_define_alias(cls_QWidget.rb_class, "minimumHeight=", "set_minimum_height");
   rb_define_method(cls_QWidget.rb_class, "set_maximum_width", RUBY_METHOD_FUNC(rb_QWidget_set_maximum_width), -1);
   rb_define_method(cls_QWidget.rb_class, "setMaximumWidth", RUBY_METHOD_FUNC(rb_QWidget_set_maximum_width), -1);
   rb_define_alias(cls_QWidget.rb_class, "maximum_width=", "set_maximum_width");
+  rb_define_alias(cls_QWidget.rb_class, "maximumWidth=", "set_maximum_width");
   rb_define_method(cls_QWidget.rb_class, "set_maximum_height", RUBY_METHOD_FUNC(rb_QWidget_set_maximum_height), -1);
   rb_define_method(cls_QWidget.rb_class, "setMaximumHeight", RUBY_METHOD_FUNC(rb_QWidget_set_maximum_height), -1);
   rb_define_alias(cls_QWidget.rb_class, "maximum_height=", "set_maximum_height");
+  rb_define_alias(cls_QWidget.rb_class, "maximumHeight=", "set_maximum_height");
   rb_define_method(cls_QWidget.rb_class, "size_increment", RUBY_METHOD_FUNC(rb_QWidget_size_increment), -1);
   rb_define_method(cls_QWidget.rb_class, "sizeIncrement", RUBY_METHOD_FUNC(rb_QWidget_size_increment), -1);
   rb_define_method(cls_QWidget.rb_class, "set_size_increment", RUBY_METHOD_FUNC(rb_QWidget_set_size_increment), -1);
   rb_define_method(cls_QWidget.rb_class, "setSizeIncrement", RUBY_METHOD_FUNC(rb_QWidget_set_size_increment), -1);
   rb_define_alias(cls_QWidget.rb_class, "size_increment=", "set_size_increment");
+  rb_define_alias(cls_QWidget.rb_class, "sizeIncrement=", "set_size_increment");
   rb_define_method(cls_QWidget.rb_class, "base_size", RUBY_METHOD_FUNC(rb_QWidget_base_size), -1);
   rb_define_method(cls_QWidget.rb_class, "baseSize", RUBY_METHOD_FUNC(rb_QWidget_base_size), -1);
   rb_define_method(cls_QWidget.rb_class, "set_base_size", RUBY_METHOD_FUNC(rb_QWidget_set_base_size), -1);
   rb_define_method(cls_QWidget.rb_class, "setBaseSize", RUBY_METHOD_FUNC(rb_QWidget_set_base_size), -1);
   rb_define_alias(cls_QWidget.rb_class, "base_size=", "set_base_size");
+  rb_define_alias(cls_QWidget.rb_class, "baseSize=", "set_base_size");
   rb_define_method(cls_QWidget.rb_class, "set_fixed_size", RUBY_METHOD_FUNC(rb_QWidget_set_fixed_size), -1);
   rb_define_method(cls_QWidget.rb_class, "setFixedSize", RUBY_METHOD_FUNC(rb_QWidget_set_fixed_size), -1);
   rb_define_alias(cls_QWidget.rb_class, "fixed_size=", "set_fixed_size");
+  rb_define_alias(cls_QWidget.rb_class, "fixedSize=", "set_fixed_size");
   rb_define_method(cls_QWidget.rb_class, "set_fixed_width", RUBY_METHOD_FUNC(rb_QWidget_set_fixed_width), -1);
   rb_define_method(cls_QWidget.rb_class, "setFixedWidth", RUBY_METHOD_FUNC(rb_QWidget_set_fixed_width), -1);
   rb_define_alias(cls_QWidget.rb_class, "fixed_width=", "set_fixed_width");
+  rb_define_alias(cls_QWidget.rb_class, "fixedWidth=", "set_fixed_width");
   rb_define_method(cls_QWidget.rb_class, "set_fixed_height", RUBY_METHOD_FUNC(rb_QWidget_set_fixed_height), -1);
   rb_define_method(cls_QWidget.rb_class, "setFixedHeight", RUBY_METHOD_FUNC(rb_QWidget_set_fixed_height), -1);
   rb_define_alias(cls_QWidget.rb_class, "fixed_height=", "set_fixed_height");
+  rb_define_alias(cls_QWidget.rb_class, "fixedHeight=", "set_fixed_height");
   rb_define_method(cls_QWidget.rb_class, "map_to_global", RUBY_METHOD_FUNC(rb_QWidget_map_to_global), -1);
   rb_define_method(cls_QWidget.rb_class, "mapToGlobal", RUBY_METHOD_FUNC(rb_QWidget_map_to_global), -1);
   rb_define_method(cls_QWidget.rb_class, "map_from_global", RUBY_METHOD_FUNC(rb_QWidget_map_from_global), -1);
@@ -75304,11 +76735,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_background_role", RUBY_METHOD_FUNC(rb_QWidget_set_background_role), -1);
   rb_define_method(cls_QWidget.rb_class, "setBackgroundRole", RUBY_METHOD_FUNC(rb_QWidget_set_background_role), -1);
   rb_define_alias(cls_QWidget.rb_class, "background_role=", "set_background_role");
+  rb_define_alias(cls_QWidget.rb_class, "backgroundRole=", "set_background_role");
   rb_define_method(cls_QWidget.rb_class, "background_role", RUBY_METHOD_FUNC(rb_QWidget_background_role), -1);
   rb_define_method(cls_QWidget.rb_class, "backgroundRole", RUBY_METHOD_FUNC(rb_QWidget_background_role), -1);
   rb_define_method(cls_QWidget.rb_class, "set_foreground_role", RUBY_METHOD_FUNC(rb_QWidget_set_foreground_role), -1);
   rb_define_method(cls_QWidget.rb_class, "setForegroundRole", RUBY_METHOD_FUNC(rb_QWidget_set_foreground_role), -1);
   rb_define_alias(cls_QWidget.rb_class, "foreground_role=", "set_foreground_role");
+  rb_define_alias(cls_QWidget.rb_class, "foregroundRole=", "set_foreground_role");
   rb_define_method(cls_QWidget.rb_class, "foreground_role", RUBY_METHOD_FUNC(rb_QWidget_foreground_role), -1);
   rb_define_method(cls_QWidget.rb_class, "foregroundRole", RUBY_METHOD_FUNC(rb_QWidget_foreground_role), -1);
   rb_define_method(cls_QWidget.rb_class, "font", RUBY_METHOD_FUNC(rb_QWidget_font), -1);
@@ -75326,6 +76759,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_mouse_tracking", RUBY_METHOD_FUNC(rb_QWidget_set_mouse_tracking), -1);
   rb_define_method(cls_QWidget.rb_class, "setMouseTracking", RUBY_METHOD_FUNC(rb_QWidget_set_mouse_tracking), -1);
   rb_define_alias(cls_QWidget.rb_class, "mouse_tracking=", "set_mouse_tracking");
+  rb_define_alias(cls_QWidget.rb_class, "mouseTracking=", "set_mouse_tracking");
   rb_define_method(cls_QWidget.rb_class, "has_mouse_tracking", RUBY_METHOD_FUNC(rb_QWidget_has_mouse_tracking), -1);
   rb_define_method(cls_QWidget.rb_class, "hasMouseTracking", RUBY_METHOD_FUNC(rb_QWidget_has_mouse_tracking), -1);
   rb_define_method(cls_QWidget.rb_class, "under_mouse", RUBY_METHOD_FUNC(rb_QWidget_under_mouse), -1);
@@ -75333,10 +76767,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_tablet_tracking", RUBY_METHOD_FUNC(rb_QWidget_set_tablet_tracking), -1);
   rb_define_method(cls_QWidget.rb_class, "setTabletTracking", RUBY_METHOD_FUNC(rb_QWidget_set_tablet_tracking), -1);
   rb_define_alias(cls_QWidget.rb_class, "tablet_tracking=", "set_tablet_tracking");
+  rb_define_alias(cls_QWidget.rb_class, "tabletTracking=", "set_tablet_tracking");
   rb_define_method(cls_QWidget.rb_class, "has_tablet_tracking", RUBY_METHOD_FUNC(rb_QWidget_has_tablet_tracking), -1);
   rb_define_method(cls_QWidget.rb_class, "hasTabletTracking", RUBY_METHOD_FUNC(rb_QWidget_has_tablet_tracking), -1);
   rb_define_method(cls_QWidget.rb_class, "clear_mask", RUBY_METHOD_FUNC(rb_QWidget_clear_mask), -1);
   rb_define_method(cls_QWidget.rb_class, "clearMask", RUBY_METHOD_FUNC(rb_QWidget_clear_mask), -1);
+  rb_define_method(cls_QWidget.rb_class, "render", RUBY_METHOD_FUNC(rb_QWidget_render), -1);
   rb_define_method(cls_QWidget.rb_class, "grab", RUBY_METHOD_FUNC(rb_QWidget_grab), -1);
   rb_define_method(cls_QWidget.rb_class, "grab_gesture", RUBY_METHOD_FUNC(rb_QWidget_grab_gesture), -1);
   rb_define_method(cls_QWidget.rb_class, "grabGesture", RUBY_METHOD_FUNC(rb_QWidget_grab_gesture), -1);
@@ -75345,9 +76781,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_window_title", RUBY_METHOD_FUNC(rb_QWidget_set_window_title), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowTitle", RUBY_METHOD_FUNC(rb_QWidget_set_window_title), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_title=", "set_window_title");
+  rb_define_alias(cls_QWidget.rb_class, "windowTitle=", "set_window_title");
   rb_define_method(cls_QWidget.rb_class, "set_style_sheet", RUBY_METHOD_FUNC(rb_QWidget_set_style_sheet), -1);
   rb_define_method(cls_QWidget.rb_class, "setStyleSheet", RUBY_METHOD_FUNC(rb_QWidget_set_style_sheet), -1);
   rb_define_alias(cls_QWidget.rb_class, "style_sheet=", "set_style_sheet");
+  rb_define_alias(cls_QWidget.rb_class, "styleSheet=", "set_style_sheet");
   rb_define_method(cls_QWidget.rb_class, "style_sheet", RUBY_METHOD_FUNC(rb_QWidget_style_sheet), -1);
   rb_define_method(cls_QWidget.rb_class, "styleSheet", RUBY_METHOD_FUNC(rb_QWidget_style_sheet), -1);
   rb_define_method(cls_QWidget.rb_class, "window_title", RUBY_METHOD_FUNC(rb_QWidget_window_title), -1);
@@ -75355,26 +76793,31 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_window_icon", RUBY_METHOD_FUNC(rb_QWidget_set_window_icon), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowIcon", RUBY_METHOD_FUNC(rb_QWidget_set_window_icon), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_icon=", "set_window_icon");
+  rb_define_alias(cls_QWidget.rb_class, "windowIcon=", "set_window_icon");
   rb_define_method(cls_QWidget.rb_class, "window_icon", RUBY_METHOD_FUNC(rb_QWidget_window_icon), -1);
   rb_define_method(cls_QWidget.rb_class, "windowIcon", RUBY_METHOD_FUNC(rb_QWidget_window_icon), -1);
   rb_define_method(cls_QWidget.rb_class, "set_window_icon_text", RUBY_METHOD_FUNC(rb_QWidget_set_window_icon_text), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowIconText", RUBY_METHOD_FUNC(rb_QWidget_set_window_icon_text), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_icon_text=", "set_window_icon_text");
+  rb_define_alias(cls_QWidget.rb_class, "windowIconText=", "set_window_icon_text");
   rb_define_method(cls_QWidget.rb_class, "window_icon_text", RUBY_METHOD_FUNC(rb_QWidget_window_icon_text), -1);
   rb_define_method(cls_QWidget.rb_class, "windowIconText", RUBY_METHOD_FUNC(rb_QWidget_window_icon_text), -1);
   rb_define_method(cls_QWidget.rb_class, "set_window_role", RUBY_METHOD_FUNC(rb_QWidget_set_window_role), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowRole", RUBY_METHOD_FUNC(rb_QWidget_set_window_role), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_role=", "set_window_role");
+  rb_define_alias(cls_QWidget.rb_class, "windowRole=", "set_window_role");
   rb_define_method(cls_QWidget.rb_class, "window_role", RUBY_METHOD_FUNC(rb_QWidget_window_role), -1);
   rb_define_method(cls_QWidget.rb_class, "windowRole", RUBY_METHOD_FUNC(rb_QWidget_window_role), -1);
   rb_define_method(cls_QWidget.rb_class, "set_window_file_path", RUBY_METHOD_FUNC(rb_QWidget_set_window_file_path), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowFilePath", RUBY_METHOD_FUNC(rb_QWidget_set_window_file_path), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_file_path=", "set_window_file_path");
+  rb_define_alias(cls_QWidget.rb_class, "windowFilePath=", "set_window_file_path");
   rb_define_method(cls_QWidget.rb_class, "window_file_path", RUBY_METHOD_FUNC(rb_QWidget_window_file_path), -1);
   rb_define_method(cls_QWidget.rb_class, "windowFilePath", RUBY_METHOD_FUNC(rb_QWidget_window_file_path), -1);
   rb_define_method(cls_QWidget.rb_class, "set_window_opacity", RUBY_METHOD_FUNC(rb_QWidget_set_window_opacity), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowOpacity", RUBY_METHOD_FUNC(rb_QWidget_set_window_opacity), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_opacity=", "set_window_opacity");
+  rb_define_alias(cls_QWidget.rb_class, "windowOpacity=", "set_window_opacity");
   rb_define_method(cls_QWidget.rb_class, "window_opacity", RUBY_METHOD_FUNC(rb_QWidget_window_opacity), -1);
   rb_define_method(cls_QWidget.rb_class, "windowOpacity", RUBY_METHOD_FUNC(rb_QWidget_window_opacity), -1);
   rb_define_method(cls_QWidget.rb_class, "is_window_modified", RUBY_METHOD_FUNC(rb_QWidget_is_window_modified), -1);
@@ -75383,21 +76826,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_tool_tip", RUBY_METHOD_FUNC(rb_QWidget_set_tool_tip), -1);
   rb_define_method(cls_QWidget.rb_class, "setToolTip", RUBY_METHOD_FUNC(rb_QWidget_set_tool_tip), -1);
   rb_define_alias(cls_QWidget.rb_class, "tool_tip=", "set_tool_tip");
+  rb_define_alias(cls_QWidget.rb_class, "toolTip=", "set_tool_tip");
   rb_define_method(cls_QWidget.rb_class, "tool_tip", RUBY_METHOD_FUNC(rb_QWidget_tool_tip), -1);
   rb_define_method(cls_QWidget.rb_class, "toolTip", RUBY_METHOD_FUNC(rb_QWidget_tool_tip), -1);
   rb_define_method(cls_QWidget.rb_class, "set_tool_tip_duration", RUBY_METHOD_FUNC(rb_QWidget_set_tool_tip_duration), -1);
   rb_define_method(cls_QWidget.rb_class, "setToolTipDuration", RUBY_METHOD_FUNC(rb_QWidget_set_tool_tip_duration), -1);
   rb_define_alias(cls_QWidget.rb_class, "tool_tip_duration=", "set_tool_tip_duration");
+  rb_define_alias(cls_QWidget.rb_class, "toolTipDuration=", "set_tool_tip_duration");
   rb_define_method(cls_QWidget.rb_class, "tool_tip_duration", RUBY_METHOD_FUNC(rb_QWidget_tool_tip_duration), -1);
   rb_define_method(cls_QWidget.rb_class, "toolTipDuration", RUBY_METHOD_FUNC(rb_QWidget_tool_tip_duration), -1);
   rb_define_method(cls_QWidget.rb_class, "set_status_tip", RUBY_METHOD_FUNC(rb_QWidget_set_status_tip), -1);
   rb_define_method(cls_QWidget.rb_class, "setStatusTip", RUBY_METHOD_FUNC(rb_QWidget_set_status_tip), -1);
   rb_define_alias(cls_QWidget.rb_class, "status_tip=", "set_status_tip");
+  rb_define_alias(cls_QWidget.rb_class, "statusTip=", "set_status_tip");
   rb_define_method(cls_QWidget.rb_class, "status_tip", RUBY_METHOD_FUNC(rb_QWidget_status_tip), -1);
   rb_define_method(cls_QWidget.rb_class, "statusTip", RUBY_METHOD_FUNC(rb_QWidget_status_tip), -1);
   rb_define_method(cls_QWidget.rb_class, "set_whats_this", RUBY_METHOD_FUNC(rb_QWidget_set_whats_this), -1);
   rb_define_method(cls_QWidget.rb_class, "setWhatsThis", RUBY_METHOD_FUNC(rb_QWidget_set_whats_this), -1);
   rb_define_alias(cls_QWidget.rb_class, "whats_this=", "set_whats_this");
+  rb_define_alias(cls_QWidget.rb_class, "whatsThis=", "set_whats_this");
   rb_define_method(cls_QWidget.rb_class, "whats_this", RUBY_METHOD_FUNC(rb_QWidget_whats_this), -1);
   rb_define_method(cls_QWidget.rb_class, "whatsThis", RUBY_METHOD_FUNC(rb_QWidget_whats_this), -1);
   rb_define_method(cls_QWidget.rb_class, "accessible_name", RUBY_METHOD_FUNC(rb_QWidget_accessible_name), -1);
@@ -75405,19 +76852,23 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_accessible_name", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_name), -1);
   rb_define_method(cls_QWidget.rb_class, "setAccessibleName", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_name), -1);
   rb_define_alias(cls_QWidget.rb_class, "accessible_name=", "set_accessible_name");
+  rb_define_alias(cls_QWidget.rb_class, "accessibleName=", "set_accessible_name");
   rb_define_method(cls_QWidget.rb_class, "accessible_description", RUBY_METHOD_FUNC(rb_QWidget_accessible_description), -1);
   rb_define_method(cls_QWidget.rb_class, "accessibleDescription", RUBY_METHOD_FUNC(rb_QWidget_accessible_description), -1);
   rb_define_method(cls_QWidget.rb_class, "set_accessible_description", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_description), -1);
   rb_define_method(cls_QWidget.rb_class, "setAccessibleDescription", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_description), -1);
   rb_define_alias(cls_QWidget.rb_class, "accessible_description=", "set_accessible_description");
+  rb_define_alias(cls_QWidget.rb_class, "accessibleDescription=", "set_accessible_description");
   rb_define_method(cls_QWidget.rb_class, "accessible_identifier", RUBY_METHOD_FUNC(rb_QWidget_accessible_identifier), -1);
   rb_define_method(cls_QWidget.rb_class, "accessibleIdentifier", RUBY_METHOD_FUNC(rb_QWidget_accessible_identifier), -1);
   rb_define_method(cls_QWidget.rb_class, "set_accessible_identifier", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_identifier), -1);
   rb_define_method(cls_QWidget.rb_class, "setAccessibleIdentifier", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_identifier), -1);
   rb_define_alias(cls_QWidget.rb_class, "accessible_identifier=", "set_accessible_identifier");
+  rb_define_alias(cls_QWidget.rb_class, "accessibleIdentifier=", "set_accessible_identifier");
   rb_define_method(cls_QWidget.rb_class, "set_layout_direction", RUBY_METHOD_FUNC(rb_QWidget_set_layout_direction), -1);
   rb_define_method(cls_QWidget.rb_class, "setLayoutDirection", RUBY_METHOD_FUNC(rb_QWidget_set_layout_direction), -1);
   rb_define_alias(cls_QWidget.rb_class, "layout_direction=", "set_layout_direction");
+  rb_define_alias(cls_QWidget.rb_class, "layoutDirection=", "set_layout_direction");
   rb_define_method(cls_QWidget.rb_class, "layout_direction", RUBY_METHOD_FUNC(rb_QWidget_layout_direction), -1);
   rb_define_method(cls_QWidget.rb_class, "layoutDirection", RUBY_METHOD_FUNC(rb_QWidget_layout_direction), -1);
   rb_define_method(cls_QWidget.rb_class, "unset_layout_direction", RUBY_METHOD_FUNC(rb_QWidget_unset_layout_direction), -1);
@@ -75445,11 +76896,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_focus_policy", RUBY_METHOD_FUNC(rb_QWidget_set_focus_policy), -1);
   rb_define_method(cls_QWidget.rb_class, "setFocusPolicy", RUBY_METHOD_FUNC(rb_QWidget_set_focus_policy), -1);
   rb_define_alias(cls_QWidget.rb_class, "focus_policy=", "set_focus_policy");
+  rb_define_alias(cls_QWidget.rb_class, "focusPolicy=", "set_focus_policy");
   rb_define_method(cls_QWidget.rb_class, "has_focus", RUBY_METHOD_FUNC(rb_QWidget_has_focus), -1);
   rb_define_method(cls_QWidget.rb_class, "hasFocus", RUBY_METHOD_FUNC(rb_QWidget_has_focus), -1);
   rb_define_method(cls_QWidget.rb_class, "set_focus_proxy", RUBY_METHOD_FUNC(rb_QWidget_set_focus_proxy), -1);
   rb_define_method(cls_QWidget.rb_class, "setFocusProxy", RUBY_METHOD_FUNC(rb_QWidget_set_focus_proxy), -1);
   rb_define_alias(cls_QWidget.rb_class, "focus_proxy=", "set_focus_proxy");
+  rb_define_alias(cls_QWidget.rb_class, "focusProxy=", "set_focus_proxy");
   rb_define_method(cls_QWidget.rb_class, "focus_proxy", RUBY_METHOD_FUNC(rb_QWidget_focus_proxy), -1);
   rb_define_method(cls_QWidget.rb_class, "focusProxy", RUBY_METHOD_FUNC(rb_QWidget_focus_proxy), -1);
   rb_define_method(cls_QWidget.rb_class, "context_menu_policy", RUBY_METHOD_FUNC(rb_QWidget_context_menu_policy), -1);
@@ -75457,6 +76910,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_context_menu_policy", RUBY_METHOD_FUNC(rb_QWidget_set_context_menu_policy), -1);
   rb_define_method(cls_QWidget.rb_class, "setContextMenuPolicy", RUBY_METHOD_FUNC(rb_QWidget_set_context_menu_policy), -1);
   rb_define_alias(cls_QWidget.rb_class, "context_menu_policy=", "set_context_menu_policy");
+  rb_define_alias(cls_QWidget.rb_class, "contextMenuPolicy=", "set_context_menu_policy");
   rb_define_method(cls_QWidget.rb_class, "grab_mouse", RUBY_METHOD_FUNC(rb_QWidget_grab_mouse), -1);
   rb_define_method(cls_QWidget.rb_class, "grabMouse", RUBY_METHOD_FUNC(rb_QWidget_grab_mouse), -1);
   rb_define_method(cls_QWidget.rb_class, "release_mouse", RUBY_METHOD_FUNC(rb_QWidget_release_mouse), -1);
@@ -75472,14 +76926,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_shortcut_enabled", RUBY_METHOD_FUNC(rb_QWidget_set_shortcut_enabled), -1);
   rb_define_method(cls_QWidget.rb_class, "setShortcutEnabled", RUBY_METHOD_FUNC(rb_QWidget_set_shortcut_enabled), -1);
   rb_define_alias(cls_QWidget.rb_class, "shortcut_enabled=", "set_shortcut_enabled");
+  rb_define_alias(cls_QWidget.rb_class, "shortcutEnabled=", "set_shortcut_enabled");
   rb_define_method(cls_QWidget.rb_class, "set_shortcut_auto_repeat", RUBY_METHOD_FUNC(rb_QWidget_set_shortcut_auto_repeat), -1);
   rb_define_method(cls_QWidget.rb_class, "setShortcutAutoRepeat", RUBY_METHOD_FUNC(rb_QWidget_set_shortcut_auto_repeat), -1);
   rb_define_alias(cls_QWidget.rb_class, "shortcut_auto_repeat=", "set_shortcut_auto_repeat");
+  rb_define_alias(cls_QWidget.rb_class, "shortcutAutoRepeat=", "set_shortcut_auto_repeat");
   rb_define_method(cls_QWidget.rb_class, "updates_enabled", RUBY_METHOD_FUNC(rb_QWidget_updates_enabled), -1);
   rb_define_method(cls_QWidget.rb_class, "updatesEnabled", RUBY_METHOD_FUNC(rb_QWidget_updates_enabled), -1);
   rb_define_method(cls_QWidget.rb_class, "set_updates_enabled", RUBY_METHOD_FUNC(rb_QWidget_set_updates_enabled), -1);
   rb_define_method(cls_QWidget.rb_class, "setUpdatesEnabled", RUBY_METHOD_FUNC(rb_QWidget_set_updates_enabled), -1);
   rb_define_alias(cls_QWidget.rb_class, "updates_enabled=", "set_updates_enabled");
+  rb_define_alias(cls_QWidget.rb_class, "updatesEnabled=", "set_updates_enabled");
   rb_define_method(cls_QWidget.rb_class, "update", RUBY_METHOD_FUNC(rb_QWidget_update), -1);
   rb_define_method(cls_QWidget.rb_class, "repaint", RUBY_METHOD_FUNC(rb_QWidget_repaint), -1);
   rb_define_method(cls_QWidget.rb_class, "set_visible", RUBY_METHOD_FUNC(rb_QWidget_set_visible), -1);
@@ -75536,6 +76993,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_window_state", RUBY_METHOD_FUNC(rb_QWidget_set_window_state), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowState", RUBY_METHOD_FUNC(rb_QWidget_set_window_state), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_state=", "set_window_state");
+  rb_define_alias(cls_QWidget.rb_class, "windowState=", "set_window_state");
   rb_define_method(cls_QWidget.rb_class, "override_window_state", RUBY_METHOD_FUNC(rb_QWidget_override_window_state), -1);
   rb_define_method(cls_QWidget.rb_class, "overrideWindowState", RUBY_METHOD_FUNC(rb_QWidget_override_window_state), -1);
   rb_define_method(cls_QWidget.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QWidget_size_hint), -1);
@@ -75547,6 +77005,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_size_policy", RUBY_METHOD_FUNC(rb_QWidget_set_size_policy), -1);
   rb_define_method(cls_QWidget.rb_class, "setSizePolicy", RUBY_METHOD_FUNC(rb_QWidget_set_size_policy), -1);
   rb_define_alias(cls_QWidget.rb_class, "size_policy=", "set_size_policy");
+  rb_define_alias(cls_QWidget.rb_class, "sizePolicy=", "set_size_policy");
   rb_define_method(cls_QWidget.rb_class, "height_for_width", RUBY_METHOD_FUNC(rb_QWidget_height_for_width), -1);
   rb_define_method(cls_QWidget.rb_class, "heightForWidth", RUBY_METHOD_FUNC(rb_QWidget_height_for_width), -1);
   rb_define_method(cls_QWidget.rb_class, "has_height_for_width", RUBY_METHOD_FUNC(rb_QWidget_has_height_for_width), -1);
@@ -75554,6 +77013,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_contents_margins", RUBY_METHOD_FUNC(rb_QWidget_set_contents_margins), -1);
   rb_define_method(cls_QWidget.rb_class, "setContentsMargins", RUBY_METHOD_FUNC(rb_QWidget_set_contents_margins), -1);
   rb_define_alias(cls_QWidget.rb_class, "contents_margins=", "set_contents_margins");
+  rb_define_alias(cls_QWidget.rb_class, "contentsMargins=", "set_contents_margins");
   rb_define_method(cls_QWidget.rb_class, "contents_rect", RUBY_METHOD_FUNC(rb_QWidget_contents_rect), -1);
   rb_define_method(cls_QWidget.rb_class, "contentsRect", RUBY_METHOD_FUNC(rb_QWidget_contents_rect), -1);
   rb_define_method(cls_QWidget.rb_class, "layout", RUBY_METHOD_FUNC(rb_QWidget_layout), -1);
@@ -75577,6 +77037,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_accept_drops", RUBY_METHOD_FUNC(rb_QWidget_set_accept_drops), -1);
   rb_define_method(cls_QWidget.rb_class, "setAcceptDrops", RUBY_METHOD_FUNC(rb_QWidget_set_accept_drops), -1);
   rb_define_alias(cls_QWidget.rb_class, "accept_drops=", "set_accept_drops");
+  rb_define_alias(cls_QWidget.rb_class, "acceptDrops=", "set_accept_drops");
   rb_define_method(cls_QWidget.rb_class, "add_action", RUBY_METHOD_FUNC(rb_QWidget_add_action), -1);
   rb_define_method(cls_QWidget.rb_class, "addAction", RUBY_METHOD_FUNC(rb_QWidget_add_action), -1);
   rb_define_method(cls_QWidget.rb_class, "insert_action", RUBY_METHOD_FUNC(rb_QWidget_insert_action), -1);
@@ -75588,11 +77049,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_window_flags", RUBY_METHOD_FUNC(rb_QWidget_set_window_flags), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowFlags", RUBY_METHOD_FUNC(rb_QWidget_set_window_flags), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_flags=", "set_window_flags");
+  rb_define_alias(cls_QWidget.rb_class, "windowFlags=", "set_window_flags");
   rb_define_method(cls_QWidget.rb_class, "window_flags", RUBY_METHOD_FUNC(rb_QWidget_window_flags), -1);
   rb_define_method(cls_QWidget.rb_class, "windowFlags", RUBY_METHOD_FUNC(rb_QWidget_window_flags), -1);
   rb_define_method(cls_QWidget.rb_class, "set_window_flag", RUBY_METHOD_FUNC(rb_QWidget_set_window_flag), -1);
   rb_define_method(cls_QWidget.rb_class, "setWindowFlag", RUBY_METHOD_FUNC(rb_QWidget_set_window_flag), -1);
   rb_define_alias(cls_QWidget.rb_class, "window_flag=", "set_window_flag");
+  rb_define_alias(cls_QWidget.rb_class, "windowFlag=", "set_window_flag");
   rb_define_method(cls_QWidget.rb_class, "override_window_flags", RUBY_METHOD_FUNC(rb_QWidget_override_window_flags), -1);
   rb_define_method(cls_QWidget.rb_class, "overrideWindowFlags", RUBY_METHOD_FUNC(rb_QWidget_override_window_flags), -1);
   rb_define_method(cls_QWidget.rb_class, "window_type", RUBY_METHOD_FUNC(rb_QWidget_window_type), -1);
@@ -75613,6 +77076,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_auto_fill_background", RUBY_METHOD_FUNC(rb_QWidget_set_auto_fill_background), -1);
   rb_define_method(cls_QWidget.rb_class, "setAutoFillBackground", RUBY_METHOD_FUNC(rb_QWidget_set_auto_fill_background), -1);
   rb_define_alias(cls_QWidget.rb_class, "auto_fill_background=", "set_auto_fill_background");
+  rb_define_alias(cls_QWidget.rb_class, "autoFillBackground=", "set_auto_fill_background");
+  rb_define_method(cls_QWidget.rb_class, "screen", RUBY_METHOD_FUNC(rb_QWidget_screen), -1);
+  rb_define_method(cls_QWidget.rb_class, "set_screen", RUBY_METHOD_FUNC(rb_QWidget_set_screen), -1);
+  rb_define_method(cls_QWidget.rb_class, "setScreen", RUBY_METHOD_FUNC(rb_QWidget_set_screen), -1);
+  rb_define_alias(cls_QWidget.rb_class, "screen=", "set_screen");
   rb_define_method(cls_QWidget.rb_class, "input_method_query", RUBY_METHOD_FUNC(rb_QWidget_input_method_query), -1);
   rb_define_method(cls_QWidget.rb_class, "inputMethodQuery", RUBY_METHOD_FUNC(rb_QWidget_input_method_query), -1);
   rb_define_method(cls_QWidget.rb_class, "input_method_hints", RUBY_METHOD_FUNC(rb_QWidget_input_method_hints), -1);
@@ -75620,6 +77088,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "set_input_method_hints", RUBY_METHOD_FUNC(rb_QWidget_set_input_method_hints), -1);
   rb_define_method(cls_QWidget.rb_class, "setInputMethodHints", RUBY_METHOD_FUNC(rb_QWidget_set_input_method_hints), -1);
   rb_define_alias(cls_QWidget.rb_class, "input_method_hints=", "set_input_method_hints");
+  rb_define_alias(cls_QWidget.rb_class, "inputMethodHints=", "set_input_method_hints");
   rb_define_singleton_method(cls_QWidget.rb_class, "tr", RUBY_METHOD_FUNC(rb_QWidget_s_tr), -1);
   rb_define_singleton_method(cls_QWidget.rb_class, "set_tab_order", RUBY_METHOD_FUNC(rb_QWidget_s_set_tab_order), -1);
   rb_define_singleton_method(cls_QWidget.rb_class, "setTabOrder", RUBY_METHOD_FUNC(rb_QWidget_s_set_tab_order), -1);
@@ -75694,6 +77163,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLabel.rb_class, "set_text_format", RUBY_METHOD_FUNC(rb_QLabel_set_text_format), -1);
   rb_define_method(cls_QLabel.rb_class, "setTextFormat", RUBY_METHOD_FUNC(rb_QLabel_set_text_format), -1);
   rb_define_alias(cls_QLabel.rb_class, "text_format=", "set_text_format");
+  rb_define_alias(cls_QLabel.rb_class, "textFormat=", "set_text_format");
   rb_define_method(cls_QLabel.rb_class, "alignment", RUBY_METHOD_FUNC(rb_QLabel_alignment), -1);
   rb_define_method(cls_QLabel.rb_class, "set_alignment", RUBY_METHOD_FUNC(rb_QLabel_set_alignment), -1);
   rb_define_method(cls_QLabel.rb_class, "setAlignment", RUBY_METHOD_FUNC(rb_QLabel_set_alignment), -1);
@@ -75701,6 +77171,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLabel.rb_class, "set_word_wrap", RUBY_METHOD_FUNC(rb_QLabel_set_word_wrap), -1);
   rb_define_method(cls_QLabel.rb_class, "setWordWrap", RUBY_METHOD_FUNC(rb_QLabel_set_word_wrap), -1);
   rb_define_alias(cls_QLabel.rb_class, "word_wrap=", "set_word_wrap");
+  rb_define_alias(cls_QLabel.rb_class, "wordWrap=", "set_word_wrap");
   rb_define_method(cls_QLabel.rb_class, "word_wrap", RUBY_METHOD_FUNC(rb_QLabel_word_wrap), -1);
   rb_define_method(cls_QLabel.rb_class, "wordWrap", RUBY_METHOD_FUNC(rb_QLabel_word_wrap), -1);
   rb_define_method(cls_QLabel.rb_class, "indent", RUBY_METHOD_FUNC(rb_QLabel_indent), -1);
@@ -75716,6 +77187,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLabel.rb_class, "set_scaled_contents", RUBY_METHOD_FUNC(rb_QLabel_set_scaled_contents), -1);
   rb_define_method(cls_QLabel.rb_class, "setScaledContents", RUBY_METHOD_FUNC(rb_QLabel_set_scaled_contents), -1);
   rb_define_alias(cls_QLabel.rb_class, "scaled_contents=", "set_scaled_contents");
+  rb_define_alias(cls_QLabel.rb_class, "scaledContents=", "set_scaled_contents");
   rb_define_method(cls_QLabel.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QLabel_size_hint), -1);
   rb_define_method(cls_QLabel.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QLabel_size_hint), -1);
   rb_define_method(cls_QLabel.rb_class, "minimum_size_hint", RUBY_METHOD_FUNC(rb_QLabel_minimum_size_hint), -1);
@@ -75731,9 +77203,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLabel.rb_class, "set_open_external_links", RUBY_METHOD_FUNC(rb_QLabel_set_open_external_links), -1);
   rb_define_method(cls_QLabel.rb_class, "setOpenExternalLinks", RUBY_METHOD_FUNC(rb_QLabel_set_open_external_links), -1);
   rb_define_alias(cls_QLabel.rb_class, "open_external_links=", "set_open_external_links");
+  rb_define_alias(cls_QLabel.rb_class, "openExternalLinks=", "set_open_external_links");
   rb_define_method(cls_QLabel.rb_class, "set_text_interaction_flags", RUBY_METHOD_FUNC(rb_QLabel_set_text_interaction_flags), -1);
   rb_define_method(cls_QLabel.rb_class, "setTextInteractionFlags", RUBY_METHOD_FUNC(rb_QLabel_set_text_interaction_flags), -1);
   rb_define_alias(cls_QLabel.rb_class, "text_interaction_flags=", "set_text_interaction_flags");
+  rb_define_alias(cls_QLabel.rb_class, "textInteractionFlags=", "set_text_interaction_flags");
   rb_define_method(cls_QLabel.rb_class, "text_interaction_flags", RUBY_METHOD_FUNC(rb_QLabel_text_interaction_flags), -1);
   rb_define_method(cls_QLabel.rb_class, "textInteractionFlags", RUBY_METHOD_FUNC(rb_QLabel_text_interaction_flags), -1);
   rb_define_method(cls_QLabel.rb_class, "set_selection", RUBY_METHOD_FUNC(rb_QLabel_set_selection), -1);
@@ -75824,6 +77298,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPushButton.rb_class, "set_auto_default", RUBY_METHOD_FUNC(rb_QPushButton_set_auto_default), -1);
   rb_define_method(cls_QPushButton.rb_class, "setAutoDefault", RUBY_METHOD_FUNC(rb_QPushButton_set_auto_default), -1);
   rb_define_alias(cls_QPushButton.rb_class, "auto_default=", "set_auto_default");
+  rb_define_alias(cls_QPushButton.rb_class, "autoDefault=", "set_auto_default");
   rb_define_method(cls_QPushButton.rb_class, "is_default", RUBY_METHOD_FUNC(rb_QPushButton_is_default), -1);
   rb_define_method(cls_QPushButton.rb_class, "isDefault", RUBY_METHOD_FUNC(rb_QPushButton_is_default), -1);
   rb_define_alias(cls_QPushButton.rb_class, "default?", "is_default");
@@ -75920,6 +77395,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCheckBox.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QCheckBox_set_check_state), -1);
   rb_define_method(cls_QCheckBox.rb_class, "setCheckState", RUBY_METHOD_FUNC(rb_QCheckBox_set_check_state), -1);
   rb_define_alias(cls_QCheckBox.rb_class, "check_state=", "set_check_state");
+  rb_define_alias(cls_QCheckBox.rb_class, "checkState=", "set_check_state");
   rb_define_singleton_method(cls_QCheckBox.rb_class, "tr", RUBY_METHOD_FUNC(rb_QCheckBox_s_tr), -1);
   rb_define_method(cls_QCheckBox.rb_class, "event", RUBY_METHOD_FUNC(rb_QCheckBox_prot_event), -1);
   rb_define_method(cls_QCheckBox.rb_class, "hit_button", RUBY_METHOD_FUNC(rb_QCheckBox_prot_hit_button), -1);
@@ -75990,10 +77466,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_max_visible_items", RUBY_METHOD_FUNC(rb_QComboBox_set_max_visible_items), -1);
   rb_define_method(cls_QComboBox.rb_class, "setMaxVisibleItems", RUBY_METHOD_FUNC(rb_QComboBox_set_max_visible_items), -1);
   rb_define_alias(cls_QComboBox.rb_class, "max_visible_items=", "set_max_visible_items");
+  rb_define_alias(cls_QComboBox.rb_class, "maxVisibleItems=", "set_max_visible_items");
   rb_define_method(cls_QComboBox.rb_class, "count", RUBY_METHOD_FUNC(rb_QComboBox_count), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_max_count", RUBY_METHOD_FUNC(rb_QComboBox_set_max_count), -1);
   rb_define_method(cls_QComboBox.rb_class, "setMaxCount", RUBY_METHOD_FUNC(rb_QComboBox_set_max_count), -1);
   rb_define_alias(cls_QComboBox.rb_class, "max_count=", "set_max_count");
+  rb_define_alias(cls_QComboBox.rb_class, "maxCount=", "set_max_count");
   rb_define_method(cls_QComboBox.rb_class, "max_count", RUBY_METHOD_FUNC(rb_QComboBox_max_count), -1);
   rb_define_method(cls_QComboBox.rb_class, "maxCount", RUBY_METHOD_FUNC(rb_QComboBox_max_count), -1);
   rb_define_method(cls_QComboBox.rb_class, "duplicates_enabled", RUBY_METHOD_FUNC(rb_QComboBox_duplicates_enabled), -1);
@@ -76001,6 +77479,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_duplicates_enabled", RUBY_METHOD_FUNC(rb_QComboBox_set_duplicates_enabled), -1);
   rb_define_method(cls_QComboBox.rb_class, "setDuplicatesEnabled", RUBY_METHOD_FUNC(rb_QComboBox_set_duplicates_enabled), -1);
   rb_define_alias(cls_QComboBox.rb_class, "duplicates_enabled=", "set_duplicates_enabled");
+  rb_define_alias(cls_QComboBox.rb_class, "duplicatesEnabled=", "set_duplicates_enabled");
   rb_define_method(cls_QComboBox.rb_class, "set_frame", RUBY_METHOD_FUNC(rb_QComboBox_set_frame), -1);
   rb_define_method(cls_QComboBox.rb_class, "setFrame", RUBY_METHOD_FUNC(rb_QComboBox_set_frame), -1);
   rb_define_alias(cls_QComboBox.rb_class, "frame=", "set_frame");
@@ -76015,24 +77494,29 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_insert_policy", RUBY_METHOD_FUNC(rb_QComboBox_set_insert_policy), -1);
   rb_define_method(cls_QComboBox.rb_class, "setInsertPolicy", RUBY_METHOD_FUNC(rb_QComboBox_set_insert_policy), -1);
   rb_define_alias(cls_QComboBox.rb_class, "insert_policy=", "set_insert_policy");
+  rb_define_alias(cls_QComboBox.rb_class, "insertPolicy=", "set_insert_policy");
   rb_define_method(cls_QComboBox.rb_class, "size_adjust_policy", RUBY_METHOD_FUNC(rb_QComboBox_size_adjust_policy), -1);
   rb_define_method(cls_QComboBox.rb_class, "sizeAdjustPolicy", RUBY_METHOD_FUNC(rb_QComboBox_size_adjust_policy), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_size_adjust_policy", RUBY_METHOD_FUNC(rb_QComboBox_set_size_adjust_policy), -1);
   rb_define_method(cls_QComboBox.rb_class, "setSizeAdjustPolicy", RUBY_METHOD_FUNC(rb_QComboBox_set_size_adjust_policy), -1);
   rb_define_alias(cls_QComboBox.rb_class, "size_adjust_policy=", "set_size_adjust_policy");
+  rb_define_alias(cls_QComboBox.rb_class, "sizeAdjustPolicy=", "set_size_adjust_policy");
   rb_define_method(cls_QComboBox.rb_class, "minimum_contents_length", RUBY_METHOD_FUNC(rb_QComboBox_minimum_contents_length), -1);
   rb_define_method(cls_QComboBox.rb_class, "minimumContentsLength", RUBY_METHOD_FUNC(rb_QComboBox_minimum_contents_length), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_minimum_contents_length", RUBY_METHOD_FUNC(rb_QComboBox_set_minimum_contents_length), -1);
   rb_define_method(cls_QComboBox.rb_class, "setMinimumContentsLength", RUBY_METHOD_FUNC(rb_QComboBox_set_minimum_contents_length), -1);
   rb_define_alias(cls_QComboBox.rb_class, "minimum_contents_length=", "set_minimum_contents_length");
+  rb_define_alias(cls_QComboBox.rb_class, "minimumContentsLength=", "set_minimum_contents_length");
   rb_define_method(cls_QComboBox.rb_class, "icon_size", RUBY_METHOD_FUNC(rb_QComboBox_icon_size), -1);
   rb_define_method(cls_QComboBox.rb_class, "iconSize", RUBY_METHOD_FUNC(rb_QComboBox_icon_size), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QComboBox_set_icon_size), -1);
   rb_define_method(cls_QComboBox.rb_class, "setIconSize", RUBY_METHOD_FUNC(rb_QComboBox_set_icon_size), -1);
   rb_define_alias(cls_QComboBox.rb_class, "icon_size=", "set_icon_size");
+  rb_define_alias(cls_QComboBox.rb_class, "iconSize=", "set_icon_size");
   rb_define_method(cls_QComboBox.rb_class, "set_placeholder_text", RUBY_METHOD_FUNC(rb_QComboBox_set_placeholder_text), -1);
   rb_define_method(cls_QComboBox.rb_class, "setPlaceholderText", RUBY_METHOD_FUNC(rb_QComboBox_set_placeholder_text), -1);
   rb_define_alias(cls_QComboBox.rb_class, "placeholder_text=", "set_placeholder_text");
+  rb_define_alias(cls_QComboBox.rb_class, "placeholderText=", "set_placeholder_text");
   rb_define_method(cls_QComboBox.rb_class, "placeholder_text", RUBY_METHOD_FUNC(rb_QComboBox_placeholder_text), -1);
   rb_define_method(cls_QComboBox.rb_class, "placeholderText", RUBY_METHOD_FUNC(rb_QComboBox_placeholder_text), -1);
   rb_define_method(cls_QComboBox.rb_class, "is_editable", RUBY_METHOD_FUNC(rb_QComboBox_is_editable), -1);
@@ -76044,6 +77528,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_line_edit", RUBY_METHOD_FUNC(rb_QComboBox_set_line_edit), -1);
   rb_define_method(cls_QComboBox.rb_class, "setLineEdit", RUBY_METHOD_FUNC(rb_QComboBox_set_line_edit), -1);
   rb_define_alias(cls_QComboBox.rb_class, "line_edit=", "set_line_edit");
+  rb_define_alias(cls_QComboBox.rb_class, "lineEdit=", "set_line_edit");
   rb_define_method(cls_QComboBox.rb_class, "line_edit", RUBY_METHOD_FUNC(rb_QComboBox_line_edit), -1);
   rb_define_method(cls_QComboBox.rb_class, "lineEdit", RUBY_METHOD_FUNC(rb_QComboBox_line_edit), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_validator", RUBY_METHOD_FUNC(rb_QComboBox_set_validator), -1);
@@ -76059,6 +77544,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_item_delegate", RUBY_METHOD_FUNC(rb_QComboBox_set_item_delegate), -1);
   rb_define_method(cls_QComboBox.rb_class, "setItemDelegate", RUBY_METHOD_FUNC(rb_QComboBox_set_item_delegate), -1);
   rb_define_alias(cls_QComboBox.rb_class, "item_delegate=", "set_item_delegate");
+  rb_define_alias(cls_QComboBox.rb_class, "itemDelegate=", "set_item_delegate");
   rb_define_method(cls_QComboBox.rb_class, "model", RUBY_METHOD_FUNC(rb_QComboBox_model), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_model", RUBY_METHOD_FUNC(rb_QComboBox_set_model), -1);
   rb_define_method(cls_QComboBox.rb_class, "setModel", RUBY_METHOD_FUNC(rb_QComboBox_set_model), -1);
@@ -76068,16 +77554,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_root_model_index", RUBY_METHOD_FUNC(rb_QComboBox_set_root_model_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "setRootModelIndex", RUBY_METHOD_FUNC(rb_QComboBox_set_root_model_index), -1);
   rb_define_alias(cls_QComboBox.rb_class, "root_model_index=", "set_root_model_index");
+  rb_define_alias(cls_QComboBox.rb_class, "rootModelIndex=", "set_root_model_index");
   rb_define_method(cls_QComboBox.rb_class, "model_column", RUBY_METHOD_FUNC(rb_QComboBox_model_column), -1);
   rb_define_method(cls_QComboBox.rb_class, "modelColumn", RUBY_METHOD_FUNC(rb_QComboBox_model_column), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_model_column", RUBY_METHOD_FUNC(rb_QComboBox_set_model_column), -1);
   rb_define_method(cls_QComboBox.rb_class, "setModelColumn", RUBY_METHOD_FUNC(rb_QComboBox_set_model_column), -1);
   rb_define_alias(cls_QComboBox.rb_class, "model_column=", "set_model_column");
+  rb_define_alias(cls_QComboBox.rb_class, "modelColumn=", "set_model_column");
   rb_define_method(cls_QComboBox.rb_class, "label_drawing_mode", RUBY_METHOD_FUNC(rb_QComboBox_label_drawing_mode), -1);
   rb_define_method(cls_QComboBox.rb_class, "labelDrawingMode", RUBY_METHOD_FUNC(rb_QComboBox_label_drawing_mode), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_label_drawing_mode", RUBY_METHOD_FUNC(rb_QComboBox_set_label_drawing_mode), -1);
   rb_define_method(cls_QComboBox.rb_class, "setLabelDrawingMode", RUBY_METHOD_FUNC(rb_QComboBox_set_label_drawing_mode), -1);
   rb_define_alias(cls_QComboBox.rb_class, "label_drawing_mode=", "set_label_drawing_mode");
+  rb_define_alias(cls_QComboBox.rb_class, "labelDrawingMode=", "set_label_drawing_mode");
   rb_define_method(cls_QComboBox.rb_class, "current_index", RUBY_METHOD_FUNC(rb_QComboBox_current_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "currentIndex", RUBY_METHOD_FUNC(rb_QComboBox_current_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "current_text", RUBY_METHOD_FUNC(rb_QComboBox_current_text), -1);
@@ -76105,12 +77594,15 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_item_text", RUBY_METHOD_FUNC(rb_QComboBox_set_item_text), -1);
   rb_define_method(cls_QComboBox.rb_class, "setItemText", RUBY_METHOD_FUNC(rb_QComboBox_set_item_text), -1);
   rb_define_alias(cls_QComboBox.rb_class, "item_text=", "set_item_text");
+  rb_define_alias(cls_QComboBox.rb_class, "itemText=", "set_item_text");
   rb_define_method(cls_QComboBox.rb_class, "set_item_icon", RUBY_METHOD_FUNC(rb_QComboBox_set_item_icon), -1);
   rb_define_method(cls_QComboBox.rb_class, "setItemIcon", RUBY_METHOD_FUNC(rb_QComboBox_set_item_icon), -1);
   rb_define_alias(cls_QComboBox.rb_class, "item_icon=", "set_item_icon");
+  rb_define_alias(cls_QComboBox.rb_class, "itemIcon=", "set_item_icon");
   rb_define_method(cls_QComboBox.rb_class, "set_item_data", RUBY_METHOD_FUNC(rb_QComboBox_set_item_data), -1);
   rb_define_method(cls_QComboBox.rb_class, "setItemData", RUBY_METHOD_FUNC(rb_QComboBox_set_item_data), -1);
   rb_define_alias(cls_QComboBox.rb_class, "item_data=", "set_item_data");
+  rb_define_alias(cls_QComboBox.rb_class, "itemData=", "set_item_data");
   rb_define_method(cls_QComboBox.rb_class, "view", RUBY_METHOD_FUNC(rb_QComboBox_view), -1);
   rb_define_method(cls_QComboBox.rb_class, "set_view", RUBY_METHOD_FUNC(rb_QComboBox_set_view), -1);
   rb_define_method(cls_QComboBox.rb_class, "setView", RUBY_METHOD_FUNC(rb_QComboBox_set_view), -1);
@@ -76132,12 +77624,15 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "set_edit_text", RUBY_METHOD_FUNC(rb_QComboBox_set_edit_text), -1);
   rb_define_method(cls_QComboBox.rb_class, "setEditText", RUBY_METHOD_FUNC(rb_QComboBox_set_edit_text), -1);
   rb_define_alias(cls_QComboBox.rb_class, "edit_text=", "set_edit_text");
+  rb_define_alias(cls_QComboBox.rb_class, "editText=", "set_edit_text");
   rb_define_method(cls_QComboBox.rb_class, "set_current_index", RUBY_METHOD_FUNC(rb_QComboBox_set_current_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "setCurrentIndex", RUBY_METHOD_FUNC(rb_QComboBox_set_current_index), -1);
   rb_define_alias(cls_QComboBox.rb_class, "current_index=", "set_current_index");
+  rb_define_alias(cls_QComboBox.rb_class, "currentIndex=", "set_current_index");
   rb_define_method(cls_QComboBox.rb_class, "set_current_text", RUBY_METHOD_FUNC(rb_QComboBox_set_current_text), -1);
   rb_define_method(cls_QComboBox.rb_class, "setCurrentText", RUBY_METHOD_FUNC(rb_QComboBox_set_current_text), -1);
   rb_define_alias(cls_QComboBox.rb_class, "current_text=", "set_current_text");
+  rb_define_alias(cls_QComboBox.rb_class, "currentText=", "set_current_text");
   rb_define_singleton_method(cls_QComboBox.rb_class, "tr", RUBY_METHOD_FUNC(rb_QComboBox_s_tr), -1);
   rb_define_method(cls_QComboBox.rb_class, "focus_in_event", RUBY_METHOD_FUNC(rb_QComboBox_prot_focus_in_event), -1);
   rb_define_method(cls_QComboBox.rb_class, "focusInEvent", RUBY_METHOD_FUNC(rb_QComboBox_prot_focus_in_event), -1);
@@ -76207,11 +77702,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "set_placeholder_text", RUBY_METHOD_FUNC(rb_QLineEdit_set_placeholder_text), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setPlaceholderText", RUBY_METHOD_FUNC(rb_QLineEdit_set_placeholder_text), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "placeholder_text=", "set_placeholder_text");
+  rb_define_alias(cls_QLineEdit.rb_class, "placeholderText=", "set_placeholder_text");
   rb_define_method(cls_QLineEdit.rb_class, "max_length", RUBY_METHOD_FUNC(rb_QLineEdit_max_length), -1);
   rb_define_method(cls_QLineEdit.rb_class, "maxLength", RUBY_METHOD_FUNC(rb_QLineEdit_max_length), -1);
   rb_define_method(cls_QLineEdit.rb_class, "set_max_length", RUBY_METHOD_FUNC(rb_QLineEdit_set_max_length), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setMaxLength", RUBY_METHOD_FUNC(rb_QLineEdit_set_max_length), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "max_length=", "set_max_length");
+  rb_define_alias(cls_QLineEdit.rb_class, "maxLength=", "set_max_length");
   rb_define_method(cls_QLineEdit.rb_class, "set_frame", RUBY_METHOD_FUNC(rb_QLineEdit_set_frame), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setFrame", RUBY_METHOD_FUNC(rb_QLineEdit_set_frame), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "frame=", "set_frame");
@@ -76220,6 +77717,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "set_clear_button_enabled", RUBY_METHOD_FUNC(rb_QLineEdit_set_clear_button_enabled), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setClearButtonEnabled", RUBY_METHOD_FUNC(rb_QLineEdit_set_clear_button_enabled), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "clear_button_enabled=", "set_clear_button_enabled");
+  rb_define_alias(cls_QLineEdit.rb_class, "clearButtonEnabled=", "set_clear_button_enabled");
   rb_define_method(cls_QLineEdit.rb_class, "is_clear_button_enabled", RUBY_METHOD_FUNC(rb_QLineEdit_is_clear_button_enabled), -1);
   rb_define_method(cls_QLineEdit.rb_class, "isClearButtonEnabled", RUBY_METHOD_FUNC(rb_QLineEdit_is_clear_button_enabled), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "clear_button_enabled?", "is_clear_button_enabled");
@@ -76228,12 +77726,14 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "set_echo_mode", RUBY_METHOD_FUNC(rb_QLineEdit_set_echo_mode), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setEchoMode", RUBY_METHOD_FUNC(rb_QLineEdit_set_echo_mode), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "echo_mode=", "set_echo_mode");
+  rb_define_alias(cls_QLineEdit.rb_class, "echoMode=", "set_echo_mode");
   rb_define_method(cls_QLineEdit.rb_class, "is_read_only", RUBY_METHOD_FUNC(rb_QLineEdit_is_read_only), -1);
   rb_define_method(cls_QLineEdit.rb_class, "isReadOnly", RUBY_METHOD_FUNC(rb_QLineEdit_is_read_only), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "read_only?", "is_read_only");
   rb_define_method(cls_QLineEdit.rb_class, "set_read_only", RUBY_METHOD_FUNC(rb_QLineEdit_set_read_only), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setReadOnly", RUBY_METHOD_FUNC(rb_QLineEdit_set_read_only), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "read_only=", "set_read_only");
+  rb_define_alias(cls_QLineEdit.rb_class, "readOnly=", "set_read_only");
   rb_define_method(cls_QLineEdit.rb_class, "set_validator", RUBY_METHOD_FUNC(rb_QLineEdit_set_validator), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setValidator", RUBY_METHOD_FUNC(rb_QLineEdit_set_validator), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "validator=", "set_validator");
@@ -76251,6 +77751,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "set_cursor_position", RUBY_METHOD_FUNC(rb_QLineEdit_set_cursor_position), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setCursorPosition", RUBY_METHOD_FUNC(rb_QLineEdit_set_cursor_position), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "cursor_position=", "set_cursor_position");
+  rb_define_alias(cls_QLineEdit.rb_class, "cursorPosition=", "set_cursor_position");
   rb_define_method(cls_QLineEdit.rb_class, "cursor_position_at", RUBY_METHOD_FUNC(rb_QLineEdit_cursor_position_at), -1);
   rb_define_method(cls_QLineEdit.rb_class, "cursorPositionAt", RUBY_METHOD_FUNC(rb_QLineEdit_cursor_position_at), -1);
   rb_define_method(cls_QLineEdit.rb_class, "set_alignment", RUBY_METHOD_FUNC(rb_QLineEdit_set_alignment), -1);
@@ -76297,11 +77798,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "set_drag_enabled", RUBY_METHOD_FUNC(rb_QLineEdit_set_drag_enabled), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setDragEnabled", RUBY_METHOD_FUNC(rb_QLineEdit_set_drag_enabled), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "drag_enabled=", "set_drag_enabled");
+  rb_define_alias(cls_QLineEdit.rb_class, "dragEnabled=", "set_drag_enabled");
   rb_define_method(cls_QLineEdit.rb_class, "drag_enabled", RUBY_METHOD_FUNC(rb_QLineEdit_drag_enabled), -1);
   rb_define_method(cls_QLineEdit.rb_class, "dragEnabled", RUBY_METHOD_FUNC(rb_QLineEdit_drag_enabled), -1);
   rb_define_method(cls_QLineEdit.rb_class, "set_cursor_move_style", RUBY_METHOD_FUNC(rb_QLineEdit_set_cursor_move_style), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setCursorMoveStyle", RUBY_METHOD_FUNC(rb_QLineEdit_set_cursor_move_style), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "cursor_move_style=", "set_cursor_move_style");
+  rb_define_alias(cls_QLineEdit.rb_class, "cursorMoveStyle=", "set_cursor_move_style");
   rb_define_method(cls_QLineEdit.rb_class, "cursor_move_style", RUBY_METHOD_FUNC(rb_QLineEdit_cursor_move_style), -1);
   rb_define_method(cls_QLineEdit.rb_class, "cursorMoveStyle", RUBY_METHOD_FUNC(rb_QLineEdit_cursor_move_style), -1);
   rb_define_method(cls_QLineEdit.rb_class, "input_mask", RUBY_METHOD_FUNC(rb_QLineEdit_input_mask), -1);
@@ -76309,11 +77812,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "set_input_mask", RUBY_METHOD_FUNC(rb_QLineEdit_set_input_mask), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setInputMask", RUBY_METHOD_FUNC(rb_QLineEdit_set_input_mask), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "input_mask=", "set_input_mask");
+  rb_define_alias(cls_QLineEdit.rb_class, "inputMask=", "set_input_mask");
   rb_define_method(cls_QLineEdit.rb_class, "has_acceptable_input", RUBY_METHOD_FUNC(rb_QLineEdit_has_acceptable_input), -1);
   rb_define_method(cls_QLineEdit.rb_class, "hasAcceptableInput", RUBY_METHOD_FUNC(rb_QLineEdit_has_acceptable_input), -1);
   rb_define_method(cls_QLineEdit.rb_class, "set_text_margins", RUBY_METHOD_FUNC(rb_QLineEdit_set_text_margins), -1);
   rb_define_method(cls_QLineEdit.rb_class, "setTextMargins", RUBY_METHOD_FUNC(rb_QLineEdit_set_text_margins), -1);
   rb_define_alias(cls_QLineEdit.rb_class, "text_margins=", "set_text_margins");
+  rb_define_alias(cls_QLineEdit.rb_class, "textMargins=", "set_text_margins");
   rb_define_method(cls_QLineEdit.rb_class, "add_action", RUBY_METHOD_FUNC(rb_QLineEdit_add_action), -1);
   rb_define_method(cls_QLineEdit.rb_class, "addAction", RUBY_METHOD_FUNC(rb_QLineEdit_add_action), -1);
   rb_define_method(cls_QLineEdit.rb_class, "set_text", RUBY_METHOD_FUNC(rb_QLineEdit_set_text), -1);
@@ -76402,11 +77907,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "set_placeholder_text", RUBY_METHOD_FUNC(rb_QTextEdit_set_placeholder_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setPlaceholderText", RUBY_METHOD_FUNC(rb_QTextEdit_set_placeholder_text), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "placeholder_text=", "set_placeholder_text");
+  rb_define_alias(cls_QTextEdit.rb_class, "placeholderText=", "set_placeholder_text");
   rb_define_method(cls_QTextEdit.rb_class, "placeholder_text", RUBY_METHOD_FUNC(rb_QTextEdit_placeholder_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "placeholderText", RUBY_METHOD_FUNC(rb_QTextEdit_placeholder_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_text_cursor", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_cursor), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setTextCursor", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_cursor), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "text_cursor=", "set_text_cursor");
+  rb_define_alias(cls_QTextEdit.rb_class, "textCursor=", "set_text_cursor");
   rb_define_method(cls_QTextEdit.rb_class, "text_cursor", RUBY_METHOD_FUNC(rb_QTextEdit_text_cursor), -1);
   rb_define_method(cls_QTextEdit.rb_class, "textCursor", RUBY_METHOD_FUNC(rb_QTextEdit_text_cursor), -1);
   rb_define_method(cls_QTextEdit.rb_class, "is_read_only", RUBY_METHOD_FUNC(rb_QTextEdit_is_read_only), -1);
@@ -76415,9 +77922,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "set_read_only", RUBY_METHOD_FUNC(rb_QTextEdit_set_read_only), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setReadOnly", RUBY_METHOD_FUNC(rb_QTextEdit_set_read_only), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "read_only=", "set_read_only");
+  rb_define_alias(cls_QTextEdit.rb_class, "readOnly=", "set_read_only");
   rb_define_method(cls_QTextEdit.rb_class, "set_text_interaction_flags", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_interaction_flags), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setTextInteractionFlags", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_interaction_flags), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "text_interaction_flags=", "set_text_interaction_flags");
+  rb_define_alias(cls_QTextEdit.rb_class, "textInteractionFlags=", "set_text_interaction_flags");
   rb_define_method(cls_QTextEdit.rb_class, "text_interaction_flags", RUBY_METHOD_FUNC(rb_QTextEdit_text_interaction_flags), -1);
   rb_define_method(cls_QTextEdit.rb_class, "textInteractionFlags", RUBY_METHOD_FUNC(rb_QTextEdit_text_interaction_flags), -1);
   rb_define_method(cls_QTextEdit.rb_class, "font_point_size", RUBY_METHOD_FUNC(rb_QTextEdit_font_point_size), -1);
@@ -76442,6 +77951,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "set_current_char_format", RUBY_METHOD_FUNC(rb_QTextEdit_set_current_char_format), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setCurrentCharFormat", RUBY_METHOD_FUNC(rb_QTextEdit_set_current_char_format), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "current_char_format=", "set_current_char_format");
+  rb_define_alias(cls_QTextEdit.rb_class, "currentCharFormat=", "set_current_char_format");
   rb_define_method(cls_QTextEdit.rb_class, "current_char_format", RUBY_METHOD_FUNC(rb_QTextEdit_current_char_format), -1);
   rb_define_method(cls_QTextEdit.rb_class, "currentCharFormat", RUBY_METHOD_FUNC(rb_QTextEdit_current_char_format), -1);
   rb_define_method(cls_QTextEdit.rb_class, "auto_formatting", RUBY_METHOD_FUNC(rb_QTextEdit_auto_formatting), -1);
@@ -76449,14 +77959,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "set_auto_formatting", RUBY_METHOD_FUNC(rb_QTextEdit_set_auto_formatting), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setAutoFormatting", RUBY_METHOD_FUNC(rb_QTextEdit_set_auto_formatting), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "auto_formatting=", "set_auto_formatting");
+  rb_define_alias(cls_QTextEdit.rb_class, "autoFormatting=", "set_auto_formatting");
   rb_define_method(cls_QTextEdit.rb_class, "tab_changes_focus", RUBY_METHOD_FUNC(rb_QTextEdit_tab_changes_focus), -1);
   rb_define_method(cls_QTextEdit.rb_class, "tabChangesFocus", RUBY_METHOD_FUNC(rb_QTextEdit_tab_changes_focus), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_tab_changes_focus", RUBY_METHOD_FUNC(rb_QTextEdit_set_tab_changes_focus), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setTabChangesFocus", RUBY_METHOD_FUNC(rb_QTextEdit_set_tab_changes_focus), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "tab_changes_focus=", "set_tab_changes_focus");
+  rb_define_alias(cls_QTextEdit.rb_class, "tabChangesFocus=", "set_tab_changes_focus");
   rb_define_method(cls_QTextEdit.rb_class, "set_document_title", RUBY_METHOD_FUNC(rb_QTextEdit_set_document_title), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setDocumentTitle", RUBY_METHOD_FUNC(rb_QTextEdit_set_document_title), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "document_title=", "set_document_title");
+  rb_define_alias(cls_QTextEdit.rb_class, "documentTitle=", "set_document_title");
   rb_define_method(cls_QTextEdit.rb_class, "document_title", RUBY_METHOD_FUNC(rb_QTextEdit_document_title), -1);
   rb_define_method(cls_QTextEdit.rb_class, "documentTitle", RUBY_METHOD_FUNC(rb_QTextEdit_document_title), -1);
   rb_define_method(cls_QTextEdit.rb_class, "is_undo_redo_enabled", RUBY_METHOD_FUNC(rb_QTextEdit_is_undo_redo_enabled), -1);
@@ -76465,21 +77978,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "set_undo_redo_enabled", RUBY_METHOD_FUNC(rb_QTextEdit_set_undo_redo_enabled), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setUndoRedoEnabled", RUBY_METHOD_FUNC(rb_QTextEdit_set_undo_redo_enabled), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "undo_redo_enabled=", "set_undo_redo_enabled");
+  rb_define_alias(cls_QTextEdit.rb_class, "undoRedoEnabled=", "set_undo_redo_enabled");
   rb_define_method(cls_QTextEdit.rb_class, "line_wrap_mode", RUBY_METHOD_FUNC(rb_QTextEdit_line_wrap_mode), -1);
   rb_define_method(cls_QTextEdit.rb_class, "lineWrapMode", RUBY_METHOD_FUNC(rb_QTextEdit_line_wrap_mode), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_line_wrap_mode", RUBY_METHOD_FUNC(rb_QTextEdit_set_line_wrap_mode), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setLineWrapMode", RUBY_METHOD_FUNC(rb_QTextEdit_set_line_wrap_mode), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "line_wrap_mode=", "set_line_wrap_mode");
+  rb_define_alias(cls_QTextEdit.rb_class, "lineWrapMode=", "set_line_wrap_mode");
   rb_define_method(cls_QTextEdit.rb_class, "line_wrap_column_or_width", RUBY_METHOD_FUNC(rb_QTextEdit_line_wrap_column_or_width), -1);
   rb_define_method(cls_QTextEdit.rb_class, "lineWrapColumnOrWidth", RUBY_METHOD_FUNC(rb_QTextEdit_line_wrap_column_or_width), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_line_wrap_column_or_width", RUBY_METHOD_FUNC(rb_QTextEdit_set_line_wrap_column_or_width), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setLineWrapColumnOrWidth", RUBY_METHOD_FUNC(rb_QTextEdit_set_line_wrap_column_or_width), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "line_wrap_column_or_width=", "set_line_wrap_column_or_width");
+  rb_define_alias(cls_QTextEdit.rb_class, "lineWrapColumnOrWidth=", "set_line_wrap_column_or_width");
   rb_define_method(cls_QTextEdit.rb_class, "word_wrap_mode", RUBY_METHOD_FUNC(rb_QTextEdit_word_wrap_mode), -1);
   rb_define_method(cls_QTextEdit.rb_class, "wordWrapMode", RUBY_METHOD_FUNC(rb_QTextEdit_word_wrap_mode), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_word_wrap_mode", RUBY_METHOD_FUNC(rb_QTextEdit_set_word_wrap_mode), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setWordWrapMode", RUBY_METHOD_FUNC(rb_QTextEdit_set_word_wrap_mode), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "word_wrap_mode=", "set_word_wrap_mode");
+  rb_define_alias(cls_QTextEdit.rb_class, "wordWrapMode=", "set_word_wrap_mode");
   rb_define_method(cls_QTextEdit.rb_class, "find", RUBY_METHOD_FUNC(rb_QTextEdit_find), -1);
   rb_define_method(cls_QTextEdit.rb_class, "to_plain_text", RUBY_METHOD_FUNC(rb_QTextEdit_to_plain_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "toPlainText", RUBY_METHOD_FUNC(rb_QTextEdit_to_plain_text), -1);
@@ -76504,21 +78021,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "set_overwrite_mode", RUBY_METHOD_FUNC(rb_QTextEdit_set_overwrite_mode), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setOverwriteMode", RUBY_METHOD_FUNC(rb_QTextEdit_set_overwrite_mode), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "overwrite_mode=", "set_overwrite_mode");
+  rb_define_alias(cls_QTextEdit.rb_class, "overwriteMode=", "set_overwrite_mode");
   rb_define_method(cls_QTextEdit.rb_class, "tab_stop_distance", RUBY_METHOD_FUNC(rb_QTextEdit_tab_stop_distance), -1);
   rb_define_method(cls_QTextEdit.rb_class, "tabStopDistance", RUBY_METHOD_FUNC(rb_QTextEdit_tab_stop_distance), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_tab_stop_distance", RUBY_METHOD_FUNC(rb_QTextEdit_set_tab_stop_distance), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setTabStopDistance", RUBY_METHOD_FUNC(rb_QTextEdit_set_tab_stop_distance), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "tab_stop_distance=", "set_tab_stop_distance");
+  rb_define_alias(cls_QTextEdit.rb_class, "tabStopDistance=", "set_tab_stop_distance");
   rb_define_method(cls_QTextEdit.rb_class, "cursor_width", RUBY_METHOD_FUNC(rb_QTextEdit_cursor_width), -1);
   rb_define_method(cls_QTextEdit.rb_class, "cursorWidth", RUBY_METHOD_FUNC(rb_QTextEdit_cursor_width), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_cursor_width", RUBY_METHOD_FUNC(rb_QTextEdit_set_cursor_width), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setCursorWidth", RUBY_METHOD_FUNC(rb_QTextEdit_set_cursor_width), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "cursor_width=", "set_cursor_width");
+  rb_define_alias(cls_QTextEdit.rb_class, "cursorWidth=", "set_cursor_width");
   rb_define_method(cls_QTextEdit.rb_class, "accept_rich_text", RUBY_METHOD_FUNC(rb_QTextEdit_accept_rich_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "acceptRichText", RUBY_METHOD_FUNC(rb_QTextEdit_accept_rich_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "set_accept_rich_text", RUBY_METHOD_FUNC(rb_QTextEdit_set_accept_rich_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setAcceptRichText", RUBY_METHOD_FUNC(rb_QTextEdit_set_accept_rich_text), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "accept_rich_text=", "set_accept_rich_text");
+  rb_define_alias(cls_QTextEdit.rb_class, "acceptRichText=", "set_accept_rich_text");
   rb_define_method(cls_QTextEdit.rb_class, "move_cursor", RUBY_METHOD_FUNC(rb_QTextEdit_move_cursor), -1);
   rb_define_method(cls_QTextEdit.rb_class, "moveCursor", RUBY_METHOD_FUNC(rb_QTextEdit_move_cursor), -1);
   rb_define_method(cls_QTextEdit.rb_class, "can_paste", RUBY_METHOD_FUNC(rb_QTextEdit_can_paste), -1);
@@ -76528,33 +78049,42 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "set_font_point_size", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_point_size), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setFontPointSize", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_point_size), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "font_point_size=", "set_font_point_size");
+  rb_define_alias(cls_QTextEdit.rb_class, "fontPointSize=", "set_font_point_size");
   rb_define_method(cls_QTextEdit.rb_class, "set_font_family", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_family), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setFontFamily", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_family), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "font_family=", "set_font_family");
+  rb_define_alias(cls_QTextEdit.rb_class, "fontFamily=", "set_font_family");
   rb_define_method(cls_QTextEdit.rb_class, "set_font_weight", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_weight), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setFontWeight", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_weight), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "font_weight=", "set_font_weight");
+  rb_define_alias(cls_QTextEdit.rb_class, "fontWeight=", "set_font_weight");
   rb_define_method(cls_QTextEdit.rb_class, "set_font_underline", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_underline), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setFontUnderline", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_underline), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "font_underline=", "set_font_underline");
+  rb_define_alias(cls_QTextEdit.rb_class, "fontUnderline=", "set_font_underline");
   rb_define_method(cls_QTextEdit.rb_class, "set_font_italic", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_italic), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setFontItalic", RUBY_METHOD_FUNC(rb_QTextEdit_set_font_italic), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "font_italic=", "set_font_italic");
+  rb_define_alias(cls_QTextEdit.rb_class, "fontItalic=", "set_font_italic");
   rb_define_method(cls_QTextEdit.rb_class, "set_text_color", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_color), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setTextColor", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_color), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "text_color=", "set_text_color");
+  rb_define_alias(cls_QTextEdit.rb_class, "textColor=", "set_text_color");
   rb_define_method(cls_QTextEdit.rb_class, "set_text_background_color", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_background_color), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setTextBackgroundColor", RUBY_METHOD_FUNC(rb_QTextEdit_set_text_background_color), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "text_background_color=", "set_text_background_color");
+  rb_define_alias(cls_QTextEdit.rb_class, "textBackgroundColor=", "set_text_background_color");
   rb_define_method(cls_QTextEdit.rb_class, "set_current_font", RUBY_METHOD_FUNC(rb_QTextEdit_set_current_font), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setCurrentFont", RUBY_METHOD_FUNC(rb_QTextEdit_set_current_font), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "current_font=", "set_current_font");
+  rb_define_alias(cls_QTextEdit.rb_class, "currentFont=", "set_current_font");
   rb_define_method(cls_QTextEdit.rb_class, "set_alignment", RUBY_METHOD_FUNC(rb_QTextEdit_set_alignment), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setAlignment", RUBY_METHOD_FUNC(rb_QTextEdit_set_alignment), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "alignment=", "set_alignment");
   rb_define_method(cls_QTextEdit.rb_class, "set_plain_text", RUBY_METHOD_FUNC(rb_QTextEdit_set_plain_text), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setPlainText", RUBY_METHOD_FUNC(rb_QTextEdit_set_plain_text), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "plain_text=", "set_plain_text");
+  rb_define_alias(cls_QTextEdit.rb_class, "plainText=", "set_plain_text");
   rb_define_method(cls_QTextEdit.rb_class, "set_html", RUBY_METHOD_FUNC(rb_QTextEdit_set_html), -1);
   rb_define_method(cls_QTextEdit.rb_class, "setHtml", RUBY_METHOD_FUNC(rb_QTextEdit_set_html), -1);
   rb_define_alias(cls_QTextEdit.rb_class, "html=", "set_html");
@@ -76668,11 +78198,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_placeholder_text", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_placeholder_text), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setPlaceholderText", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_placeholder_text), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "placeholder_text=", "set_placeholder_text");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "placeholderText=", "set_placeholder_text");
   rb_define_method(cls_QPlainTextEdit.rb_class, "placeholder_text", RUBY_METHOD_FUNC(rb_QPlainTextEdit_placeholder_text), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "placeholderText", RUBY_METHOD_FUNC(rb_QPlainTextEdit_placeholder_text), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_text_cursor", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_text_cursor), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setTextCursor", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_text_cursor), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "text_cursor=", "set_text_cursor");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "textCursor=", "set_text_cursor");
   rb_define_method(cls_QPlainTextEdit.rb_class, "text_cursor", RUBY_METHOD_FUNC(rb_QPlainTextEdit_text_cursor), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "textCursor", RUBY_METHOD_FUNC(rb_QPlainTextEdit_text_cursor), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "is_read_only", RUBY_METHOD_FUNC(rb_QPlainTextEdit_is_read_only), -1);
@@ -76681,9 +78213,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_read_only", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_read_only), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setReadOnly", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_read_only), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "read_only=", "set_read_only");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "readOnly=", "set_read_only");
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_text_interaction_flags", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_text_interaction_flags), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setTextInteractionFlags", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_text_interaction_flags), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "text_interaction_flags=", "set_text_interaction_flags");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "textInteractionFlags=", "set_text_interaction_flags");
   rb_define_method(cls_QPlainTextEdit.rb_class, "text_interaction_flags", RUBY_METHOD_FUNC(rb_QPlainTextEdit_text_interaction_flags), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "textInteractionFlags", RUBY_METHOD_FUNC(rb_QPlainTextEdit_text_interaction_flags), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "merge_current_char_format", RUBY_METHOD_FUNC(rb_QPlainTextEdit_merge_current_char_format), -1);
@@ -76691,6 +78225,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_current_char_format", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_current_char_format), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setCurrentCharFormat", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_current_char_format), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "current_char_format=", "set_current_char_format");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "currentCharFormat=", "set_current_char_format");
   rb_define_method(cls_QPlainTextEdit.rb_class, "current_char_format", RUBY_METHOD_FUNC(rb_QPlainTextEdit_current_char_format), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "currentCharFormat", RUBY_METHOD_FUNC(rb_QPlainTextEdit_current_char_format), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "tab_changes_focus", RUBY_METHOD_FUNC(rb_QPlainTextEdit_tab_changes_focus), -1);
@@ -76698,9 +78233,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_tab_changes_focus", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_tab_changes_focus), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setTabChangesFocus", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_tab_changes_focus), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "tab_changes_focus=", "set_tab_changes_focus");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "tabChangesFocus=", "set_tab_changes_focus");
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_document_title", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_document_title), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setDocumentTitle", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_document_title), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "document_title=", "set_document_title");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "documentTitle=", "set_document_title");
   rb_define_method(cls_QPlainTextEdit.rb_class, "document_title", RUBY_METHOD_FUNC(rb_QPlainTextEdit_document_title), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "documentTitle", RUBY_METHOD_FUNC(rb_QPlainTextEdit_document_title), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "is_undo_redo_enabled", RUBY_METHOD_FUNC(rb_QPlainTextEdit_is_undo_redo_enabled), -1);
@@ -76709,9 +78246,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_undo_redo_enabled", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_undo_redo_enabled), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setUndoRedoEnabled", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_undo_redo_enabled), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "undo_redo_enabled=", "set_undo_redo_enabled");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "undoRedoEnabled=", "set_undo_redo_enabled");
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_maximum_block_count", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_maximum_block_count), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setMaximumBlockCount", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_maximum_block_count), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "maximum_block_count=", "set_maximum_block_count");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "maximumBlockCount=", "set_maximum_block_count");
   rb_define_method(cls_QPlainTextEdit.rb_class, "maximum_block_count", RUBY_METHOD_FUNC(rb_QPlainTextEdit_maximum_block_count), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "maximumBlockCount", RUBY_METHOD_FUNC(rb_QPlainTextEdit_maximum_block_count), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "line_wrap_mode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_line_wrap_mode), -1);
@@ -76719,19 +78258,23 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_line_wrap_mode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_line_wrap_mode), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setLineWrapMode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_line_wrap_mode), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "line_wrap_mode=", "set_line_wrap_mode");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "lineWrapMode=", "set_line_wrap_mode");
   rb_define_method(cls_QPlainTextEdit.rb_class, "word_wrap_mode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_word_wrap_mode), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "wordWrapMode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_word_wrap_mode), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_word_wrap_mode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_word_wrap_mode), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setWordWrapMode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_word_wrap_mode), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "word_wrap_mode=", "set_word_wrap_mode");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "wordWrapMode=", "set_word_wrap_mode");
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_background_visible", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_background_visible), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setBackgroundVisible", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_background_visible), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "background_visible=", "set_background_visible");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "backgroundVisible=", "set_background_visible");
   rb_define_method(cls_QPlainTextEdit.rb_class, "background_visible", RUBY_METHOD_FUNC(rb_QPlainTextEdit_background_visible), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "backgroundVisible", RUBY_METHOD_FUNC(rb_QPlainTextEdit_background_visible), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_center_on_scroll", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_center_on_scroll), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setCenterOnScroll", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_center_on_scroll), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "center_on_scroll=", "set_center_on_scroll");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "centerOnScroll=", "set_center_on_scroll");
   rb_define_method(cls_QPlainTextEdit.rb_class, "center_on_scroll", RUBY_METHOD_FUNC(rb_QPlainTextEdit_center_on_scroll), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "centerOnScroll", RUBY_METHOD_FUNC(rb_QPlainTextEdit_center_on_scroll), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "find", RUBY_METHOD_FUNC(rb_QPlainTextEdit_find), -1);
@@ -76754,16 +78297,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_overwrite_mode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_overwrite_mode), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setOverwriteMode", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_overwrite_mode), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "overwrite_mode=", "set_overwrite_mode");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "overwriteMode=", "set_overwrite_mode");
   rb_define_method(cls_QPlainTextEdit.rb_class, "tab_stop_distance", RUBY_METHOD_FUNC(rb_QPlainTextEdit_tab_stop_distance), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "tabStopDistance", RUBY_METHOD_FUNC(rb_QPlainTextEdit_tab_stop_distance), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_tab_stop_distance", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_tab_stop_distance), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setTabStopDistance", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_tab_stop_distance), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "tab_stop_distance=", "set_tab_stop_distance");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "tabStopDistance=", "set_tab_stop_distance");
   rb_define_method(cls_QPlainTextEdit.rb_class, "cursor_width", RUBY_METHOD_FUNC(rb_QPlainTextEdit_cursor_width), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "cursorWidth", RUBY_METHOD_FUNC(rb_QPlainTextEdit_cursor_width), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_cursor_width", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_cursor_width), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setCursorWidth", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_cursor_width), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "cursor_width=", "set_cursor_width");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "cursorWidth=", "set_cursor_width");
   rb_define_method(cls_QPlainTextEdit.rb_class, "move_cursor", RUBY_METHOD_FUNC(rb_QPlainTextEdit_move_cursor), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "moveCursor", RUBY_METHOD_FUNC(rb_QPlainTextEdit_move_cursor), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "can_paste", RUBY_METHOD_FUNC(rb_QPlainTextEdit_can_paste), -1);
@@ -76775,6 +78321,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "set_plain_text", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_plain_text), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "setPlainText", RUBY_METHOD_FUNC(rb_QPlainTextEdit_set_plain_text), -1);
   rb_define_alias(cls_QPlainTextEdit.rb_class, "plain_text=", "set_plain_text");
+  rb_define_alias(cls_QPlainTextEdit.rb_class, "plainText=", "set_plain_text");
   rb_define_method(cls_QPlainTextEdit.rb_class, "cut", RUBY_METHOD_FUNC(rb_QPlainTextEdit_cut), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "copy", RUBY_METHOD_FUNC(rb_QPlainTextEdit_copy), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "paste", RUBY_METHOD_FUNC(rb_QPlainTextEdit_paste), -1);
@@ -76880,11 +78427,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMainWindow.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QMainWindow_set_icon_size), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setIconSize", RUBY_METHOD_FUNC(rb_QMainWindow_set_icon_size), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "icon_size=", "set_icon_size");
+  rb_define_alias(cls_QMainWindow.rb_class, "iconSize=", "set_icon_size");
   rb_define_method(cls_QMainWindow.rb_class, "tool_button_style", RUBY_METHOD_FUNC(rb_QMainWindow_tool_button_style), -1);
   rb_define_method(cls_QMainWindow.rb_class, "toolButtonStyle", RUBY_METHOD_FUNC(rb_QMainWindow_tool_button_style), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_tool_button_style", RUBY_METHOD_FUNC(rb_QMainWindow_set_tool_button_style), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setToolButtonStyle", RUBY_METHOD_FUNC(rb_QMainWindow_set_tool_button_style), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "tool_button_style=", "set_tool_button_style");
+  rb_define_alias(cls_QMainWindow.rb_class, "toolButtonStyle=", "set_tool_button_style");
   rb_define_method(cls_QMainWindow.rb_class, "is_animated", RUBY_METHOD_FUNC(rb_QMainWindow_is_animated), -1);
   rb_define_method(cls_QMainWindow.rb_class, "isAnimated", RUBY_METHOD_FUNC(rb_QMainWindow_is_animated), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "animated?", "is_animated");
@@ -76896,19 +78445,23 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMainWindow.rb_class, "set_document_mode", RUBY_METHOD_FUNC(rb_QMainWindow_set_document_mode), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setDocumentMode", RUBY_METHOD_FUNC(rb_QMainWindow_set_document_mode), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "document_mode=", "set_document_mode");
+  rb_define_alias(cls_QMainWindow.rb_class, "documentMode=", "set_document_mode");
   rb_define_method(cls_QMainWindow.rb_class, "tab_shape", RUBY_METHOD_FUNC(rb_QMainWindow_tab_shape), -1);
   rb_define_method(cls_QMainWindow.rb_class, "tabShape", RUBY_METHOD_FUNC(rb_QMainWindow_tab_shape), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_tab_shape", RUBY_METHOD_FUNC(rb_QMainWindow_set_tab_shape), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setTabShape", RUBY_METHOD_FUNC(rb_QMainWindow_set_tab_shape), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "tab_shape=", "set_tab_shape");
+  rb_define_alias(cls_QMainWindow.rb_class, "tabShape=", "set_tab_shape");
   rb_define_method(cls_QMainWindow.rb_class, "tab_position", RUBY_METHOD_FUNC(rb_QMainWindow_tab_position), -1);
   rb_define_method(cls_QMainWindow.rb_class, "tabPosition", RUBY_METHOD_FUNC(rb_QMainWindow_tab_position), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_tab_position", RUBY_METHOD_FUNC(rb_QMainWindow_set_tab_position), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setTabPosition", RUBY_METHOD_FUNC(rb_QMainWindow_set_tab_position), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "tab_position=", "set_tab_position");
+  rb_define_alias(cls_QMainWindow.rb_class, "tabPosition=", "set_tab_position");
   rb_define_method(cls_QMainWindow.rb_class, "set_dock_options", RUBY_METHOD_FUNC(rb_QMainWindow_set_dock_options), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setDockOptions", RUBY_METHOD_FUNC(rb_QMainWindow_set_dock_options), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "dock_options=", "set_dock_options");
+  rb_define_alias(cls_QMainWindow.rb_class, "dockOptions=", "set_dock_options");
   rb_define_method(cls_QMainWindow.rb_class, "dock_options", RUBY_METHOD_FUNC(rb_QMainWindow_dock_options), -1);
   rb_define_method(cls_QMainWindow.rb_class, "dockOptions", RUBY_METHOD_FUNC(rb_QMainWindow_dock_options), -1);
   rb_define_method(cls_QMainWindow.rb_class, "is_separator", RUBY_METHOD_FUNC(rb_QMainWindow_is_separator), -1);
@@ -76918,21 +78471,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMainWindow.rb_class, "set_menu_bar", RUBY_METHOD_FUNC(rb_QMainWindow_set_menu_bar), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setMenuBar", RUBY_METHOD_FUNC(rb_QMainWindow_set_menu_bar), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "menu_bar=", "set_menu_bar");
+  rb_define_alias(cls_QMainWindow.rb_class, "menuBar=", "set_menu_bar");
   rb_define_method(cls_QMainWindow.rb_class, "menu_widget", RUBY_METHOD_FUNC(rb_QMainWindow_menu_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "menuWidget", RUBY_METHOD_FUNC(rb_QMainWindow_menu_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_menu_widget", RUBY_METHOD_FUNC(rb_QMainWindow_set_menu_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setMenuWidget", RUBY_METHOD_FUNC(rb_QMainWindow_set_menu_widget), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "menu_widget=", "set_menu_widget");
+  rb_define_alias(cls_QMainWindow.rb_class, "menuWidget=", "set_menu_widget");
   rb_define_method(cls_QMainWindow.rb_class, "status_bar", RUBY_METHOD_FUNC(rb_QMainWindow_status_bar), -1);
   rb_define_method(cls_QMainWindow.rb_class, "statusBar", RUBY_METHOD_FUNC(rb_QMainWindow_status_bar), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_status_bar", RUBY_METHOD_FUNC(rb_QMainWindow_set_status_bar), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setStatusBar", RUBY_METHOD_FUNC(rb_QMainWindow_set_status_bar), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "status_bar=", "set_status_bar");
+  rb_define_alias(cls_QMainWindow.rb_class, "statusBar=", "set_status_bar");
   rb_define_method(cls_QMainWindow.rb_class, "central_widget", RUBY_METHOD_FUNC(rb_QMainWindow_central_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "centralWidget", RUBY_METHOD_FUNC(rb_QMainWindow_central_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_central_widget", RUBY_METHOD_FUNC(rb_QMainWindow_set_central_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setCentralWidget", RUBY_METHOD_FUNC(rb_QMainWindow_set_central_widget), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "central_widget=", "set_central_widget");
+  rb_define_alias(cls_QMainWindow.rb_class, "centralWidget=", "set_central_widget");
   rb_define_method(cls_QMainWindow.rb_class, "take_central_widget", RUBY_METHOD_FUNC(rb_QMainWindow_take_central_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "takeCentralWidget", RUBY_METHOD_FUNC(rb_QMainWindow_take_central_widget), -1);
   rb_define_method(cls_QMainWindow.rb_class, "set_corner", RUBY_METHOD_FUNC(rb_QMainWindow_set_corner), -1);
@@ -76969,9 +78526,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMainWindow.rb_class, "set_dock_nesting_enabled", RUBY_METHOD_FUNC(rb_QMainWindow_set_dock_nesting_enabled), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setDockNestingEnabled", RUBY_METHOD_FUNC(rb_QMainWindow_set_dock_nesting_enabled), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "dock_nesting_enabled=", "set_dock_nesting_enabled");
+  rb_define_alias(cls_QMainWindow.rb_class, "dockNestingEnabled=", "set_dock_nesting_enabled");
   rb_define_method(cls_QMainWindow.rb_class, "set_unified_title_and_tool_bar_on_mac", RUBY_METHOD_FUNC(rb_QMainWindow_set_unified_title_and_tool_bar_on_mac), -1);
   rb_define_method(cls_QMainWindow.rb_class, "setUnifiedTitleAndToolBarOnMac", RUBY_METHOD_FUNC(rb_QMainWindow_set_unified_title_and_tool_bar_on_mac), -1);
   rb_define_alias(cls_QMainWindow.rb_class, "unified_title_and_tool_bar_on_mac=", "set_unified_title_and_tool_bar_on_mac");
+  rb_define_alias(cls_QMainWindow.rb_class, "unifiedTitleAndToolBarOnMac=", "set_unified_title_and_tool_bar_on_mac");
   rb_define_singleton_method(cls_QMainWindow.rb_class, "tr", RUBY_METHOD_FUNC(rb_QMainWindow_s_tr), -1);
   rb_define_method(cls_QMainWindow.rb_class, "event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_event), -1);
   rb_define_method(cls_QMainWindow.rb_class, "mouse_press_event", RUBY_METHOD_FUNC(rb_QMainWindow_prot_mouse_press_event), -1);
@@ -77034,6 +78593,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLayout.rb_class, "set_contents_margins", RUBY_METHOD_FUNC(rb_QLayout_set_contents_margins), -1);
   rb_define_method(cls_QLayout.rb_class, "setContentsMargins", RUBY_METHOD_FUNC(rb_QLayout_set_contents_margins), -1);
   rb_define_alias(cls_QLayout.rb_class, "contents_margins=", "set_contents_margins");
+  rb_define_alias(cls_QLayout.rb_class, "contentsMargins=", "set_contents_margins");
   rb_define_method(cls_QLayout.rb_class, "unset_contents_margins", RUBY_METHOD_FUNC(rb_QLayout_unset_contents_margins), -1);
   rb_define_method(cls_QLayout.rb_class, "unsetContentsMargins", RUBY_METHOD_FUNC(rb_QLayout_unset_contents_margins), -1);
   rb_define_method(cls_QLayout.rb_class, "contents_rect", RUBY_METHOD_FUNC(rb_QLayout_contents_rect), -1);
@@ -77044,24 +78604,29 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLayout.rb_class, "set_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_set_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "setSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_set_size_constraint), -1);
   rb_define_alias(cls_QLayout.rb_class, "size_constraint=", "set_size_constraint");
+  rb_define_alias(cls_QLayout.rb_class, "sizeConstraint=", "set_size_constraint");
   rb_define_method(cls_QLayout.rb_class, "size_constraint", RUBY_METHOD_FUNC(rb_QLayout_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "sizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "set_size_constraints", RUBY_METHOD_FUNC(rb_QLayout_set_size_constraints), -1);
   rb_define_method(cls_QLayout.rb_class, "setSizeConstraints", RUBY_METHOD_FUNC(rb_QLayout_set_size_constraints), -1);
   rb_define_alias(cls_QLayout.rb_class, "size_constraints=", "set_size_constraints");
+  rb_define_alias(cls_QLayout.rb_class, "sizeConstraints=", "set_size_constraints");
   rb_define_method(cls_QLayout.rb_class, "set_horizontal_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_set_horizontal_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "setHorizontalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_set_horizontal_size_constraint), -1);
   rb_define_alias(cls_QLayout.rb_class, "horizontal_size_constraint=", "set_horizontal_size_constraint");
+  rb_define_alias(cls_QLayout.rb_class, "horizontalSizeConstraint=", "set_horizontal_size_constraint");
   rb_define_method(cls_QLayout.rb_class, "horizontal_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_horizontal_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "horizontalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_horizontal_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "set_vertical_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_set_vertical_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "setVerticalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_set_vertical_size_constraint), -1);
   rb_define_alias(cls_QLayout.rb_class, "vertical_size_constraint=", "set_vertical_size_constraint");
+  rb_define_alias(cls_QLayout.rb_class, "verticalSizeConstraint=", "set_vertical_size_constraint");
   rb_define_method(cls_QLayout.rb_class, "vertical_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_vertical_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "verticalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_vertical_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "set_menu_bar", RUBY_METHOD_FUNC(rb_QLayout_set_menu_bar), -1);
   rb_define_method(cls_QLayout.rb_class, "setMenuBar", RUBY_METHOD_FUNC(rb_QLayout_set_menu_bar), -1);
   rb_define_alias(cls_QLayout.rb_class, "menu_bar=", "set_menu_bar");
+  rb_define_alias(cls_QLayout.rb_class, "menuBar=", "set_menu_bar");
   rb_define_method(cls_QLayout.rb_class, "menu_bar", RUBY_METHOD_FUNC(rb_QLayout_menu_bar), -1);
   rb_define_method(cls_QLayout.rb_class, "menuBar", RUBY_METHOD_FUNC(rb_QLayout_menu_bar), -1);
   rb_define_method(cls_QLayout.rb_class, "parent_widget", RUBY_METHOD_FUNC(rb_QLayout_parent_widget), -1);
@@ -77154,6 +78719,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QBoxLayout.rb_class, "set_stretch_factor", RUBY_METHOD_FUNC(rb_QBoxLayout_set_stretch_factor), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "setStretchFactor", RUBY_METHOD_FUNC(rb_QBoxLayout_set_stretch_factor), -1);
   rb_define_alias(cls_QBoxLayout.rb_class, "stretch_factor=", "set_stretch_factor");
+  rb_define_alias(cls_QBoxLayout.rb_class, "stretchFactor=", "set_stretch_factor");
   rb_define_method(cls_QBoxLayout.rb_class, "set_stretch", RUBY_METHOD_FUNC(rb_QBoxLayout_set_stretch), -1);
   rb_define_method(cls_QBoxLayout.rb_class, "setStretch", RUBY_METHOD_FUNC(rb_QBoxLayout_set_stretch), -1);
   rb_define_alias(cls_QBoxLayout.rb_class, "stretch=", "set_stretch");
@@ -77220,11 +78786,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGridLayout.rb_class, "set_horizontal_spacing", RUBY_METHOD_FUNC(rb_QGridLayout_set_horizontal_spacing), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setHorizontalSpacing", RUBY_METHOD_FUNC(rb_QGridLayout_set_horizontal_spacing), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "horizontal_spacing=", "set_horizontal_spacing");
+  rb_define_alias(cls_QGridLayout.rb_class, "horizontalSpacing=", "set_horizontal_spacing");
   rb_define_method(cls_QGridLayout.rb_class, "horizontal_spacing", RUBY_METHOD_FUNC(rb_QGridLayout_horizontal_spacing), -1);
   rb_define_method(cls_QGridLayout.rb_class, "horizontalSpacing", RUBY_METHOD_FUNC(rb_QGridLayout_horizontal_spacing), -1);
   rb_define_method(cls_QGridLayout.rb_class, "set_vertical_spacing", RUBY_METHOD_FUNC(rb_QGridLayout_set_vertical_spacing), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setVerticalSpacing", RUBY_METHOD_FUNC(rb_QGridLayout_set_vertical_spacing), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "vertical_spacing=", "set_vertical_spacing");
+  rb_define_alias(cls_QGridLayout.rb_class, "verticalSpacing=", "set_vertical_spacing");
   rb_define_method(cls_QGridLayout.rb_class, "vertical_spacing", RUBY_METHOD_FUNC(rb_QGridLayout_vertical_spacing), -1);
   rb_define_method(cls_QGridLayout.rb_class, "verticalSpacing", RUBY_METHOD_FUNC(rb_QGridLayout_vertical_spacing), -1);
   rb_define_method(cls_QGridLayout.rb_class, "set_spacing", RUBY_METHOD_FUNC(rb_QGridLayout_set_spacing), -1);
@@ -77234,9 +78802,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGridLayout.rb_class, "set_row_stretch", RUBY_METHOD_FUNC(rb_QGridLayout_set_row_stretch), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setRowStretch", RUBY_METHOD_FUNC(rb_QGridLayout_set_row_stretch), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "row_stretch=", "set_row_stretch");
+  rb_define_alias(cls_QGridLayout.rb_class, "rowStretch=", "set_row_stretch");
   rb_define_method(cls_QGridLayout.rb_class, "set_column_stretch", RUBY_METHOD_FUNC(rb_QGridLayout_set_column_stretch), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setColumnStretch", RUBY_METHOD_FUNC(rb_QGridLayout_set_column_stretch), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "column_stretch=", "set_column_stretch");
+  rb_define_alias(cls_QGridLayout.rb_class, "columnStretch=", "set_column_stretch");
   rb_define_method(cls_QGridLayout.rb_class, "row_stretch", RUBY_METHOD_FUNC(rb_QGridLayout_row_stretch), -1);
   rb_define_method(cls_QGridLayout.rb_class, "rowStretch", RUBY_METHOD_FUNC(rb_QGridLayout_row_stretch), -1);
   rb_define_method(cls_QGridLayout.rb_class, "column_stretch", RUBY_METHOD_FUNC(rb_QGridLayout_column_stretch), -1);
@@ -77244,9 +78814,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGridLayout.rb_class, "set_row_minimum_height", RUBY_METHOD_FUNC(rb_QGridLayout_set_row_minimum_height), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setRowMinimumHeight", RUBY_METHOD_FUNC(rb_QGridLayout_set_row_minimum_height), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "row_minimum_height=", "set_row_minimum_height");
+  rb_define_alias(cls_QGridLayout.rb_class, "rowMinimumHeight=", "set_row_minimum_height");
   rb_define_method(cls_QGridLayout.rb_class, "set_column_minimum_width", RUBY_METHOD_FUNC(rb_QGridLayout_set_column_minimum_width), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setColumnMinimumWidth", RUBY_METHOD_FUNC(rb_QGridLayout_set_column_minimum_width), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "column_minimum_width=", "set_column_minimum_width");
+  rb_define_alias(cls_QGridLayout.rb_class, "columnMinimumWidth=", "set_column_minimum_width");
   rb_define_method(cls_QGridLayout.rb_class, "row_minimum_height", RUBY_METHOD_FUNC(rb_QGridLayout_row_minimum_height), -1);
   rb_define_method(cls_QGridLayout.rb_class, "rowMinimumHeight", RUBY_METHOD_FUNC(rb_QGridLayout_row_minimum_height), -1);
   rb_define_method(cls_QGridLayout.rb_class, "column_minimum_width", RUBY_METHOD_FUNC(rb_QGridLayout_column_minimum_width), -1);
@@ -77273,6 +78845,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGridLayout.rb_class, "set_origin_corner", RUBY_METHOD_FUNC(rb_QGridLayout_set_origin_corner), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setOriginCorner", RUBY_METHOD_FUNC(rb_QGridLayout_set_origin_corner), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "origin_corner=", "set_origin_corner");
+  rb_define_alias(cls_QGridLayout.rb_class, "originCorner=", "set_origin_corner");
   rb_define_method(cls_QGridLayout.rb_class, "origin_corner", RUBY_METHOD_FUNC(rb_QGridLayout_origin_corner), -1);
   rb_define_method(cls_QGridLayout.rb_class, "originCorner", RUBY_METHOD_FUNC(rb_QGridLayout_origin_corner), -1);
   rb_define_method(cls_QGridLayout.rb_class, "item_at", RUBY_METHOD_FUNC(rb_QGridLayout_item_at), -1);
@@ -77290,6 +78863,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGridLayout.rb_class, "set_default_positioning", RUBY_METHOD_FUNC(rb_QGridLayout_set_default_positioning), -1);
   rb_define_method(cls_QGridLayout.rb_class, "setDefaultPositioning", RUBY_METHOD_FUNC(rb_QGridLayout_set_default_positioning), -1);
   rb_define_alias(cls_QGridLayout.rb_class, "default_positioning=", "set_default_positioning");
+  rb_define_alias(cls_QGridLayout.rb_class, "defaultPositioning=", "set_default_positioning");
   rb_define_singleton_method(cls_QGridLayout.rb_class, "tr", RUBY_METHOD_FUNC(rb_QGridLayout_s_tr), -1);
   rb_define_method(cls_QGridLayout.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QGridLayout_prot_child_event), -1);
   rb_define_method(cls_QGridLayout.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QGridLayout_prot_child_event), -1);
@@ -77303,31 +78877,37 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFormLayout.rb_class, "set_field_growth_policy", RUBY_METHOD_FUNC(rb_QFormLayout_set_field_growth_policy), -1);
   rb_define_method(cls_QFormLayout.rb_class, "setFieldGrowthPolicy", RUBY_METHOD_FUNC(rb_QFormLayout_set_field_growth_policy), -1);
   rb_define_alias(cls_QFormLayout.rb_class, "field_growth_policy=", "set_field_growth_policy");
+  rb_define_alias(cls_QFormLayout.rb_class, "fieldGrowthPolicy=", "set_field_growth_policy");
   rb_define_method(cls_QFormLayout.rb_class, "field_growth_policy", RUBY_METHOD_FUNC(rb_QFormLayout_field_growth_policy), -1);
   rb_define_method(cls_QFormLayout.rb_class, "fieldGrowthPolicy", RUBY_METHOD_FUNC(rb_QFormLayout_field_growth_policy), -1);
   rb_define_method(cls_QFormLayout.rb_class, "set_row_wrap_policy", RUBY_METHOD_FUNC(rb_QFormLayout_set_row_wrap_policy), -1);
   rb_define_method(cls_QFormLayout.rb_class, "setRowWrapPolicy", RUBY_METHOD_FUNC(rb_QFormLayout_set_row_wrap_policy), -1);
   rb_define_alias(cls_QFormLayout.rb_class, "row_wrap_policy=", "set_row_wrap_policy");
+  rb_define_alias(cls_QFormLayout.rb_class, "rowWrapPolicy=", "set_row_wrap_policy");
   rb_define_method(cls_QFormLayout.rb_class, "row_wrap_policy", RUBY_METHOD_FUNC(rb_QFormLayout_row_wrap_policy), -1);
   rb_define_method(cls_QFormLayout.rb_class, "rowWrapPolicy", RUBY_METHOD_FUNC(rb_QFormLayout_row_wrap_policy), -1);
   rb_define_method(cls_QFormLayout.rb_class, "set_label_alignment", RUBY_METHOD_FUNC(rb_QFormLayout_set_label_alignment), -1);
   rb_define_method(cls_QFormLayout.rb_class, "setLabelAlignment", RUBY_METHOD_FUNC(rb_QFormLayout_set_label_alignment), -1);
   rb_define_alias(cls_QFormLayout.rb_class, "label_alignment=", "set_label_alignment");
+  rb_define_alias(cls_QFormLayout.rb_class, "labelAlignment=", "set_label_alignment");
   rb_define_method(cls_QFormLayout.rb_class, "label_alignment", RUBY_METHOD_FUNC(rb_QFormLayout_label_alignment), -1);
   rb_define_method(cls_QFormLayout.rb_class, "labelAlignment", RUBY_METHOD_FUNC(rb_QFormLayout_label_alignment), -1);
   rb_define_method(cls_QFormLayout.rb_class, "set_form_alignment", RUBY_METHOD_FUNC(rb_QFormLayout_set_form_alignment), -1);
   rb_define_method(cls_QFormLayout.rb_class, "setFormAlignment", RUBY_METHOD_FUNC(rb_QFormLayout_set_form_alignment), -1);
   rb_define_alias(cls_QFormLayout.rb_class, "form_alignment=", "set_form_alignment");
+  rb_define_alias(cls_QFormLayout.rb_class, "formAlignment=", "set_form_alignment");
   rb_define_method(cls_QFormLayout.rb_class, "form_alignment", RUBY_METHOD_FUNC(rb_QFormLayout_form_alignment), -1);
   rb_define_method(cls_QFormLayout.rb_class, "formAlignment", RUBY_METHOD_FUNC(rb_QFormLayout_form_alignment), -1);
   rb_define_method(cls_QFormLayout.rb_class, "set_horizontal_spacing", RUBY_METHOD_FUNC(rb_QFormLayout_set_horizontal_spacing), -1);
   rb_define_method(cls_QFormLayout.rb_class, "setHorizontalSpacing", RUBY_METHOD_FUNC(rb_QFormLayout_set_horizontal_spacing), -1);
   rb_define_alias(cls_QFormLayout.rb_class, "horizontal_spacing=", "set_horizontal_spacing");
+  rb_define_alias(cls_QFormLayout.rb_class, "horizontalSpacing=", "set_horizontal_spacing");
   rb_define_method(cls_QFormLayout.rb_class, "horizontal_spacing", RUBY_METHOD_FUNC(rb_QFormLayout_horizontal_spacing), -1);
   rb_define_method(cls_QFormLayout.rb_class, "horizontalSpacing", RUBY_METHOD_FUNC(rb_QFormLayout_horizontal_spacing), -1);
   rb_define_method(cls_QFormLayout.rb_class, "set_vertical_spacing", RUBY_METHOD_FUNC(rb_QFormLayout_set_vertical_spacing), -1);
   rb_define_method(cls_QFormLayout.rb_class, "setVerticalSpacing", RUBY_METHOD_FUNC(rb_QFormLayout_set_vertical_spacing), -1);
   rb_define_alias(cls_QFormLayout.rb_class, "vertical_spacing=", "set_vertical_spacing");
+  rb_define_alias(cls_QFormLayout.rb_class, "verticalSpacing=", "set_vertical_spacing");
   rb_define_method(cls_QFormLayout.rb_class, "vertical_spacing", RUBY_METHOD_FUNC(rb_QFormLayout_vertical_spacing), -1);
   rb_define_method(cls_QFormLayout.rb_class, "verticalSpacing", RUBY_METHOD_FUNC(rb_QFormLayout_vertical_spacing), -1);
   rb_define_method(cls_QFormLayout.rb_class, "spacing", RUBY_METHOD_FUNC(rb_QFormLayout_spacing), -1);
@@ -77352,6 +78932,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFormLayout.rb_class, "set_row_visible", RUBY_METHOD_FUNC(rb_QFormLayout_set_row_visible), -1);
   rb_define_method(cls_QFormLayout.rb_class, "setRowVisible", RUBY_METHOD_FUNC(rb_QFormLayout_set_row_visible), -1);
   rb_define_alias(cls_QFormLayout.rb_class, "row_visible=", "set_row_visible");
+  rb_define_alias(cls_QFormLayout.rb_class, "rowVisible=", "set_row_visible");
   rb_define_method(cls_QFormLayout.rb_class, "is_row_visible", RUBY_METHOD_FUNC(rb_QFormLayout_is_row_visible), -1);
   rb_define_method(cls_QFormLayout.rb_class, "isRowVisible", RUBY_METHOD_FUNC(rb_QFormLayout_is_row_visible), -1);
   rb_define_method(cls_QFormLayout.rb_class, "item_at", RUBY_METHOD_FUNC(rb_QFormLayout_item_at), -1);
@@ -77404,6 +78985,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStackedLayout.rb_class, "set_stacking_mode", RUBY_METHOD_FUNC(rb_QStackedLayout_set_stacking_mode), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "setStackingMode", RUBY_METHOD_FUNC(rb_QStackedLayout_set_stacking_mode), -1);
   rb_define_alias(cls_QStackedLayout.rb_class, "stacking_mode=", "set_stacking_mode");
+  rb_define_alias(cls_QStackedLayout.rb_class, "stackingMode=", "set_stacking_mode");
   rb_define_method(cls_QStackedLayout.rb_class, "add_item", RUBY_METHOD_FUNC(rb_QStackedLayout_add_item), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "addItem", RUBY_METHOD_FUNC(rb_QStackedLayout_add_item), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QStackedLayout_size_hint), -1);
@@ -77424,9 +79006,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStackedLayout.rb_class, "set_current_index", RUBY_METHOD_FUNC(rb_QStackedLayout_set_current_index), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "setCurrentIndex", RUBY_METHOD_FUNC(rb_QStackedLayout_set_current_index), -1);
   rb_define_alias(cls_QStackedLayout.rb_class, "current_index=", "set_current_index");
+  rb_define_alias(cls_QStackedLayout.rb_class, "currentIndex=", "set_current_index");
   rb_define_method(cls_QStackedLayout.rb_class, "set_current_widget", RUBY_METHOD_FUNC(rb_QStackedLayout_set_current_widget), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "setCurrentWidget", RUBY_METHOD_FUNC(rb_QStackedLayout_set_current_widget), -1);
   rb_define_alias(cls_QStackedLayout.rb_class, "current_widget=", "set_current_widget");
+  rb_define_alias(cls_QStackedLayout.rb_class, "currentWidget=", "set_current_widget");
   rb_define_singleton_method(cls_QStackedLayout.rb_class, "tr", RUBY_METHOD_FUNC(rb_QStackedLayout_s_tr), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QStackedLayout_prot_child_event), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QStackedLayout_prot_child_event), -1);
@@ -77552,15 +79136,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QRect.rb_class, "set_top_left", RUBY_METHOD_FUNC(rb_QRect_set_top_left), -1);
   rb_define_method(cls_QRect.rb_class, "setTopLeft", RUBY_METHOD_FUNC(rb_QRect_set_top_left), -1);
   rb_define_alias(cls_QRect.rb_class, "top_left=", "set_top_left");
+  rb_define_alias(cls_QRect.rb_class, "topLeft=", "set_top_left");
   rb_define_method(cls_QRect.rb_class, "set_bottom_right", RUBY_METHOD_FUNC(rb_QRect_set_bottom_right), -1);
   rb_define_method(cls_QRect.rb_class, "setBottomRight", RUBY_METHOD_FUNC(rb_QRect_set_bottom_right), -1);
   rb_define_alias(cls_QRect.rb_class, "bottom_right=", "set_bottom_right");
+  rb_define_alias(cls_QRect.rb_class, "bottomRight=", "set_bottom_right");
   rb_define_method(cls_QRect.rb_class, "set_top_right", RUBY_METHOD_FUNC(rb_QRect_set_top_right), -1);
   rb_define_method(cls_QRect.rb_class, "setTopRight", RUBY_METHOD_FUNC(rb_QRect_set_top_right), -1);
   rb_define_alias(cls_QRect.rb_class, "top_right=", "set_top_right");
+  rb_define_alias(cls_QRect.rb_class, "topRight=", "set_top_right");
   rb_define_method(cls_QRect.rb_class, "set_bottom_left", RUBY_METHOD_FUNC(rb_QRect_set_bottom_left), -1);
   rb_define_method(cls_QRect.rb_class, "setBottomLeft", RUBY_METHOD_FUNC(rb_QRect_set_bottom_left), -1);
   rb_define_alias(cls_QRect.rb_class, "bottom_left=", "set_bottom_left");
+  rb_define_alias(cls_QRect.rb_class, "bottomLeft=", "set_bottom_left");
   rb_define_method(cls_QRect.rb_class, "top_left", RUBY_METHOD_FUNC(rb_QRect_top_left), -1);
   rb_define_method(cls_QRect.rb_class, "topLeft", RUBY_METHOD_FUNC(rb_QRect_top_left), -1);
   rb_define_method(cls_QRect.rb_class, "bottom_right", RUBY_METHOD_FUNC(rb_QRect_bottom_right), -1);
@@ -77720,15 +79308,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QRectF.rb_class, "set_top_left", RUBY_METHOD_FUNC(rb_QRectF_set_top_left), -1);
   rb_define_method(cls_QRectF.rb_class, "setTopLeft", RUBY_METHOD_FUNC(rb_QRectF_set_top_left), -1);
   rb_define_alias(cls_QRectF.rb_class, "top_left=", "set_top_left");
+  rb_define_alias(cls_QRectF.rb_class, "topLeft=", "set_top_left");
   rb_define_method(cls_QRectF.rb_class, "set_bottom_right", RUBY_METHOD_FUNC(rb_QRectF_set_bottom_right), -1);
   rb_define_method(cls_QRectF.rb_class, "setBottomRight", RUBY_METHOD_FUNC(rb_QRectF_set_bottom_right), -1);
   rb_define_alias(cls_QRectF.rb_class, "bottom_right=", "set_bottom_right");
+  rb_define_alias(cls_QRectF.rb_class, "bottomRight=", "set_bottom_right");
   rb_define_method(cls_QRectF.rb_class, "set_top_right", RUBY_METHOD_FUNC(rb_QRectF_set_top_right), -1);
   rb_define_method(cls_QRectF.rb_class, "setTopRight", RUBY_METHOD_FUNC(rb_QRectF_set_top_right), -1);
   rb_define_alias(cls_QRectF.rb_class, "top_right=", "set_top_right");
+  rb_define_alias(cls_QRectF.rb_class, "topRight=", "set_top_right");
   rb_define_method(cls_QRectF.rb_class, "set_bottom_left", RUBY_METHOD_FUNC(rb_QRectF_set_bottom_left), -1);
   rb_define_method(cls_QRectF.rb_class, "setBottomLeft", RUBY_METHOD_FUNC(rb_QRectF_set_bottom_left), -1);
   rb_define_alias(cls_QRectF.rb_class, "bottom_left=", "set_bottom_left");
+  rb_define_alias(cls_QRectF.rb_class, "bottomLeft=", "set_bottom_left");
   rb_define_method(cls_QRectF.rb_class, "move_left", RUBY_METHOD_FUNC(rb_QRectF_move_left), -1);
   rb_define_method(cls_QRectF.rb_class, "moveLeft", RUBY_METHOD_FUNC(rb_QRectF_move_left), -1);
   rb_define_method(cls_QRectF.rb_class, "move_top", RUBY_METHOD_FUNC(rb_QRectF_move_top), -1);
@@ -77800,6 +79392,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDate.rb_class, "daysInMonth", RUBY_METHOD_FUNC(rb_QDate_days_in_month), -1);
   rb_define_method(cls_QDate.rb_class, "days_in_year", RUBY_METHOD_FUNC(rb_QDate_days_in_year), -1);
   rb_define_method(cls_QDate.rb_class, "daysInYear", RUBY_METHOD_FUNC(rb_QDate_days_in_year), -1);
+  rb_define_method(cls_QDate.rb_class, "week_number", RUBY_METHOD_FUNC(rb_QDate_week_number), -1);
+  rb_define_method(cls_QDate.rb_class, "weekNumber", RUBY_METHOD_FUNC(rb_QDate_week_number), -1);
   rb_define_method(cls_QDate.rb_class, "to_string", RUBY_METHOD_FUNC(rb_QDate_to_string), -1);
   rb_define_method(cls_QDate.rb_class, "toString", RUBY_METHOD_FUNC(rb_QDate_to_string), -1);
   rb_define_method(cls_QDate.rb_class, "set_date", RUBY_METHOD_FUNC(rb_QDate_set_date), -1);
@@ -77831,6 +79425,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QUrl.rb_class, "set_url", RUBY_METHOD_FUNC(rb_QUrl_set_url), -1);
   rb_define_method(cls_QUrl.rb_class, "setUrl", RUBY_METHOD_FUNC(rb_QUrl_set_url), -1);
   rb_define_alias(cls_QUrl.rb_class, "url=", "set_url");
+  rb_define_method(cls_QUrl.rb_class, "url", RUBY_METHOD_FUNC(rb_QUrl_url), -1);
+  rb_define_method(cls_QUrl.rb_class, "to_string", RUBY_METHOD_FUNC(rb_QUrl_to_string), -1);
+  rb_define_method(cls_QUrl.rb_class, "toString", RUBY_METHOD_FUNC(rb_QUrl_to_string), -1);
+  rb_define_method(cls_QUrl.rb_class, "to_display_string", RUBY_METHOD_FUNC(rb_QUrl_to_display_string), -1);
+  rb_define_method(cls_QUrl.rb_class, "toDisplayString", RUBY_METHOD_FUNC(rb_QUrl_to_display_string), -1);
+  rb_define_method(cls_QUrl.rb_class, "to_encoded", RUBY_METHOD_FUNC(rb_QUrl_to_encoded), -1);
+  rb_define_method(cls_QUrl.rb_class, "toEncoded", RUBY_METHOD_FUNC(rb_QUrl_to_encoded), -1);
   rb_define_method(cls_QUrl.rb_class, "is_valid", RUBY_METHOD_FUNC(rb_QUrl_is_valid), -1);
   rb_define_method(cls_QUrl.rb_class, "isValid", RUBY_METHOD_FUNC(rb_QUrl_is_valid), -1);
   rb_define_alias(cls_QUrl.rb_class, "valid?", "is_valid");
@@ -77851,11 +79452,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QUrl.rb_class, "set_user_info", RUBY_METHOD_FUNC(rb_QUrl_set_user_info), -1);
   rb_define_method(cls_QUrl.rb_class, "setUserInfo", RUBY_METHOD_FUNC(rb_QUrl_set_user_info), -1);
   rb_define_alias(cls_QUrl.rb_class, "user_info=", "set_user_info");
+  rb_define_alias(cls_QUrl.rb_class, "userInfo=", "set_user_info");
   rb_define_method(cls_QUrl.rb_class, "user_info", RUBY_METHOD_FUNC(rb_QUrl_user_info), -1);
   rb_define_method(cls_QUrl.rb_class, "userInfo", RUBY_METHOD_FUNC(rb_QUrl_user_info), -1);
   rb_define_method(cls_QUrl.rb_class, "set_user_name", RUBY_METHOD_FUNC(rb_QUrl_set_user_name), -1);
   rb_define_method(cls_QUrl.rb_class, "setUserName", RUBY_METHOD_FUNC(rb_QUrl_set_user_name), -1);
   rb_define_alias(cls_QUrl.rb_class, "user_name=", "set_user_name");
+  rb_define_alias(cls_QUrl.rb_class, "userName=", "set_user_name");
   rb_define_method(cls_QUrl.rb_class, "user_name", RUBY_METHOD_FUNC(rb_QUrl_user_name), -1);
   rb_define_method(cls_QUrl.rb_class, "userName", RUBY_METHOD_FUNC(rb_QUrl_user_name), -1);
   rb_define_method(cls_QUrl.rb_class, "set_password", RUBY_METHOD_FUNC(rb_QUrl_set_password), -1);
@@ -78019,7 +79622,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFocusEvent.rb_class, "lost_focus", RUBY_METHOD_FUNC(rb_QFocusEvent_lost_focus), -1);
   rb_define_method(cls_QFocusEvent.rb_class, "lostFocus", RUBY_METHOD_FUNC(rb_QFocusEvent_lost_focus), -1);
   rb_define_method(cls_QFocusEvent.rb_class, "reason", RUBY_METHOD_FUNC(rb_QFocusEvent_reason), -1);
-  rb_undef_alloc_func(cls_QEnterEvent.rb_class);
+  rb_define_alloc_func(cls_QEnterEvent.rb_class, rb_QEnterEvent_alloc);
+  qt6rb::register_ctor(cls_QEnterEvent.rb_class, rb_QEnterEvent_ctor);
+  rb_include_module(cls_QEnterEvent.rb_class, qt6rb::constructable_module());
   rb_define_method(cls_QEnterEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QEnterEvent_clone), -1);
   rb_define_method(cls_QEnterEvent.rb_class, "pos", RUBY_METHOD_FUNC(rb_QEnterEvent_pos), -1);
   rb_define_method(cls_QEnterEvent.rb_class, "global_pos", RUBY_METHOD_FUNC(rb_QEnterEvent_global_pos), -1);
@@ -78036,7 +79641,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QEnterEvent.rb_class, "windowPos", RUBY_METHOD_FUNC(rb_QEnterEvent_window_pos), -1);
   rb_define_method(cls_QEnterEvent.rb_class, "screen_pos", RUBY_METHOD_FUNC(rb_QEnterEvent_screen_pos), -1);
   rb_define_method(cls_QEnterEvent.rb_class, "screenPos", RUBY_METHOD_FUNC(rb_QEnterEvent_screen_pos), -1);
-  rb_undef_alloc_func(cls_QMouseEvent.rb_class);
+  rb_define_alloc_func(cls_QMouseEvent.rb_class, rb_QMouseEvent_alloc);
+  qt6rb::register_ctor(cls_QMouseEvent.rb_class, rb_QMouseEvent_ctor);
+  rb_include_module(cls_QMouseEvent.rb_class, qt6rb::constructable_module());
   rb_define_method(cls_QMouseEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QMouseEvent_clone), -1);
   rb_define_method(cls_QMouseEvent.rb_class, "pos", RUBY_METHOD_FUNC(rb_QMouseEvent_pos), -1);
   rb_define_method(cls_QMouseEvent.rb_class, "global_pos", RUBY_METHOD_FUNC(rb_QMouseEvent_global_pos), -1);
@@ -78055,7 +79662,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMouseEvent.rb_class, "screenPos", RUBY_METHOD_FUNC(rb_QMouseEvent_screen_pos), -1);
   rb_define_method(cls_QMouseEvent.rb_class, "source", RUBY_METHOD_FUNC(rb_QMouseEvent_source), -1);
   rb_define_method(cls_QMouseEvent.rb_class, "flags", RUBY_METHOD_FUNC(rb_QMouseEvent_flags), -1);
-  rb_undef_alloc_func(cls_QWheelEvent.rb_class);
+  rb_define_alloc_func(cls_QWheelEvent.rb_class, rb_QWheelEvent_alloc);
+  qt6rb::register_ctor(cls_QWheelEvent.rb_class, rb_QWheelEvent_ctor);
+  rb_include_module(cls_QWheelEvent.rb_class, qt6rb::constructable_module());
   rb_define_method(cls_QWheelEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QWheelEvent_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QWheelEvent.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QWheelEvent_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QWheelEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QWheelEvent_clone), -1);
@@ -78090,6 +79699,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QColor.rb_class, "set_named_color", RUBY_METHOD_FUNC(rb_QColor_set_named_color), -1);
   rb_define_method(cls_QColor.rb_class, "setNamedColor", RUBY_METHOD_FUNC(rb_QColor_set_named_color), -1);
   rb_define_alias(cls_QColor.rb_class, "named_color=", "set_named_color");
+  rb_define_alias(cls_QColor.rb_class, "namedColor=", "set_named_color");
   rb_define_method(cls_QColor.rb_class, "spec", RUBY_METHOD_FUNC(rb_QColor_spec), -1);
   rb_define_method(cls_QColor.rb_class, "alpha", RUBY_METHOD_FUNC(rb_QColor_alpha), -1);
   rb_define_method(cls_QColor.rb_class, "set_alpha", RUBY_METHOD_FUNC(rb_QColor_set_alpha), -1);
@@ -78100,6 +79710,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QColor.rb_class, "set_alpha_f", RUBY_METHOD_FUNC(rb_QColor_set_alpha_f), -1);
   rb_define_method(cls_QColor.rb_class, "setAlphaF", RUBY_METHOD_FUNC(rb_QColor_set_alpha_f), -1);
   rb_define_alias(cls_QColor.rb_class, "alpha_f=", "set_alpha_f");
+  rb_define_alias(cls_QColor.rb_class, "alphaF=", "set_alpha_f");
   rb_define_method(cls_QColor.rb_class, "red", RUBY_METHOD_FUNC(rb_QColor_red), -1);
   rb_define_method(cls_QColor.rb_class, "green", RUBY_METHOD_FUNC(rb_QColor_green), -1);
   rb_define_method(cls_QColor.rb_class, "blue", RUBY_METHOD_FUNC(rb_QColor_blue), -1);
@@ -78121,18 +79732,22 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QColor.rb_class, "set_red_f", RUBY_METHOD_FUNC(rb_QColor_set_red_f), -1);
   rb_define_method(cls_QColor.rb_class, "setRedF", RUBY_METHOD_FUNC(rb_QColor_set_red_f), -1);
   rb_define_alias(cls_QColor.rb_class, "red_f=", "set_red_f");
+  rb_define_alias(cls_QColor.rb_class, "redF=", "set_red_f");
   rb_define_method(cls_QColor.rb_class, "set_green_f", RUBY_METHOD_FUNC(rb_QColor_set_green_f), -1);
   rb_define_method(cls_QColor.rb_class, "setGreenF", RUBY_METHOD_FUNC(rb_QColor_set_green_f), -1);
   rb_define_alias(cls_QColor.rb_class, "green_f=", "set_green_f");
+  rb_define_alias(cls_QColor.rb_class, "greenF=", "set_green_f");
   rb_define_method(cls_QColor.rb_class, "set_blue_f", RUBY_METHOD_FUNC(rb_QColor_set_blue_f), -1);
   rb_define_method(cls_QColor.rb_class, "setBlueF", RUBY_METHOD_FUNC(rb_QColor_set_blue_f), -1);
   rb_define_alias(cls_QColor.rb_class, "blue_f=", "set_blue_f");
+  rb_define_alias(cls_QColor.rb_class, "blueF=", "set_blue_f");
   rb_define_method(cls_QColor.rb_class, "set_rgb", RUBY_METHOD_FUNC(rb_QColor_set_rgb), -1);
   rb_define_method(cls_QColor.rb_class, "setRgb", RUBY_METHOD_FUNC(rb_QColor_set_rgb), -1);
   rb_define_alias(cls_QColor.rb_class, "rgb=", "set_rgb");
   rb_define_method(cls_QColor.rb_class, "set_rgb_f", RUBY_METHOD_FUNC(rb_QColor_set_rgb_f), -1);
   rb_define_method(cls_QColor.rb_class, "setRgbF", RUBY_METHOD_FUNC(rb_QColor_set_rgb_f), -1);
   rb_define_alias(cls_QColor.rb_class, "rgb_f=", "set_rgb_f");
+  rb_define_alias(cls_QColor.rb_class, "rgbF=", "set_rgb_f");
   rb_define_method(cls_QColor.rb_class, "rgba", RUBY_METHOD_FUNC(rb_QColor_rgba), -1);
   rb_define_method(cls_QColor.rb_class, "set_rgba", RUBY_METHOD_FUNC(rb_QColor_set_rgba), -1);
   rb_define_method(cls_QColor.rb_class, "setRgba", RUBY_METHOD_FUNC(rb_QColor_set_rgba), -1);
@@ -78161,6 +79776,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QColor.rb_class, "set_hsv_f", RUBY_METHOD_FUNC(rb_QColor_set_hsv_f), -1);
   rb_define_method(cls_QColor.rb_class, "setHsvF", RUBY_METHOD_FUNC(rb_QColor_set_hsv_f), -1);
   rb_define_alias(cls_QColor.rb_class, "hsv_f=", "set_hsv_f");
+  rb_define_alias(cls_QColor.rb_class, "hsvF=", "set_hsv_f");
   rb_define_method(cls_QColor.rb_class, "cyan", RUBY_METHOD_FUNC(rb_QColor_cyan), -1);
   rb_define_method(cls_QColor.rb_class, "magenta", RUBY_METHOD_FUNC(rb_QColor_magenta), -1);
   rb_define_method(cls_QColor.rb_class, "yellow", RUBY_METHOD_FUNC(rb_QColor_yellow), -1);
@@ -78179,6 +79795,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QColor.rb_class, "set_cmyk_f", RUBY_METHOD_FUNC(rb_QColor_set_cmyk_f), -1);
   rb_define_method(cls_QColor.rb_class, "setCmykF", RUBY_METHOD_FUNC(rb_QColor_set_cmyk_f), -1);
   rb_define_alias(cls_QColor.rb_class, "cmyk_f=", "set_cmyk_f");
+  rb_define_alias(cls_QColor.rb_class, "cmykF=", "set_cmyk_f");
   rb_define_method(cls_QColor.rb_class, "hsl_hue", RUBY_METHOD_FUNC(rb_QColor_hsl_hue), -1);
   rb_define_method(cls_QColor.rb_class, "hslHue", RUBY_METHOD_FUNC(rb_QColor_hsl_hue), -1);
   rb_define_method(cls_QColor.rb_class, "hsl_saturation", RUBY_METHOD_FUNC(rb_QColor_hsl_saturation), -1);
@@ -78196,6 +79813,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QColor.rb_class, "set_hsl_f", RUBY_METHOD_FUNC(rb_QColor_set_hsl_f), -1);
   rb_define_method(cls_QColor.rb_class, "setHslF", RUBY_METHOD_FUNC(rb_QColor_set_hsl_f), -1);
   rb_define_alias(cls_QColor.rb_class, "hsl_f=", "set_hsl_f");
+  rb_define_alias(cls_QColor.rb_class, "hslF=", "set_hsl_f");
   rb_define_method(cls_QColor.rb_class, "to_rgb", RUBY_METHOD_FUNC(rb_QColor_to_rgb), -1);
   rb_define_method(cls_QColor.rb_class, "toRgb", RUBY_METHOD_FUNC(rb_QColor_to_rgb), -1);
   rb_define_method(cls_QColor.rb_class, "to_hsv", RUBY_METHOD_FUNC(rb_QColor_to_hsv), -1);
@@ -78246,16 +79864,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPen.rb_class, "set_dash_offset", RUBY_METHOD_FUNC(rb_QPen_set_dash_offset), -1);
   rb_define_method(cls_QPen.rb_class, "setDashOffset", RUBY_METHOD_FUNC(rb_QPen_set_dash_offset), -1);
   rb_define_alias(cls_QPen.rb_class, "dash_offset=", "set_dash_offset");
+  rb_define_alias(cls_QPen.rb_class, "dashOffset=", "set_dash_offset");
   rb_define_method(cls_QPen.rb_class, "miter_limit", RUBY_METHOD_FUNC(rb_QPen_miter_limit), -1);
   rb_define_method(cls_QPen.rb_class, "miterLimit", RUBY_METHOD_FUNC(rb_QPen_miter_limit), -1);
   rb_define_method(cls_QPen.rb_class, "set_miter_limit", RUBY_METHOD_FUNC(rb_QPen_set_miter_limit), -1);
   rb_define_method(cls_QPen.rb_class, "setMiterLimit", RUBY_METHOD_FUNC(rb_QPen_set_miter_limit), -1);
   rb_define_alias(cls_QPen.rb_class, "miter_limit=", "set_miter_limit");
+  rb_define_alias(cls_QPen.rb_class, "miterLimit=", "set_miter_limit");
   rb_define_method(cls_QPen.rb_class, "width_f", RUBY_METHOD_FUNC(rb_QPen_width_f), -1);
   rb_define_method(cls_QPen.rb_class, "widthF", RUBY_METHOD_FUNC(rb_QPen_width_f), -1);
   rb_define_method(cls_QPen.rb_class, "set_width_f", RUBY_METHOD_FUNC(rb_QPen_set_width_f), -1);
   rb_define_method(cls_QPen.rb_class, "setWidthF", RUBY_METHOD_FUNC(rb_QPen_set_width_f), -1);
   rb_define_alias(cls_QPen.rb_class, "width_f=", "set_width_f");
+  rb_define_alias(cls_QPen.rb_class, "widthF=", "set_width_f");
   rb_define_method(cls_QPen.rb_class, "width", RUBY_METHOD_FUNC(rb_QPen_width), -1);
   rb_define_method(cls_QPen.rb_class, "set_width", RUBY_METHOD_FUNC(rb_QPen_set_width), -1);
   rb_define_method(cls_QPen.rb_class, "setWidth", RUBY_METHOD_FUNC(rb_QPen_set_width), -1);
@@ -78276,11 +79897,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPen.rb_class, "set_cap_style", RUBY_METHOD_FUNC(rb_QPen_set_cap_style), -1);
   rb_define_method(cls_QPen.rb_class, "setCapStyle", RUBY_METHOD_FUNC(rb_QPen_set_cap_style), -1);
   rb_define_alias(cls_QPen.rb_class, "cap_style=", "set_cap_style");
+  rb_define_alias(cls_QPen.rb_class, "capStyle=", "set_cap_style");
   rb_define_method(cls_QPen.rb_class, "join_style", RUBY_METHOD_FUNC(rb_QPen_join_style), -1);
   rb_define_method(cls_QPen.rb_class, "joinStyle", RUBY_METHOD_FUNC(rb_QPen_join_style), -1);
   rb_define_method(cls_QPen.rb_class, "set_join_style", RUBY_METHOD_FUNC(rb_QPen_set_join_style), -1);
   rb_define_method(cls_QPen.rb_class, "setJoinStyle", RUBY_METHOD_FUNC(rb_QPen_set_join_style), -1);
   rb_define_alias(cls_QPen.rb_class, "join_style=", "set_join_style");
+  rb_define_alias(cls_QPen.rb_class, "joinStyle=", "set_join_style");
   rb_define_method(cls_QPen.rb_class, "is_cosmetic", RUBY_METHOD_FUNC(rb_QPen_is_cosmetic), -1);
   rb_define_method(cls_QPen.rb_class, "isCosmetic", RUBY_METHOD_FUNC(rb_QPen_is_cosmetic), -1);
   rb_define_alias(cls_QPen.rb_class, "cosmetic?", "is_cosmetic");
@@ -78306,6 +79929,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QBrush.rb_class, "set_texture_image", RUBY_METHOD_FUNC(rb_QBrush_set_texture_image), -1);
   rb_define_method(cls_QBrush.rb_class, "setTextureImage", RUBY_METHOD_FUNC(rb_QBrush_set_texture_image), -1);
   rb_define_alias(cls_QBrush.rb_class, "texture_image=", "set_texture_image");
+  rb_define_alias(cls_QBrush.rb_class, "textureImage=", "set_texture_image");
   rb_define_method(cls_QBrush.rb_class, "color", RUBY_METHOD_FUNC(rb_QBrush_color), -1);
   rb_define_method(cls_QBrush.rb_class, "set_color", RUBY_METHOD_FUNC(rb_QBrush_set_color), -1);
   rb_define_method(cls_QBrush.rb_class, "setColor", RUBY_METHOD_FUNC(rb_QBrush_set_color), -1);
@@ -78327,6 +79951,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPalette.rb_class, "set_current_color_group", RUBY_METHOD_FUNC(rb_QPalette_set_current_color_group), -1);
   rb_define_method(cls_QPalette.rb_class, "setCurrentColorGroup", RUBY_METHOD_FUNC(rb_QPalette_set_current_color_group), -1);
   rb_define_alias(cls_QPalette.rb_class, "current_color_group=", "set_current_color_group");
+  rb_define_alias(cls_QPalette.rb_class, "currentColorGroup=", "set_current_color_group");
   rb_define_method(cls_QPalette.rb_class, "color", RUBY_METHOD_FUNC(rb_QPalette_color), -1);
   rb_define_method(cls_QPalette.rb_class, "brush", RUBY_METHOD_FUNC(rb_QPalette_brush), -1);
   rb_define_method(cls_QPalette.rb_class, "set_color", RUBY_METHOD_FUNC(rb_QPalette_set_color), -1);
@@ -78340,6 +79965,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPalette.rb_class, "set_color_group", RUBY_METHOD_FUNC(rb_QPalette_set_color_group), -1);
   rb_define_method(cls_QPalette.rb_class, "setColorGroup", RUBY_METHOD_FUNC(rb_QPalette_set_color_group), -1);
   rb_define_alias(cls_QPalette.rb_class, "color_group=", "set_color_group");
+  rb_define_alias(cls_QPalette.rb_class, "colorGroup=", "set_color_group");
   rb_define_method(cls_QPalette.rb_class, "is_equal", RUBY_METHOD_FUNC(rb_QPalette_is_equal), -1);
   rb_define_method(cls_QPalette.rb_class, "isEqual", RUBY_METHOD_FUNC(rb_QPalette_is_equal), -1);
   rb_define_method(cls_QPalette.rb_class, "window_text", RUBY_METHOD_FUNC(rb_QPalette_window_text), -1);
@@ -78382,6 +80008,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPalette.rb_class, "set_resolve_mask", RUBY_METHOD_FUNC(rb_QPalette_set_resolve_mask), -1);
   rb_define_method(cls_QPalette.rb_class, "setResolveMask", RUBY_METHOD_FUNC(rb_QPalette_set_resolve_mask), -1);
   rb_define_alias(cls_QPalette.rb_class, "resolve_mask=", "set_resolve_mask");
+  rb_define_alias(cls_QPalette.rb_class, "resolveMask=", "set_resolve_mask");
   rb_define_alloc_func(cls_QFont.rb_class, rb_QFont_alloc);
   qt6rb::register_ctor(cls_QFont.rb_class, rb_QFont_ctor);
   rb_include_module(cls_QFont.rb_class, qt6rb::constructable_module());
@@ -78400,21 +80027,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFont.rb_class, "set_style_name", RUBY_METHOD_FUNC(rb_QFont_set_style_name), -1);
   rb_define_method(cls_QFont.rb_class, "setStyleName", RUBY_METHOD_FUNC(rb_QFont_set_style_name), -1);
   rb_define_alias(cls_QFont.rb_class, "style_name=", "set_style_name");
+  rb_define_alias(cls_QFont.rb_class, "styleName=", "set_style_name");
   rb_define_method(cls_QFont.rb_class, "point_size", RUBY_METHOD_FUNC(rb_QFont_point_size), -1);
   rb_define_method(cls_QFont.rb_class, "pointSize", RUBY_METHOD_FUNC(rb_QFont_point_size), -1);
   rb_define_method(cls_QFont.rb_class, "set_point_size", RUBY_METHOD_FUNC(rb_QFont_set_point_size), -1);
   rb_define_method(cls_QFont.rb_class, "setPointSize", RUBY_METHOD_FUNC(rb_QFont_set_point_size), -1);
   rb_define_alias(cls_QFont.rb_class, "point_size=", "set_point_size");
+  rb_define_alias(cls_QFont.rb_class, "pointSize=", "set_point_size");
   rb_define_method(cls_QFont.rb_class, "point_size_f", RUBY_METHOD_FUNC(rb_QFont_point_size_f), -1);
   rb_define_method(cls_QFont.rb_class, "pointSizeF", RUBY_METHOD_FUNC(rb_QFont_point_size_f), -1);
   rb_define_method(cls_QFont.rb_class, "set_point_size_f", RUBY_METHOD_FUNC(rb_QFont_set_point_size_f), -1);
   rb_define_method(cls_QFont.rb_class, "setPointSizeF", RUBY_METHOD_FUNC(rb_QFont_set_point_size_f), -1);
   rb_define_alias(cls_QFont.rb_class, "point_size_f=", "set_point_size_f");
+  rb_define_alias(cls_QFont.rb_class, "pointSizeF=", "set_point_size_f");
   rb_define_method(cls_QFont.rb_class, "pixel_size", RUBY_METHOD_FUNC(rb_QFont_pixel_size), -1);
   rb_define_method(cls_QFont.rb_class, "pixelSize", RUBY_METHOD_FUNC(rb_QFont_pixel_size), -1);
   rb_define_method(cls_QFont.rb_class, "set_pixel_size", RUBY_METHOD_FUNC(rb_QFont_set_pixel_size), -1);
   rb_define_method(cls_QFont.rb_class, "setPixelSize", RUBY_METHOD_FUNC(rb_QFont_set_pixel_size), -1);
   rb_define_alias(cls_QFont.rb_class, "pixel_size=", "set_pixel_size");
+  rb_define_alias(cls_QFont.rb_class, "pixelSize=", "set_pixel_size");
   rb_define_method(cls_QFont.rb_class, "weight", RUBY_METHOD_FUNC(rb_QFont_weight), -1);
   rb_define_method(cls_QFont.rb_class, "set_weight", RUBY_METHOD_FUNC(rb_QFont_set_weight), -1);
   rb_define_method(cls_QFont.rb_class, "setWeight", RUBY_METHOD_FUNC(rb_QFont_set_weight), -1);
@@ -78444,11 +80075,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFont.rb_class, "set_strike_out", RUBY_METHOD_FUNC(rb_QFont_set_strike_out), -1);
   rb_define_method(cls_QFont.rb_class, "setStrikeOut", RUBY_METHOD_FUNC(rb_QFont_set_strike_out), -1);
   rb_define_alias(cls_QFont.rb_class, "strike_out=", "set_strike_out");
+  rb_define_alias(cls_QFont.rb_class, "strikeOut=", "set_strike_out");
   rb_define_method(cls_QFont.rb_class, "fixed_pitch", RUBY_METHOD_FUNC(rb_QFont_fixed_pitch), -1);
   rb_define_method(cls_QFont.rb_class, "fixedPitch", RUBY_METHOD_FUNC(rb_QFont_fixed_pitch), -1);
   rb_define_method(cls_QFont.rb_class, "set_fixed_pitch", RUBY_METHOD_FUNC(rb_QFont_set_fixed_pitch), -1);
   rb_define_method(cls_QFont.rb_class, "setFixedPitch", RUBY_METHOD_FUNC(rb_QFont_set_fixed_pitch), -1);
   rb_define_alias(cls_QFont.rb_class, "fixed_pitch=", "set_fixed_pitch");
+  rb_define_alias(cls_QFont.rb_class, "fixedPitch=", "set_fixed_pitch");
   rb_define_method(cls_QFont.rb_class, "kerning", RUBY_METHOD_FUNC(rb_QFont_kerning), -1);
   rb_define_method(cls_QFont.rb_class, "set_kerning", RUBY_METHOD_FUNC(rb_QFont_set_kerning), -1);
   rb_define_method(cls_QFont.rb_class, "setKerning", RUBY_METHOD_FUNC(rb_QFont_set_kerning), -1);
@@ -78460,9 +80093,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFont.rb_class, "set_style_hint", RUBY_METHOD_FUNC(rb_QFont_set_style_hint), -1);
   rb_define_method(cls_QFont.rb_class, "setStyleHint", RUBY_METHOD_FUNC(rb_QFont_set_style_hint), -1);
   rb_define_alias(cls_QFont.rb_class, "style_hint=", "set_style_hint");
+  rb_define_alias(cls_QFont.rb_class, "styleHint=", "set_style_hint");
   rb_define_method(cls_QFont.rb_class, "set_style_strategy", RUBY_METHOD_FUNC(rb_QFont_set_style_strategy), -1);
   rb_define_method(cls_QFont.rb_class, "setStyleStrategy", RUBY_METHOD_FUNC(rb_QFont_set_style_strategy), -1);
   rb_define_alias(cls_QFont.rb_class, "style_strategy=", "set_style_strategy");
+  rb_define_alias(cls_QFont.rb_class, "styleStrategy=", "set_style_strategy");
   rb_define_method(cls_QFont.rb_class, "stretch", RUBY_METHOD_FUNC(rb_QFont_stretch), -1);
   rb_define_method(cls_QFont.rb_class, "set_stretch", RUBY_METHOD_FUNC(rb_QFont_set_stretch), -1);
   rb_define_method(cls_QFont.rb_class, "setStretch", RUBY_METHOD_FUNC(rb_QFont_set_stretch), -1);
@@ -78474,11 +80109,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFont.rb_class, "set_letter_spacing", RUBY_METHOD_FUNC(rb_QFont_set_letter_spacing), -1);
   rb_define_method(cls_QFont.rb_class, "setLetterSpacing", RUBY_METHOD_FUNC(rb_QFont_set_letter_spacing), -1);
   rb_define_alias(cls_QFont.rb_class, "letter_spacing=", "set_letter_spacing");
+  rb_define_alias(cls_QFont.rb_class, "letterSpacing=", "set_letter_spacing");
   rb_define_method(cls_QFont.rb_class, "word_spacing", RUBY_METHOD_FUNC(rb_QFont_word_spacing), -1);
   rb_define_method(cls_QFont.rb_class, "wordSpacing", RUBY_METHOD_FUNC(rb_QFont_word_spacing), -1);
   rb_define_method(cls_QFont.rb_class, "set_word_spacing", RUBY_METHOD_FUNC(rb_QFont_set_word_spacing), -1);
   rb_define_method(cls_QFont.rb_class, "setWordSpacing", RUBY_METHOD_FUNC(rb_QFont_set_word_spacing), -1);
   rb_define_alias(cls_QFont.rb_class, "word_spacing=", "set_word_spacing");
+  rb_define_alias(cls_QFont.rb_class, "wordSpacing=", "set_word_spacing");
   rb_define_method(cls_QFont.rb_class, "set_capitalization", RUBY_METHOD_FUNC(rb_QFont_set_capitalization), -1);
   rb_define_method(cls_QFont.rb_class, "setCapitalization", RUBY_METHOD_FUNC(rb_QFont_set_capitalization), -1);
   rb_define_alias(cls_QFont.rb_class, "capitalization=", "set_capitalization");
@@ -78486,6 +80123,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFont.rb_class, "set_hinting_preference", RUBY_METHOD_FUNC(rb_QFont_set_hinting_preference), -1);
   rb_define_method(cls_QFont.rb_class, "setHintingPreference", RUBY_METHOD_FUNC(rb_QFont_set_hinting_preference), -1);
   rb_define_alias(cls_QFont.rb_class, "hinting_preference=", "set_hinting_preference");
+  rb_define_alias(cls_QFont.rb_class, "hintingPreference=", "set_hinting_preference");
   rb_define_method(cls_QFont.rb_class, "hinting_preference", RUBY_METHOD_FUNC(rb_QFont_hinting_preference), -1);
   rb_define_method(cls_QFont.rb_class, "hintingPreference", RUBY_METHOD_FUNC(rb_QFont_hinting_preference), -1);
   rb_define_method(cls_QFont.rb_class, "clear_features", RUBY_METHOD_FUNC(rb_QFont_clear_features), -1);
@@ -78509,9 +80147,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFont.rb_class, "set_resolve_mask", RUBY_METHOD_FUNC(rb_QFont_set_resolve_mask), -1);
   rb_define_method(cls_QFont.rb_class, "setResolveMask", RUBY_METHOD_FUNC(rb_QFont_set_resolve_mask), -1);
   rb_define_alias(cls_QFont.rb_class, "resolve_mask=", "set_resolve_mask");
+  rb_define_alias(cls_QFont.rb_class, "resolveMask=", "set_resolve_mask");
   rb_define_method(cls_QFont.rb_class, "set_legacy_weight", RUBY_METHOD_FUNC(rb_QFont_set_legacy_weight), -1);
   rb_define_method(cls_QFont.rb_class, "setLegacyWeight", RUBY_METHOD_FUNC(rb_QFont_set_legacy_weight), -1);
   rb_define_alias(cls_QFont.rb_class, "legacy_weight=", "set_legacy_weight");
+  rb_define_alias(cls_QFont.rb_class, "legacyWeight=", "set_legacy_weight");
   rb_define_method(cls_QFont.rb_class, "legacy_weight", RUBY_METHOD_FUNC(rb_QFont_legacy_weight), -1);
   rb_define_method(cls_QFont.rb_class, "legacyWeight", RUBY_METHOD_FUNC(rb_QFont_legacy_weight), -1);
   rb_define_singleton_method(cls_QFont.rb_class, "substitute", RUBY_METHOD_FUNC(rb_QFont_s_substitute), -1);
@@ -78554,6 +80194,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFontMetrics.rb_class, "horizontalAdvance", RUBY_METHOD_FUNC(rb_QFontMetrics_horizontal_advance), -1);
   rb_define_method(cls_QFontMetrics.rb_class, "bounding_rect", RUBY_METHOD_FUNC(rb_QFontMetrics_bounding_rect), -1);
   rb_define_method(cls_QFontMetrics.rb_class, "boundingRect", RUBY_METHOD_FUNC(rb_QFontMetrics_bounding_rect), -1);
+  rb_define_method(cls_QFontMetrics.rb_class, "size", RUBY_METHOD_FUNC(rb_QFontMetrics_size), -1);
   rb_define_method(cls_QFontMetrics.rb_class, "tight_bounding_rect", RUBY_METHOD_FUNC(rb_QFontMetrics_tight_bounding_rect), -1);
   rb_define_method(cls_QFontMetrics.rb_class, "tightBoundingRect", RUBY_METHOD_FUNC(rb_QFontMetrics_tight_bounding_rect), -1);
   rb_define_method(cls_QFontMetrics.rb_class, "elided_text", RUBY_METHOD_FUNC(rb_QFontMetrics_elided_text), -1);
@@ -78607,6 +80248,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QIcon.rb_class, "set_is_mask", RUBY_METHOD_FUNC(rb_QIcon_set_is_mask), -1);
   rb_define_method(cls_QIcon.rb_class, "setIsMask", RUBY_METHOD_FUNC(rb_QIcon_set_is_mask), -1);
   rb_define_alias(cls_QIcon.rb_class, "is_mask=", "set_is_mask");
+  rb_define_alias(cls_QIcon.rb_class, "isMask=", "set_is_mask");
   rb_define_method(cls_QIcon.rb_class, "is_mask", RUBY_METHOD_FUNC(rb_QIcon_is_mask), -1);
   rb_define_method(cls_QIcon.rb_class, "isMask", RUBY_METHOD_FUNC(rb_QIcon_is_mask), -1);
   rb_define_alias(cls_QIcon.rb_class, "mask?", "is_mask");
@@ -78649,6 +80291,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPixmap.rb_class, "set_device_pixel_ratio", RUBY_METHOD_FUNC(rb_QPixmap_set_device_pixel_ratio), -1);
   rb_define_method(cls_QPixmap.rb_class, "setDevicePixelRatio", RUBY_METHOD_FUNC(rb_QPixmap_set_device_pixel_ratio), -1);
   rb_define_alias(cls_QPixmap.rb_class, "device_pixel_ratio=", "set_device_pixel_ratio");
+  rb_define_alias(cls_QPixmap.rb_class, "devicePixelRatio=", "set_device_pixel_ratio");
   rb_define_method(cls_QPixmap.rb_class, "device_independent_size", RUBY_METHOD_FUNC(rb_QPixmap_device_independent_size), -1);
   rb_define_method(cls_QPixmap.rb_class, "deviceIndependentSize", RUBY_METHOD_FUNC(rb_QPixmap_device_independent_size), -1);
   rb_define_method(cls_QPixmap.rb_class, "has_alpha", RUBY_METHOD_FUNC(rb_QPixmap_has_alpha), -1);
@@ -78669,6 +80312,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPixmap.rb_class, "convert_from_image", RUBY_METHOD_FUNC(rb_QPixmap_convert_from_image), -1);
   rb_define_method(cls_QPixmap.rb_class, "convertFromImage", RUBY_METHOD_FUNC(rb_QPixmap_convert_from_image), -1);
   rb_define_method(cls_QPixmap.rb_class, "copy", RUBY_METHOD_FUNC(rb_QPixmap_copy), -1);
+  rb_define_method(cls_QPixmap.rb_class, "scroll", RUBY_METHOD_FUNC(rb_QPixmap_scroll), -1);
   rb_define_method(cls_QPixmap.rb_class, "cache_key", RUBY_METHOD_FUNC(rb_QPixmap_cache_key), -1);
   rb_define_method(cls_QPixmap.rb_class, "cacheKey", RUBY_METHOD_FUNC(rb_QPixmap_cache_key), -1);
   rb_define_method(cls_QPixmap.rb_class, "is_detached", RUBY_METHOD_FUNC(rb_QPixmap_is_detached), -1);
@@ -78728,6 +80372,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "set_color_count", RUBY_METHOD_FUNC(rb_QImage_set_color_count), -1);
   rb_define_method(cls_QImage.rb_class, "setColorCount", RUBY_METHOD_FUNC(rb_QImage_set_color_count), -1);
   rb_define_alias(cls_QImage.rb_class, "color_count=", "set_color_count");
+  rb_define_alias(cls_QImage.rb_class, "colorCount=", "set_color_count");
   rb_define_method(cls_QImage.rb_class, "all_gray", RUBY_METHOD_FUNC(rb_QImage_all_gray), -1);
   rb_define_method(cls_QImage.rb_class, "allGray", RUBY_METHOD_FUNC(rb_QImage_all_gray), -1);
   rb_define_method(cls_QImage.rb_class, "is_grayscale", RUBY_METHOD_FUNC(rb_QImage_is_grayscale), -1);
@@ -78749,11 +80394,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "set_pixel_color", RUBY_METHOD_FUNC(rb_QImage_set_pixel_color), -1);
   rb_define_method(cls_QImage.rb_class, "setPixelColor", RUBY_METHOD_FUNC(rb_QImage_set_pixel_color), -1);
   rb_define_alias(cls_QImage.rb_class, "pixel_color=", "set_pixel_color");
+  rb_define_alias(cls_QImage.rb_class, "pixelColor=", "set_pixel_color");
   rb_define_method(cls_QImage.rb_class, "device_pixel_ratio", RUBY_METHOD_FUNC(rb_QImage_device_pixel_ratio), -1);
   rb_define_method(cls_QImage.rb_class, "devicePixelRatio", RUBY_METHOD_FUNC(rb_QImage_device_pixel_ratio), -1);
   rb_define_method(cls_QImage.rb_class, "set_device_pixel_ratio", RUBY_METHOD_FUNC(rb_QImage_set_device_pixel_ratio), -1);
   rb_define_method(cls_QImage.rb_class, "setDevicePixelRatio", RUBY_METHOD_FUNC(rb_QImage_set_device_pixel_ratio), -1);
   rb_define_alias(cls_QImage.rb_class, "device_pixel_ratio=", "set_device_pixel_ratio");
+  rb_define_alias(cls_QImage.rb_class, "devicePixelRatio=", "set_device_pixel_ratio");
   rb_define_method(cls_QImage.rb_class, "device_independent_size", RUBY_METHOD_FUNC(rb_QImage_device_independent_size), -1);
   rb_define_method(cls_QImage.rb_class, "deviceIndependentSize", RUBY_METHOD_FUNC(rb_QImage_device_independent_size), -1);
   rb_define_method(cls_QImage.rb_class, "fill", RUBY_METHOD_FUNC(rb_QImage_fill), -1);
@@ -78762,6 +80409,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "set_alpha_channel", RUBY_METHOD_FUNC(rb_QImage_set_alpha_channel), -1);
   rb_define_method(cls_QImage.rb_class, "setAlphaChannel", RUBY_METHOD_FUNC(rb_QImage_set_alpha_channel), -1);
   rb_define_alias(cls_QImage.rb_class, "alpha_channel=", "set_alpha_channel");
+  rb_define_alias(cls_QImage.rb_class, "alphaChannel=", "set_alpha_channel");
   rb_define_method(cls_QImage.rb_class, "create_alpha_mask", RUBY_METHOD_FUNC(rb_QImage_create_alpha_mask), -1);
   rb_define_method(cls_QImage.rb_class, "createAlphaMask", RUBY_METHOD_FUNC(rb_QImage_create_alpha_mask), -1);
   rb_define_method(cls_QImage.rb_class, "create_heuristic_mask", RUBY_METHOD_FUNC(rb_QImage_create_heuristic_mask), -1);
@@ -78796,9 +80444,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "set_dots_per_meter_x", RUBY_METHOD_FUNC(rb_QImage_set_dots_per_meter_x), -1);
   rb_define_method(cls_QImage.rb_class, "setDotsPerMeterX", RUBY_METHOD_FUNC(rb_QImage_set_dots_per_meter_x), -1);
   rb_define_alias(cls_QImage.rb_class, "dots_per_meter_x=", "set_dots_per_meter_x");
+  rb_define_alias(cls_QImage.rb_class, "dotsPerMeterX=", "set_dots_per_meter_x");
   rb_define_method(cls_QImage.rb_class, "set_dots_per_meter_y", RUBY_METHOD_FUNC(rb_QImage_set_dots_per_meter_y), -1);
   rb_define_method(cls_QImage.rb_class, "setDotsPerMeterY", RUBY_METHOD_FUNC(rb_QImage_set_dots_per_meter_y), -1);
   rb_define_alias(cls_QImage.rb_class, "dots_per_meter_y=", "set_dots_per_meter_y");
+  rb_define_alias(cls_QImage.rb_class, "dotsPerMeterY=", "set_dots_per_meter_y");
   rb_define_method(cls_QImage.rb_class, "offset", RUBY_METHOD_FUNC(rb_QImage_offset), -1);
   rb_define_method(cls_QImage.rb_class, "set_offset", RUBY_METHOD_FUNC(rb_QImage_set_offset), -1);
   rb_define_method(cls_QImage.rb_class, "setOffset", RUBY_METHOD_FUNC(rb_QImage_set_offset), -1);
@@ -78831,6 +80481,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_composition_mode", RUBY_METHOD_FUNC(rb_QPainter_set_composition_mode), -1);
   rb_define_method(cls_QPainter.rb_class, "setCompositionMode", RUBY_METHOD_FUNC(rb_QPainter_set_composition_mode), -1);
   rb_define_alias(cls_QPainter.rb_class, "composition_mode=", "set_composition_mode");
+  rb_define_alias(cls_QPainter.rb_class, "compositionMode=", "set_composition_mode");
   rb_define_method(cls_QPainter.rb_class, "composition_mode", RUBY_METHOD_FUNC(rb_QPainter_composition_mode), -1);
   rb_define_method(cls_QPainter.rb_class, "compositionMode", RUBY_METHOD_FUNC(rb_QPainter_composition_mode), -1);
   rb_define_method(cls_QPainter.rb_class, "font", RUBY_METHOD_FUNC(rb_QPainter_font), -1);
@@ -78850,6 +80501,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_background_mode", RUBY_METHOD_FUNC(rb_QPainter_set_background_mode), -1);
   rb_define_method(cls_QPainter.rb_class, "setBackgroundMode", RUBY_METHOD_FUNC(rb_QPainter_set_background_mode), -1);
   rb_define_alias(cls_QPainter.rb_class, "background_mode=", "set_background_mode");
+  rb_define_alias(cls_QPainter.rb_class, "backgroundMode=", "set_background_mode");
   rb_define_method(cls_QPainter.rb_class, "background_mode", RUBY_METHOD_FUNC(rb_QPainter_background_mode), -1);
   rb_define_method(cls_QPainter.rb_class, "backgroundMode", RUBY_METHOD_FUNC(rb_QPainter_background_mode), -1);
   rb_define_method(cls_QPainter.rb_class, "brush_origin", RUBY_METHOD_FUNC(rb_QPainter_brush_origin), -1);
@@ -78859,6 +80511,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_brush_origin", RUBY_METHOD_FUNC(rb_QPainter_set_brush_origin), -1);
   rb_define_method(cls_QPainter.rb_class, "setBrushOrigin", RUBY_METHOD_FUNC(rb_QPainter_set_brush_origin), -1);
   rb_define_alias(cls_QPainter.rb_class, "brush_origin=", "set_brush_origin");
+  rb_define_alias(cls_QPainter.rb_class, "brushOrigin=", "set_brush_origin");
   rb_define_method(cls_QPainter.rb_class, "set_background", RUBY_METHOD_FUNC(rb_QPainter_set_background), -1);
   rb_define_method(cls_QPainter.rb_class, "setBackground", RUBY_METHOD_FUNC(rb_QPainter_set_background), -1);
   rb_define_alias(cls_QPainter.rb_class, "background=", "set_background");
@@ -78870,6 +80523,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_clip_rect", RUBY_METHOD_FUNC(rb_QPainter_set_clip_rect), -1);
   rb_define_method(cls_QPainter.rb_class, "setClipRect", RUBY_METHOD_FUNC(rb_QPainter_set_clip_rect), -1);
   rb_define_alias(cls_QPainter.rb_class, "clip_rect=", "set_clip_rect");
+  rb_define_alias(cls_QPainter.rb_class, "clipRect=", "set_clip_rect");
   rb_define_method(cls_QPainter.rb_class, "set_clipping", RUBY_METHOD_FUNC(rb_QPainter_set_clipping), -1);
   rb_define_method(cls_QPainter.rb_class, "setClipping", RUBY_METHOD_FUNC(rb_QPainter_set_clipping), -1);
   rb_define_alias(cls_QPainter.rb_class, "clipping=", "set_clipping");
@@ -78884,6 +80538,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_world_matrix_enabled", RUBY_METHOD_FUNC(rb_QPainter_set_world_matrix_enabled), -1);
   rb_define_method(cls_QPainter.rb_class, "setWorldMatrixEnabled", RUBY_METHOD_FUNC(rb_QPainter_set_world_matrix_enabled), -1);
   rb_define_alias(cls_QPainter.rb_class, "world_matrix_enabled=", "set_world_matrix_enabled");
+  rb_define_alias(cls_QPainter.rb_class, "worldMatrixEnabled=", "set_world_matrix_enabled");
   rb_define_method(cls_QPainter.rb_class, "world_matrix_enabled", RUBY_METHOD_FUNC(rb_QPainter_world_matrix_enabled), -1);
   rb_define_method(cls_QPainter.rb_class, "worldMatrixEnabled", RUBY_METHOD_FUNC(rb_QPainter_world_matrix_enabled), -1);
   rb_define_method(cls_QPainter.rb_class, "scale", RUBY_METHOD_FUNC(rb_QPainter_scale), -1);
@@ -78901,6 +80556,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_view_transform_enabled", RUBY_METHOD_FUNC(rb_QPainter_set_view_transform_enabled), -1);
   rb_define_method(cls_QPainter.rb_class, "setViewTransformEnabled", RUBY_METHOD_FUNC(rb_QPainter_set_view_transform_enabled), -1);
   rb_define_alias(cls_QPainter.rb_class, "view_transform_enabled=", "set_view_transform_enabled");
+  rb_define_alias(cls_QPainter.rb_class, "viewTransformEnabled=", "set_view_transform_enabled");
   rb_define_method(cls_QPainter.rb_class, "view_transform_enabled", RUBY_METHOD_FUNC(rb_QPainter_view_transform_enabled), -1);
   rb_define_method(cls_QPainter.rb_class, "viewTransformEnabled", RUBY_METHOD_FUNC(rb_QPainter_view_transform_enabled), -1);
   rb_define_method(cls_QPainter.rb_class, "draw_point", RUBY_METHOD_FUNC(rb_QPainter_draw_point), -1);
@@ -78940,6 +80596,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_layout_direction", RUBY_METHOD_FUNC(rb_QPainter_set_layout_direction), -1);
   rb_define_method(cls_QPainter.rb_class, "setLayoutDirection", RUBY_METHOD_FUNC(rb_QPainter_set_layout_direction), -1);
   rb_define_alias(cls_QPainter.rb_class, "layout_direction=", "set_layout_direction");
+  rb_define_alias(cls_QPainter.rb_class, "layoutDirection=", "set_layout_direction");
   rb_define_method(cls_QPainter.rb_class, "layout_direction", RUBY_METHOD_FUNC(rb_QPainter_layout_direction), -1);
   rb_define_method(cls_QPainter.rb_class, "layoutDirection", RUBY_METHOD_FUNC(rb_QPainter_layout_direction), -1);
   rb_define_method(cls_QPainter.rb_class, "draw_text", RUBY_METHOD_FUNC(rb_QPainter_draw_text), -1);
@@ -78953,9 +80610,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "set_render_hint", RUBY_METHOD_FUNC(rb_QPainter_set_render_hint), -1);
   rb_define_method(cls_QPainter.rb_class, "setRenderHint", RUBY_METHOD_FUNC(rb_QPainter_set_render_hint), -1);
   rb_define_alias(cls_QPainter.rb_class, "render_hint=", "set_render_hint");
+  rb_define_alias(cls_QPainter.rb_class, "renderHint=", "set_render_hint");
   rb_define_method(cls_QPainter.rb_class, "set_render_hints", RUBY_METHOD_FUNC(rb_QPainter_set_render_hints), -1);
   rb_define_method(cls_QPainter.rb_class, "setRenderHints", RUBY_METHOD_FUNC(rb_QPainter_set_render_hints), -1);
   rb_define_alias(cls_QPainter.rb_class, "render_hints=", "set_render_hints");
+  rb_define_alias(cls_QPainter.rb_class, "renderHints=", "set_render_hints");
   rb_define_method(cls_QPainter.rb_class, "render_hints", RUBY_METHOD_FUNC(rb_QPainter_render_hints), -1);
   rb_define_method(cls_QPainter.rb_class, "renderHints", RUBY_METHOD_FUNC(rb_QPainter_render_hints), -1);
   rb_define_method(cls_QPainter.rb_class, "test_render_hint", RUBY_METHOD_FUNC(rb_QPainter_test_render_hint), -1);
@@ -78976,6 +80635,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLinearGradient.rb_class, "set_final_stop", RUBY_METHOD_FUNC(rb_QLinearGradient_set_final_stop), -1);
   rb_define_method(cls_QLinearGradient.rb_class, "setFinalStop", RUBY_METHOD_FUNC(rb_QLinearGradient_set_final_stop), -1);
   rb_define_alias(cls_QLinearGradient.rb_class, "final_stop=", "set_final_stop");
+  rb_define_alias(cls_QLinearGradient.rb_class, "finalStop=", "set_final_stop");
   rb_define_alloc_func(cls_QRadialGradient.rb_class, rb_QRadialGradient_alloc);
   qt6rb::register_ctor(cls_QRadialGradient.rb_class, rb_QRadialGradient_ctor);
   rb_include_module(cls_QRadialGradient.rb_class, qt6rb::constructable_module());
@@ -78988,6 +80648,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QRadialGradient.rb_class, "set_focal_point", RUBY_METHOD_FUNC(rb_QRadialGradient_set_focal_point), -1);
   rb_define_method(cls_QRadialGradient.rb_class, "setFocalPoint", RUBY_METHOD_FUNC(rb_QRadialGradient_set_focal_point), -1);
   rb_define_alias(cls_QRadialGradient.rb_class, "focal_point=", "set_focal_point");
+  rb_define_alias(cls_QRadialGradient.rb_class, "focalPoint=", "set_focal_point");
   rb_define_method(cls_QRadialGradient.rb_class, "radius", RUBY_METHOD_FUNC(rb_QRadialGradient_radius), -1);
   rb_define_method(cls_QRadialGradient.rb_class, "set_radius", RUBY_METHOD_FUNC(rb_QRadialGradient_set_radius), -1);
   rb_define_method(cls_QRadialGradient.rb_class, "setRadius", RUBY_METHOD_FUNC(rb_QRadialGradient_set_radius), -1);
@@ -78997,11 +80658,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QRadialGradient.rb_class, "set_center_radius", RUBY_METHOD_FUNC(rb_QRadialGradient_set_center_radius), -1);
   rb_define_method(cls_QRadialGradient.rb_class, "setCenterRadius", RUBY_METHOD_FUNC(rb_QRadialGradient_set_center_radius), -1);
   rb_define_alias(cls_QRadialGradient.rb_class, "center_radius=", "set_center_radius");
+  rb_define_alias(cls_QRadialGradient.rb_class, "centerRadius=", "set_center_radius");
   rb_define_method(cls_QRadialGradient.rb_class, "focal_radius", RUBY_METHOD_FUNC(rb_QRadialGradient_focal_radius), -1);
   rb_define_method(cls_QRadialGradient.rb_class, "focalRadius", RUBY_METHOD_FUNC(rb_QRadialGradient_focal_radius), -1);
   rb_define_method(cls_QRadialGradient.rb_class, "set_focal_radius", RUBY_METHOD_FUNC(rb_QRadialGradient_set_focal_radius), -1);
   rb_define_method(cls_QRadialGradient.rb_class, "setFocalRadius", RUBY_METHOD_FUNC(rb_QRadialGradient_set_focal_radius), -1);
   rb_define_alias(cls_QRadialGradient.rb_class, "focal_radius=", "set_focal_radius");
+  rb_define_alias(cls_QRadialGradient.rb_class, "focalRadius=", "set_focal_radius");
   rb_define_alloc_func(cls_QPolygon.rb_class, rb_QPolygon_alloc);
   qt6rb::register_ctor(cls_QPolygon.rb_class, rb_QPolygon_ctor);
   rb_include_module(cls_QPolygon.rb_class, qt6rb::constructable_module());
@@ -79037,6 +80700,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMessageBox.rb_class, "set_standard_buttons", RUBY_METHOD_FUNC(rb_QMessageBox_set_standard_buttons), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setStandardButtons", RUBY_METHOD_FUNC(rb_QMessageBox_set_standard_buttons), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "standard_buttons=", "set_standard_buttons");
+  rb_define_alias(cls_QMessageBox.rb_class, "standardButtons=", "set_standard_buttons");
   rb_define_method(cls_QMessageBox.rb_class, "standard_buttons", RUBY_METHOD_FUNC(rb_QMessageBox_standard_buttons), -1);
   rb_define_method(cls_QMessageBox.rb_class, "standardButtons", RUBY_METHOD_FUNC(rb_QMessageBox_standard_buttons), -1);
   rb_define_method(cls_QMessageBox.rb_class, "standard_button", RUBY_METHOD_FUNC(rb_QMessageBox_standard_button), -1);
@@ -79047,11 +80711,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMessageBox.rb_class, "set_default_button", RUBY_METHOD_FUNC(rb_QMessageBox_set_default_button), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setDefaultButton", RUBY_METHOD_FUNC(rb_QMessageBox_set_default_button), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "default_button=", "set_default_button");
+  rb_define_alias(cls_QMessageBox.rb_class, "defaultButton=", "set_default_button");
   rb_define_method(cls_QMessageBox.rb_class, "escape_button", RUBY_METHOD_FUNC(rb_QMessageBox_escape_button), -1);
   rb_define_method(cls_QMessageBox.rb_class, "escapeButton", RUBY_METHOD_FUNC(rb_QMessageBox_escape_button), -1);
   rb_define_method(cls_QMessageBox.rb_class, "set_escape_button", RUBY_METHOD_FUNC(rb_QMessageBox_set_escape_button), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setEscapeButton", RUBY_METHOD_FUNC(rb_QMessageBox_set_escape_button), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "escape_button=", "set_escape_button");
+  rb_define_alias(cls_QMessageBox.rb_class, "escapeButton=", "set_escape_button");
   rb_define_method(cls_QMessageBox.rb_class, "clicked_button", RUBY_METHOD_FUNC(rb_QMessageBox_clicked_button), -1);
   rb_define_method(cls_QMessageBox.rb_class, "clickedButton", RUBY_METHOD_FUNC(rb_QMessageBox_clicked_button), -1);
   rb_define_method(cls_QMessageBox.rb_class, "text", RUBY_METHOD_FUNC(rb_QMessageBox_text), -1);
@@ -79067,19 +80733,23 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMessageBox.rb_class, "set_icon_pixmap", RUBY_METHOD_FUNC(rb_QMessageBox_set_icon_pixmap), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setIconPixmap", RUBY_METHOD_FUNC(rb_QMessageBox_set_icon_pixmap), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "icon_pixmap=", "set_icon_pixmap");
+  rb_define_alias(cls_QMessageBox.rb_class, "iconPixmap=", "set_icon_pixmap");
   rb_define_method(cls_QMessageBox.rb_class, "text_format", RUBY_METHOD_FUNC(rb_QMessageBox_text_format), -1);
   rb_define_method(cls_QMessageBox.rb_class, "textFormat", RUBY_METHOD_FUNC(rb_QMessageBox_text_format), -1);
   rb_define_method(cls_QMessageBox.rb_class, "set_text_format", RUBY_METHOD_FUNC(rb_QMessageBox_set_text_format), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setTextFormat", RUBY_METHOD_FUNC(rb_QMessageBox_set_text_format), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "text_format=", "set_text_format");
+  rb_define_alias(cls_QMessageBox.rb_class, "textFormat=", "set_text_format");
   rb_define_method(cls_QMessageBox.rb_class, "set_text_interaction_flags", RUBY_METHOD_FUNC(rb_QMessageBox_set_text_interaction_flags), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setTextInteractionFlags", RUBY_METHOD_FUNC(rb_QMessageBox_set_text_interaction_flags), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "text_interaction_flags=", "set_text_interaction_flags");
+  rb_define_alias(cls_QMessageBox.rb_class, "textInteractionFlags=", "set_text_interaction_flags");
   rb_define_method(cls_QMessageBox.rb_class, "text_interaction_flags", RUBY_METHOD_FUNC(rb_QMessageBox_text_interaction_flags), -1);
   rb_define_method(cls_QMessageBox.rb_class, "textInteractionFlags", RUBY_METHOD_FUNC(rb_QMessageBox_text_interaction_flags), -1);
   rb_define_method(cls_QMessageBox.rb_class, "set_check_box", RUBY_METHOD_FUNC(rb_QMessageBox_set_check_box), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setCheckBox", RUBY_METHOD_FUNC(rb_QMessageBox_set_check_box), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "check_box=", "set_check_box");
+  rb_define_alias(cls_QMessageBox.rb_class, "checkBox=", "set_check_box");
   rb_define_method(cls_QMessageBox.rb_class, "check_box", RUBY_METHOD_FUNC(rb_QMessageBox_check_box), -1);
   rb_define_method(cls_QMessageBox.rb_class, "checkBox", RUBY_METHOD_FUNC(rb_QMessageBox_check_box), -1);
   rb_define_method(cls_QMessageBox.rb_class, "set_option", RUBY_METHOD_FUNC(rb_QMessageBox_set_option), -1);
@@ -79096,22 +80766,27 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMessageBox.rb_class, "set_button_text", RUBY_METHOD_FUNC(rb_QMessageBox_set_button_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setButtonText", RUBY_METHOD_FUNC(rb_QMessageBox_set_button_text), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "button_text=", "set_button_text");
+  rb_define_alias(cls_QMessageBox.rb_class, "buttonText=", "set_button_text");
   rb_define_method(cls_QMessageBox.rb_class, "informative_text", RUBY_METHOD_FUNC(rb_QMessageBox_informative_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "informativeText", RUBY_METHOD_FUNC(rb_QMessageBox_informative_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "set_informative_text", RUBY_METHOD_FUNC(rb_QMessageBox_set_informative_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setInformativeText", RUBY_METHOD_FUNC(rb_QMessageBox_set_informative_text), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "informative_text=", "set_informative_text");
+  rb_define_alias(cls_QMessageBox.rb_class, "informativeText=", "set_informative_text");
   rb_define_method(cls_QMessageBox.rb_class, "detailed_text", RUBY_METHOD_FUNC(rb_QMessageBox_detailed_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "detailedText", RUBY_METHOD_FUNC(rb_QMessageBox_detailed_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "set_detailed_text", RUBY_METHOD_FUNC(rb_QMessageBox_set_detailed_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setDetailedText", RUBY_METHOD_FUNC(rb_QMessageBox_set_detailed_text), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "detailed_text=", "set_detailed_text");
+  rb_define_alias(cls_QMessageBox.rb_class, "detailedText=", "set_detailed_text");
   rb_define_method(cls_QMessageBox.rb_class, "set_window_title", RUBY_METHOD_FUNC(rb_QMessageBox_set_window_title), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setWindowTitle", RUBY_METHOD_FUNC(rb_QMessageBox_set_window_title), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "window_title=", "set_window_title");
+  rb_define_alias(cls_QMessageBox.rb_class, "windowTitle=", "set_window_title");
   rb_define_method(cls_QMessageBox.rb_class, "set_window_modality", RUBY_METHOD_FUNC(rb_QMessageBox_set_window_modality), -1);
   rb_define_method(cls_QMessageBox.rb_class, "setWindowModality", RUBY_METHOD_FUNC(rb_QMessageBox_set_window_modality), -1);
   rb_define_alias(cls_QMessageBox.rb_class, "window_modality=", "set_window_modality");
+  rb_define_alias(cls_QMessageBox.rb_class, "windowModality=", "set_window_modality");
   rb_define_singleton_method(cls_QMessageBox.rb_class, "tr", RUBY_METHOD_FUNC(rb_QMessageBox_s_tr), -1);
   rb_define_singleton_method(cls_QMessageBox.rb_class, "information", RUBY_METHOD_FUNC(rb_QMessageBox_s_information), -1);
   rb_define_singleton_method(cls_QMessageBox.rb_class, "question", RUBY_METHOD_FUNC(rb_QMessageBox_s_question), -1);
@@ -79190,6 +80865,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDialog.rb_class, "set_size_grip_enabled", RUBY_METHOD_FUNC(rb_QDialog_set_size_grip_enabled), -1);
   rb_define_method(cls_QDialog.rb_class, "setSizeGripEnabled", RUBY_METHOD_FUNC(rb_QDialog_set_size_grip_enabled), -1);
   rb_define_alias(cls_QDialog.rb_class, "size_grip_enabled=", "set_size_grip_enabled");
+  rb_define_alias(cls_QDialog.rb_class, "sizeGripEnabled=", "set_size_grip_enabled");
   rb_define_method(cls_QDialog.rb_class, "is_size_grip_enabled", RUBY_METHOD_FUNC(rb_QDialog_is_size_grip_enabled), -1);
   rb_define_method(cls_QDialog.rb_class, "isSizeGripEnabled", RUBY_METHOD_FUNC(rb_QDialog_is_size_grip_enabled), -1);
   rb_define_alias(cls_QDialog.rb_class, "size_grip_enabled?", "is_size_grip_enabled");
@@ -79270,6 +80946,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "set_directory_url", RUBY_METHOD_FUNC(rb_QFileDialog_set_directory_url), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setDirectoryUrl", RUBY_METHOD_FUNC(rb_QFileDialog_set_directory_url), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "directory_url=", "set_directory_url");
+  rb_define_alias(cls_QFileDialog.rb_class, "directoryUrl=", "set_directory_url");
   rb_define_method(cls_QFileDialog.rb_class, "directory_url", RUBY_METHOD_FUNC(rb_QFileDialog_directory_url), -1);
   rb_define_method(cls_QFileDialog.rb_class, "directoryUrl", RUBY_METHOD_FUNC(rb_QFileDialog_directory_url), -1);
   rb_define_method(cls_QFileDialog.rb_class, "select_file", RUBY_METHOD_FUNC(rb_QFileDialog_select_file), -1);
@@ -79281,9 +80958,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "set_name_filter", RUBY_METHOD_FUNC(rb_QFileDialog_set_name_filter), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setNameFilter", RUBY_METHOD_FUNC(rb_QFileDialog_set_name_filter), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "name_filter=", "set_name_filter");
+  rb_define_alias(cls_QFileDialog.rb_class, "nameFilter=", "set_name_filter");
   rb_define_method(cls_QFileDialog.rb_class, "set_name_filters", RUBY_METHOD_FUNC(rb_QFileDialog_set_name_filters), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setNameFilters", RUBY_METHOD_FUNC(rb_QFileDialog_set_name_filters), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "name_filters=", "set_name_filters");
+  rb_define_alias(cls_QFileDialog.rb_class, "nameFilters=", "set_name_filters");
   rb_define_method(cls_QFileDialog.rb_class, "name_filters", RUBY_METHOD_FUNC(rb_QFileDialog_name_filters), -1);
   rb_define_method(cls_QFileDialog.rb_class, "nameFilters", RUBY_METHOD_FUNC(rb_QFileDialog_name_filters), -1);
   rb_define_method(cls_QFileDialog.rb_class, "select_name_filter", RUBY_METHOD_FUNC(rb_QFileDialog_select_name_filter), -1);
@@ -79295,6 +80974,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "set_mime_type_filters", RUBY_METHOD_FUNC(rb_QFileDialog_set_mime_type_filters), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setMimeTypeFilters", RUBY_METHOD_FUNC(rb_QFileDialog_set_mime_type_filters), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "mime_type_filters=", "set_mime_type_filters");
+  rb_define_alias(cls_QFileDialog.rb_class, "mimeTypeFilters=", "set_mime_type_filters");
   rb_define_method(cls_QFileDialog.rb_class, "mime_type_filters", RUBY_METHOD_FUNC(rb_QFileDialog_mime_type_filters), -1);
   rb_define_method(cls_QFileDialog.rb_class, "mimeTypeFilters", RUBY_METHOD_FUNC(rb_QFileDialog_mime_type_filters), -1);
   rb_define_method(cls_QFileDialog.rb_class, "select_mime_type_filter", RUBY_METHOD_FUNC(rb_QFileDialog_select_mime_type_filter), -1);
@@ -79306,16 +80986,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "set_view_mode", RUBY_METHOD_FUNC(rb_QFileDialog_set_view_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setViewMode", RUBY_METHOD_FUNC(rb_QFileDialog_set_view_mode), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "view_mode=", "set_view_mode");
+  rb_define_alias(cls_QFileDialog.rb_class, "viewMode=", "set_view_mode");
   rb_define_method(cls_QFileDialog.rb_class, "view_mode", RUBY_METHOD_FUNC(rb_QFileDialog_view_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "viewMode", RUBY_METHOD_FUNC(rb_QFileDialog_view_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "set_file_mode", RUBY_METHOD_FUNC(rb_QFileDialog_set_file_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setFileMode", RUBY_METHOD_FUNC(rb_QFileDialog_set_file_mode), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "file_mode=", "set_file_mode");
+  rb_define_alias(cls_QFileDialog.rb_class, "fileMode=", "set_file_mode");
   rb_define_method(cls_QFileDialog.rb_class, "file_mode", RUBY_METHOD_FUNC(rb_QFileDialog_file_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "fileMode", RUBY_METHOD_FUNC(rb_QFileDialog_file_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "set_accept_mode", RUBY_METHOD_FUNC(rb_QFileDialog_set_accept_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setAcceptMode", RUBY_METHOD_FUNC(rb_QFileDialog_set_accept_mode), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "accept_mode=", "set_accept_mode");
+  rb_define_alias(cls_QFileDialog.rb_class, "acceptMode=", "set_accept_mode");
   rb_define_method(cls_QFileDialog.rb_class, "accept_mode", RUBY_METHOD_FUNC(rb_QFileDialog_accept_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "acceptMode", RUBY_METHOD_FUNC(rb_QFileDialog_accept_mode), -1);
   rb_define_method(cls_QFileDialog.rb_class, "save_state", RUBY_METHOD_FUNC(rb_QFileDialog_save_state), -1);
@@ -79325,6 +81008,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "set_default_suffix", RUBY_METHOD_FUNC(rb_QFileDialog_set_default_suffix), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setDefaultSuffix", RUBY_METHOD_FUNC(rb_QFileDialog_set_default_suffix), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "default_suffix=", "set_default_suffix");
+  rb_define_alias(cls_QFileDialog.rb_class, "defaultSuffix=", "set_default_suffix");
   rb_define_method(cls_QFileDialog.rb_class, "default_suffix", RUBY_METHOD_FUNC(rb_QFileDialog_default_suffix), -1);
   rb_define_method(cls_QFileDialog.rb_class, "defaultSuffix", RUBY_METHOD_FUNC(rb_QFileDialog_default_suffix), -1);
   rb_define_method(cls_QFileDialog.rb_class, "set_history", RUBY_METHOD_FUNC(rb_QFileDialog_set_history), -1);
@@ -79334,16 +81018,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "set_item_delegate", RUBY_METHOD_FUNC(rb_QFileDialog_set_item_delegate), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setItemDelegate", RUBY_METHOD_FUNC(rb_QFileDialog_set_item_delegate), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "item_delegate=", "set_item_delegate");
+  rb_define_alias(cls_QFileDialog.rb_class, "itemDelegate=", "set_item_delegate");
   rb_define_method(cls_QFileDialog.rb_class, "item_delegate", RUBY_METHOD_FUNC(rb_QFileDialog_item_delegate), -1);
   rb_define_method(cls_QFileDialog.rb_class, "itemDelegate", RUBY_METHOD_FUNC(rb_QFileDialog_item_delegate), -1);
   rb_define_method(cls_QFileDialog.rb_class, "set_label_text", RUBY_METHOD_FUNC(rb_QFileDialog_set_label_text), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setLabelText", RUBY_METHOD_FUNC(rb_QFileDialog_set_label_text), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "label_text=", "set_label_text");
+  rb_define_alias(cls_QFileDialog.rb_class, "labelText=", "set_label_text");
   rb_define_method(cls_QFileDialog.rb_class, "label_text", RUBY_METHOD_FUNC(rb_QFileDialog_label_text), -1);
   rb_define_method(cls_QFileDialog.rb_class, "labelText", RUBY_METHOD_FUNC(rb_QFileDialog_label_text), -1);
   rb_define_method(cls_QFileDialog.rb_class, "set_supported_schemes", RUBY_METHOD_FUNC(rb_QFileDialog_set_supported_schemes), -1);
   rb_define_method(cls_QFileDialog.rb_class, "setSupportedSchemes", RUBY_METHOD_FUNC(rb_QFileDialog_set_supported_schemes), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "supported_schemes=", "set_supported_schemes");
+  rb_define_alias(cls_QFileDialog.rb_class, "supportedSchemes=", "set_supported_schemes");
   rb_define_method(cls_QFileDialog.rb_class, "supported_schemes", RUBY_METHOD_FUNC(rb_QFileDialog_supported_schemes), -1);
   rb_define_method(cls_QFileDialog.rb_class, "supportedSchemes", RUBY_METHOD_FUNC(rb_QFileDialog_supported_schemes), -1);
   rb_define_method(cls_QFileDialog.rb_class, "set_option", RUBY_METHOD_FUNC(rb_QFileDialog_set_option), -1);
@@ -79360,10 +81047,20 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "setVisible", RUBY_METHOD_FUNC(rb_QFileDialog_set_visible), -1);
   rb_define_alias(cls_QFileDialog.rb_class, "visible=", "set_visible");
   rb_define_singleton_method(cls_QFileDialog.rb_class, "tr", RUBY_METHOD_FUNC(rb_QFileDialog_s_tr), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "get_open_file_name", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_open_file_name), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "getOpenFileName", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_open_file_name), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "get_open_file_url", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_open_file_url), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "getOpenFileUrl", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_open_file_url), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "get_save_file_name", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_save_file_name), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "getSaveFileName", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_save_file_name), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "get_save_file_url", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_save_file_url), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "getSaveFileUrl", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_save_file_url), -1);
   rb_define_singleton_method(cls_QFileDialog.rb_class, "get_existing_directory", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_existing_directory), -1);
   rb_define_singleton_method(cls_QFileDialog.rb_class, "getExistingDirectory", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_existing_directory), -1);
   rb_define_singleton_method(cls_QFileDialog.rb_class, "get_existing_directory_url", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_existing_directory_url), -1);
   rb_define_singleton_method(cls_QFileDialog.rb_class, "getExistingDirectoryUrl", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_existing_directory_url), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "get_open_file_names", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_open_file_names), -1);
+  rb_define_singleton_method(cls_QFileDialog.rb_class, "getOpenFileNames", RUBY_METHOD_FUNC(rb_QFileDialog_s_get_open_file_names), -1);
   rb_define_singleton_method(cls_QFileDialog.rb_class, "save_file_content", RUBY_METHOD_FUNC(rb_QFileDialog_s_save_file_content), -1);
   rb_define_singleton_method(cls_QFileDialog.rb_class, "saveFileContent", RUBY_METHOD_FUNC(rb_QFileDialog_s_save_file_content), -1);
   rb_define_method(cls_QFileDialog.rb_class, "done", RUBY_METHOD_FUNC(rb_QFileDialog_prot_done), -1);
@@ -79435,11 +81132,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QInputDialog.rb_class, "set_input_mode", RUBY_METHOD_FUNC(rb_QInputDialog_set_input_mode), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setInputMode", RUBY_METHOD_FUNC(rb_QInputDialog_set_input_mode), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "input_mode=", "set_input_mode");
+  rb_define_alias(cls_QInputDialog.rb_class, "inputMode=", "set_input_mode");
   rb_define_method(cls_QInputDialog.rb_class, "input_mode", RUBY_METHOD_FUNC(rb_QInputDialog_input_mode), -1);
   rb_define_method(cls_QInputDialog.rb_class, "inputMode", RUBY_METHOD_FUNC(rb_QInputDialog_input_mode), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_label_text", RUBY_METHOD_FUNC(rb_QInputDialog_set_label_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setLabelText", RUBY_METHOD_FUNC(rb_QInputDialog_set_label_text), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "label_text=", "set_label_text");
+  rb_define_alias(cls_QInputDialog.rb_class, "labelText=", "set_label_text");
   rb_define_method(cls_QInputDialog.rb_class, "label_text", RUBY_METHOD_FUNC(rb_QInputDialog_label_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "labelText", RUBY_METHOD_FUNC(rb_QInputDialog_label_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_option", RUBY_METHOD_FUNC(rb_QInputDialog_set_option), -1);
@@ -79454,78 +81153,94 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QInputDialog.rb_class, "set_text_value", RUBY_METHOD_FUNC(rb_QInputDialog_set_text_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setTextValue", RUBY_METHOD_FUNC(rb_QInputDialog_set_text_value), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "text_value=", "set_text_value");
+  rb_define_alias(cls_QInputDialog.rb_class, "textValue=", "set_text_value");
   rb_define_method(cls_QInputDialog.rb_class, "text_value", RUBY_METHOD_FUNC(rb_QInputDialog_text_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "textValue", RUBY_METHOD_FUNC(rb_QInputDialog_text_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_text_echo_mode", RUBY_METHOD_FUNC(rb_QInputDialog_set_text_echo_mode), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setTextEchoMode", RUBY_METHOD_FUNC(rb_QInputDialog_set_text_echo_mode), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "text_echo_mode=", "set_text_echo_mode");
+  rb_define_alias(cls_QInputDialog.rb_class, "textEchoMode=", "set_text_echo_mode");
   rb_define_method(cls_QInputDialog.rb_class, "text_echo_mode", RUBY_METHOD_FUNC(rb_QInputDialog_text_echo_mode), -1);
   rb_define_method(cls_QInputDialog.rb_class, "textEchoMode", RUBY_METHOD_FUNC(rb_QInputDialog_text_echo_mode), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_combo_box_editable", RUBY_METHOD_FUNC(rb_QInputDialog_set_combo_box_editable), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setComboBoxEditable", RUBY_METHOD_FUNC(rb_QInputDialog_set_combo_box_editable), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "combo_box_editable=", "set_combo_box_editable");
+  rb_define_alias(cls_QInputDialog.rb_class, "comboBoxEditable=", "set_combo_box_editable");
   rb_define_method(cls_QInputDialog.rb_class, "is_combo_box_editable", RUBY_METHOD_FUNC(rb_QInputDialog_is_combo_box_editable), -1);
   rb_define_method(cls_QInputDialog.rb_class, "isComboBoxEditable", RUBY_METHOD_FUNC(rb_QInputDialog_is_combo_box_editable), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "combo_box_editable?", "is_combo_box_editable");
   rb_define_method(cls_QInputDialog.rb_class, "set_combo_box_items", RUBY_METHOD_FUNC(rb_QInputDialog_set_combo_box_items), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setComboBoxItems", RUBY_METHOD_FUNC(rb_QInputDialog_set_combo_box_items), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "combo_box_items=", "set_combo_box_items");
+  rb_define_alias(cls_QInputDialog.rb_class, "comboBoxItems=", "set_combo_box_items");
   rb_define_method(cls_QInputDialog.rb_class, "combo_box_items", RUBY_METHOD_FUNC(rb_QInputDialog_combo_box_items), -1);
   rb_define_method(cls_QInputDialog.rb_class, "comboBoxItems", RUBY_METHOD_FUNC(rb_QInputDialog_combo_box_items), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_int_value", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setIntValue", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_value), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "int_value=", "set_int_value");
+  rb_define_alias(cls_QInputDialog.rb_class, "intValue=", "set_int_value");
   rb_define_method(cls_QInputDialog.rb_class, "int_value", RUBY_METHOD_FUNC(rb_QInputDialog_int_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "intValue", RUBY_METHOD_FUNC(rb_QInputDialog_int_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_int_minimum", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_minimum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setIntMinimum", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_minimum), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "int_minimum=", "set_int_minimum");
+  rb_define_alias(cls_QInputDialog.rb_class, "intMinimum=", "set_int_minimum");
   rb_define_method(cls_QInputDialog.rb_class, "int_minimum", RUBY_METHOD_FUNC(rb_QInputDialog_int_minimum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "intMinimum", RUBY_METHOD_FUNC(rb_QInputDialog_int_minimum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_int_maximum", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_maximum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setIntMaximum", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_maximum), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "int_maximum=", "set_int_maximum");
+  rb_define_alias(cls_QInputDialog.rb_class, "intMaximum=", "set_int_maximum");
   rb_define_method(cls_QInputDialog.rb_class, "int_maximum", RUBY_METHOD_FUNC(rb_QInputDialog_int_maximum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "intMaximum", RUBY_METHOD_FUNC(rb_QInputDialog_int_maximum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_int_range", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_range), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setIntRange", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_range), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "int_range=", "set_int_range");
+  rb_define_alias(cls_QInputDialog.rb_class, "intRange=", "set_int_range");
   rb_define_method(cls_QInputDialog.rb_class, "set_int_step", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_step), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setIntStep", RUBY_METHOD_FUNC(rb_QInputDialog_set_int_step), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "int_step=", "set_int_step");
+  rb_define_alias(cls_QInputDialog.rb_class, "intStep=", "set_int_step");
   rb_define_method(cls_QInputDialog.rb_class, "int_step", RUBY_METHOD_FUNC(rb_QInputDialog_int_step), -1);
   rb_define_method(cls_QInputDialog.rb_class, "intStep", RUBY_METHOD_FUNC(rb_QInputDialog_int_step), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_double_value", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setDoubleValue", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_value), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "double_value=", "set_double_value");
+  rb_define_alias(cls_QInputDialog.rb_class, "doubleValue=", "set_double_value");
   rb_define_method(cls_QInputDialog.rb_class, "double_value", RUBY_METHOD_FUNC(rb_QInputDialog_double_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "doubleValue", RUBY_METHOD_FUNC(rb_QInputDialog_double_value), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_double_minimum", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_minimum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setDoubleMinimum", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_minimum), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "double_minimum=", "set_double_minimum");
+  rb_define_alias(cls_QInputDialog.rb_class, "doubleMinimum=", "set_double_minimum");
   rb_define_method(cls_QInputDialog.rb_class, "double_minimum", RUBY_METHOD_FUNC(rb_QInputDialog_double_minimum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "doubleMinimum", RUBY_METHOD_FUNC(rb_QInputDialog_double_minimum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_double_maximum", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_maximum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setDoubleMaximum", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_maximum), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "double_maximum=", "set_double_maximum");
+  rb_define_alias(cls_QInputDialog.rb_class, "doubleMaximum=", "set_double_maximum");
   rb_define_method(cls_QInputDialog.rb_class, "double_maximum", RUBY_METHOD_FUNC(rb_QInputDialog_double_maximum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "doubleMaximum", RUBY_METHOD_FUNC(rb_QInputDialog_double_maximum), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_double_range", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_range), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setDoubleRange", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_range), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "double_range=", "set_double_range");
+  rb_define_alias(cls_QInputDialog.rb_class, "doubleRange=", "set_double_range");
   rb_define_method(cls_QInputDialog.rb_class, "set_double_decimals", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_decimals), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setDoubleDecimals", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_decimals), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "double_decimals=", "set_double_decimals");
+  rb_define_alias(cls_QInputDialog.rb_class, "doubleDecimals=", "set_double_decimals");
   rb_define_method(cls_QInputDialog.rb_class, "double_decimals", RUBY_METHOD_FUNC(rb_QInputDialog_double_decimals), -1);
   rb_define_method(cls_QInputDialog.rb_class, "doubleDecimals", RUBY_METHOD_FUNC(rb_QInputDialog_double_decimals), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_ok_button_text", RUBY_METHOD_FUNC(rb_QInputDialog_set_ok_button_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setOkButtonText", RUBY_METHOD_FUNC(rb_QInputDialog_set_ok_button_text), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "ok_button_text=", "set_ok_button_text");
+  rb_define_alias(cls_QInputDialog.rb_class, "okButtonText=", "set_ok_button_text");
   rb_define_method(cls_QInputDialog.rb_class, "ok_button_text", RUBY_METHOD_FUNC(rb_QInputDialog_ok_button_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "okButtonText", RUBY_METHOD_FUNC(rb_QInputDialog_ok_button_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "set_cancel_button_text", RUBY_METHOD_FUNC(rb_QInputDialog_set_cancel_button_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setCancelButtonText", RUBY_METHOD_FUNC(rb_QInputDialog_set_cancel_button_text), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "cancel_button_text=", "set_cancel_button_text");
+  rb_define_alias(cls_QInputDialog.rb_class, "cancelButtonText=", "set_cancel_button_text");
   rb_define_method(cls_QInputDialog.rb_class, "cancel_button_text", RUBY_METHOD_FUNC(rb_QInputDialog_cancel_button_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "cancelButtonText", RUBY_METHOD_FUNC(rb_QInputDialog_cancel_button_text), -1);
   rb_define_method(cls_QInputDialog.rb_class, "open", RUBY_METHOD_FUNC(rb_QInputDialog_open), -1);
@@ -79539,10 +81254,21 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QInputDialog.rb_class, "set_double_step", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_step), -1);
   rb_define_method(cls_QInputDialog.rb_class, "setDoubleStep", RUBY_METHOD_FUNC(rb_QInputDialog_set_double_step), -1);
   rb_define_alias(cls_QInputDialog.rb_class, "double_step=", "set_double_step");
+  rb_define_alias(cls_QInputDialog.rb_class, "doubleStep=", "set_double_step");
   rb_define_method(cls_QInputDialog.rb_class, "double_step", RUBY_METHOD_FUNC(rb_QInputDialog_double_step), -1);
   rb_define_method(cls_QInputDialog.rb_class, "doubleStep", RUBY_METHOD_FUNC(rb_QInputDialog_double_step), -1);
   rb_define_method(cls_QInputDialog.rb_class, "done", RUBY_METHOD_FUNC(rb_QInputDialog_done), -1);
   rb_define_singleton_method(cls_QInputDialog.rb_class, "tr", RUBY_METHOD_FUNC(rb_QInputDialog_s_tr), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "get_text", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_text), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "getText", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_text), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "get_multi_line_text", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_multi_line_text), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "getMultiLineText", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_multi_line_text), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "get_item", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_item), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "getItem", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_item), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "get_int", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_int), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "getInt", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_int), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "get_double", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_double), -1);
+  rb_define_singleton_method(cls_QInputDialog.rb_class, "getDouble", RUBY_METHOD_FUNC(rb_QInputDialog_s_get_double), -1);
   rb_define_method(cls_QInputDialog.rb_class, "key_press_event", RUBY_METHOD_FUNC(rb_QInputDialog_prot_key_press_event), -1);
   rb_define_method(cls_QInputDialog.rb_class, "keyPressEvent", RUBY_METHOD_FUNC(rb_QInputDialog_prot_key_press_event), -1);
   rb_define_method(cls_QInputDialog.rb_class, "close_event", RUBY_METHOD_FUNC(rb_QInputDialog_prot_close_event), -1);
@@ -79612,6 +81338,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QProgressBar.rb_class, "set_text_visible", RUBY_METHOD_FUNC(rb_QProgressBar_set_text_visible), -1);
   rb_define_method(cls_QProgressBar.rb_class, "setTextVisible", RUBY_METHOD_FUNC(rb_QProgressBar_set_text_visible), -1);
   rb_define_alias(cls_QProgressBar.rb_class, "text_visible=", "set_text_visible");
+  rb_define_alias(cls_QProgressBar.rb_class, "textVisible=", "set_text_visible");
   rb_define_method(cls_QProgressBar.rb_class, "is_text_visible", RUBY_METHOD_FUNC(rb_QProgressBar_is_text_visible), -1);
   rb_define_method(cls_QProgressBar.rb_class, "isTextVisible", RUBY_METHOD_FUNC(rb_QProgressBar_is_text_visible), -1);
   rb_define_alias(cls_QProgressBar.rb_class, "text_visible?", "is_text_visible");
@@ -79627,11 +81354,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QProgressBar.rb_class, "set_inverted_appearance", RUBY_METHOD_FUNC(rb_QProgressBar_set_inverted_appearance), -1);
   rb_define_method(cls_QProgressBar.rb_class, "setInvertedAppearance", RUBY_METHOD_FUNC(rb_QProgressBar_set_inverted_appearance), -1);
   rb_define_alias(cls_QProgressBar.rb_class, "inverted_appearance=", "set_inverted_appearance");
+  rb_define_alias(cls_QProgressBar.rb_class, "invertedAppearance=", "set_inverted_appearance");
   rb_define_method(cls_QProgressBar.rb_class, "inverted_appearance", RUBY_METHOD_FUNC(rb_QProgressBar_inverted_appearance), -1);
   rb_define_method(cls_QProgressBar.rb_class, "invertedAppearance", RUBY_METHOD_FUNC(rb_QProgressBar_inverted_appearance), -1);
   rb_define_method(cls_QProgressBar.rb_class, "set_text_direction", RUBY_METHOD_FUNC(rb_QProgressBar_set_text_direction), -1);
   rb_define_method(cls_QProgressBar.rb_class, "setTextDirection", RUBY_METHOD_FUNC(rb_QProgressBar_set_text_direction), -1);
   rb_define_alias(cls_QProgressBar.rb_class, "text_direction=", "set_text_direction");
+  rb_define_alias(cls_QProgressBar.rb_class, "textDirection=", "set_text_direction");
   rb_define_method(cls_QProgressBar.rb_class, "text_direction", RUBY_METHOD_FUNC(rb_QProgressBar_text_direction), -1);
   rb_define_method(cls_QProgressBar.rb_class, "textDirection", RUBY_METHOD_FUNC(rb_QProgressBar_text_direction), -1);
   rb_define_method(cls_QProgressBar.rb_class, "set_format", RUBY_METHOD_FUNC(rb_QProgressBar_set_format), -1);
@@ -79719,11 +81448,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSlider.rb_class, "set_tick_position", RUBY_METHOD_FUNC(rb_QSlider_set_tick_position), -1);
   rb_define_method(cls_QSlider.rb_class, "setTickPosition", RUBY_METHOD_FUNC(rb_QSlider_set_tick_position), -1);
   rb_define_alias(cls_QSlider.rb_class, "tick_position=", "set_tick_position");
+  rb_define_alias(cls_QSlider.rb_class, "tickPosition=", "set_tick_position");
   rb_define_method(cls_QSlider.rb_class, "tick_position", RUBY_METHOD_FUNC(rb_QSlider_tick_position), -1);
   rb_define_method(cls_QSlider.rb_class, "tickPosition", RUBY_METHOD_FUNC(rb_QSlider_tick_position), -1);
   rb_define_method(cls_QSlider.rb_class, "set_tick_interval", RUBY_METHOD_FUNC(rb_QSlider_set_tick_interval), -1);
   rb_define_method(cls_QSlider.rb_class, "setTickInterval", RUBY_METHOD_FUNC(rb_QSlider_set_tick_interval), -1);
   rb_define_alias(cls_QSlider.rb_class, "tick_interval=", "set_tick_interval");
+  rb_define_alias(cls_QSlider.rb_class, "tickInterval=", "set_tick_interval");
   rb_define_method(cls_QSlider.rb_class, "tick_interval", RUBY_METHOD_FUNC(rb_QSlider_tick_interval), -1);
   rb_define_method(cls_QSlider.rb_class, "tickInterval", RUBY_METHOD_FUNC(rb_QSlider_tick_interval), -1);
   rb_define_method(cls_QSlider.rb_class, "event", RUBY_METHOD_FUNC(rb_QSlider_event), -1);
@@ -79797,6 +81528,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSpinBox.rb_class, "set_single_step", RUBY_METHOD_FUNC(rb_QSpinBox_set_single_step), -1);
   rb_define_method(cls_QSpinBox.rb_class, "setSingleStep", RUBY_METHOD_FUNC(rb_QSpinBox_set_single_step), -1);
   rb_define_alias(cls_QSpinBox.rb_class, "single_step=", "set_single_step");
+  rb_define_alias(cls_QSpinBox.rb_class, "singleStep=", "set_single_step");
   rb_define_method(cls_QSpinBox.rb_class, "minimum", RUBY_METHOD_FUNC(rb_QSpinBox_minimum), -1);
   rb_define_method(cls_QSpinBox.rb_class, "set_minimum", RUBY_METHOD_FUNC(rb_QSpinBox_set_minimum), -1);
   rb_define_method(cls_QSpinBox.rb_class, "setMinimum", RUBY_METHOD_FUNC(rb_QSpinBox_set_minimum), -1);
@@ -79813,11 +81545,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSpinBox.rb_class, "set_step_type", RUBY_METHOD_FUNC(rb_QSpinBox_set_step_type), -1);
   rb_define_method(cls_QSpinBox.rb_class, "setStepType", RUBY_METHOD_FUNC(rb_QSpinBox_set_step_type), -1);
   rb_define_alias(cls_QSpinBox.rb_class, "step_type=", "set_step_type");
+  rb_define_alias(cls_QSpinBox.rb_class, "stepType=", "set_step_type");
   rb_define_method(cls_QSpinBox.rb_class, "display_integer_base", RUBY_METHOD_FUNC(rb_QSpinBox_display_integer_base), -1);
   rb_define_method(cls_QSpinBox.rb_class, "displayIntegerBase", RUBY_METHOD_FUNC(rb_QSpinBox_display_integer_base), -1);
   rb_define_method(cls_QSpinBox.rb_class, "set_display_integer_base", RUBY_METHOD_FUNC(rb_QSpinBox_set_display_integer_base), -1);
   rb_define_method(cls_QSpinBox.rb_class, "setDisplayIntegerBase", RUBY_METHOD_FUNC(rb_QSpinBox_set_display_integer_base), -1);
   rb_define_alias(cls_QSpinBox.rb_class, "display_integer_base=", "set_display_integer_base");
+  rb_define_alias(cls_QSpinBox.rb_class, "displayIntegerBase=", "set_display_integer_base");
   rb_define_method(cls_QSpinBox.rb_class, "set_value", RUBY_METHOD_FUNC(rb_QSpinBox_set_value), -1);
   rb_define_method(cls_QSpinBox.rb_class, "setValue", RUBY_METHOD_FUNC(rb_QSpinBox_set_value), -1);
   rb_define_alias(cls_QSpinBox.rb_class, "value=", "set_value");
@@ -79900,6 +81634,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDoubleSpinBox.rb_class, "set_single_step", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_single_step), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "setSingleStep", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_single_step), -1);
   rb_define_alias(cls_QDoubleSpinBox.rb_class, "single_step=", "set_single_step");
+  rb_define_alias(cls_QDoubleSpinBox.rb_class, "singleStep=", "set_single_step");
   rb_define_method(cls_QDoubleSpinBox.rb_class, "minimum", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_minimum), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "set_minimum", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_minimum), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "setMinimum", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_minimum), -1);
@@ -79916,6 +81651,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDoubleSpinBox.rb_class, "set_step_type", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_step_type), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "setStepType", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_step_type), -1);
   rb_define_alias(cls_QDoubleSpinBox.rb_class, "step_type=", "set_step_type");
+  rb_define_alias(cls_QDoubleSpinBox.rb_class, "stepType=", "set_step_type");
   rb_define_method(cls_QDoubleSpinBox.rb_class, "decimals", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_decimals), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "set_decimals", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_decimals), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "setDecimals", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_set_decimals), -1);
@@ -80101,6 +81837,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDialogButtonBox.rb_class, "set_standard_buttons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_set_standard_buttons), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "setStandardButtons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_set_standard_buttons), -1);
   rb_define_alias(cls_QDialogButtonBox.rb_class, "standard_buttons=", "set_standard_buttons");
+  rb_define_alias(cls_QDialogButtonBox.rb_class, "standardButtons=", "set_standard_buttons");
   rb_define_method(cls_QDialogButtonBox.rb_class, "standard_buttons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_standard_buttons), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "standardButtons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_standard_buttons), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "standard_button", RUBY_METHOD_FUNC(rb_QDialogButtonBox_standard_button), -1);
@@ -80109,6 +81846,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDialogButtonBox.rb_class, "set_center_buttons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_set_center_buttons), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "setCenterButtons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_set_center_buttons), -1);
   rb_define_alias(cls_QDialogButtonBox.rb_class, "center_buttons=", "set_center_buttons");
+  rb_define_alias(cls_QDialogButtonBox.rb_class, "centerButtons=", "set_center_buttons");
   rb_define_method(cls_QDialogButtonBox.rb_class, "center_buttons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_center_buttons), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "centerButtons", RUBY_METHOD_FUNC(rb_QDialogButtonBox_center_buttons), -1);
   rb_define_singleton_method(cls_QDialogButtonBox.rb_class, "tr", RUBY_METHOD_FUNC(rb_QDialogButtonBox_s_tr), -1);
@@ -80185,6 +81923,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCalendarWidget.rb_class, "set_minimum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_minimum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setMinimumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_minimum_date), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "minimum_date=", "set_minimum_date");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "minimumDate=", "set_minimum_date");
   rb_define_method(cls_QCalendarWidget.rb_class, "clear_minimum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_minimum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "clearMinimumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_minimum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "maximum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_maximum_date), -1);
@@ -80192,6 +81931,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCalendarWidget.rb_class, "set_maximum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_maximum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setMaximumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_maximum_date), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "maximum_date=", "set_maximum_date");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "maximumDate=", "set_maximum_date");
   rb_define_method(cls_QCalendarWidget.rb_class, "clear_maximum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_maximum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "clearMaximumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_maximum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "first_day_of_week", RUBY_METHOD_FUNC(rb_QCalendarWidget_first_day_of_week), -1);
@@ -80199,6 +81939,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCalendarWidget.rb_class, "set_first_day_of_week", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_first_day_of_week), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setFirstDayOfWeek", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_first_day_of_week), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "first_day_of_week=", "set_first_day_of_week");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "firstDayOfWeek=", "set_first_day_of_week");
   rb_define_method(cls_QCalendarWidget.rb_class, "is_navigation_bar_visible", RUBY_METHOD_FUNC(rb_QCalendarWidget_is_navigation_bar_visible), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "isNavigationBarVisible", RUBY_METHOD_FUNC(rb_QCalendarWidget_is_navigation_bar_visible), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "navigation_bar_visible?", "is_navigation_bar_visible");
@@ -80210,57 +81951,70 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCalendarWidget.rb_class, "set_selection_mode", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_selection_mode), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setSelectionMode", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_selection_mode), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "selection_mode=", "set_selection_mode");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "selectionMode=", "set_selection_mode");
   rb_define_method(cls_QCalendarWidget.rb_class, "horizontal_header_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_horizontal_header_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "horizontalHeaderFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_horizontal_header_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_horizontal_header_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_horizontal_header_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setHorizontalHeaderFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_horizontal_header_format), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "horizontal_header_format=", "set_horizontal_header_format");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "horizontalHeaderFormat=", "set_horizontal_header_format");
   rb_define_method(cls_QCalendarWidget.rb_class, "vertical_header_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_vertical_header_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "verticalHeaderFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_vertical_header_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_vertical_header_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_vertical_header_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setVerticalHeaderFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_vertical_header_format), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "vertical_header_format=", "set_vertical_header_format");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "verticalHeaderFormat=", "set_vertical_header_format");
   rb_define_method(cls_QCalendarWidget.rb_class, "header_text_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_header_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "headerTextFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_header_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_header_text_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_header_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setHeaderTextFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_header_text_format), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "header_text_format=", "set_header_text_format");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "headerTextFormat=", "set_header_text_format");
   rb_define_method(cls_QCalendarWidget.rb_class, "weekday_text_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_weekday_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "weekdayTextFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_weekday_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_weekday_text_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_weekday_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setWeekdayTextFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_weekday_text_format), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "weekday_text_format=", "set_weekday_text_format");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "weekdayTextFormat=", "set_weekday_text_format");
   rb_define_method(cls_QCalendarWidget.rb_class, "date_text_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_date_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "dateTextFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_date_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_date_text_format", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_text_format), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setDateTextFormat", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_text_format), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "date_text_format=", "set_date_text_format");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "dateTextFormat=", "set_date_text_format");
   rb_define_method(cls_QCalendarWidget.rb_class, "is_date_edit_enabled", RUBY_METHOD_FUNC(rb_QCalendarWidget_is_date_edit_enabled), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "isDateEditEnabled", RUBY_METHOD_FUNC(rb_QCalendarWidget_is_date_edit_enabled), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "date_edit_enabled?", "is_date_edit_enabled");
   rb_define_method(cls_QCalendarWidget.rb_class, "set_date_edit_enabled", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_edit_enabled), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setDateEditEnabled", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_edit_enabled), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "date_edit_enabled=", "set_date_edit_enabled");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "dateEditEnabled=", "set_date_edit_enabled");
   rb_define_method(cls_QCalendarWidget.rb_class, "date_edit_accept_delay", RUBY_METHOD_FUNC(rb_QCalendarWidget_date_edit_accept_delay), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "dateEditAcceptDelay", RUBY_METHOD_FUNC(rb_QCalendarWidget_date_edit_accept_delay), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_date_edit_accept_delay", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_edit_accept_delay), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setDateEditAcceptDelay", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_edit_accept_delay), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "date_edit_accept_delay=", "set_date_edit_accept_delay");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "dateEditAcceptDelay=", "set_date_edit_accept_delay");
   rb_define_method(cls_QCalendarWidget.rb_class, "set_selected_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_selected_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setSelectedDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_selected_date), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "selected_date=", "set_selected_date");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "selectedDate=", "set_selected_date");
   rb_define_method(cls_QCalendarWidget.rb_class, "set_date_range", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_range), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setDateRange", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_date_range), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "date_range=", "set_date_range");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "dateRange=", "set_date_range");
   rb_define_method(cls_QCalendarWidget.rb_class, "set_current_page", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_current_page), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setCurrentPage", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_current_page), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "current_page=", "set_current_page");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "currentPage=", "set_current_page");
   rb_define_method(cls_QCalendarWidget.rb_class, "set_grid_visible", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_grid_visible), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setGridVisible", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_grid_visible), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "grid_visible=", "set_grid_visible");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "gridVisible=", "set_grid_visible");
   rb_define_method(cls_QCalendarWidget.rb_class, "set_navigation_bar_visible", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_navigation_bar_visible), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setNavigationBarVisible", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_navigation_bar_visible), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "navigation_bar_visible=", "set_navigation_bar_visible");
+  rb_define_alias(cls_QCalendarWidget.rb_class, "navigationBarVisible=", "set_navigation_bar_visible");
   rb_define_method(cls_QCalendarWidget.rb_class, "show_next_month", RUBY_METHOD_FUNC(rb_QCalendarWidget_show_next_month), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "showNextMonth", RUBY_METHOD_FUNC(rb_QCalendarWidget_show_next_month), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "show_previous_month", RUBY_METHOD_FUNC(rb_QCalendarWidget_show_previous_month), -1);
@@ -80339,11 +82093,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "set_row_count", RUBY_METHOD_FUNC(rb_QTableWidget_set_row_count), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setRowCount", RUBY_METHOD_FUNC(rb_QTableWidget_set_row_count), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "row_count=", "set_row_count");
+  rb_define_alias(cls_QTableWidget.rb_class, "rowCount=", "set_row_count");
   rb_define_method(cls_QTableWidget.rb_class, "row_count", RUBY_METHOD_FUNC(rb_QTableWidget_row_count), -1);
   rb_define_method(cls_QTableWidget.rb_class, "rowCount", RUBY_METHOD_FUNC(rb_QTableWidget_row_count), -1);
   rb_define_method(cls_QTableWidget.rb_class, "set_column_count", RUBY_METHOD_FUNC(rb_QTableWidget_set_column_count), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setColumnCount", RUBY_METHOD_FUNC(rb_QTableWidget_set_column_count), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "column_count=", "set_column_count");
+  rb_define_alias(cls_QTableWidget.rb_class, "columnCount=", "set_column_count");
   rb_define_method(cls_QTableWidget.rb_class, "column_count", RUBY_METHOD_FUNC(rb_QTableWidget_column_count), -1);
   rb_define_method(cls_QTableWidget.rb_class, "columnCount", RUBY_METHOD_FUNC(rb_QTableWidget_column_count), -1);
   rb_define_method(cls_QTableWidget.rb_class, "row", RUBY_METHOD_FUNC(rb_QTableWidget_row), -1);
@@ -80363,6 +82119,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "set_vertical_header_item", RUBY_METHOD_FUNC(rb_QTableWidget_set_vertical_header_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setVerticalHeaderItem", RUBY_METHOD_FUNC(rb_QTableWidget_set_vertical_header_item), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "vertical_header_item=", "set_vertical_header_item");
+  rb_define_alias(cls_QTableWidget.rb_class, "verticalHeaderItem=", "set_vertical_header_item");
   rb_define_method(cls_QTableWidget.rb_class, "take_vertical_header_item", RUBY_METHOD_FUNC(rb_QTableWidget_take_vertical_header_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "takeVerticalHeaderItem", RUBY_METHOD_FUNC(rb_QTableWidget_take_vertical_header_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "horizontal_header_item", RUBY_METHOD_FUNC(rb_QTableWidget_horizontal_header_item), -1);
@@ -80370,14 +82127,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "set_horizontal_header_item", RUBY_METHOD_FUNC(rb_QTableWidget_set_horizontal_header_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setHorizontalHeaderItem", RUBY_METHOD_FUNC(rb_QTableWidget_set_horizontal_header_item), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "horizontal_header_item=", "set_horizontal_header_item");
+  rb_define_alias(cls_QTableWidget.rb_class, "horizontalHeaderItem=", "set_horizontal_header_item");
   rb_define_method(cls_QTableWidget.rb_class, "take_horizontal_header_item", RUBY_METHOD_FUNC(rb_QTableWidget_take_horizontal_header_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "takeHorizontalHeaderItem", RUBY_METHOD_FUNC(rb_QTableWidget_take_horizontal_header_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "set_vertical_header_labels", RUBY_METHOD_FUNC(rb_QTableWidget_set_vertical_header_labels), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setVerticalHeaderLabels", RUBY_METHOD_FUNC(rb_QTableWidget_set_vertical_header_labels), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "vertical_header_labels=", "set_vertical_header_labels");
+  rb_define_alias(cls_QTableWidget.rb_class, "verticalHeaderLabels=", "set_vertical_header_labels");
   rb_define_method(cls_QTableWidget.rb_class, "set_horizontal_header_labels", RUBY_METHOD_FUNC(rb_QTableWidget_set_horizontal_header_labels), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setHorizontalHeaderLabels", RUBY_METHOD_FUNC(rb_QTableWidget_set_horizontal_header_labels), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "horizontal_header_labels=", "set_horizontal_header_labels");
+  rb_define_alias(cls_QTableWidget.rb_class, "horizontalHeaderLabels=", "set_horizontal_header_labels");
   rb_define_method(cls_QTableWidget.rb_class, "current_row", RUBY_METHOD_FUNC(rb_QTableWidget_current_row), -1);
   rb_define_method(cls_QTableWidget.rb_class, "currentRow", RUBY_METHOD_FUNC(rb_QTableWidget_current_row), -1);
   rb_define_method(cls_QTableWidget.rb_class, "current_column", RUBY_METHOD_FUNC(rb_QTableWidget_current_column), -1);
@@ -80387,14 +82147,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "set_current_item", RUBY_METHOD_FUNC(rb_QTableWidget_set_current_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setCurrentItem", RUBY_METHOD_FUNC(rb_QTableWidget_set_current_item), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "current_item=", "set_current_item");
+  rb_define_alias(cls_QTableWidget.rb_class, "currentItem=", "set_current_item");
   rb_define_method(cls_QTableWidget.rb_class, "set_current_cell", RUBY_METHOD_FUNC(rb_QTableWidget_set_current_cell), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setCurrentCell", RUBY_METHOD_FUNC(rb_QTableWidget_set_current_cell), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "current_cell=", "set_current_cell");
+  rb_define_alias(cls_QTableWidget.rb_class, "currentCell=", "set_current_cell");
   rb_define_method(cls_QTableWidget.rb_class, "sort_items", RUBY_METHOD_FUNC(rb_QTableWidget_sort_items), -1);
   rb_define_method(cls_QTableWidget.rb_class, "sortItems", RUBY_METHOD_FUNC(rb_QTableWidget_sort_items), -1);
   rb_define_method(cls_QTableWidget.rb_class, "set_sorting_enabled", RUBY_METHOD_FUNC(rb_QTableWidget_set_sorting_enabled), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setSortingEnabled", RUBY_METHOD_FUNC(rb_QTableWidget_set_sorting_enabled), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "sorting_enabled=", "set_sorting_enabled");
+  rb_define_alias(cls_QTableWidget.rb_class, "sortingEnabled=", "set_sorting_enabled");
   rb_define_method(cls_QTableWidget.rb_class, "is_sorting_enabled", RUBY_METHOD_FUNC(rb_QTableWidget_is_sorting_enabled), -1);
   rb_define_method(cls_QTableWidget.rb_class, "isSortingEnabled", RUBY_METHOD_FUNC(rb_QTableWidget_is_sorting_enabled), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "sorting_enabled?", "is_sorting_enabled");
@@ -80411,6 +82174,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "set_cell_widget", RUBY_METHOD_FUNC(rb_QTableWidget_set_cell_widget), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setCellWidget", RUBY_METHOD_FUNC(rb_QTableWidget_set_cell_widget), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "cell_widget=", "set_cell_widget");
+  rb_define_alias(cls_QTableWidget.rb_class, "cellWidget=", "set_cell_widget");
   rb_define_method(cls_QTableWidget.rb_class, "remove_cell_widget", RUBY_METHOD_FUNC(rb_QTableWidget_remove_cell_widget), -1);
   rb_define_method(cls_QTableWidget.rb_class, "removeCellWidget", RUBY_METHOD_FUNC(rb_QTableWidget_remove_cell_widget), -1);
   rb_define_method(cls_QTableWidget.rb_class, "visual_row", RUBY_METHOD_FUNC(rb_QTableWidget_visual_row), -1);
@@ -80426,11 +82190,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "set_item_prototype", RUBY_METHOD_FUNC(rb_QTableWidget_set_item_prototype), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setItemPrototype", RUBY_METHOD_FUNC(rb_QTableWidget_set_item_prototype), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "item_prototype=", "set_item_prototype");
+  rb_define_alias(cls_QTableWidget.rb_class, "itemPrototype=", "set_item_prototype");
   rb_define_method(cls_QTableWidget.rb_class, "supported_drag_actions", RUBY_METHOD_FUNC(rb_QTableWidget_supported_drag_actions), -1);
   rb_define_method(cls_QTableWidget.rb_class, "supportedDragActions", RUBY_METHOD_FUNC(rb_QTableWidget_supported_drag_actions), -1);
   rb_define_method(cls_QTableWidget.rb_class, "set_supported_drag_actions", RUBY_METHOD_FUNC(rb_QTableWidget_set_supported_drag_actions), -1);
   rb_define_method(cls_QTableWidget.rb_class, "setSupportedDragActions", RUBY_METHOD_FUNC(rb_QTableWidget_set_supported_drag_actions), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "supported_drag_actions=", "set_supported_drag_actions");
+  rb_define_alias(cls_QTableWidget.rb_class, "supportedDragActions=", "set_supported_drag_actions");
   rb_define_method(cls_QTableWidget.rb_class, "scroll_to_item", RUBY_METHOD_FUNC(rb_QTableWidget_scroll_to_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "scrollToItem", RUBY_METHOD_FUNC(rb_QTableWidget_scroll_to_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "insert_row", RUBY_METHOD_FUNC(rb_QTableWidget_insert_row), -1);
@@ -80583,16 +82349,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_status_tip", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_status_tip), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setStatusTip", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_status_tip), -1);
   rb_define_alias(cls_QTableWidgetItem.rb_class, "status_tip=", "set_status_tip");
+  rb_define_alias(cls_QTableWidgetItem.rb_class, "statusTip=", "set_status_tip");
   rb_define_method(cls_QTableWidgetItem.rb_class, "tool_tip", RUBY_METHOD_FUNC(rb_QTableWidgetItem_tool_tip), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "toolTip", RUBY_METHOD_FUNC(rb_QTableWidgetItem_tool_tip), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_tool_tip", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_tool_tip), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setToolTip", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_tool_tip), -1);
   rb_define_alias(cls_QTableWidgetItem.rb_class, "tool_tip=", "set_tool_tip");
+  rb_define_alias(cls_QTableWidgetItem.rb_class, "toolTip=", "set_tool_tip");
   rb_define_method(cls_QTableWidgetItem.rb_class, "whats_this", RUBY_METHOD_FUNC(rb_QTableWidgetItem_whats_this), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "whatsThis", RUBY_METHOD_FUNC(rb_QTableWidgetItem_whats_this), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_whats_this", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_whats_this), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setWhatsThis", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_whats_this), -1);
   rb_define_alias(cls_QTableWidgetItem.rb_class, "whats_this=", "set_whats_this");
+  rb_define_alias(cls_QTableWidgetItem.rb_class, "whatsThis=", "set_whats_this");
   rb_define_method(cls_QTableWidgetItem.rb_class, "font", RUBY_METHOD_FUNC(rb_QTableWidgetItem_font), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_font), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setFont", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_font), -1);
@@ -80602,6 +82371,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_text_alignment", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_text_alignment), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setTextAlignment", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_text_alignment), -1);
   rb_define_alias(cls_QTableWidgetItem.rb_class, "text_alignment=", "set_text_alignment");
+  rb_define_alias(cls_QTableWidgetItem.rb_class, "textAlignment=", "set_text_alignment");
   rb_define_method(cls_QTableWidgetItem.rb_class, "background", RUBY_METHOD_FUNC(rb_QTableWidgetItem_background), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_background", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_background), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setBackground", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_background), -1);
@@ -80615,11 +82385,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_check_state), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setCheckState", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_check_state), -1);
   rb_define_alias(cls_QTableWidgetItem.rb_class, "check_state=", "set_check_state");
+  rb_define_alias(cls_QTableWidgetItem.rb_class, "checkState=", "set_check_state");
   rb_define_method(cls_QTableWidgetItem.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QTableWidgetItem_size_hint), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QTableWidgetItem_size_hint), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_size_hint", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_size_hint), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setSizeHint", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_size_hint), -1);
   rb_define_alias(cls_QTableWidgetItem.rb_class, "size_hint=", "set_size_hint");
+  rb_define_alias(cls_QTableWidgetItem.rb_class, "sizeHint=", "set_size_hint");
   rb_define_method(cls_QTableWidgetItem.rb_class, "data", RUBY_METHOD_FUNC(rb_QTableWidgetItem_data), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "set_data", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_data), -1);
   rb_define_method(cls_QTableWidgetItem.rb_class, "setData", RUBY_METHOD_FUNC(rb_QTableWidgetItem_set_data), -1);
@@ -80633,6 +82405,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "set_column_count", RUBY_METHOD_FUNC(rb_QTreeWidget_set_column_count), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "setColumnCount", RUBY_METHOD_FUNC(rb_QTreeWidget_set_column_count), -1);
   rb_define_alias(cls_QTreeWidget.rb_class, "column_count=", "set_column_count");
+  rb_define_alias(cls_QTreeWidget.rb_class, "columnCount=", "set_column_count");
   rb_define_method(cls_QTreeWidget.rb_class, "invisible_root_item", RUBY_METHOD_FUNC(rb_QTreeWidget_invisible_root_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "invisibleRootItem", RUBY_METHOD_FUNC(rb_QTreeWidget_invisible_root_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "top_level_item", RUBY_METHOD_FUNC(rb_QTreeWidget_top_level_item), -1);
@@ -80652,12 +82425,15 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "set_header_item", RUBY_METHOD_FUNC(rb_QTreeWidget_set_header_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "setHeaderItem", RUBY_METHOD_FUNC(rb_QTreeWidget_set_header_item), -1);
   rb_define_alias(cls_QTreeWidget.rb_class, "header_item=", "set_header_item");
+  rb_define_alias(cls_QTreeWidget.rb_class, "headerItem=", "set_header_item");
   rb_define_method(cls_QTreeWidget.rb_class, "set_header_labels", RUBY_METHOD_FUNC(rb_QTreeWidget_set_header_labels), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "setHeaderLabels", RUBY_METHOD_FUNC(rb_QTreeWidget_set_header_labels), -1);
   rb_define_alias(cls_QTreeWidget.rb_class, "header_labels=", "set_header_labels");
+  rb_define_alias(cls_QTreeWidget.rb_class, "headerLabels=", "set_header_labels");
   rb_define_method(cls_QTreeWidget.rb_class, "set_header_label", RUBY_METHOD_FUNC(rb_QTreeWidget_set_header_label), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "setHeaderLabel", RUBY_METHOD_FUNC(rb_QTreeWidget_set_header_label), -1);
   rb_define_alias(cls_QTreeWidget.rb_class, "header_label=", "set_header_label");
+  rb_define_alias(cls_QTreeWidget.rb_class, "headerLabel=", "set_header_label");
   rb_define_method(cls_QTreeWidget.rb_class, "current_item", RUBY_METHOD_FUNC(rb_QTreeWidget_current_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "currentItem", RUBY_METHOD_FUNC(rb_QTreeWidget_current_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "current_column", RUBY_METHOD_FUNC(rb_QTreeWidget_current_column), -1);
@@ -80665,6 +82441,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "set_current_item", RUBY_METHOD_FUNC(rb_QTreeWidget_set_current_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "setCurrentItem", RUBY_METHOD_FUNC(rb_QTreeWidget_set_current_item), -1);
   rb_define_alias(cls_QTreeWidget.rb_class, "current_item=", "set_current_item");
+  rb_define_alias(cls_QTreeWidget.rb_class, "currentItem=", "set_current_item");
   rb_define_method(cls_QTreeWidget.rb_class, "item_at", RUBY_METHOD_FUNC(rb_QTreeWidget_item_at), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "itemAt", RUBY_METHOD_FUNC(rb_QTreeWidget_item_at), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "visual_item_rect", RUBY_METHOD_FUNC(rb_QTreeWidget_visual_item_rect), -1);
@@ -80686,6 +82463,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "set_item_widget", RUBY_METHOD_FUNC(rb_QTreeWidget_set_item_widget), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "setItemWidget", RUBY_METHOD_FUNC(rb_QTreeWidget_set_item_widget), -1);
   rb_define_alias(cls_QTreeWidget.rb_class, "item_widget=", "set_item_widget");
+  rb_define_alias(cls_QTreeWidget.rb_class, "itemWidget=", "set_item_widget");
   rb_define_method(cls_QTreeWidget.rb_class, "remove_item_widget", RUBY_METHOD_FUNC(rb_QTreeWidget_remove_item_widget), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "removeItemWidget", RUBY_METHOD_FUNC(rb_QTreeWidget_remove_item_widget), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "item_above", RUBY_METHOD_FUNC(rb_QTreeWidget_item_above), -1);
@@ -80701,6 +82479,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "set_supported_drag_actions", RUBY_METHOD_FUNC(rb_QTreeWidget_set_supported_drag_actions), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "setSupportedDragActions", RUBY_METHOD_FUNC(rb_QTreeWidget_set_supported_drag_actions), -1);
   rb_define_alias(cls_QTreeWidget.rb_class, "supported_drag_actions=", "set_supported_drag_actions");
+  rb_define_alias(cls_QTreeWidget.rb_class, "supportedDragActions=", "set_supported_drag_actions");
   rb_define_method(cls_QTreeWidget.rb_class, "scroll_to_item", RUBY_METHOD_FUNC(rb_QTreeWidget_scroll_to_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "scrollToItem", RUBY_METHOD_FUNC(rb_QTreeWidget_scroll_to_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "expand_item", RUBY_METHOD_FUNC(rb_QTreeWidget_expand_item), -1);
@@ -80842,6 +82621,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_first_column_spanned", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_first_column_spanned), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setFirstColumnSpanned", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_first_column_spanned), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "first_column_spanned=", "set_first_column_spanned");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "firstColumnSpanned=", "set_first_column_spanned");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "is_first_column_spanned", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_is_first_column_spanned), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "isFirstColumnSpanned", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_is_first_column_spanned), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "first_column_spanned?", "is_first_column_spanned");
@@ -80854,6 +82634,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_child_indicator_policy", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_child_indicator_policy), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setChildIndicatorPolicy", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_child_indicator_policy), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "child_indicator_policy=", "set_child_indicator_policy");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "childIndicatorPolicy=", "set_child_indicator_policy");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "child_indicator_policy", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_child_indicator_policy), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "childIndicatorPolicy", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_child_indicator_policy), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "flags", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_flags), -1);
@@ -80873,16 +82654,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_status_tip", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_status_tip), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setStatusTip", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_status_tip), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "status_tip=", "set_status_tip");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "statusTip=", "set_status_tip");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "tool_tip", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_tool_tip), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "toolTip", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_tool_tip), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_tool_tip", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_tool_tip), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setToolTip", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_tool_tip), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "tool_tip=", "set_tool_tip");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "toolTip=", "set_tool_tip");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "whats_this", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_whats_this), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "whatsThis", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_whats_this), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_whats_this", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_whats_this), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setWhatsThis", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_whats_this), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "whats_this=", "set_whats_this");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "whatsThis=", "set_whats_this");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "font", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_font), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_font), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setFont", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_font), -1);
@@ -80892,6 +82676,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_text_alignment", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_text_alignment), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setTextAlignment", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_text_alignment), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "text_alignment=", "set_text_alignment");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "textAlignment=", "set_text_alignment");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "background", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_background), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_background", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_background), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setBackground", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_background), -1);
@@ -80905,11 +82690,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_check_state), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setCheckState", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_check_state), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "check_state=", "set_check_state");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "checkState=", "set_check_state");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_size_hint), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_size_hint), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_size_hint", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_size_hint), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setSizeHint", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_size_hint), -1);
   rb_define_alias(cls_QTreeWidgetItem.rb_class, "size_hint=", "set_size_hint");
+  rb_define_alias(cls_QTreeWidgetItem.rb_class, "sizeHint=", "set_size_hint");
   rb_define_method(cls_QTreeWidgetItem.rb_class, "data", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_data), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "set_data", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_data), -1);
   rb_define_method(cls_QTreeWidgetItem.rb_class, "setData", RUBY_METHOD_FUNC(rb_QTreeWidgetItem_set_data), -1);
@@ -80947,29 +82734,35 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_enabled", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_enabled), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabEnabled", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_enabled), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_enabled=", "set_tab_enabled");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabEnabled=", "set_tab_enabled");
   rb_define_method(cls_QTabWidget.rb_class, "is_tab_visible", RUBY_METHOD_FUNC(rb_QTabWidget_is_tab_visible), -1);
   rb_define_method(cls_QTabWidget.rb_class, "isTabVisible", RUBY_METHOD_FUNC(rb_QTabWidget_is_tab_visible), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_visible", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_visible), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabVisible", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_visible), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_visible=", "set_tab_visible");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabVisible=", "set_tab_visible");
   rb_define_method(cls_QTabWidget.rb_class, "tab_text", RUBY_METHOD_FUNC(rb_QTabWidget_tab_text), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tabText", RUBY_METHOD_FUNC(rb_QTabWidget_tab_text), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_text", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_text), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabText", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_text), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_text=", "set_tab_text");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabText=", "set_tab_text");
   rb_define_method(cls_QTabWidget.rb_class, "tab_icon", RUBY_METHOD_FUNC(rb_QTabWidget_tab_icon), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tabIcon", RUBY_METHOD_FUNC(rb_QTabWidget_tab_icon), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_icon", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_icon), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabIcon", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_icon), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_icon=", "set_tab_icon");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabIcon=", "set_tab_icon");
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_tool_tip", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_tool_tip), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabToolTip", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_tool_tip), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_tool_tip=", "set_tab_tool_tip");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabToolTip=", "set_tab_tool_tip");
   rb_define_method(cls_QTabWidget.rb_class, "tab_tool_tip", RUBY_METHOD_FUNC(rb_QTabWidget_tab_tool_tip), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tabToolTip", RUBY_METHOD_FUNC(rb_QTabWidget_tab_tool_tip), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_whats_this", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_whats_this), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabWhatsThis", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_whats_this), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_whats_this=", "set_tab_whats_this");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabWhatsThis=", "set_tab_whats_this");
   rb_define_method(cls_QTabWidget.rb_class, "tab_whats_this", RUBY_METHOD_FUNC(rb_QTabWidget_tab_whats_this), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tabWhatsThis", RUBY_METHOD_FUNC(rb_QTabWidget_tab_whats_this), -1);
   rb_define_method(cls_QTabWidget.rb_class, "current_index", RUBY_METHOD_FUNC(rb_QTabWidget_current_index), -1);
@@ -80985,11 +82778,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_position", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_position), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabPosition", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_position), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_position=", "set_tab_position");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabPosition=", "set_tab_position");
   rb_define_method(cls_QTabWidget.rb_class, "tabs_closable", RUBY_METHOD_FUNC(rb_QTabWidget_tabs_closable), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tabsClosable", RUBY_METHOD_FUNC(rb_QTabWidget_tabs_closable), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_tabs_closable", RUBY_METHOD_FUNC(rb_QTabWidget_set_tabs_closable), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabsClosable", RUBY_METHOD_FUNC(rb_QTabWidget_set_tabs_closable), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tabs_closable=", "set_tabs_closable");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabsClosable=", "set_tabs_closable");
   rb_define_method(cls_QTabWidget.rb_class, "is_movable", RUBY_METHOD_FUNC(rb_QTabWidget_is_movable), -1);
   rb_define_method(cls_QTabWidget.rb_class, "isMovable", RUBY_METHOD_FUNC(rb_QTabWidget_is_movable), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "movable?", "is_movable");
@@ -81001,6 +82796,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_shape", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_shape), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabShape", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_shape), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_shape=", "set_tab_shape");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabShape=", "set_tab_shape");
   rb_define_method(cls_QTabWidget.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QTabWidget_size_hint), -1);
   rb_define_method(cls_QTabWidget.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QTabWidget_size_hint), -1);
   rb_define_method(cls_QTabWidget.rb_class, "minimum_size_hint", RUBY_METHOD_FUNC(rb_QTabWidget_minimum_size_hint), -1);
@@ -81012,6 +82808,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabWidget.rb_class, "set_corner_widget", RUBY_METHOD_FUNC(rb_QTabWidget_set_corner_widget), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setCornerWidget", RUBY_METHOD_FUNC(rb_QTabWidget_set_corner_widget), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "corner_widget=", "set_corner_widget");
+  rb_define_alias(cls_QTabWidget.rb_class, "cornerWidget=", "set_corner_widget");
   rb_define_method(cls_QTabWidget.rb_class, "corner_widget", RUBY_METHOD_FUNC(rb_QTabWidget_corner_widget), -1);
   rb_define_method(cls_QTabWidget.rb_class, "cornerWidget", RUBY_METHOD_FUNC(rb_QTabWidget_corner_widget), -1);
   rb_define_method(cls_QTabWidget.rb_class, "elide_mode", RUBY_METHOD_FUNC(rb_QTabWidget_elide_mode), -1);
@@ -81019,33 +82816,40 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabWidget.rb_class, "set_elide_mode", RUBY_METHOD_FUNC(rb_QTabWidget_set_elide_mode), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setElideMode", RUBY_METHOD_FUNC(rb_QTabWidget_set_elide_mode), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "elide_mode=", "set_elide_mode");
+  rb_define_alias(cls_QTabWidget.rb_class, "elideMode=", "set_elide_mode");
   rb_define_method(cls_QTabWidget.rb_class, "icon_size", RUBY_METHOD_FUNC(rb_QTabWidget_icon_size), -1);
   rb_define_method(cls_QTabWidget.rb_class, "iconSize", RUBY_METHOD_FUNC(rb_QTabWidget_icon_size), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QTabWidget_set_icon_size), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setIconSize", RUBY_METHOD_FUNC(rb_QTabWidget_set_icon_size), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "icon_size=", "set_icon_size");
+  rb_define_alias(cls_QTabWidget.rb_class, "iconSize=", "set_icon_size");
   rb_define_method(cls_QTabWidget.rb_class, "uses_scroll_buttons", RUBY_METHOD_FUNC(rb_QTabWidget_uses_scroll_buttons), -1);
   rb_define_method(cls_QTabWidget.rb_class, "usesScrollButtons", RUBY_METHOD_FUNC(rb_QTabWidget_uses_scroll_buttons), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_uses_scroll_buttons", RUBY_METHOD_FUNC(rb_QTabWidget_set_uses_scroll_buttons), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setUsesScrollButtons", RUBY_METHOD_FUNC(rb_QTabWidget_set_uses_scroll_buttons), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "uses_scroll_buttons=", "set_uses_scroll_buttons");
+  rb_define_alias(cls_QTabWidget.rb_class, "usesScrollButtons=", "set_uses_scroll_buttons");
   rb_define_method(cls_QTabWidget.rb_class, "document_mode", RUBY_METHOD_FUNC(rb_QTabWidget_document_mode), -1);
   rb_define_method(cls_QTabWidget.rb_class, "documentMode", RUBY_METHOD_FUNC(rb_QTabWidget_document_mode), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_document_mode", RUBY_METHOD_FUNC(rb_QTabWidget_set_document_mode), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setDocumentMode", RUBY_METHOD_FUNC(rb_QTabWidget_set_document_mode), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "document_mode=", "set_document_mode");
+  rb_define_alias(cls_QTabWidget.rb_class, "documentMode=", "set_document_mode");
   rb_define_method(cls_QTabWidget.rb_class, "tab_bar_auto_hide", RUBY_METHOD_FUNC(rb_QTabWidget_tab_bar_auto_hide), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tabBarAutoHide", RUBY_METHOD_FUNC(rb_QTabWidget_tab_bar_auto_hide), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_tab_bar_auto_hide", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_bar_auto_hide), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setTabBarAutoHide", RUBY_METHOD_FUNC(rb_QTabWidget_set_tab_bar_auto_hide), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "tab_bar_auto_hide=", "set_tab_bar_auto_hide");
+  rb_define_alias(cls_QTabWidget.rb_class, "tabBarAutoHide=", "set_tab_bar_auto_hide");
   rb_define_method(cls_QTabWidget.rb_class, "clear", RUBY_METHOD_FUNC(rb_QTabWidget_clear), -1);
   rb_define_method(cls_QTabWidget.rb_class, "set_current_index", RUBY_METHOD_FUNC(rb_QTabWidget_set_current_index), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setCurrentIndex", RUBY_METHOD_FUNC(rb_QTabWidget_set_current_index), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "current_index=", "set_current_index");
+  rb_define_alias(cls_QTabWidget.rb_class, "currentIndex=", "set_current_index");
   rb_define_method(cls_QTabWidget.rb_class, "set_current_widget", RUBY_METHOD_FUNC(rb_QTabWidget_set_current_widget), -1);
   rb_define_method(cls_QTabWidget.rb_class, "setCurrentWidget", RUBY_METHOD_FUNC(rb_QTabWidget_set_current_widget), -1);
   rb_define_alias(cls_QTabWidget.rb_class, "current_widget=", "set_current_widget");
+  rb_define_alias(cls_QTabWidget.rb_class, "currentWidget=", "set_current_widget");
   rb_define_singleton_method(cls_QTabWidget.rb_class, "tr", RUBY_METHOD_FUNC(rb_QTabWidget_s_tr), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tab_inserted", RUBY_METHOD_FUNC(rb_QTabWidget_prot_tab_inserted), -1);
   rb_define_method(cls_QTabWidget.rb_class, "tabInserted", RUBY_METHOD_FUNC(rb_QTabWidget_prot_tab_inserted), -1);
@@ -81127,11 +82931,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "set_current_item", RUBY_METHOD_FUNC(rb_QListWidget_set_current_item), -1);
   rb_define_method(cls_QListWidget.rb_class, "setCurrentItem", RUBY_METHOD_FUNC(rb_QListWidget_set_current_item), -1);
   rb_define_alias(cls_QListWidget.rb_class, "current_item=", "set_current_item");
+  rb_define_alias(cls_QListWidget.rb_class, "currentItem=", "set_current_item");
   rb_define_method(cls_QListWidget.rb_class, "current_row", RUBY_METHOD_FUNC(rb_QListWidget_current_row), -1);
   rb_define_method(cls_QListWidget.rb_class, "currentRow", RUBY_METHOD_FUNC(rb_QListWidget_current_row), -1);
   rb_define_method(cls_QListWidget.rb_class, "set_current_row", RUBY_METHOD_FUNC(rb_QListWidget_set_current_row), -1);
   rb_define_method(cls_QListWidget.rb_class, "setCurrentRow", RUBY_METHOD_FUNC(rb_QListWidget_set_current_row), -1);
   rb_define_alias(cls_QListWidget.rb_class, "current_row=", "set_current_row");
+  rb_define_alias(cls_QListWidget.rb_class, "currentRow=", "set_current_row");
   rb_define_method(cls_QListWidget.rb_class, "item_at", RUBY_METHOD_FUNC(rb_QListWidget_item_at), -1);
   rb_define_method(cls_QListWidget.rb_class, "itemAt", RUBY_METHOD_FUNC(rb_QListWidget_item_at), -1);
   rb_define_method(cls_QListWidget.rb_class, "visual_item_rect", RUBY_METHOD_FUNC(rb_QListWidget_visual_item_rect), -1);
@@ -81141,6 +82947,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "set_sorting_enabled", RUBY_METHOD_FUNC(rb_QListWidget_set_sorting_enabled), -1);
   rb_define_method(cls_QListWidget.rb_class, "setSortingEnabled", RUBY_METHOD_FUNC(rb_QListWidget_set_sorting_enabled), -1);
   rb_define_alias(cls_QListWidget.rb_class, "sorting_enabled=", "set_sorting_enabled");
+  rb_define_alias(cls_QListWidget.rb_class, "sortingEnabled=", "set_sorting_enabled");
   rb_define_method(cls_QListWidget.rb_class, "is_sorting_enabled", RUBY_METHOD_FUNC(rb_QListWidget_is_sorting_enabled), -1);
   rb_define_method(cls_QListWidget.rb_class, "isSortingEnabled", RUBY_METHOD_FUNC(rb_QListWidget_is_sorting_enabled), -1);
   rb_define_alias(cls_QListWidget.rb_class, "sorting_enabled?", "is_sorting_enabled");
@@ -81157,6 +82964,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "set_item_widget", RUBY_METHOD_FUNC(rb_QListWidget_set_item_widget), -1);
   rb_define_method(cls_QListWidget.rb_class, "setItemWidget", RUBY_METHOD_FUNC(rb_QListWidget_set_item_widget), -1);
   rb_define_alias(cls_QListWidget.rb_class, "item_widget=", "set_item_widget");
+  rb_define_alias(cls_QListWidget.rb_class, "itemWidget=", "set_item_widget");
   rb_define_method(cls_QListWidget.rb_class, "remove_item_widget", RUBY_METHOD_FUNC(rb_QListWidget_remove_item_widget), -1);
   rb_define_method(cls_QListWidget.rb_class, "removeItemWidget", RUBY_METHOD_FUNC(rb_QListWidget_remove_item_widget), -1);
   rb_define_method(cls_QListWidget.rb_class, "index_from_item", RUBY_METHOD_FUNC(rb_QListWidget_index_from_item), -1);
@@ -81166,6 +82974,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "set_supported_drag_actions", RUBY_METHOD_FUNC(rb_QListWidget_set_supported_drag_actions), -1);
   rb_define_method(cls_QListWidget.rb_class, "setSupportedDragActions", RUBY_METHOD_FUNC(rb_QListWidget_set_supported_drag_actions), -1);
   rb_define_alias(cls_QListWidget.rb_class, "supported_drag_actions=", "set_supported_drag_actions");
+  rb_define_alias(cls_QListWidget.rb_class, "supportedDragActions=", "set_supported_drag_actions");
   rb_define_method(cls_QListWidget.rb_class, "supported_drag_actions", RUBY_METHOD_FUNC(rb_QListWidget_supported_drag_actions), -1);
   rb_define_method(cls_QListWidget.rb_class, "supportedDragActions", RUBY_METHOD_FUNC(rb_QListWidget_supported_drag_actions), -1);
   rb_define_method(cls_QListWidget.rb_class, "scroll_to_item", RUBY_METHOD_FUNC(rb_QListWidget_scroll_to_item), -1);
@@ -81305,16 +83114,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidgetItem.rb_class, "set_status_tip", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_status_tip), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setStatusTip", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_status_tip), -1);
   rb_define_alias(cls_QListWidgetItem.rb_class, "status_tip=", "set_status_tip");
+  rb_define_alias(cls_QListWidgetItem.rb_class, "statusTip=", "set_status_tip");
   rb_define_method(cls_QListWidgetItem.rb_class, "tool_tip", RUBY_METHOD_FUNC(rb_QListWidgetItem_tool_tip), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "toolTip", RUBY_METHOD_FUNC(rb_QListWidgetItem_tool_tip), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "set_tool_tip", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_tool_tip), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setToolTip", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_tool_tip), -1);
   rb_define_alias(cls_QListWidgetItem.rb_class, "tool_tip=", "set_tool_tip");
+  rb_define_alias(cls_QListWidgetItem.rb_class, "toolTip=", "set_tool_tip");
   rb_define_method(cls_QListWidgetItem.rb_class, "whats_this", RUBY_METHOD_FUNC(rb_QListWidgetItem_whats_this), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "whatsThis", RUBY_METHOD_FUNC(rb_QListWidgetItem_whats_this), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "set_whats_this", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_whats_this), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setWhatsThis", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_whats_this), -1);
   rb_define_alias(cls_QListWidgetItem.rb_class, "whats_this=", "set_whats_this");
+  rb_define_alias(cls_QListWidgetItem.rb_class, "whatsThis=", "set_whats_this");
   rb_define_method(cls_QListWidgetItem.rb_class, "font", RUBY_METHOD_FUNC(rb_QListWidgetItem_font), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_font), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setFont", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_font), -1);
@@ -81324,6 +83136,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidgetItem.rb_class, "set_text_alignment", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_text_alignment), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setTextAlignment", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_text_alignment), -1);
   rb_define_alias(cls_QListWidgetItem.rb_class, "text_alignment=", "set_text_alignment");
+  rb_define_alias(cls_QListWidgetItem.rb_class, "textAlignment=", "set_text_alignment");
   rb_define_method(cls_QListWidgetItem.rb_class, "background", RUBY_METHOD_FUNC(rb_QListWidgetItem_background), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "set_background", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_background), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setBackground", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_background), -1);
@@ -81337,11 +83150,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidgetItem.rb_class, "set_check_state", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_check_state), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setCheckState", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_check_state), -1);
   rb_define_alias(cls_QListWidgetItem.rb_class, "check_state=", "set_check_state");
+  rb_define_alias(cls_QListWidgetItem.rb_class, "checkState=", "set_check_state");
   rb_define_method(cls_QListWidgetItem.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QListWidgetItem_size_hint), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QListWidgetItem_size_hint), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "set_size_hint", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_size_hint), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setSizeHint", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_size_hint), -1);
   rb_define_alias(cls_QListWidgetItem.rb_class, "size_hint=", "set_size_hint");
+  rb_define_alias(cls_QListWidgetItem.rb_class, "sizeHint=", "set_size_hint");
   rb_define_method(cls_QListWidgetItem.rb_class, "data", RUBY_METHOD_FUNC(rb_QListWidgetItem_data), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "set_data", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_data), -1);
   rb_define_method(cls_QListWidgetItem.rb_class, "setData", RUBY_METHOD_FUNC(rb_QListWidgetItem_set_data), -1);
@@ -81369,14 +83184,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextCursor.rb_class, "set_visual_navigation", RUBY_METHOD_FUNC(rb_QTextCursor_set_visual_navigation), -1);
   rb_define_method(cls_QTextCursor.rb_class, "setVisualNavigation", RUBY_METHOD_FUNC(rb_QTextCursor_set_visual_navigation), -1);
   rb_define_alias(cls_QTextCursor.rb_class, "visual_navigation=", "set_visual_navigation");
+  rb_define_alias(cls_QTextCursor.rb_class, "visualNavigation=", "set_visual_navigation");
   rb_define_method(cls_QTextCursor.rb_class, "set_vertical_movement_x", RUBY_METHOD_FUNC(rb_QTextCursor_set_vertical_movement_x), -1);
   rb_define_method(cls_QTextCursor.rb_class, "setVerticalMovementX", RUBY_METHOD_FUNC(rb_QTextCursor_set_vertical_movement_x), -1);
   rb_define_alias(cls_QTextCursor.rb_class, "vertical_movement_x=", "set_vertical_movement_x");
+  rb_define_alias(cls_QTextCursor.rb_class, "verticalMovementX=", "set_vertical_movement_x");
   rb_define_method(cls_QTextCursor.rb_class, "vertical_movement_x", RUBY_METHOD_FUNC(rb_QTextCursor_vertical_movement_x), -1);
   rb_define_method(cls_QTextCursor.rb_class, "verticalMovementX", RUBY_METHOD_FUNC(rb_QTextCursor_vertical_movement_x), -1);
   rb_define_method(cls_QTextCursor.rb_class, "set_keep_position_on_insert", RUBY_METHOD_FUNC(rb_QTextCursor_set_keep_position_on_insert), -1);
   rb_define_method(cls_QTextCursor.rb_class, "setKeepPositionOnInsert", RUBY_METHOD_FUNC(rb_QTextCursor_set_keep_position_on_insert), -1);
   rb_define_alias(cls_QTextCursor.rb_class, "keep_position_on_insert=", "set_keep_position_on_insert");
+  rb_define_alias(cls_QTextCursor.rb_class, "keepPositionOnInsert=", "set_keep_position_on_insert");
   rb_define_method(cls_QTextCursor.rb_class, "keep_position_on_insert", RUBY_METHOD_FUNC(rb_QTextCursor_keep_position_on_insert), -1);
   rb_define_method(cls_QTextCursor.rb_class, "keepPositionOnInsert", RUBY_METHOD_FUNC(rb_QTextCursor_keep_position_on_insert), -1);
   rb_define_method(cls_QTextCursor.rb_class, "delete_char", RUBY_METHOD_FUNC(rb_QTextCursor_delete_char), -1);
@@ -81404,6 +83222,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextCursor.rb_class, "set_char_format", RUBY_METHOD_FUNC(rb_QTextCursor_set_char_format), -1);
   rb_define_method(cls_QTextCursor.rb_class, "setCharFormat", RUBY_METHOD_FUNC(rb_QTextCursor_set_char_format), -1);
   rb_define_alias(cls_QTextCursor.rb_class, "char_format=", "set_char_format");
+  rb_define_alias(cls_QTextCursor.rb_class, "charFormat=", "set_char_format");
   rb_define_method(cls_QTextCursor.rb_class, "merge_char_format", RUBY_METHOD_FUNC(rb_QTextCursor_merge_char_format), -1);
   rb_define_method(cls_QTextCursor.rb_class, "mergeCharFormat", RUBY_METHOD_FUNC(rb_QTextCursor_merge_char_format), -1);
   rb_define_method(cls_QTextCursor.rb_class, "block_char_format", RUBY_METHOD_FUNC(rb_QTextCursor_block_char_format), -1);
@@ -81411,6 +83230,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextCursor.rb_class, "set_block_char_format", RUBY_METHOD_FUNC(rb_QTextCursor_set_block_char_format), -1);
   rb_define_method(cls_QTextCursor.rb_class, "setBlockCharFormat", RUBY_METHOD_FUNC(rb_QTextCursor_set_block_char_format), -1);
   rb_define_alias(cls_QTextCursor.rb_class, "block_char_format=", "set_block_char_format");
+  rb_define_alias(cls_QTextCursor.rb_class, "blockCharFormat=", "set_block_char_format");
   rb_define_method(cls_QTextCursor.rb_class, "merge_block_char_format", RUBY_METHOD_FUNC(rb_QTextCursor_merge_block_char_format), -1);
   rb_define_method(cls_QTextCursor.rb_class, "mergeBlockCharFormat", RUBY_METHOD_FUNC(rb_QTextCursor_merge_block_char_format), -1);
   rb_define_method(cls_QTextCursor.rb_class, "at_block_start", RUBY_METHOD_FUNC(rb_QTextCursor_at_block_start), -1);
@@ -81455,6 +83275,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_undo_redo_enabled", RUBY_METHOD_FUNC(rb_QTextDocument_set_undo_redo_enabled), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setUndoRedoEnabled", RUBY_METHOD_FUNC(rb_QTextDocument_set_undo_redo_enabled), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "undo_redo_enabled=", "set_undo_redo_enabled");
+  rb_define_alias(cls_QTextDocument.rb_class, "undoRedoEnabled=", "set_undo_redo_enabled");
   rb_define_method(cls_QTextDocument.rb_class, "is_undo_redo_enabled", RUBY_METHOD_FUNC(rb_QTextDocument_is_undo_redo_enabled), -1);
   rb_define_method(cls_QTextDocument.rb_class, "isUndoRedoEnabled", RUBY_METHOD_FUNC(rb_QTextDocument_is_undo_redo_enabled), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "undo_redo_enabled?", "is_undo_redo_enabled");
@@ -81472,6 +83293,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_meta_information", RUBY_METHOD_FUNC(rb_QTextDocument_set_meta_information), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setMetaInformation", RUBY_METHOD_FUNC(rb_QTextDocument_set_meta_information), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "meta_information=", "set_meta_information");
+  rb_define_alias(cls_QTextDocument.rb_class, "metaInformation=", "set_meta_information");
   rb_define_method(cls_QTextDocument.rb_class, "meta_information", RUBY_METHOD_FUNC(rb_QTextDocument_meta_information), -1);
   rb_define_method(cls_QTextDocument.rb_class, "metaInformation", RUBY_METHOD_FUNC(rb_QTextDocument_meta_information), -1);
   rb_define_method(cls_QTextDocument.rb_class, "to_html", RUBY_METHOD_FUNC(rb_QTextDocument_to_html), -1);
@@ -81491,30 +83313,36 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_plain_text", RUBY_METHOD_FUNC(rb_QTextDocument_set_plain_text), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setPlainText", RUBY_METHOD_FUNC(rb_QTextDocument_set_plain_text), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "plain_text=", "set_plain_text");
+  rb_define_alias(cls_QTextDocument.rb_class, "plainText=", "set_plain_text");
   rb_define_method(cls_QTextDocument.rb_class, "find", RUBY_METHOD_FUNC(rb_QTextDocument_find), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_page_size", RUBY_METHOD_FUNC(rb_QTextDocument_set_page_size), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setPageSize", RUBY_METHOD_FUNC(rb_QTextDocument_set_page_size), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "page_size=", "set_page_size");
+  rb_define_alias(cls_QTextDocument.rb_class, "pageSize=", "set_page_size");
   rb_define_method(cls_QTextDocument.rb_class, "page_size", RUBY_METHOD_FUNC(rb_QTextDocument_page_size), -1);
   rb_define_method(cls_QTextDocument.rb_class, "pageSize", RUBY_METHOD_FUNC(rb_QTextDocument_page_size), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_default_font", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_font), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setDefaultFont", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_font), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "default_font=", "set_default_font");
+  rb_define_alias(cls_QTextDocument.rb_class, "defaultFont=", "set_default_font");
   rb_define_method(cls_QTextDocument.rb_class, "default_font", RUBY_METHOD_FUNC(rb_QTextDocument_default_font), -1);
   rb_define_method(cls_QTextDocument.rb_class, "defaultFont", RUBY_METHOD_FUNC(rb_QTextDocument_default_font), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_super_script_baseline", RUBY_METHOD_FUNC(rb_QTextDocument_set_super_script_baseline), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setSuperScriptBaseline", RUBY_METHOD_FUNC(rb_QTextDocument_set_super_script_baseline), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "super_script_baseline=", "set_super_script_baseline");
+  rb_define_alias(cls_QTextDocument.rb_class, "superScriptBaseline=", "set_super_script_baseline");
   rb_define_method(cls_QTextDocument.rb_class, "super_script_baseline", RUBY_METHOD_FUNC(rb_QTextDocument_super_script_baseline), -1);
   rb_define_method(cls_QTextDocument.rb_class, "superScriptBaseline", RUBY_METHOD_FUNC(rb_QTextDocument_super_script_baseline), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_sub_script_baseline", RUBY_METHOD_FUNC(rb_QTextDocument_set_sub_script_baseline), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setSubScriptBaseline", RUBY_METHOD_FUNC(rb_QTextDocument_set_sub_script_baseline), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "sub_script_baseline=", "set_sub_script_baseline");
+  rb_define_alias(cls_QTextDocument.rb_class, "subScriptBaseline=", "set_sub_script_baseline");
   rb_define_method(cls_QTextDocument.rb_class, "sub_script_baseline", RUBY_METHOD_FUNC(rb_QTextDocument_sub_script_baseline), -1);
   rb_define_method(cls_QTextDocument.rb_class, "subScriptBaseline", RUBY_METHOD_FUNC(rb_QTextDocument_sub_script_baseline), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_baseline_offset", RUBY_METHOD_FUNC(rb_QTextDocument_set_baseline_offset), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setBaselineOffset", RUBY_METHOD_FUNC(rb_QTextDocument_set_baseline_offset), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "baseline_offset=", "set_baseline_offset");
+  rb_define_alias(cls_QTextDocument.rb_class, "baselineOffset=", "set_baseline_offset");
   rb_define_method(cls_QTextDocument.rb_class, "baseline_offset", RUBY_METHOD_FUNC(rb_QTextDocument_baseline_offset), -1);
   rb_define_method(cls_QTextDocument.rb_class, "baselineOffset", RUBY_METHOD_FUNC(rb_QTextDocument_baseline_offset), -1);
   rb_define_method(cls_QTextDocument.rb_class, "page_count", RUBY_METHOD_FUNC(rb_QTextDocument_page_count), -1);
@@ -81530,11 +83358,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_use_design_metrics", RUBY_METHOD_FUNC(rb_QTextDocument_set_use_design_metrics), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setUseDesignMetrics", RUBY_METHOD_FUNC(rb_QTextDocument_set_use_design_metrics), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "use_design_metrics=", "set_use_design_metrics");
+  rb_define_alias(cls_QTextDocument.rb_class, "useDesignMetrics=", "set_use_design_metrics");
   rb_define_method(cls_QTextDocument.rb_class, "use_design_metrics", RUBY_METHOD_FUNC(rb_QTextDocument_use_design_metrics), -1);
   rb_define_method(cls_QTextDocument.rb_class, "useDesignMetrics", RUBY_METHOD_FUNC(rb_QTextDocument_use_design_metrics), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_layout_enabled", RUBY_METHOD_FUNC(rb_QTextDocument_set_layout_enabled), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setLayoutEnabled", RUBY_METHOD_FUNC(rb_QTextDocument_set_layout_enabled), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "layout_enabled=", "set_layout_enabled");
+  rb_define_alias(cls_QTextDocument.rb_class, "layoutEnabled=", "set_layout_enabled");
   rb_define_method(cls_QTextDocument.rb_class, "is_layout_enabled", RUBY_METHOD_FUNC(rb_QTextDocument_is_layout_enabled), -1);
   rb_define_method(cls_QTextDocument.rb_class, "isLayoutEnabled", RUBY_METHOD_FUNC(rb_QTextDocument_is_layout_enabled), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "layout_enabled?", "is_layout_enabled");
@@ -81543,6 +83373,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_text_width", RUBY_METHOD_FUNC(rb_QTextDocument_set_text_width), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setTextWidth", RUBY_METHOD_FUNC(rb_QTextDocument_set_text_width), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "text_width=", "set_text_width");
+  rb_define_alias(cls_QTextDocument.rb_class, "textWidth=", "set_text_width");
   rb_define_method(cls_QTextDocument.rb_class, "text_width", RUBY_METHOD_FUNC(rb_QTextDocument_text_width), -1);
   rb_define_method(cls_QTextDocument.rb_class, "textWidth", RUBY_METHOD_FUNC(rb_QTextDocument_text_width), -1);
   rb_define_method(cls_QTextDocument.rb_class, "ideal_width", RUBY_METHOD_FUNC(rb_QTextDocument_ideal_width), -1);
@@ -81552,11 +83383,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_indent_width", RUBY_METHOD_FUNC(rb_QTextDocument_set_indent_width), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setIndentWidth", RUBY_METHOD_FUNC(rb_QTextDocument_set_indent_width), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "indent_width=", "set_indent_width");
+  rb_define_alias(cls_QTextDocument.rb_class, "indentWidth=", "set_indent_width");
   rb_define_method(cls_QTextDocument.rb_class, "document_margin", RUBY_METHOD_FUNC(rb_QTextDocument_document_margin), -1);
   rb_define_method(cls_QTextDocument.rb_class, "documentMargin", RUBY_METHOD_FUNC(rb_QTextDocument_document_margin), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_document_margin", RUBY_METHOD_FUNC(rb_QTextDocument_set_document_margin), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setDocumentMargin", RUBY_METHOD_FUNC(rb_QTextDocument_set_document_margin), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "document_margin=", "set_document_margin");
+  rb_define_alias(cls_QTextDocument.rb_class, "documentMargin=", "set_document_margin");
   rb_define_method(cls_QTextDocument.rb_class, "adjust_size", RUBY_METHOD_FUNC(rb_QTextDocument_adjust_size), -1);
   rb_define_method(cls_QTextDocument.rb_class, "adjustSize", RUBY_METHOD_FUNC(rb_QTextDocument_adjust_size), -1);
   rb_define_method(cls_QTextDocument.rb_class, "size", RUBY_METHOD_FUNC(rb_QTextDocument_size), -1);
@@ -81569,6 +83402,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_default_style_sheet", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_style_sheet), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setDefaultStyleSheet", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_style_sheet), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "default_style_sheet=", "set_default_style_sheet");
+  rb_define_alias(cls_QTextDocument.rb_class, "defaultStyleSheet=", "set_default_style_sheet");
   rb_define_method(cls_QTextDocument.rb_class, "default_style_sheet", RUBY_METHOD_FUNC(rb_QTextDocument_default_style_sheet), -1);
   rb_define_method(cls_QTextDocument.rb_class, "defaultStyleSheet", RUBY_METHOD_FUNC(rb_QTextDocument_default_style_sheet), -1);
   rb_define_method(cls_QTextDocument.rb_class, "undo", RUBY_METHOD_FUNC(rb_QTextDocument_undo), -1);
@@ -81580,21 +83414,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextDocument.rb_class, "set_maximum_block_count", RUBY_METHOD_FUNC(rb_QTextDocument_set_maximum_block_count), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setMaximumBlockCount", RUBY_METHOD_FUNC(rb_QTextDocument_set_maximum_block_count), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "maximum_block_count=", "set_maximum_block_count");
+  rb_define_alias(cls_QTextDocument.rb_class, "maximumBlockCount=", "set_maximum_block_count");
   rb_define_method(cls_QTextDocument.rb_class, "default_text_option", RUBY_METHOD_FUNC(rb_QTextDocument_default_text_option), -1);
   rb_define_method(cls_QTextDocument.rb_class, "defaultTextOption", RUBY_METHOD_FUNC(rb_QTextDocument_default_text_option), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_default_text_option", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_text_option), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setDefaultTextOption", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_text_option), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "default_text_option=", "set_default_text_option");
+  rb_define_alias(cls_QTextDocument.rb_class, "defaultTextOption=", "set_default_text_option");
   rb_define_method(cls_QTextDocument.rb_class, "base_url", RUBY_METHOD_FUNC(rb_QTextDocument_base_url), -1);
   rb_define_method(cls_QTextDocument.rb_class, "baseUrl", RUBY_METHOD_FUNC(rb_QTextDocument_base_url), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_base_url", RUBY_METHOD_FUNC(rb_QTextDocument_set_base_url), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setBaseUrl", RUBY_METHOD_FUNC(rb_QTextDocument_set_base_url), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "base_url=", "set_base_url");
+  rb_define_alias(cls_QTextDocument.rb_class, "baseUrl=", "set_base_url");
   rb_define_method(cls_QTextDocument.rb_class, "default_cursor_move_style", RUBY_METHOD_FUNC(rb_QTextDocument_default_cursor_move_style), -1);
   rb_define_method(cls_QTextDocument.rb_class, "defaultCursorMoveStyle", RUBY_METHOD_FUNC(rb_QTextDocument_default_cursor_move_style), -1);
   rb_define_method(cls_QTextDocument.rb_class, "set_default_cursor_move_style", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_cursor_move_style), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setDefaultCursorMoveStyle", RUBY_METHOD_FUNC(rb_QTextDocument_set_default_cursor_move_style), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "default_cursor_move_style=", "set_default_cursor_move_style");
+  rb_define_alias(cls_QTextDocument.rb_class, "defaultCursorMoveStyle=", "set_default_cursor_move_style");
   rb_define_method(cls_QTextDocument.rb_class, "set_modified", RUBY_METHOD_FUNC(rb_QTextDocument_set_modified), -1);
   rb_define_method(cls_QTextDocument.rb_class, "setModified", RUBY_METHOD_FUNC(rb_QTextDocument_set_modified), -1);
   rb_define_alias(cls_QTextDocument.rb_class, "modified=", "set_modified");
@@ -81650,89 +83488,107 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_family", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_family), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontFamily", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_family), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_family=", "set_font_family");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontFamily=", "set_font_family");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_family", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_family), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontFamily", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_family), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_families", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_families), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontFamilies", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_families), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_families=", "set_font_families");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontFamilies=", "set_font_families");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_families", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_families), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontFamilies", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_families), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_style_name", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_style_name), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontStyleName", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_style_name), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_style_name=", "set_font_style_name");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontStyleName=", "set_font_style_name");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_style_name", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_style_name), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontStyleName", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_style_name), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_point_size", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_point_size), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontPointSize", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_point_size), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_point_size=", "set_font_point_size");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontPointSize=", "set_font_point_size");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_point_size", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_point_size), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontPointSize", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_point_size), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_weight", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_weight), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontWeight", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_weight), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_weight=", "set_font_weight");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontWeight=", "set_font_weight");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_weight", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_weight), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontWeight", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_weight), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_italic", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_italic), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontItalic", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_italic), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_italic=", "set_font_italic");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontItalic=", "set_font_italic");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_italic", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_italic), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontItalic", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_italic), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_capitalization", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_capitalization), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontCapitalization", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_capitalization), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_capitalization=", "set_font_capitalization");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontCapitalization=", "set_font_capitalization");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_capitalization", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_capitalization), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontCapitalization", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_capitalization), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_letter_spacing_type", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_letter_spacing_type), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontLetterSpacingType", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_letter_spacing_type), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_letter_spacing_type=", "set_font_letter_spacing_type");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontLetterSpacingType=", "set_font_letter_spacing_type");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_letter_spacing_type", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_letter_spacing_type), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontLetterSpacingType", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_letter_spacing_type), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_letter_spacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_letter_spacing), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontLetterSpacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_letter_spacing), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_letter_spacing=", "set_font_letter_spacing");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontLetterSpacing=", "set_font_letter_spacing");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_letter_spacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_letter_spacing), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontLetterSpacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_letter_spacing), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_word_spacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_word_spacing), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontWordSpacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_word_spacing), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_word_spacing=", "set_font_word_spacing");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontWordSpacing=", "set_font_word_spacing");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_word_spacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_word_spacing), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontWordSpacing", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_word_spacing), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_underline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_underline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontUnderline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_underline), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_underline=", "set_font_underline");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontUnderline=", "set_font_underline");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_underline", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_underline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontUnderline", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_underline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_overline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_overline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontOverline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_overline), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_overline=", "set_font_overline");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontOverline=", "set_font_overline");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_overline", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_overline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontOverline", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_overline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_strike_out", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_strike_out), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontStrikeOut", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_strike_out), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_strike_out=", "set_font_strike_out");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontStrikeOut=", "set_font_strike_out");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_strike_out", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_strike_out), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontStrikeOut", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_strike_out), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_underline_color", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_underline_color), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setUnderlineColor", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_underline_color), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "underline_color=", "set_underline_color");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "underlineColor=", "set_underline_color");
   rb_define_method(cls_QTextCharFormat.rb_class, "underline_color", RUBY_METHOD_FUNC(rb_QTextCharFormat_underline_color), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "underlineColor", RUBY_METHOD_FUNC(rb_QTextCharFormat_underline_color), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_fixed_pitch", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_fixed_pitch), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontFixedPitch", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_fixed_pitch), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_fixed_pitch=", "set_font_fixed_pitch");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontFixedPitch=", "set_font_fixed_pitch");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_fixed_pitch", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_fixed_pitch), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontFixedPitch", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_fixed_pitch), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_stretch", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_stretch), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontStretch", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_stretch), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_stretch=", "set_font_stretch");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontStretch=", "set_font_stretch");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_stretch", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_stretch), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontStretch", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_stretch), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_style_hint", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_style_hint), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontStyleHint", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_style_hint), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_style_hint=", "set_font_style_hint");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontStyleHint=", "set_font_style_hint");
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_style_strategy", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_style_strategy), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontStyleStrategy", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_style_strategy), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_style_strategy=", "set_font_style_strategy");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontStyleStrategy=", "set_font_style_strategy");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_style_hint", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_style_hint), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontStyleHint", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_style_hint), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "font_style_strategy", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_style_strategy), -1);
@@ -81740,46 +83596,55 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_hinting_preference", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_hinting_preference), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontHintingPreference", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_hinting_preference), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_hinting_preference=", "set_font_hinting_preference");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontHintingPreference=", "set_font_hinting_preference");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_hinting_preference", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_hinting_preference), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontHintingPreference", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_hinting_preference), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_font_kerning", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_kerning), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setFontKerning", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_font_kerning), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "font_kerning=", "set_font_kerning");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "fontKerning=", "set_font_kerning");
   rb_define_method(cls_QTextCharFormat.rb_class, "font_kerning", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_kerning), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "fontKerning", RUBY_METHOD_FUNC(rb_QTextCharFormat_font_kerning), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_underline_style", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_underline_style), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setUnderlineStyle", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_underline_style), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "underline_style=", "set_underline_style");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "underlineStyle=", "set_underline_style");
   rb_define_method(cls_QTextCharFormat.rb_class, "underline_style", RUBY_METHOD_FUNC(rb_QTextCharFormat_underline_style), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "underlineStyle", RUBY_METHOD_FUNC(rb_QTextCharFormat_underline_style), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_vertical_alignment", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_vertical_alignment), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setVerticalAlignment", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_vertical_alignment), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "vertical_alignment=", "set_vertical_alignment");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "verticalAlignment=", "set_vertical_alignment");
   rb_define_method(cls_QTextCharFormat.rb_class, "vertical_alignment", RUBY_METHOD_FUNC(rb_QTextCharFormat_vertical_alignment), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "verticalAlignment", RUBY_METHOD_FUNC(rb_QTextCharFormat_vertical_alignment), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_text_outline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_text_outline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setTextOutline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_text_outline), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "text_outline=", "set_text_outline");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "textOutline=", "set_text_outline");
   rb_define_method(cls_QTextCharFormat.rb_class, "text_outline", RUBY_METHOD_FUNC(rb_QTextCharFormat_text_outline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "textOutline", RUBY_METHOD_FUNC(rb_QTextCharFormat_text_outline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_tool_tip", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_tool_tip), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setToolTip", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_tool_tip), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "tool_tip=", "set_tool_tip");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "toolTip=", "set_tool_tip");
   rb_define_method(cls_QTextCharFormat.rb_class, "tool_tip", RUBY_METHOD_FUNC(rb_QTextCharFormat_tool_tip), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "toolTip", RUBY_METHOD_FUNC(rb_QTextCharFormat_tool_tip), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_super_script_baseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_super_script_baseline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setSuperScriptBaseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_super_script_baseline), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "super_script_baseline=", "set_super_script_baseline");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "superScriptBaseline=", "set_super_script_baseline");
   rb_define_method(cls_QTextCharFormat.rb_class, "super_script_baseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_super_script_baseline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "superScriptBaseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_super_script_baseline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_sub_script_baseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_sub_script_baseline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setSubScriptBaseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_sub_script_baseline), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "sub_script_baseline=", "set_sub_script_baseline");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "subScriptBaseline=", "set_sub_script_baseline");
   rb_define_method(cls_QTextCharFormat.rb_class, "sub_script_baseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_sub_script_baseline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "subScriptBaseline", RUBY_METHOD_FUNC(rb_QTextCharFormat_sub_script_baseline), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_baseline_offset", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_baseline_offset), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setBaselineOffset", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_baseline_offset), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "baseline_offset=", "set_baseline_offset");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "baselineOffset=", "set_baseline_offset");
   rb_define_method(cls_QTextCharFormat.rb_class, "baseline_offset", RUBY_METHOD_FUNC(rb_QTextCharFormat_baseline_offset), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "baselineOffset", RUBY_METHOD_FUNC(rb_QTextCharFormat_baseline_offset), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_anchor", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_anchor), -1);
@@ -81791,21 +83656,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextCharFormat.rb_class, "set_anchor_href", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_anchor_href), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setAnchorHref", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_anchor_href), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "anchor_href=", "set_anchor_href");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "anchorHref=", "set_anchor_href");
   rb_define_method(cls_QTextCharFormat.rb_class, "anchor_href", RUBY_METHOD_FUNC(rb_QTextCharFormat_anchor_href), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "anchorHref", RUBY_METHOD_FUNC(rb_QTextCharFormat_anchor_href), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_anchor_names", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_anchor_names), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setAnchorNames", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_anchor_names), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "anchor_names=", "set_anchor_names");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "anchorNames=", "set_anchor_names");
   rb_define_method(cls_QTextCharFormat.rb_class, "anchor_names", RUBY_METHOD_FUNC(rb_QTextCharFormat_anchor_names), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "anchorNames", RUBY_METHOD_FUNC(rb_QTextCharFormat_anchor_names), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_table_cell_row_span", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_table_cell_row_span), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setTableCellRowSpan", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_table_cell_row_span), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "table_cell_row_span=", "set_table_cell_row_span");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "tableCellRowSpan=", "set_table_cell_row_span");
   rb_define_method(cls_QTextCharFormat.rb_class, "table_cell_row_span", RUBY_METHOD_FUNC(rb_QTextCharFormat_table_cell_row_span), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "tableCellRowSpan", RUBY_METHOD_FUNC(rb_QTextCharFormat_table_cell_row_span), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "set_table_cell_column_span", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_table_cell_column_span), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "setTableCellColumnSpan", RUBY_METHOD_FUNC(rb_QTextCharFormat_set_table_cell_column_span), -1);
   rb_define_alias(cls_QTextCharFormat.rb_class, "table_cell_column_span=", "set_table_cell_column_span");
+  rb_define_alias(cls_QTextCharFormat.rb_class, "tableCellColumnSpan=", "set_table_cell_column_span");
   rb_define_method(cls_QTextCharFormat.rb_class, "table_cell_column_span", RUBY_METHOD_FUNC(rb_QTextCharFormat_table_cell_column_span), -1);
   rb_define_method(cls_QTextCharFormat.rb_class, "tableCellColumnSpan", RUBY_METHOD_FUNC(rb_QTextCharFormat_table_cell_column_span), -1);
   rb_undef_alloc_func(cls_QSyntaxHighlighter.rb_class);
@@ -81825,11 +83694,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextOption.rb_class, "set_text_direction", RUBY_METHOD_FUNC(rb_QTextOption_set_text_direction), -1);
   rb_define_method(cls_QTextOption.rb_class, "setTextDirection", RUBY_METHOD_FUNC(rb_QTextOption_set_text_direction), -1);
   rb_define_alias(cls_QTextOption.rb_class, "text_direction=", "set_text_direction");
+  rb_define_alias(cls_QTextOption.rb_class, "textDirection=", "set_text_direction");
   rb_define_method(cls_QTextOption.rb_class, "text_direction", RUBY_METHOD_FUNC(rb_QTextOption_text_direction), -1);
   rb_define_method(cls_QTextOption.rb_class, "textDirection", RUBY_METHOD_FUNC(rb_QTextOption_text_direction), -1);
   rb_define_method(cls_QTextOption.rb_class, "set_wrap_mode", RUBY_METHOD_FUNC(rb_QTextOption_set_wrap_mode), -1);
   rb_define_method(cls_QTextOption.rb_class, "setWrapMode", RUBY_METHOD_FUNC(rb_QTextOption_set_wrap_mode), -1);
   rb_define_alias(cls_QTextOption.rb_class, "wrap_mode=", "set_wrap_mode");
+  rb_define_alias(cls_QTextOption.rb_class, "wrapMode=", "set_wrap_mode");
   rb_define_method(cls_QTextOption.rb_class, "wrap_mode", RUBY_METHOD_FUNC(rb_QTextOption_wrap_mode), -1);
   rb_define_method(cls_QTextOption.rb_class, "wrapMode", RUBY_METHOD_FUNC(rb_QTextOption_wrap_mode), -1);
   rb_define_method(cls_QTextOption.rb_class, "set_flags", RUBY_METHOD_FUNC(rb_QTextOption_set_flags), -1);
@@ -81839,11 +83710,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextOption.rb_class, "set_tab_stop_distance", RUBY_METHOD_FUNC(rb_QTextOption_set_tab_stop_distance), -1);
   rb_define_method(cls_QTextOption.rb_class, "setTabStopDistance", RUBY_METHOD_FUNC(rb_QTextOption_set_tab_stop_distance), -1);
   rb_define_alias(cls_QTextOption.rb_class, "tab_stop_distance=", "set_tab_stop_distance");
+  rb_define_alias(cls_QTextOption.rb_class, "tabStopDistance=", "set_tab_stop_distance");
   rb_define_method(cls_QTextOption.rb_class, "tab_stop_distance", RUBY_METHOD_FUNC(rb_QTextOption_tab_stop_distance), -1);
   rb_define_method(cls_QTextOption.rb_class, "tabStopDistance", RUBY_METHOD_FUNC(rb_QTextOption_tab_stop_distance), -1);
   rb_define_method(cls_QTextOption.rb_class, "set_use_design_metrics", RUBY_METHOD_FUNC(rb_QTextOption_set_use_design_metrics), -1);
   rb_define_method(cls_QTextOption.rb_class, "setUseDesignMetrics", RUBY_METHOD_FUNC(rb_QTextOption_set_use_design_metrics), -1);
   rb_define_alias(cls_QTextOption.rb_class, "use_design_metrics=", "set_use_design_metrics");
+  rb_define_alias(cls_QTextOption.rb_class, "useDesignMetrics=", "set_use_design_metrics");
   rb_define_method(cls_QTextOption.rb_class, "use_design_metrics", RUBY_METHOD_FUNC(rb_QTextOption_use_design_metrics), -1);
   rb_define_method(cls_QTextOption.rb_class, "useDesignMetrics", RUBY_METHOD_FUNC(rb_QTextOption_use_design_metrics), -1);
   rb_define_alloc_func(cls_QScrollBar.rb_class, rb_QScrollBar_alloc);
@@ -81913,16 +83786,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_item_delegate", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_item_delegate), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setItemDelegate", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_item_delegate), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "item_delegate=", "set_item_delegate");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "itemDelegate=", "set_item_delegate");
   rb_define_method(cls_QAbstractItemView.rb_class, "item_delegate", RUBY_METHOD_FUNC(rb_QAbstractItemView_item_delegate), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "itemDelegate", RUBY_METHOD_FUNC(rb_QAbstractItemView_item_delegate), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_selection_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_selection_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setSelectionMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_selection_mode), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "selection_mode=", "set_selection_mode");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "selectionMode=", "set_selection_mode");
   rb_define_method(cls_QAbstractItemView.rb_class, "selection_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_selection_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "selectionMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_selection_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_selection_behavior", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_selection_behavior), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setSelectionBehavior", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_selection_behavior), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "selection_behavior=", "set_selection_behavior");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "selectionBehavior=", "set_selection_behavior");
   rb_define_method(cls_QAbstractItemView.rb_class, "selection_behavior", RUBY_METHOD_FUNC(rb_QAbstractItemView_selection_behavior), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "selectionBehavior", RUBY_METHOD_FUNC(rb_QAbstractItemView_selection_behavior), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "current_index", RUBY_METHOD_FUNC(rb_QAbstractItemView_current_index), -1);
@@ -81932,11 +83808,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_edit_triggers", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_edit_triggers), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setEditTriggers", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_edit_triggers), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "edit_triggers=", "set_edit_triggers");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "editTriggers=", "set_edit_triggers");
   rb_define_method(cls_QAbstractItemView.rb_class, "edit_triggers", RUBY_METHOD_FUNC(rb_QAbstractItemView_edit_triggers), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "editTriggers", RUBY_METHOD_FUNC(rb_QAbstractItemView_edit_triggers), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_vertical_scroll_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_vertical_scroll_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setVerticalScrollMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_vertical_scroll_mode), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "vertical_scroll_mode=", "set_vertical_scroll_mode");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "verticalScrollMode=", "set_vertical_scroll_mode");
   rb_define_method(cls_QAbstractItemView.rb_class, "vertical_scroll_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_vertical_scroll_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "verticalScrollMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_vertical_scroll_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "reset_vertical_scroll_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_reset_vertical_scroll_mode), -1);
@@ -81944,6 +83822,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_horizontal_scroll_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_horizontal_scroll_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setHorizontalScrollMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_horizontal_scroll_mode), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "horizontal_scroll_mode=", "set_horizontal_scroll_mode");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "horizontalScrollMode=", "set_horizontal_scroll_mode");
   rb_define_method(cls_QAbstractItemView.rb_class, "horizontal_scroll_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_horizontal_scroll_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "horizontalScrollMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_horizontal_scroll_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "reset_horizontal_scroll_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_reset_horizontal_scroll_mode), -1);
@@ -81951,56 +83830,67 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_auto_scroll", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_auto_scroll), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setAutoScroll", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_auto_scroll), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "auto_scroll=", "set_auto_scroll");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "autoScroll=", "set_auto_scroll");
   rb_define_method(cls_QAbstractItemView.rb_class, "has_auto_scroll", RUBY_METHOD_FUNC(rb_QAbstractItemView_has_auto_scroll), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "hasAutoScroll", RUBY_METHOD_FUNC(rb_QAbstractItemView_has_auto_scroll), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_auto_scroll_margin", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_auto_scroll_margin), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setAutoScrollMargin", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_auto_scroll_margin), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "auto_scroll_margin=", "set_auto_scroll_margin");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "autoScrollMargin=", "set_auto_scroll_margin");
   rb_define_method(cls_QAbstractItemView.rb_class, "auto_scroll_margin", RUBY_METHOD_FUNC(rb_QAbstractItemView_auto_scroll_margin), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "autoScrollMargin", RUBY_METHOD_FUNC(rb_QAbstractItemView_auto_scroll_margin), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_tab_key_navigation", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_tab_key_navigation), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setTabKeyNavigation", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_tab_key_navigation), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "tab_key_navigation=", "set_tab_key_navigation");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "tabKeyNavigation=", "set_tab_key_navigation");
   rb_define_method(cls_QAbstractItemView.rb_class, "tab_key_navigation", RUBY_METHOD_FUNC(rb_QAbstractItemView_tab_key_navigation), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "tabKeyNavigation", RUBY_METHOD_FUNC(rb_QAbstractItemView_tab_key_navigation), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_drop_indicator_shown", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drop_indicator_shown), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setDropIndicatorShown", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drop_indicator_shown), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "drop_indicator_shown=", "set_drop_indicator_shown");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "dropIndicatorShown=", "set_drop_indicator_shown");
   rb_define_method(cls_QAbstractItemView.rb_class, "show_drop_indicator", RUBY_METHOD_FUNC(rb_QAbstractItemView_show_drop_indicator), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "showDropIndicator", RUBY_METHOD_FUNC(rb_QAbstractItemView_show_drop_indicator), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_drag_enabled", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drag_enabled), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setDragEnabled", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drag_enabled), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "drag_enabled=", "set_drag_enabled");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "dragEnabled=", "set_drag_enabled");
   rb_define_method(cls_QAbstractItemView.rb_class, "drag_enabled", RUBY_METHOD_FUNC(rb_QAbstractItemView_drag_enabled), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "dragEnabled", RUBY_METHOD_FUNC(rb_QAbstractItemView_drag_enabled), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_drag_drop_overwrite_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drag_drop_overwrite_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setDragDropOverwriteMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drag_drop_overwrite_mode), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "drag_drop_overwrite_mode=", "set_drag_drop_overwrite_mode");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "dragDropOverwriteMode=", "set_drag_drop_overwrite_mode");
   rb_define_method(cls_QAbstractItemView.rb_class, "drag_drop_overwrite_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_drag_drop_overwrite_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "dragDropOverwriteMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_drag_drop_overwrite_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_drag_drop_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drag_drop_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setDragDropMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_drag_drop_mode), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "drag_drop_mode=", "set_drag_drop_mode");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "dragDropMode=", "set_drag_drop_mode");
   rb_define_method(cls_QAbstractItemView.rb_class, "drag_drop_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_drag_drop_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "dragDropMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_drag_drop_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_default_drop_action", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_default_drop_action), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setDefaultDropAction", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_default_drop_action), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "default_drop_action=", "set_default_drop_action");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "defaultDropAction=", "set_default_drop_action");
   rb_define_method(cls_QAbstractItemView.rb_class, "default_drop_action", RUBY_METHOD_FUNC(rb_QAbstractItemView_default_drop_action), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "defaultDropAction", RUBY_METHOD_FUNC(rb_QAbstractItemView_default_drop_action), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_alternating_row_colors", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_alternating_row_colors), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setAlternatingRowColors", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_alternating_row_colors), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "alternating_row_colors=", "set_alternating_row_colors");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "alternatingRowColors=", "set_alternating_row_colors");
   rb_define_method(cls_QAbstractItemView.rb_class, "alternating_row_colors", RUBY_METHOD_FUNC(rb_QAbstractItemView_alternating_row_colors), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "alternatingRowColors", RUBY_METHOD_FUNC(rb_QAbstractItemView_alternating_row_colors), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_icon_size), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setIconSize", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_icon_size), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "icon_size=", "set_icon_size");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "iconSize=", "set_icon_size");
   rb_define_method(cls_QAbstractItemView.rb_class, "icon_size", RUBY_METHOD_FUNC(rb_QAbstractItemView_icon_size), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "iconSize", RUBY_METHOD_FUNC(rb_QAbstractItemView_icon_size), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_text_elide_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_text_elide_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setTextElideMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_text_elide_mode), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "text_elide_mode=", "set_text_elide_mode");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "textElideMode=", "set_text_elide_mode");
   rb_define_method(cls_QAbstractItemView.rb_class, "text_elide_mode", RUBY_METHOD_FUNC(rb_QAbstractItemView_text_elide_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "textElideMode", RUBY_METHOD_FUNC(rb_QAbstractItemView_text_elide_mode), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "keyboard_search", RUBY_METHOD_FUNC(rb_QAbstractItemView_keyboard_search), -1);
@@ -82016,11 +83906,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_update_threshold", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_update_threshold), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setUpdateThreshold", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_update_threshold), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "update_threshold=", "set_update_threshold");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "updateThreshold=", "set_update_threshold");
   rb_define_method(cls_QAbstractItemView.rb_class, "keyboard_search_flags", RUBY_METHOD_FUNC(rb_QAbstractItemView_keyboard_search_flags), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "keyboardSearchFlags", RUBY_METHOD_FUNC(rb_QAbstractItemView_keyboard_search_flags), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_keyboard_search_flags", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_keyboard_search_flags), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setKeyboardSearchFlags", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_keyboard_search_flags), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "keyboard_search_flags=", "set_keyboard_search_flags");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "keyboardSearchFlags=", "set_keyboard_search_flags");
   rb_define_method(cls_QAbstractItemView.rb_class, "open_persistent_editor", RUBY_METHOD_FUNC(rb_QAbstractItemView_open_persistent_editor), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "openPersistentEditor", RUBY_METHOD_FUNC(rb_QAbstractItemView_open_persistent_editor), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "close_persistent_editor", RUBY_METHOD_FUNC(rb_QAbstractItemView_close_persistent_editor), -1);
@@ -82030,16 +83922,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_index_widget", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_index_widget), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setIndexWidget", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_index_widget), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "index_widget=", "set_index_widget");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "indexWidget=", "set_index_widget");
   rb_define_method(cls_QAbstractItemView.rb_class, "index_widget", RUBY_METHOD_FUNC(rb_QAbstractItemView_index_widget), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "indexWidget", RUBY_METHOD_FUNC(rb_QAbstractItemView_index_widget), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_item_delegate_for_row", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_item_delegate_for_row), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setItemDelegateForRow", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_item_delegate_for_row), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "item_delegate_for_row=", "set_item_delegate_for_row");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "itemDelegateForRow=", "set_item_delegate_for_row");
   rb_define_method(cls_QAbstractItemView.rb_class, "item_delegate_for_row", RUBY_METHOD_FUNC(rb_QAbstractItemView_item_delegate_for_row), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "itemDelegateForRow", RUBY_METHOD_FUNC(rb_QAbstractItemView_item_delegate_for_row), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_item_delegate_for_column", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_item_delegate_for_column), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setItemDelegateForColumn", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_item_delegate_for_column), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "item_delegate_for_column=", "set_item_delegate_for_column");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "itemDelegateForColumn=", "set_item_delegate_for_column");
   rb_define_method(cls_QAbstractItemView.rb_class, "item_delegate_for_column", RUBY_METHOD_FUNC(rb_QAbstractItemView_item_delegate_for_column), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "itemDelegateForColumn", RUBY_METHOD_FUNC(rb_QAbstractItemView_item_delegate_for_column), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "item_delegate_for_index", RUBY_METHOD_FUNC(rb_QAbstractItemView_item_delegate_for_index), -1);
@@ -82050,6 +83945,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_root_index", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_root_index), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setRootIndex", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_root_index), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "root_index=", "set_root_index");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "rootIndex=", "set_root_index");
   rb_define_method(cls_QAbstractItemView.rb_class, "do_items_layout", RUBY_METHOD_FUNC(rb_QAbstractItemView_do_items_layout), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "doItemsLayout", RUBY_METHOD_FUNC(rb_QAbstractItemView_do_items_layout), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "select_all", RUBY_METHOD_FUNC(rb_QAbstractItemView_select_all), -1);
@@ -82060,6 +83956,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "set_current_index", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_current_index), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setCurrentIndex", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_current_index), -1);
   rb_define_alias(cls_QAbstractItemView.rb_class, "current_index=", "set_current_index");
+  rb_define_alias(cls_QAbstractItemView.rb_class, "currentIndex=", "set_current_index");
   rb_define_method(cls_QAbstractItemView.rb_class, "scroll_to_top", RUBY_METHOD_FUNC(rb_QAbstractItemView_scroll_to_top), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "scrollToTop", RUBY_METHOD_FUNC(rb_QAbstractItemView_scroll_to_top), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "scroll_to_bottom", RUBY_METHOD_FUNC(rb_QAbstractItemView_scroll_to_bottom), -1);
@@ -82112,6 +84009,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_section_hidden", RUBY_METHOD_FUNC(rb_QHeaderView_set_section_hidden), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setSectionHidden", RUBY_METHOD_FUNC(rb_QHeaderView_set_section_hidden), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "section_hidden=", "set_section_hidden");
+  rb_define_alias(cls_QHeaderView.rb_class, "sectionHidden=", "set_section_hidden");
   rb_define_method(cls_QHeaderView.rb_class, "hidden_section_count", RUBY_METHOD_FUNC(rb_QHeaderView_hidden_section_count), -1);
   rb_define_method(cls_QHeaderView.rb_class, "hiddenSectionCount", RUBY_METHOD_FUNC(rb_QHeaderView_hidden_section_count), -1);
   rb_define_method(cls_QHeaderView.rb_class, "hide_section", RUBY_METHOD_FUNC(rb_QHeaderView_hide_section), -1);
@@ -82126,22 +84024,26 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_sections_movable", RUBY_METHOD_FUNC(rb_QHeaderView_set_sections_movable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setSectionsMovable", RUBY_METHOD_FUNC(rb_QHeaderView_set_sections_movable), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "sections_movable=", "set_sections_movable");
+  rb_define_alias(cls_QHeaderView.rb_class, "sectionsMovable=", "set_sections_movable");
   rb_define_method(cls_QHeaderView.rb_class, "sections_movable", RUBY_METHOD_FUNC(rb_QHeaderView_sections_movable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "sectionsMovable", RUBY_METHOD_FUNC(rb_QHeaderView_sections_movable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "set_first_section_movable", RUBY_METHOD_FUNC(rb_QHeaderView_set_first_section_movable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setFirstSectionMovable", RUBY_METHOD_FUNC(rb_QHeaderView_set_first_section_movable), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "first_section_movable=", "set_first_section_movable");
+  rb_define_alias(cls_QHeaderView.rb_class, "firstSectionMovable=", "set_first_section_movable");
   rb_define_method(cls_QHeaderView.rb_class, "is_first_section_movable", RUBY_METHOD_FUNC(rb_QHeaderView_is_first_section_movable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "isFirstSectionMovable", RUBY_METHOD_FUNC(rb_QHeaderView_is_first_section_movable), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "first_section_movable?", "is_first_section_movable");
   rb_define_method(cls_QHeaderView.rb_class, "set_sections_clickable", RUBY_METHOD_FUNC(rb_QHeaderView_set_sections_clickable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setSectionsClickable", RUBY_METHOD_FUNC(rb_QHeaderView_set_sections_clickable), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "sections_clickable=", "set_sections_clickable");
+  rb_define_alias(cls_QHeaderView.rb_class, "sectionsClickable=", "set_sections_clickable");
   rb_define_method(cls_QHeaderView.rb_class, "sections_clickable", RUBY_METHOD_FUNC(rb_QHeaderView_sections_clickable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "sectionsClickable", RUBY_METHOD_FUNC(rb_QHeaderView_sections_clickable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "set_highlight_sections", RUBY_METHOD_FUNC(rb_QHeaderView_set_highlight_sections), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setHighlightSections", RUBY_METHOD_FUNC(rb_QHeaderView_set_highlight_sections), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "highlight_sections=", "set_highlight_sections");
+  rb_define_alias(cls_QHeaderView.rb_class, "highlightSections=", "set_highlight_sections");
   rb_define_method(cls_QHeaderView.rb_class, "highlight_sections", RUBY_METHOD_FUNC(rb_QHeaderView_highlight_sections), -1);
   rb_define_method(cls_QHeaderView.rb_class, "highlightSections", RUBY_METHOD_FUNC(rb_QHeaderView_highlight_sections), -1);
   rb_define_method(cls_QHeaderView.rb_class, "section_resize_mode", RUBY_METHOD_FUNC(rb_QHeaderView_section_resize_mode), -1);
@@ -82149,9 +84051,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_section_resize_mode", RUBY_METHOD_FUNC(rb_QHeaderView_set_section_resize_mode), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setSectionResizeMode", RUBY_METHOD_FUNC(rb_QHeaderView_set_section_resize_mode), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "section_resize_mode=", "set_section_resize_mode");
+  rb_define_alias(cls_QHeaderView.rb_class, "sectionResizeMode=", "set_section_resize_mode");
   rb_define_method(cls_QHeaderView.rb_class, "set_resize_contents_precision", RUBY_METHOD_FUNC(rb_QHeaderView_set_resize_contents_precision), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setResizeContentsPrecision", RUBY_METHOD_FUNC(rb_QHeaderView_set_resize_contents_precision), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "resize_contents_precision=", "set_resize_contents_precision");
+  rb_define_alias(cls_QHeaderView.rb_class, "resizeContentsPrecision=", "set_resize_contents_precision");
   rb_define_method(cls_QHeaderView.rb_class, "resize_contents_precision", RUBY_METHOD_FUNC(rb_QHeaderView_resize_contents_precision), -1);
   rb_define_method(cls_QHeaderView.rb_class, "resizeContentsPrecision", RUBY_METHOD_FUNC(rb_QHeaderView_resize_contents_precision), -1);
   rb_define_method(cls_QHeaderView.rb_class, "stretch_section_count", RUBY_METHOD_FUNC(rb_QHeaderView_stretch_section_count), -1);
@@ -82159,12 +84063,14 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_sort_indicator_shown", RUBY_METHOD_FUNC(rb_QHeaderView_set_sort_indicator_shown), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setSortIndicatorShown", RUBY_METHOD_FUNC(rb_QHeaderView_set_sort_indicator_shown), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "sort_indicator_shown=", "set_sort_indicator_shown");
+  rb_define_alias(cls_QHeaderView.rb_class, "sortIndicatorShown=", "set_sort_indicator_shown");
   rb_define_method(cls_QHeaderView.rb_class, "is_sort_indicator_shown", RUBY_METHOD_FUNC(rb_QHeaderView_is_sort_indicator_shown), -1);
   rb_define_method(cls_QHeaderView.rb_class, "isSortIndicatorShown", RUBY_METHOD_FUNC(rb_QHeaderView_is_sort_indicator_shown), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "sort_indicator_shown?", "is_sort_indicator_shown");
   rb_define_method(cls_QHeaderView.rb_class, "set_sort_indicator", RUBY_METHOD_FUNC(rb_QHeaderView_set_sort_indicator), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setSortIndicator", RUBY_METHOD_FUNC(rb_QHeaderView_set_sort_indicator), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "sort_indicator=", "set_sort_indicator");
+  rb_define_alias(cls_QHeaderView.rb_class, "sortIndicator=", "set_sort_indicator");
   rb_define_method(cls_QHeaderView.rb_class, "sort_indicator_section", RUBY_METHOD_FUNC(rb_QHeaderView_sort_indicator_section), -1);
   rb_define_method(cls_QHeaderView.rb_class, "sortIndicatorSection", RUBY_METHOD_FUNC(rb_QHeaderView_sort_indicator_section), -1);
   rb_define_method(cls_QHeaderView.rb_class, "sort_indicator_order", RUBY_METHOD_FUNC(rb_QHeaderView_sort_indicator_order), -1);
@@ -82172,6 +84078,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_sort_indicator_clearable", RUBY_METHOD_FUNC(rb_QHeaderView_set_sort_indicator_clearable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setSortIndicatorClearable", RUBY_METHOD_FUNC(rb_QHeaderView_set_sort_indicator_clearable), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "sort_indicator_clearable=", "set_sort_indicator_clearable");
+  rb_define_alias(cls_QHeaderView.rb_class, "sortIndicatorClearable=", "set_sort_indicator_clearable");
   rb_define_method(cls_QHeaderView.rb_class, "is_sort_indicator_clearable", RUBY_METHOD_FUNC(rb_QHeaderView_is_sort_indicator_clearable), -1);
   rb_define_method(cls_QHeaderView.rb_class, "isSortIndicatorClearable", RUBY_METHOD_FUNC(rb_QHeaderView_is_sort_indicator_clearable), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "sort_indicator_clearable?", "is_sort_indicator_clearable");
@@ -82180,16 +84087,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_stretch_last_section", RUBY_METHOD_FUNC(rb_QHeaderView_set_stretch_last_section), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setStretchLastSection", RUBY_METHOD_FUNC(rb_QHeaderView_set_stretch_last_section), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "stretch_last_section=", "set_stretch_last_section");
+  rb_define_alias(cls_QHeaderView.rb_class, "stretchLastSection=", "set_stretch_last_section");
   rb_define_method(cls_QHeaderView.rb_class, "cascading_section_resizes", RUBY_METHOD_FUNC(rb_QHeaderView_cascading_section_resizes), -1);
   rb_define_method(cls_QHeaderView.rb_class, "cascadingSectionResizes", RUBY_METHOD_FUNC(rb_QHeaderView_cascading_section_resizes), -1);
   rb_define_method(cls_QHeaderView.rb_class, "set_cascading_section_resizes", RUBY_METHOD_FUNC(rb_QHeaderView_set_cascading_section_resizes), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setCascadingSectionResizes", RUBY_METHOD_FUNC(rb_QHeaderView_set_cascading_section_resizes), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "cascading_section_resizes=", "set_cascading_section_resizes");
+  rb_define_alias(cls_QHeaderView.rb_class, "cascadingSectionResizes=", "set_cascading_section_resizes");
   rb_define_method(cls_QHeaderView.rb_class, "default_section_size", RUBY_METHOD_FUNC(rb_QHeaderView_default_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "defaultSectionSize", RUBY_METHOD_FUNC(rb_QHeaderView_default_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "set_default_section_size", RUBY_METHOD_FUNC(rb_QHeaderView_set_default_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setDefaultSectionSize", RUBY_METHOD_FUNC(rb_QHeaderView_set_default_section_size), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "default_section_size=", "set_default_section_size");
+  rb_define_alias(cls_QHeaderView.rb_class, "defaultSectionSize=", "set_default_section_size");
   rb_define_method(cls_QHeaderView.rb_class, "reset_default_section_size", RUBY_METHOD_FUNC(rb_QHeaderView_reset_default_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "resetDefaultSectionSize", RUBY_METHOD_FUNC(rb_QHeaderView_reset_default_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "minimum_section_size", RUBY_METHOD_FUNC(rb_QHeaderView_minimum_section_size), -1);
@@ -82197,16 +84107,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_minimum_section_size", RUBY_METHOD_FUNC(rb_QHeaderView_set_minimum_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setMinimumSectionSize", RUBY_METHOD_FUNC(rb_QHeaderView_set_minimum_section_size), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "minimum_section_size=", "set_minimum_section_size");
+  rb_define_alias(cls_QHeaderView.rb_class, "minimumSectionSize=", "set_minimum_section_size");
   rb_define_method(cls_QHeaderView.rb_class, "maximum_section_size", RUBY_METHOD_FUNC(rb_QHeaderView_maximum_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "maximumSectionSize", RUBY_METHOD_FUNC(rb_QHeaderView_maximum_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "set_maximum_section_size", RUBY_METHOD_FUNC(rb_QHeaderView_set_maximum_section_size), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setMaximumSectionSize", RUBY_METHOD_FUNC(rb_QHeaderView_set_maximum_section_size), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "maximum_section_size=", "set_maximum_section_size");
+  rb_define_alias(cls_QHeaderView.rb_class, "maximumSectionSize=", "set_maximum_section_size");
   rb_define_method(cls_QHeaderView.rb_class, "default_alignment", RUBY_METHOD_FUNC(rb_QHeaderView_default_alignment), -1);
   rb_define_method(cls_QHeaderView.rb_class, "defaultAlignment", RUBY_METHOD_FUNC(rb_QHeaderView_default_alignment), -1);
   rb_define_method(cls_QHeaderView.rb_class, "set_default_alignment", RUBY_METHOD_FUNC(rb_QHeaderView_set_default_alignment), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setDefaultAlignment", RUBY_METHOD_FUNC(rb_QHeaderView_set_default_alignment), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "default_alignment=", "set_default_alignment");
+  rb_define_alias(cls_QHeaderView.rb_class, "defaultAlignment=", "set_default_alignment");
   rb_define_method(cls_QHeaderView.rb_class, "do_items_layout", RUBY_METHOD_FUNC(rb_QHeaderView_do_items_layout), -1);
   rb_define_method(cls_QHeaderView.rb_class, "doItemsLayout", RUBY_METHOD_FUNC(rb_QHeaderView_do_items_layout), -1);
   rb_define_method(cls_QHeaderView.rb_class, "sections_moved", RUBY_METHOD_FUNC(rb_QHeaderView_sections_moved), -1);
@@ -82224,6 +84137,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "set_offset_to_section_position", RUBY_METHOD_FUNC(rb_QHeaderView_set_offset_to_section_position), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setOffsetToSectionPosition", RUBY_METHOD_FUNC(rb_QHeaderView_set_offset_to_section_position), -1);
   rb_define_alias(cls_QHeaderView.rb_class, "offset_to_section_position=", "set_offset_to_section_position");
+  rb_define_alias(cls_QHeaderView.rb_class, "offsetToSectionPosition=", "set_offset_to_section_position");
   rb_define_method(cls_QHeaderView.rb_class, "set_offset_to_last_section", RUBY_METHOD_FUNC(rb_QHeaderView_set_offset_to_last_section), -1);
   rb_define_method(cls_QHeaderView.rb_class, "setOffsetToLastSection", RUBY_METHOD_FUNC(rb_QHeaderView_set_offset_to_last_section), -1);
   rb_define_method(cls_QHeaderView.rb_class, "header_data_changed", RUBY_METHOD_FUNC(rb_QHeaderView_header_data_changed), -1);
@@ -82431,6 +84345,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSplitter.rb_class, "set_children_collapsible", RUBY_METHOD_FUNC(rb_QSplitter_set_children_collapsible), -1);
   rb_define_method(cls_QSplitter.rb_class, "setChildrenCollapsible", RUBY_METHOD_FUNC(rb_QSplitter_set_children_collapsible), -1);
   rb_define_alias(cls_QSplitter.rb_class, "children_collapsible=", "set_children_collapsible");
+  rb_define_alias(cls_QSplitter.rb_class, "childrenCollapsible=", "set_children_collapsible");
   rb_define_method(cls_QSplitter.rb_class, "children_collapsible", RUBY_METHOD_FUNC(rb_QSplitter_children_collapsible), -1);
   rb_define_method(cls_QSplitter.rb_class, "childrenCollapsible", RUBY_METHOD_FUNC(rb_QSplitter_children_collapsible), -1);
   rb_define_method(cls_QSplitter.rb_class, "set_collapsible", RUBY_METHOD_FUNC(rb_QSplitter_set_collapsible), -1);
@@ -82441,6 +84356,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSplitter.rb_class, "set_opaque_resize", RUBY_METHOD_FUNC(rb_QSplitter_set_opaque_resize), -1);
   rb_define_method(cls_QSplitter.rb_class, "setOpaqueResize", RUBY_METHOD_FUNC(rb_QSplitter_set_opaque_resize), -1);
   rb_define_alias(cls_QSplitter.rb_class, "opaque_resize=", "set_opaque_resize");
+  rb_define_alias(cls_QSplitter.rb_class, "opaqueResize=", "set_opaque_resize");
   rb_define_method(cls_QSplitter.rb_class, "opaque_resize", RUBY_METHOD_FUNC(rb_QSplitter_opaque_resize), -1);
   rb_define_method(cls_QSplitter.rb_class, "opaqueResize", RUBY_METHOD_FUNC(rb_QSplitter_opaque_resize), -1);
   rb_define_method(cls_QSplitter.rb_class, "refresh", RUBY_METHOD_FUNC(rb_QSplitter_refresh), -1);
@@ -82457,6 +84373,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSplitter.rb_class, "set_handle_width", RUBY_METHOD_FUNC(rb_QSplitter_set_handle_width), -1);
   rb_define_method(cls_QSplitter.rb_class, "setHandleWidth", RUBY_METHOD_FUNC(rb_QSplitter_set_handle_width), -1);
   rb_define_alias(cls_QSplitter.rb_class, "handle_width=", "set_handle_width");
+  rb_define_alias(cls_QSplitter.rb_class, "handleWidth=", "set_handle_width");
   rb_define_method(cls_QSplitter.rb_class, "index_of", RUBY_METHOD_FUNC(rb_QSplitter_index_of), -1);
   rb_define_method(cls_QSplitter.rb_class, "indexOf", RUBY_METHOD_FUNC(rb_QSplitter_index_of), -1);
   rb_define_method(cls_QSplitter.rb_class, "widget", RUBY_METHOD_FUNC(rb_QSplitter_widget), -1);
@@ -82464,6 +84381,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSplitter.rb_class, "set_stretch_factor", RUBY_METHOD_FUNC(rb_QSplitter_set_stretch_factor), -1);
   rb_define_method(cls_QSplitter.rb_class, "setStretchFactor", RUBY_METHOD_FUNC(rb_QSplitter_set_stretch_factor), -1);
   rb_define_alias(cls_QSplitter.rb_class, "stretch_factor=", "set_stretch_factor");
+  rb_define_alias(cls_QSplitter.rb_class, "stretchFactor=", "set_stretch_factor");
   rb_define_singleton_method(cls_QSplitter.rb_class, "tr", RUBY_METHOD_FUNC(rb_QSplitter_s_tr), -1);
   rb_define_method(cls_QSplitter.rb_class, "child_event", RUBY_METHOD_FUNC(rb_QSplitter_prot_child_event), -1);
   rb_define_method(cls_QSplitter.rb_class, "childEvent", RUBY_METHOD_FUNC(rb_QSplitter_prot_child_event), -1);
@@ -82531,6 +84449,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QScrollArea.rb_class, "set_widget_resizable", RUBY_METHOD_FUNC(rb_QScrollArea_set_widget_resizable), -1);
   rb_define_method(cls_QScrollArea.rb_class, "setWidgetResizable", RUBY_METHOD_FUNC(rb_QScrollArea_set_widget_resizable), -1);
   rb_define_alias(cls_QScrollArea.rb_class, "widget_resizable=", "set_widget_resizable");
+  rb_define_alias(cls_QScrollArea.rb_class, "widgetResizable=", "set_widget_resizable");
   rb_define_method(cls_QScrollArea.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QScrollArea_size_hint), -1);
   rb_define_method(cls_QScrollArea.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QScrollArea_size_hint), -1);
   rb_define_method(cls_QScrollArea.rb_class, "focus_next_prev_child", RUBY_METHOD_FUNC(rb_QScrollArea_focus_next_prev_child), -1);
@@ -82617,6 +84536,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStatusBar.rb_class, "set_size_grip_enabled", RUBY_METHOD_FUNC(rb_QStatusBar_set_size_grip_enabled), -1);
   rb_define_method(cls_QStatusBar.rb_class, "setSizeGripEnabled", RUBY_METHOD_FUNC(rb_QStatusBar_set_size_grip_enabled), -1);
   rb_define_alias(cls_QStatusBar.rb_class, "size_grip_enabled=", "set_size_grip_enabled");
+  rb_define_alias(cls_QStatusBar.rb_class, "sizeGripEnabled=", "set_size_grip_enabled");
   rb_define_method(cls_QStatusBar.rb_class, "is_size_grip_enabled", RUBY_METHOD_FUNC(rb_QStatusBar_is_size_grip_enabled), -1);
   rb_define_method(cls_QStatusBar.rb_class, "isSizeGripEnabled", RUBY_METHOD_FUNC(rb_QStatusBar_is_size_grip_enabled), -1);
   rb_define_alias(cls_QStatusBar.rb_class, "size_grip_enabled?", "is_size_grip_enabled");
@@ -82696,9 +84616,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenuBar.rb_class, "set_active_action", RUBY_METHOD_FUNC(rb_QMenuBar_set_active_action), -1);
   rb_define_method(cls_QMenuBar.rb_class, "setActiveAction", RUBY_METHOD_FUNC(rb_QMenuBar_set_active_action), -1);
   rb_define_alias(cls_QMenuBar.rb_class, "active_action=", "set_active_action");
+  rb_define_alias(cls_QMenuBar.rb_class, "activeAction=", "set_active_action");
   rb_define_method(cls_QMenuBar.rb_class, "set_default_up", RUBY_METHOD_FUNC(rb_QMenuBar_set_default_up), -1);
   rb_define_method(cls_QMenuBar.rb_class, "setDefaultUp", RUBY_METHOD_FUNC(rb_QMenuBar_set_default_up), -1);
   rb_define_alias(cls_QMenuBar.rb_class, "default_up=", "set_default_up");
+  rb_define_alias(cls_QMenuBar.rb_class, "defaultUp=", "set_default_up");
   rb_define_method(cls_QMenuBar.rb_class, "is_default_up", RUBY_METHOD_FUNC(rb_QMenuBar_is_default_up), -1);
   rb_define_method(cls_QMenuBar.rb_class, "isDefaultUp", RUBY_METHOD_FUNC(rb_QMenuBar_is_default_up), -1);
   rb_define_alias(cls_QMenuBar.rb_class, "default_up?", "is_default_up");
@@ -82715,6 +84637,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenuBar.rb_class, "set_corner_widget", RUBY_METHOD_FUNC(rb_QMenuBar_set_corner_widget), -1);
   rb_define_method(cls_QMenuBar.rb_class, "setCornerWidget", RUBY_METHOD_FUNC(rb_QMenuBar_set_corner_widget), -1);
   rb_define_alias(cls_QMenuBar.rb_class, "corner_widget=", "set_corner_widget");
+  rb_define_alias(cls_QMenuBar.rb_class, "cornerWidget=", "set_corner_widget");
   rb_define_method(cls_QMenuBar.rb_class, "corner_widget", RUBY_METHOD_FUNC(rb_QMenuBar_corner_widget), -1);
   rb_define_method(cls_QMenuBar.rb_class, "cornerWidget", RUBY_METHOD_FUNC(rb_QMenuBar_corner_widget), -1);
   rb_define_method(cls_QMenuBar.rb_class, "is_native_menu_bar", RUBY_METHOD_FUNC(rb_QMenuBar_is_native_menu_bar), -1);
@@ -82723,6 +84646,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenuBar.rb_class, "set_native_menu_bar", RUBY_METHOD_FUNC(rb_QMenuBar_set_native_menu_bar), -1);
   rb_define_method(cls_QMenuBar.rb_class, "setNativeMenuBar", RUBY_METHOD_FUNC(rb_QMenuBar_set_native_menu_bar), -1);
   rb_define_alias(cls_QMenuBar.rb_class, "native_menu_bar=", "set_native_menu_bar");
+  rb_define_alias(cls_QMenuBar.rb_class, "nativeMenuBar=", "set_native_menu_bar");
   rb_define_method(cls_QMenuBar.rb_class, "set_visible", RUBY_METHOD_FUNC(rb_QMenuBar_set_visible), -1);
   rb_define_method(cls_QMenuBar.rb_class, "setVisible", RUBY_METHOD_FUNC(rb_QMenuBar_set_visible), -1);
   rb_define_alias(cls_QMenuBar.rb_class, "visible=", "set_visible");
@@ -82806,6 +84730,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenu.rb_class, "set_tear_off_enabled", RUBY_METHOD_FUNC(rb_QMenu_set_tear_off_enabled), -1);
   rb_define_method(cls_QMenu.rb_class, "setTearOffEnabled", RUBY_METHOD_FUNC(rb_QMenu_set_tear_off_enabled), -1);
   rb_define_alias(cls_QMenu.rb_class, "tear_off_enabled=", "set_tear_off_enabled");
+  rb_define_alias(cls_QMenu.rb_class, "tearOffEnabled=", "set_tear_off_enabled");
   rb_define_method(cls_QMenu.rb_class, "is_tear_off_enabled", RUBY_METHOD_FUNC(rb_QMenu_is_tear_off_enabled), -1);
   rb_define_method(cls_QMenu.rb_class, "isTearOffEnabled", RUBY_METHOD_FUNC(rb_QMenu_is_tear_off_enabled), -1);
   rb_define_alias(cls_QMenu.rb_class, "tear_off_enabled?", "is_tear_off_enabled");
@@ -82819,11 +84744,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenu.rb_class, "set_default_action", RUBY_METHOD_FUNC(rb_QMenu_set_default_action), -1);
   rb_define_method(cls_QMenu.rb_class, "setDefaultAction", RUBY_METHOD_FUNC(rb_QMenu_set_default_action), -1);
   rb_define_alias(cls_QMenu.rb_class, "default_action=", "set_default_action");
+  rb_define_alias(cls_QMenu.rb_class, "defaultAction=", "set_default_action");
   rb_define_method(cls_QMenu.rb_class, "default_action", RUBY_METHOD_FUNC(rb_QMenu_default_action), -1);
   rb_define_method(cls_QMenu.rb_class, "defaultAction", RUBY_METHOD_FUNC(rb_QMenu_default_action), -1);
   rb_define_method(cls_QMenu.rb_class, "set_active_action", RUBY_METHOD_FUNC(rb_QMenu_set_active_action), -1);
   rb_define_method(cls_QMenu.rb_class, "setActiveAction", RUBY_METHOD_FUNC(rb_QMenu_set_active_action), -1);
   rb_define_alias(cls_QMenu.rb_class, "active_action=", "set_active_action");
+  rb_define_alias(cls_QMenu.rb_class, "activeAction=", "set_active_action");
   rb_define_method(cls_QMenu.rb_class, "active_action", RUBY_METHOD_FUNC(rb_QMenu_active_action), -1);
   rb_define_method(cls_QMenu.rb_class, "activeAction", RUBY_METHOD_FUNC(rb_QMenu_active_action), -1);
   rb_define_method(cls_QMenu.rb_class, "popup", RUBY_METHOD_FUNC(rb_QMenu_popup), -1);
@@ -82847,6 +84774,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenu.rb_class, "set_no_replay_for", RUBY_METHOD_FUNC(rb_QMenu_set_no_replay_for), -1);
   rb_define_method(cls_QMenu.rb_class, "setNoReplayFor", RUBY_METHOD_FUNC(rb_QMenu_set_no_replay_for), -1);
   rb_define_alias(cls_QMenu.rb_class, "no_replay_for=", "set_no_replay_for");
+  rb_define_alias(cls_QMenu.rb_class, "noReplayFor=", "set_no_replay_for");
   rb_define_method(cls_QMenu.rb_class, "set_as_dock_menu", RUBY_METHOD_FUNC(rb_QMenu_set_as_dock_menu), -1);
   rb_define_method(cls_QMenu.rb_class, "setAsDockMenu", RUBY_METHOD_FUNC(rb_QMenu_set_as_dock_menu), -1);
   rb_define_method(cls_QMenu.rb_class, "separators_collapsible", RUBY_METHOD_FUNC(rb_QMenu_separators_collapsible), -1);
@@ -82854,11 +84782,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenu.rb_class, "set_separators_collapsible", RUBY_METHOD_FUNC(rb_QMenu_set_separators_collapsible), -1);
   rb_define_method(cls_QMenu.rb_class, "setSeparatorsCollapsible", RUBY_METHOD_FUNC(rb_QMenu_set_separators_collapsible), -1);
   rb_define_alias(cls_QMenu.rb_class, "separators_collapsible=", "set_separators_collapsible");
+  rb_define_alias(cls_QMenu.rb_class, "separatorsCollapsible=", "set_separators_collapsible");
   rb_define_method(cls_QMenu.rb_class, "tool_tips_visible", RUBY_METHOD_FUNC(rb_QMenu_tool_tips_visible), -1);
   rb_define_method(cls_QMenu.rb_class, "toolTipsVisible", RUBY_METHOD_FUNC(rb_QMenu_tool_tips_visible), -1);
   rb_define_method(cls_QMenu.rb_class, "set_tool_tips_visible", RUBY_METHOD_FUNC(rb_QMenu_set_tool_tips_visible), -1);
   rb_define_method(cls_QMenu.rb_class, "setToolTipsVisible", RUBY_METHOD_FUNC(rb_QMenu_set_tool_tips_visible), -1);
   rb_define_alias(cls_QMenu.rb_class, "tool_tips_visible=", "set_tool_tips_visible");
+  rb_define_alias(cls_QMenu.rb_class, "toolTipsVisible=", "set_tool_tips_visible");
   rb_define_singleton_method(cls_QMenu.rb_class, "tr", RUBY_METHOD_FUNC(rb_QMenu_s_tr), -1);
   rb_define_singleton_method(cls_QMenu.rb_class, "menu_in_action", RUBY_METHOD_FUNC(rb_QMenu_s_menu_in_action), -1);
   rb_define_singleton_method(cls_QMenu.rb_class, "menuInAction", RUBY_METHOD_FUNC(rb_QMenu_s_menu_in_action), -1);
@@ -82923,6 +84853,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAction.rb_class, "set_action_group", RUBY_METHOD_FUNC(rb_QAction_set_action_group), -1);
   rb_define_method(cls_QAction.rb_class, "setActionGroup", RUBY_METHOD_FUNC(rb_QAction_set_action_group), -1);
   rb_define_alias(cls_QAction.rb_class, "action_group=", "set_action_group");
+  rb_define_alias(cls_QAction.rb_class, "actionGroup=", "set_action_group");
   rb_define_method(cls_QAction.rb_class, "action_group", RUBY_METHOD_FUNC(rb_QAction_action_group), -1);
   rb_define_method(cls_QAction.rb_class, "actionGroup", RUBY_METHOD_FUNC(rb_QAction_action_group), -1);
   rb_define_method(cls_QAction.rb_class, "set_icon", RUBY_METHOD_FUNC(rb_QAction_set_icon), -1);
@@ -82936,21 +84867,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAction.rb_class, "set_icon_text", RUBY_METHOD_FUNC(rb_QAction_set_icon_text), -1);
   rb_define_method(cls_QAction.rb_class, "setIconText", RUBY_METHOD_FUNC(rb_QAction_set_icon_text), -1);
   rb_define_alias(cls_QAction.rb_class, "icon_text=", "set_icon_text");
+  rb_define_alias(cls_QAction.rb_class, "iconText=", "set_icon_text");
   rb_define_method(cls_QAction.rb_class, "icon_text", RUBY_METHOD_FUNC(rb_QAction_icon_text), -1);
   rb_define_method(cls_QAction.rb_class, "iconText", RUBY_METHOD_FUNC(rb_QAction_icon_text), -1);
   rb_define_method(cls_QAction.rb_class, "set_tool_tip", RUBY_METHOD_FUNC(rb_QAction_set_tool_tip), -1);
   rb_define_method(cls_QAction.rb_class, "setToolTip", RUBY_METHOD_FUNC(rb_QAction_set_tool_tip), -1);
   rb_define_alias(cls_QAction.rb_class, "tool_tip=", "set_tool_tip");
+  rb_define_alias(cls_QAction.rb_class, "toolTip=", "set_tool_tip");
   rb_define_method(cls_QAction.rb_class, "tool_tip", RUBY_METHOD_FUNC(rb_QAction_tool_tip), -1);
   rb_define_method(cls_QAction.rb_class, "toolTip", RUBY_METHOD_FUNC(rb_QAction_tool_tip), -1);
   rb_define_method(cls_QAction.rb_class, "set_status_tip", RUBY_METHOD_FUNC(rb_QAction_set_status_tip), -1);
   rb_define_method(cls_QAction.rb_class, "setStatusTip", RUBY_METHOD_FUNC(rb_QAction_set_status_tip), -1);
   rb_define_alias(cls_QAction.rb_class, "status_tip=", "set_status_tip");
+  rb_define_alias(cls_QAction.rb_class, "statusTip=", "set_status_tip");
   rb_define_method(cls_QAction.rb_class, "status_tip", RUBY_METHOD_FUNC(rb_QAction_status_tip), -1);
   rb_define_method(cls_QAction.rb_class, "statusTip", RUBY_METHOD_FUNC(rb_QAction_status_tip), -1);
   rb_define_method(cls_QAction.rb_class, "set_whats_this", RUBY_METHOD_FUNC(rb_QAction_set_whats_this), -1);
   rb_define_method(cls_QAction.rb_class, "setWhatsThis", RUBY_METHOD_FUNC(rb_QAction_set_whats_this), -1);
   rb_define_alias(cls_QAction.rb_class, "whats_this=", "set_whats_this");
+  rb_define_alias(cls_QAction.rb_class, "whatsThis=", "set_whats_this");
   rb_define_method(cls_QAction.rb_class, "whats_this", RUBY_METHOD_FUNC(rb_QAction_whats_this), -1);
   rb_define_method(cls_QAction.rb_class, "whatsThis", RUBY_METHOD_FUNC(rb_QAction_whats_this), -1);
   rb_define_method(cls_QAction.rb_class, "set_priority", RUBY_METHOD_FUNC(rb_QAction_set_priority), -1);
@@ -82973,11 +84908,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAction.rb_class, "set_shortcut_context", RUBY_METHOD_FUNC(rb_QAction_set_shortcut_context), -1);
   rb_define_method(cls_QAction.rb_class, "setShortcutContext", RUBY_METHOD_FUNC(rb_QAction_set_shortcut_context), -1);
   rb_define_alias(cls_QAction.rb_class, "shortcut_context=", "set_shortcut_context");
+  rb_define_alias(cls_QAction.rb_class, "shortcutContext=", "set_shortcut_context");
   rb_define_method(cls_QAction.rb_class, "shortcut_context", RUBY_METHOD_FUNC(rb_QAction_shortcut_context), -1);
   rb_define_method(cls_QAction.rb_class, "shortcutContext", RUBY_METHOD_FUNC(rb_QAction_shortcut_context), -1);
   rb_define_method(cls_QAction.rb_class, "set_auto_repeat", RUBY_METHOD_FUNC(rb_QAction_set_auto_repeat), -1);
   rb_define_method(cls_QAction.rb_class, "setAutoRepeat", RUBY_METHOD_FUNC(rb_QAction_set_auto_repeat), -1);
   rb_define_alias(cls_QAction.rb_class, "auto_repeat=", "set_auto_repeat");
+  rb_define_alias(cls_QAction.rb_class, "autoRepeat=", "set_auto_repeat");
   rb_define_method(cls_QAction.rb_class, "auto_repeat", RUBY_METHOD_FUNC(rb_QAction_auto_repeat), -1);
   rb_define_method(cls_QAction.rb_class, "autoRepeat", RUBY_METHOD_FUNC(rb_QAction_auto_repeat), -1);
   rb_define_method(cls_QAction.rb_class, "set_font", RUBY_METHOD_FUNC(rb_QAction_set_font), -1);
@@ -83007,17 +84944,20 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAction.rb_class, "set_menu_role", RUBY_METHOD_FUNC(rb_QAction_set_menu_role), -1);
   rb_define_method(cls_QAction.rb_class, "setMenuRole", RUBY_METHOD_FUNC(rb_QAction_set_menu_role), -1);
   rb_define_alias(cls_QAction.rb_class, "menu_role=", "set_menu_role");
+  rb_define_alias(cls_QAction.rb_class, "menuRole=", "set_menu_role");
   rb_define_method(cls_QAction.rb_class, "menu_role", RUBY_METHOD_FUNC(rb_QAction_menu_role), -1);
   rb_define_method(cls_QAction.rb_class, "menuRole", RUBY_METHOD_FUNC(rb_QAction_menu_role), -1);
   rb_define_method(cls_QAction.rb_class, "set_icon_visible_in_menu", RUBY_METHOD_FUNC(rb_QAction_set_icon_visible_in_menu), -1);
   rb_define_method(cls_QAction.rb_class, "setIconVisibleInMenu", RUBY_METHOD_FUNC(rb_QAction_set_icon_visible_in_menu), -1);
   rb_define_alias(cls_QAction.rb_class, "icon_visible_in_menu=", "set_icon_visible_in_menu");
+  rb_define_alias(cls_QAction.rb_class, "iconVisibleInMenu=", "set_icon_visible_in_menu");
   rb_define_method(cls_QAction.rb_class, "is_icon_visible_in_menu", RUBY_METHOD_FUNC(rb_QAction_is_icon_visible_in_menu), -1);
   rb_define_method(cls_QAction.rb_class, "isIconVisibleInMenu", RUBY_METHOD_FUNC(rb_QAction_is_icon_visible_in_menu), -1);
   rb_define_alias(cls_QAction.rb_class, "icon_visible_in_menu?", "is_icon_visible_in_menu");
   rb_define_method(cls_QAction.rb_class, "set_shortcut_visible_in_context_menu", RUBY_METHOD_FUNC(rb_QAction_set_shortcut_visible_in_context_menu), -1);
   rb_define_method(cls_QAction.rb_class, "setShortcutVisibleInContextMenu", RUBY_METHOD_FUNC(rb_QAction_set_shortcut_visible_in_context_menu), -1);
   rb_define_alias(cls_QAction.rb_class, "shortcut_visible_in_context_menu=", "set_shortcut_visible_in_context_menu");
+  rb_define_alias(cls_QAction.rb_class, "shortcutVisibleInContextMenu=", "set_shortcut_visible_in_context_menu");
   rb_define_method(cls_QAction.rb_class, "is_shortcut_visible_in_context_menu", RUBY_METHOD_FUNC(rb_QAction_is_shortcut_visible_in_context_menu), -1);
   rb_define_method(cls_QAction.rb_class, "isShortcutVisibleInContextMenu", RUBY_METHOD_FUNC(rb_QAction_is_shortcut_visible_in_context_menu), -1);
   rb_define_alias(cls_QAction.rb_class, "shortcut_visible_in_context_menu?", "is_shortcut_visible_in_context_menu");
@@ -83090,6 +85030,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QActionGroup.rb_class, "set_exclusion_policy", RUBY_METHOD_FUNC(rb_QActionGroup_set_exclusion_policy), -1);
   rb_define_method(cls_QActionGroup.rb_class, "setExclusionPolicy", RUBY_METHOD_FUNC(rb_QActionGroup_set_exclusion_policy), -1);
   rb_define_alias(cls_QActionGroup.rb_class, "exclusion_policy=", "set_exclusion_policy");
+  rb_define_alias(cls_QActionGroup.rb_class, "exclusionPolicy=", "set_exclusion_policy");
   rb_define_singleton_method(cls_QActionGroup.rb_class, "tr", RUBY_METHOD_FUNC(rb_QActionGroup_s_tr), -1);
   rb_define_method(cls_QActionGroup.rb_class, "timer_event", RUBY_METHOD_FUNC(rb_QActionGroup_prot_timer_event), -1);
   rb_define_method(cls_QActionGroup.rb_class, "timerEvent", RUBY_METHOD_FUNC(rb_QActionGroup_prot_timer_event), -1);
@@ -83111,6 +85052,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QToolBar.rb_class, "set_allowed_areas", RUBY_METHOD_FUNC(rb_QToolBar_set_allowed_areas), -1);
   rb_define_method(cls_QToolBar.rb_class, "setAllowedAreas", RUBY_METHOD_FUNC(rb_QToolBar_set_allowed_areas), -1);
   rb_define_alias(cls_QToolBar.rb_class, "allowed_areas=", "set_allowed_areas");
+  rb_define_alias(cls_QToolBar.rb_class, "allowedAreas=", "set_allowed_areas");
   rb_define_method(cls_QToolBar.rb_class, "allowed_areas", RUBY_METHOD_FUNC(rb_QToolBar_allowed_areas), -1);
   rb_define_method(cls_QToolBar.rb_class, "allowedAreas", RUBY_METHOD_FUNC(rb_QToolBar_allowed_areas), -1);
   rb_define_method(cls_QToolBar.rb_class, "is_area_allowed", RUBY_METHOD_FUNC(rb_QToolBar_is_area_allowed), -1);
@@ -83152,9 +85094,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QToolBar.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QToolBar_set_icon_size), -1);
   rb_define_method(cls_QToolBar.rb_class, "setIconSize", RUBY_METHOD_FUNC(rb_QToolBar_set_icon_size), -1);
   rb_define_alias(cls_QToolBar.rb_class, "icon_size=", "set_icon_size");
+  rb_define_alias(cls_QToolBar.rb_class, "iconSize=", "set_icon_size");
   rb_define_method(cls_QToolBar.rb_class, "set_tool_button_style", RUBY_METHOD_FUNC(rb_QToolBar_set_tool_button_style), -1);
   rb_define_method(cls_QToolBar.rb_class, "setToolButtonStyle", RUBY_METHOD_FUNC(rb_QToolBar_set_tool_button_style), -1);
   rb_define_alias(cls_QToolBar.rb_class, "tool_button_style=", "set_tool_button_style");
+  rb_define_alias(cls_QToolBar.rb_class, "toolButtonStyle=", "set_tool_button_style");
   rb_define_singleton_method(cls_QToolBar.rb_class, "tr", RUBY_METHOD_FUNC(rb_QToolBar_s_tr), -1);
   rb_define_method(cls_QToolBar.rb_class, "change_event", RUBY_METHOD_FUNC(rb_QToolBar_prot_change_event), -1);
   rb_define_method(cls_QToolBar.rb_class, "changeEvent", RUBY_METHOD_FUNC(rb_QToolBar_prot_change_event), -1);
@@ -83215,6 +85159,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QToolBar.rb_class, "on_tool_button_style_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_tool_button_style_changed), 0);
   rb_define_method(cls_QToolBar.rb_class, "on_top_level_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_top_level_changed), 0);
   rb_define_method(cls_QToolBar.rb_class, "on_visibility_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_visibility_changed), 0);
+  rb_undef_alloc_func(cls_QDesktopServices.rb_class);
+  rb_define_singleton_method(cls_QDesktopServices.rb_class, "open_url", RUBY_METHOD_FUNC(rb_QDesktopServices_s_open_url), -1);
+  rb_define_singleton_method(cls_QDesktopServices.rb_class, "openUrl", RUBY_METHOD_FUNC(rb_QDesktopServices_s_open_url), -1);
+  rb_define_singleton_method(cls_QDesktopServices.rb_class, "set_url_handler", RUBY_METHOD_FUNC(rb_QDesktopServices_s_set_url_handler), -1);
+  rb_define_singleton_method(cls_QDesktopServices.rb_class, "setUrlHandler", RUBY_METHOD_FUNC(rb_QDesktopServices_s_set_url_handler), -1);
+  rb_define_singleton_method(cls_QDesktopServices.rb_class, "unset_url_handler", RUBY_METHOD_FUNC(rb_QDesktopServices_s_unset_url_handler), -1);
+  rb_define_singleton_method(cls_QDesktopServices.rb_class, "unsetUrlHandler", RUBY_METHOD_FUNC(rb_QDesktopServices_s_unset_url_handler), -1);
   rb_undef_alloc_func(cls_QValidator.rb_class);
   rb_define_singleton_method(cls_QValidator.rb_class, "tr", RUBY_METHOD_FUNC(rb_QValidator_s_tr), -1);
   rb_define_method(cls_QValidator.rb_class, "on_changed", RUBY_METHOD_FUNC(rb_QValidator_on_changed), 0);
@@ -83306,22 +85257,27 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSizePolicy.rb_class, "set_horizontal_policy", RUBY_METHOD_FUNC(rb_QSizePolicy_set_horizontal_policy), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setHorizontalPolicy", RUBY_METHOD_FUNC(rb_QSizePolicy_set_horizontal_policy), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "horizontal_policy=", "set_horizontal_policy");
+  rb_define_alias(cls_QSizePolicy.rb_class, "horizontalPolicy=", "set_horizontal_policy");
   rb_define_method(cls_QSizePolicy.rb_class, "set_vertical_policy", RUBY_METHOD_FUNC(rb_QSizePolicy_set_vertical_policy), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setVerticalPolicy", RUBY_METHOD_FUNC(rb_QSizePolicy_set_vertical_policy), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "vertical_policy=", "set_vertical_policy");
+  rb_define_alias(cls_QSizePolicy.rb_class, "verticalPolicy=", "set_vertical_policy");
   rb_define_method(cls_QSizePolicy.rb_class, "set_control_type", RUBY_METHOD_FUNC(rb_QSizePolicy_set_control_type), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setControlType", RUBY_METHOD_FUNC(rb_QSizePolicy_set_control_type), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "control_type=", "set_control_type");
+  rb_define_alias(cls_QSizePolicy.rb_class, "controlType=", "set_control_type");
   rb_define_method(cls_QSizePolicy.rb_class, "expanding_directions", RUBY_METHOD_FUNC(rb_QSizePolicy_expanding_directions), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "expandingDirections", RUBY_METHOD_FUNC(rb_QSizePolicy_expanding_directions), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "set_height_for_width", RUBY_METHOD_FUNC(rb_QSizePolicy_set_height_for_width), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setHeightForWidth", RUBY_METHOD_FUNC(rb_QSizePolicy_set_height_for_width), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "height_for_width=", "set_height_for_width");
+  rb_define_alias(cls_QSizePolicy.rb_class, "heightForWidth=", "set_height_for_width");
   rb_define_method(cls_QSizePolicy.rb_class, "has_height_for_width", RUBY_METHOD_FUNC(rb_QSizePolicy_has_height_for_width), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "hasHeightForWidth", RUBY_METHOD_FUNC(rb_QSizePolicy_has_height_for_width), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "set_width_for_height", RUBY_METHOD_FUNC(rb_QSizePolicy_set_width_for_height), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setWidthForHeight", RUBY_METHOD_FUNC(rb_QSizePolicy_set_width_for_height), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "width_for_height=", "set_width_for_height");
+  rb_define_alias(cls_QSizePolicy.rb_class, "widthForHeight=", "set_width_for_height");
   rb_define_method(cls_QSizePolicy.rb_class, "has_width_for_height", RUBY_METHOD_FUNC(rb_QSizePolicy_has_width_for_height), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "hasWidthForHeight", RUBY_METHOD_FUNC(rb_QSizePolicy_has_width_for_height), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "horizontal_stretch", RUBY_METHOD_FUNC(rb_QSizePolicy_horizontal_stretch), -1);
@@ -83331,14 +85287,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSizePolicy.rb_class, "set_horizontal_stretch", RUBY_METHOD_FUNC(rb_QSizePolicy_set_horizontal_stretch), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setHorizontalStretch", RUBY_METHOD_FUNC(rb_QSizePolicy_set_horizontal_stretch), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "horizontal_stretch=", "set_horizontal_stretch");
+  rb_define_alias(cls_QSizePolicy.rb_class, "horizontalStretch=", "set_horizontal_stretch");
   rb_define_method(cls_QSizePolicy.rb_class, "set_vertical_stretch", RUBY_METHOD_FUNC(rb_QSizePolicy_set_vertical_stretch), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setVerticalStretch", RUBY_METHOD_FUNC(rb_QSizePolicy_set_vertical_stretch), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "vertical_stretch=", "set_vertical_stretch");
+  rb_define_alias(cls_QSizePolicy.rb_class, "verticalStretch=", "set_vertical_stretch");
   rb_define_method(cls_QSizePolicy.rb_class, "retain_size_when_hidden", RUBY_METHOD_FUNC(rb_QSizePolicy_retain_size_when_hidden), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "retainSizeWhenHidden", RUBY_METHOD_FUNC(rb_QSizePolicy_retain_size_when_hidden), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "set_retain_size_when_hidden", RUBY_METHOD_FUNC(rb_QSizePolicy_set_retain_size_when_hidden), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "setRetainSizeWhenHidden", RUBY_METHOD_FUNC(rb_QSizePolicy_set_retain_size_when_hidden), -1);
   rb_define_alias(cls_QSizePolicy.rb_class, "retain_size_when_hidden=", "set_retain_size_when_hidden");
+  rb_define_alias(cls_QSizePolicy.rb_class, "retainSizeWhenHidden=", "set_retain_size_when_hidden");
   rb_define_method(cls_QSizePolicy.rb_class, "transpose", RUBY_METHOD_FUNC(rb_QSizePolicy_transpose), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "transposed", RUBY_METHOD_FUNC(rb_QSizePolicy_transposed), -1);
   rb_define_alloc_func(cls_QSettings.rb_class, rb_QSettings_alloc);
@@ -83353,6 +85312,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSettings.rb_class, "set_atomic_sync_required", RUBY_METHOD_FUNC(rb_QSettings_set_atomic_sync_required), -1);
   rb_define_method(cls_QSettings.rb_class, "setAtomicSyncRequired", RUBY_METHOD_FUNC(rb_QSettings_set_atomic_sync_required), -1);
   rb_define_alias(cls_QSettings.rb_class, "atomic_sync_required=", "set_atomic_sync_required");
+  rb_define_alias(cls_QSettings.rb_class, "atomicSyncRequired=", "set_atomic_sync_required");
   rb_define_method(cls_QSettings.rb_class, "end_group", RUBY_METHOD_FUNC(rb_QSettings_end_group), -1);
   rb_define_method(cls_QSettings.rb_class, "endGroup", RUBY_METHOD_FUNC(rb_QSettings_end_group), -1);
   rb_define_method(cls_QSettings.rb_class, "group", RUBY_METHOD_FUNC(rb_QSettings_group), -1);
@@ -83361,6 +85321,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSettings.rb_class, "set_array_index", RUBY_METHOD_FUNC(rb_QSettings_set_array_index), -1);
   rb_define_method(cls_QSettings.rb_class, "setArrayIndex", RUBY_METHOD_FUNC(rb_QSettings_set_array_index), -1);
   rb_define_alias(cls_QSettings.rb_class, "array_index=", "set_array_index");
+  rb_define_alias(cls_QSettings.rb_class, "arrayIndex=", "set_array_index");
   rb_define_method(cls_QSettings.rb_class, "all_keys", RUBY_METHOD_FUNC(rb_QSettings_all_keys), -1);
   rb_define_method(cls_QSettings.rb_class, "allKeys", RUBY_METHOD_FUNC(rb_QSettings_all_keys), -1);
   rb_define_method(cls_QSettings.rb_class, "child_keys", RUBY_METHOD_FUNC(rb_QSettings_child_keys), -1);
@@ -83373,6 +85334,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSettings.rb_class, "set_fallbacks_enabled", RUBY_METHOD_FUNC(rb_QSettings_set_fallbacks_enabled), -1);
   rb_define_method(cls_QSettings.rb_class, "setFallbacksEnabled", RUBY_METHOD_FUNC(rb_QSettings_set_fallbacks_enabled), -1);
   rb_define_alias(cls_QSettings.rb_class, "fallbacks_enabled=", "set_fallbacks_enabled");
+  rb_define_alias(cls_QSettings.rb_class, "fallbacksEnabled=", "set_fallbacks_enabled");
   rb_define_method(cls_QSettings.rb_class, "fallbacks_enabled", RUBY_METHOD_FUNC(rb_QSettings_fallbacks_enabled), -1);
   rb_define_method(cls_QSettings.rb_class, "fallbacksEnabled", RUBY_METHOD_FUNC(rb_QSettings_fallbacks_enabled), -1);
   rb_define_method(cls_QSettings.rb_class, "file_name", RUBY_METHOD_FUNC(rb_QSettings_file_name), -1);
@@ -83441,6 +85403,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStringListModel.rb_class, "set_string_list", RUBY_METHOD_FUNC(rb_QStringListModel_set_string_list), -1);
   rb_define_method(cls_QStringListModel.rb_class, "setStringList", RUBY_METHOD_FUNC(rb_QStringListModel_set_string_list), -1);
   rb_define_alias(cls_QStringListModel.rb_class, "string_list=", "set_string_list");
+  rb_define_alias(cls_QStringListModel.rb_class, "stringList=", "set_string_list");
   rb_define_method(cls_QStringListModel.rb_class, "supported_drop_actions", RUBY_METHOD_FUNC(rb_QStringListModel_supported_drop_actions), -1);
   rb_define_method(cls_QStringListModel.rb_class, "supportedDropActions", RUBY_METHOD_FUNC(rb_QStringListModel_supported_drop_actions), -1);
   rb_define_singleton_method(cls_QStringListModel.rb_class, "tr", RUBY_METHOD_FUNC(rb_QStringListModel_s_tr), -1);
@@ -83464,6 +85427,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemModel.rb_class, "set_header_data", RUBY_METHOD_FUNC(rb_QAbstractItemModel_set_header_data), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "setHeaderData", RUBY_METHOD_FUNC(rb_QAbstractItemModel_set_header_data), -1);
   rb_define_alias(cls_QAbstractItemModel.rb_class, "header_data=", "set_header_data");
+  rb_define_alias(cls_QAbstractItemModel.rb_class, "headerData=", "set_header_data");
   rb_define_method(cls_QAbstractItemModel.rb_class, "clear_item_data", RUBY_METHOD_FUNC(rb_QAbstractItemModel_clear_item_data), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "clearItemData", RUBY_METHOD_FUNC(rb_QAbstractItemModel_clear_item_data), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "mime_types", RUBY_METHOD_FUNC(rb_QAbstractItemModel_mime_types), -1);
@@ -83513,7 +85477,10 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemModel.rb_class, "submit", RUBY_METHOD_FUNC(rb_QAbstractItemModel_submit), -1);
   rb_define_method(cls_QAbstractItemModel.rb_class, "revert", RUBY_METHOD_FUNC(rb_QAbstractItemModel_revert), -1);
   rb_define_singleton_method(cls_QAbstractItemModel.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractItemModel_s_tr), -1);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_data_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_data_changed), 0);
   rb_define_method(cls_QAbstractItemModel.rb_class, "on_header_data_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_header_data_changed), 0);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_layout_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_layout_changed), 0);
+  rb_define_method(cls_QAbstractItemModel.rb_class, "on_layout_about_to_be_changed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_layout_about_to_be_changed), 0);
   rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_inserted), 0);
   rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_inserted", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_inserted), 0);
   rb_define_method(cls_QAbstractItemModel.rb_class, "on_rows_about_to_be_removed", RUBY_METHOD_FUNC(rb_QAbstractItemModel_on_rows_about_to_be_removed), 0);
@@ -83563,6 +85530,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileSystemModel.rb_class, "set_root_path", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_root_path), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "setRootPath", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_root_path), -1);
   rb_define_alias(cls_QFileSystemModel.rb_class, "root_path=", "set_root_path");
+  rb_define_alias(cls_QFileSystemModel.rb_class, "rootPath=", "set_root_path");
   rb_define_method(cls_QFileSystemModel.rb_class, "root_path", RUBY_METHOD_FUNC(rb_QFileSystemModel_root_path), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "rootPath", RUBY_METHOD_FUNC(rb_QFileSystemModel_root_path), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "set_filter", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_filter), -1);
@@ -83572,22 +85540,26 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileSystemModel.rb_class, "set_resolve_symlinks", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_resolve_symlinks), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "setResolveSymlinks", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_resolve_symlinks), -1);
   rb_define_alias(cls_QFileSystemModel.rb_class, "resolve_symlinks=", "set_resolve_symlinks");
+  rb_define_alias(cls_QFileSystemModel.rb_class, "resolveSymlinks=", "set_resolve_symlinks");
   rb_define_method(cls_QFileSystemModel.rb_class, "resolve_symlinks", RUBY_METHOD_FUNC(rb_QFileSystemModel_resolve_symlinks), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "resolveSymlinks", RUBY_METHOD_FUNC(rb_QFileSystemModel_resolve_symlinks), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "set_read_only", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_read_only), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "setReadOnly", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_read_only), -1);
   rb_define_alias(cls_QFileSystemModel.rb_class, "read_only=", "set_read_only");
+  rb_define_alias(cls_QFileSystemModel.rb_class, "readOnly=", "set_read_only");
   rb_define_method(cls_QFileSystemModel.rb_class, "is_read_only", RUBY_METHOD_FUNC(rb_QFileSystemModel_is_read_only), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "isReadOnly", RUBY_METHOD_FUNC(rb_QFileSystemModel_is_read_only), -1);
   rb_define_alias(cls_QFileSystemModel.rb_class, "read_only?", "is_read_only");
   rb_define_method(cls_QFileSystemModel.rb_class, "set_name_filter_disables", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_name_filter_disables), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "setNameFilterDisables", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_name_filter_disables), -1);
   rb_define_alias(cls_QFileSystemModel.rb_class, "name_filter_disables=", "set_name_filter_disables");
+  rb_define_alias(cls_QFileSystemModel.rb_class, "nameFilterDisables=", "set_name_filter_disables");
   rb_define_method(cls_QFileSystemModel.rb_class, "name_filter_disables", RUBY_METHOD_FUNC(rb_QFileSystemModel_name_filter_disables), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "nameFilterDisables", RUBY_METHOD_FUNC(rb_QFileSystemModel_name_filter_disables), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "set_name_filters", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_name_filters), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "setNameFilters", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_name_filters), -1);
   rb_define_alias(cls_QFileSystemModel.rb_class, "name_filters=", "set_name_filters");
+  rb_define_alias(cls_QFileSystemModel.rb_class, "nameFilters=", "set_name_filters");
   rb_define_method(cls_QFileSystemModel.rb_class, "name_filters", RUBY_METHOD_FUNC(rb_QFileSystemModel_name_filters), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "nameFilters", RUBY_METHOD_FUNC(rb_QFileSystemModel_name_filters), -1);
   rb_define_method(cls_QFileSystemModel.rb_class, "set_option", RUBY_METHOD_FUNC(rb_QFileSystemModel_set_option), -1);
@@ -83644,11 +85616,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListView.rb_class, "set_resize_mode", RUBY_METHOD_FUNC(rb_QListView_set_resize_mode), -1);
   rb_define_method(cls_QListView.rb_class, "setResizeMode", RUBY_METHOD_FUNC(rb_QListView_set_resize_mode), -1);
   rb_define_alias(cls_QListView.rb_class, "resize_mode=", "set_resize_mode");
+  rb_define_alias(cls_QListView.rb_class, "resizeMode=", "set_resize_mode");
   rb_define_method(cls_QListView.rb_class, "resize_mode", RUBY_METHOD_FUNC(rb_QListView_resize_mode), -1);
   rb_define_method(cls_QListView.rb_class, "resizeMode", RUBY_METHOD_FUNC(rb_QListView_resize_mode), -1);
   rb_define_method(cls_QListView.rb_class, "set_layout_mode", RUBY_METHOD_FUNC(rb_QListView_set_layout_mode), -1);
   rb_define_method(cls_QListView.rb_class, "setLayoutMode", RUBY_METHOD_FUNC(rb_QListView_set_layout_mode), -1);
   rb_define_alias(cls_QListView.rb_class, "layout_mode=", "set_layout_mode");
+  rb_define_alias(cls_QListView.rb_class, "layoutMode=", "set_layout_mode");
   rb_define_method(cls_QListView.rb_class, "layout_mode", RUBY_METHOD_FUNC(rb_QListView_layout_mode), -1);
   rb_define_method(cls_QListView.rb_class, "layoutMode", RUBY_METHOD_FUNC(rb_QListView_layout_mode), -1);
   rb_define_method(cls_QListView.rb_class, "set_spacing", RUBY_METHOD_FUNC(rb_QListView_set_spacing), -1);
@@ -83658,16 +85632,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListView.rb_class, "set_batch_size", RUBY_METHOD_FUNC(rb_QListView_set_batch_size), -1);
   rb_define_method(cls_QListView.rb_class, "setBatchSize", RUBY_METHOD_FUNC(rb_QListView_set_batch_size), -1);
   rb_define_alias(cls_QListView.rb_class, "batch_size=", "set_batch_size");
+  rb_define_alias(cls_QListView.rb_class, "batchSize=", "set_batch_size");
   rb_define_method(cls_QListView.rb_class, "batch_size", RUBY_METHOD_FUNC(rb_QListView_batch_size), -1);
   rb_define_method(cls_QListView.rb_class, "batchSize", RUBY_METHOD_FUNC(rb_QListView_batch_size), -1);
   rb_define_method(cls_QListView.rb_class, "set_grid_size", RUBY_METHOD_FUNC(rb_QListView_set_grid_size), -1);
   rb_define_method(cls_QListView.rb_class, "setGridSize", RUBY_METHOD_FUNC(rb_QListView_set_grid_size), -1);
   rb_define_alias(cls_QListView.rb_class, "grid_size=", "set_grid_size");
+  rb_define_alias(cls_QListView.rb_class, "gridSize=", "set_grid_size");
   rb_define_method(cls_QListView.rb_class, "grid_size", RUBY_METHOD_FUNC(rb_QListView_grid_size), -1);
   rb_define_method(cls_QListView.rb_class, "gridSize", RUBY_METHOD_FUNC(rb_QListView_grid_size), -1);
   rb_define_method(cls_QListView.rb_class, "set_view_mode", RUBY_METHOD_FUNC(rb_QListView_set_view_mode), -1);
   rb_define_method(cls_QListView.rb_class, "setViewMode", RUBY_METHOD_FUNC(rb_QListView_set_view_mode), -1);
   rb_define_alias(cls_QListView.rb_class, "view_mode=", "set_view_mode");
+  rb_define_alias(cls_QListView.rb_class, "viewMode=", "set_view_mode");
   rb_define_method(cls_QListView.rb_class, "view_mode", RUBY_METHOD_FUNC(rb_QListView_view_mode), -1);
   rb_define_method(cls_QListView.rb_class, "viewMode", RUBY_METHOD_FUNC(rb_QListView_view_mode), -1);
   rb_define_method(cls_QListView.rb_class, "clear_property_flags", RUBY_METHOD_FUNC(rb_QListView_clear_property_flags), -1);
@@ -83677,30 +85654,36 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListView.rb_class, "set_row_hidden", RUBY_METHOD_FUNC(rb_QListView_set_row_hidden), -1);
   rb_define_method(cls_QListView.rb_class, "setRowHidden", RUBY_METHOD_FUNC(rb_QListView_set_row_hidden), -1);
   rb_define_alias(cls_QListView.rb_class, "row_hidden=", "set_row_hidden");
+  rb_define_alias(cls_QListView.rb_class, "rowHidden=", "set_row_hidden");
   rb_define_method(cls_QListView.rb_class, "set_model_column", RUBY_METHOD_FUNC(rb_QListView_set_model_column), -1);
   rb_define_method(cls_QListView.rb_class, "setModelColumn", RUBY_METHOD_FUNC(rb_QListView_set_model_column), -1);
   rb_define_alias(cls_QListView.rb_class, "model_column=", "set_model_column");
+  rb_define_alias(cls_QListView.rb_class, "modelColumn=", "set_model_column");
   rb_define_method(cls_QListView.rb_class, "model_column", RUBY_METHOD_FUNC(rb_QListView_model_column), -1);
   rb_define_method(cls_QListView.rb_class, "modelColumn", RUBY_METHOD_FUNC(rb_QListView_model_column), -1);
   rb_define_method(cls_QListView.rb_class, "set_uniform_item_sizes", RUBY_METHOD_FUNC(rb_QListView_set_uniform_item_sizes), -1);
   rb_define_method(cls_QListView.rb_class, "setUniformItemSizes", RUBY_METHOD_FUNC(rb_QListView_set_uniform_item_sizes), -1);
   rb_define_alias(cls_QListView.rb_class, "uniform_item_sizes=", "set_uniform_item_sizes");
+  rb_define_alias(cls_QListView.rb_class, "uniformItemSizes=", "set_uniform_item_sizes");
   rb_define_method(cls_QListView.rb_class, "uniform_item_sizes", RUBY_METHOD_FUNC(rb_QListView_uniform_item_sizes), -1);
   rb_define_method(cls_QListView.rb_class, "uniformItemSizes", RUBY_METHOD_FUNC(rb_QListView_uniform_item_sizes), -1);
   rb_define_method(cls_QListView.rb_class, "set_word_wrap", RUBY_METHOD_FUNC(rb_QListView_set_word_wrap), -1);
   rb_define_method(cls_QListView.rb_class, "setWordWrap", RUBY_METHOD_FUNC(rb_QListView_set_word_wrap), -1);
   rb_define_alias(cls_QListView.rb_class, "word_wrap=", "set_word_wrap");
+  rb_define_alias(cls_QListView.rb_class, "wordWrap=", "set_word_wrap");
   rb_define_method(cls_QListView.rb_class, "word_wrap", RUBY_METHOD_FUNC(rb_QListView_word_wrap), -1);
   rb_define_method(cls_QListView.rb_class, "wordWrap", RUBY_METHOD_FUNC(rb_QListView_word_wrap), -1);
   rb_define_method(cls_QListView.rb_class, "set_selection_rect_visible", RUBY_METHOD_FUNC(rb_QListView_set_selection_rect_visible), -1);
   rb_define_method(cls_QListView.rb_class, "setSelectionRectVisible", RUBY_METHOD_FUNC(rb_QListView_set_selection_rect_visible), -1);
   rb_define_alias(cls_QListView.rb_class, "selection_rect_visible=", "set_selection_rect_visible");
+  rb_define_alias(cls_QListView.rb_class, "selectionRectVisible=", "set_selection_rect_visible");
   rb_define_method(cls_QListView.rb_class, "is_selection_rect_visible", RUBY_METHOD_FUNC(rb_QListView_is_selection_rect_visible), -1);
   rb_define_method(cls_QListView.rb_class, "isSelectionRectVisible", RUBY_METHOD_FUNC(rb_QListView_is_selection_rect_visible), -1);
   rb_define_alias(cls_QListView.rb_class, "selection_rect_visible?", "is_selection_rect_visible");
   rb_define_method(cls_QListView.rb_class, "set_item_alignment", RUBY_METHOD_FUNC(rb_QListView_set_item_alignment), -1);
   rb_define_method(cls_QListView.rb_class, "setItemAlignment", RUBY_METHOD_FUNC(rb_QListView_set_item_alignment), -1);
   rb_define_alias(cls_QListView.rb_class, "item_alignment=", "set_item_alignment");
+  rb_define_alias(cls_QListView.rb_class, "itemAlignment=", "set_item_alignment");
   rb_define_method(cls_QListView.rb_class, "item_alignment", RUBY_METHOD_FUNC(rb_QListView_item_alignment), -1);
   rb_define_method(cls_QListView.rb_class, "itemAlignment", RUBY_METHOD_FUNC(rb_QListView_item_alignment), -1);
   rb_define_method(cls_QListView.rb_class, "visual_rect", RUBY_METHOD_FUNC(rb_QListView_visual_rect), -1);
@@ -83715,6 +85698,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListView.rb_class, "set_root_index", RUBY_METHOD_FUNC(rb_QListView_set_root_index), -1);
   rb_define_method(cls_QListView.rb_class, "setRootIndex", RUBY_METHOD_FUNC(rb_QListView_set_root_index), -1);
   rb_define_alias(cls_QListView.rb_class, "root_index=", "set_root_index");
+  rb_define_alias(cls_QListView.rb_class, "rootIndex=", "set_root_index");
   rb_define_singleton_method(cls_QListView.rb_class, "tr", RUBY_METHOD_FUNC(rb_QListView_s_tr), -1);
   rb_define_method(cls_QListView.rb_class, "event", RUBY_METHOD_FUNC(rb_QListView_prot_event), -1);
   rb_define_method(cls_QListView.rb_class, "scroll_contents_by", RUBY_METHOD_FUNC(rb_QListView_prot_scroll_contents_by), -1);
@@ -83807,6 +85791,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "set_root_index", RUBY_METHOD_FUNC(rb_QTreeView_set_root_index), -1);
   rb_define_method(cls_QTreeView.rb_class, "setRootIndex", RUBY_METHOD_FUNC(rb_QTreeView_set_root_index), -1);
   rb_define_alias(cls_QTreeView.rb_class, "root_index=", "set_root_index");
+  rb_define_alias(cls_QTreeView.rb_class, "rootIndex=", "set_root_index");
   rb_define_method(cls_QTreeView.rb_class, "header", RUBY_METHOD_FUNC(rb_QTreeView_header), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_header", RUBY_METHOD_FUNC(rb_QTreeView_set_header), -1);
   rb_define_method(cls_QTreeView.rb_class, "setHeader", RUBY_METHOD_FUNC(rb_QTreeView_set_header), -1);
@@ -83816,6 +85801,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "set_auto_expand_delay", RUBY_METHOD_FUNC(rb_QTreeView_set_auto_expand_delay), -1);
   rb_define_method(cls_QTreeView.rb_class, "setAutoExpandDelay", RUBY_METHOD_FUNC(rb_QTreeView_set_auto_expand_delay), -1);
   rb_define_alias(cls_QTreeView.rb_class, "auto_expand_delay=", "set_auto_expand_delay");
+  rb_define_alias(cls_QTreeView.rb_class, "autoExpandDelay=", "set_auto_expand_delay");
   rb_define_method(cls_QTreeView.rb_class, "indentation", RUBY_METHOD_FUNC(rb_QTreeView_indentation), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_indentation", RUBY_METHOD_FUNC(rb_QTreeView_set_indentation), -1);
   rb_define_method(cls_QTreeView.rb_class, "setIndentation", RUBY_METHOD_FUNC(rb_QTreeView_set_indentation), -1);
@@ -83827,21 +85813,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "set_root_is_decorated", RUBY_METHOD_FUNC(rb_QTreeView_set_root_is_decorated), -1);
   rb_define_method(cls_QTreeView.rb_class, "setRootIsDecorated", RUBY_METHOD_FUNC(rb_QTreeView_set_root_is_decorated), -1);
   rb_define_alias(cls_QTreeView.rb_class, "root_is_decorated=", "set_root_is_decorated");
+  rb_define_alias(cls_QTreeView.rb_class, "rootIsDecorated=", "set_root_is_decorated");
   rb_define_method(cls_QTreeView.rb_class, "uniform_row_heights", RUBY_METHOD_FUNC(rb_QTreeView_uniform_row_heights), -1);
   rb_define_method(cls_QTreeView.rb_class, "uniformRowHeights", RUBY_METHOD_FUNC(rb_QTreeView_uniform_row_heights), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_uniform_row_heights", RUBY_METHOD_FUNC(rb_QTreeView_set_uniform_row_heights), -1);
   rb_define_method(cls_QTreeView.rb_class, "setUniformRowHeights", RUBY_METHOD_FUNC(rb_QTreeView_set_uniform_row_heights), -1);
   rb_define_alias(cls_QTreeView.rb_class, "uniform_row_heights=", "set_uniform_row_heights");
+  rb_define_alias(cls_QTreeView.rb_class, "uniformRowHeights=", "set_uniform_row_heights");
   rb_define_method(cls_QTreeView.rb_class, "items_expandable", RUBY_METHOD_FUNC(rb_QTreeView_items_expandable), -1);
   rb_define_method(cls_QTreeView.rb_class, "itemsExpandable", RUBY_METHOD_FUNC(rb_QTreeView_items_expandable), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_items_expandable", RUBY_METHOD_FUNC(rb_QTreeView_set_items_expandable), -1);
   rb_define_method(cls_QTreeView.rb_class, "setItemsExpandable", RUBY_METHOD_FUNC(rb_QTreeView_set_items_expandable), -1);
   rb_define_alias(cls_QTreeView.rb_class, "items_expandable=", "set_items_expandable");
+  rb_define_alias(cls_QTreeView.rb_class, "itemsExpandable=", "set_items_expandable");
   rb_define_method(cls_QTreeView.rb_class, "expands_on_double_click", RUBY_METHOD_FUNC(rb_QTreeView_expands_on_double_click), -1);
   rb_define_method(cls_QTreeView.rb_class, "expandsOnDoubleClick", RUBY_METHOD_FUNC(rb_QTreeView_expands_on_double_click), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_expands_on_double_click", RUBY_METHOD_FUNC(rb_QTreeView_set_expands_on_double_click), -1);
   rb_define_method(cls_QTreeView.rb_class, "setExpandsOnDoubleClick", RUBY_METHOD_FUNC(rb_QTreeView_set_expands_on_double_click), -1);
   rb_define_alias(cls_QTreeView.rb_class, "expands_on_double_click=", "set_expands_on_double_click");
+  rb_define_alias(cls_QTreeView.rb_class, "expandsOnDoubleClick=", "set_expands_on_double_click");
   rb_define_method(cls_QTreeView.rb_class, "column_viewport_position", RUBY_METHOD_FUNC(rb_QTreeView_column_viewport_position), -1);
   rb_define_method(cls_QTreeView.rb_class, "columnViewportPosition", RUBY_METHOD_FUNC(rb_QTreeView_column_viewport_position), -1);
   rb_define_method(cls_QTreeView.rb_class, "column_width", RUBY_METHOD_FUNC(rb_QTreeView_column_width), -1);
@@ -83849,6 +85839,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "set_column_width", RUBY_METHOD_FUNC(rb_QTreeView_set_column_width), -1);
   rb_define_method(cls_QTreeView.rb_class, "setColumnWidth", RUBY_METHOD_FUNC(rb_QTreeView_set_column_width), -1);
   rb_define_alias(cls_QTreeView.rb_class, "column_width=", "set_column_width");
+  rb_define_alias(cls_QTreeView.rb_class, "columnWidth=", "set_column_width");
   rb_define_method(cls_QTreeView.rb_class, "column_at", RUBY_METHOD_FUNC(rb_QTreeView_column_at), -1);
   rb_define_method(cls_QTreeView.rb_class, "columnAt", RUBY_METHOD_FUNC(rb_QTreeView_column_at), -1);
   rb_define_method(cls_QTreeView.rb_class, "is_column_hidden", RUBY_METHOD_FUNC(rb_QTreeView_is_column_hidden), -1);
@@ -83856,22 +85847,26 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "set_column_hidden", RUBY_METHOD_FUNC(rb_QTreeView_set_column_hidden), -1);
   rb_define_method(cls_QTreeView.rb_class, "setColumnHidden", RUBY_METHOD_FUNC(rb_QTreeView_set_column_hidden), -1);
   rb_define_alias(cls_QTreeView.rb_class, "column_hidden=", "set_column_hidden");
+  rb_define_alias(cls_QTreeView.rb_class, "columnHidden=", "set_column_hidden");
   rb_define_method(cls_QTreeView.rb_class, "is_header_hidden", RUBY_METHOD_FUNC(rb_QTreeView_is_header_hidden), -1);
   rb_define_method(cls_QTreeView.rb_class, "isHeaderHidden", RUBY_METHOD_FUNC(rb_QTreeView_is_header_hidden), -1);
   rb_define_alias(cls_QTreeView.rb_class, "header_hidden?", "is_header_hidden");
   rb_define_method(cls_QTreeView.rb_class, "set_header_hidden", RUBY_METHOD_FUNC(rb_QTreeView_set_header_hidden), -1);
   rb_define_method(cls_QTreeView.rb_class, "setHeaderHidden", RUBY_METHOD_FUNC(rb_QTreeView_set_header_hidden), -1);
   rb_define_alias(cls_QTreeView.rb_class, "header_hidden=", "set_header_hidden");
+  rb_define_alias(cls_QTreeView.rb_class, "headerHidden=", "set_header_hidden");
   rb_define_method(cls_QTreeView.rb_class, "is_row_hidden", RUBY_METHOD_FUNC(rb_QTreeView_is_row_hidden), -1);
   rb_define_method(cls_QTreeView.rb_class, "isRowHidden", RUBY_METHOD_FUNC(rb_QTreeView_is_row_hidden), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_row_hidden", RUBY_METHOD_FUNC(rb_QTreeView_set_row_hidden), -1);
   rb_define_method(cls_QTreeView.rb_class, "setRowHidden", RUBY_METHOD_FUNC(rb_QTreeView_set_row_hidden), -1);
   rb_define_alias(cls_QTreeView.rb_class, "row_hidden=", "set_row_hidden");
+  rb_define_alias(cls_QTreeView.rb_class, "rowHidden=", "set_row_hidden");
   rb_define_method(cls_QTreeView.rb_class, "is_first_column_spanned", RUBY_METHOD_FUNC(rb_QTreeView_is_first_column_spanned), -1);
   rb_define_method(cls_QTreeView.rb_class, "isFirstColumnSpanned", RUBY_METHOD_FUNC(rb_QTreeView_is_first_column_spanned), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_first_column_spanned", RUBY_METHOD_FUNC(rb_QTreeView_set_first_column_spanned), -1);
   rb_define_method(cls_QTreeView.rb_class, "setFirstColumnSpanned", RUBY_METHOD_FUNC(rb_QTreeView_set_first_column_spanned), -1);
   rb_define_alias(cls_QTreeView.rb_class, "first_column_spanned=", "set_first_column_spanned");
+  rb_define_alias(cls_QTreeView.rb_class, "firstColumnSpanned=", "set_first_column_spanned");
   rb_define_method(cls_QTreeView.rb_class, "is_expanded", RUBY_METHOD_FUNC(rb_QTreeView_is_expanded), -1);
   rb_define_method(cls_QTreeView.rb_class, "isExpanded", RUBY_METHOD_FUNC(rb_QTreeView_is_expanded), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_expanded", RUBY_METHOD_FUNC(rb_QTreeView_set_expanded), -1);
@@ -83880,6 +85875,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "set_sorting_enabled", RUBY_METHOD_FUNC(rb_QTreeView_set_sorting_enabled), -1);
   rb_define_method(cls_QTreeView.rb_class, "setSortingEnabled", RUBY_METHOD_FUNC(rb_QTreeView_set_sorting_enabled), -1);
   rb_define_alias(cls_QTreeView.rb_class, "sorting_enabled=", "set_sorting_enabled");
+  rb_define_alias(cls_QTreeView.rb_class, "sortingEnabled=", "set_sorting_enabled");
   rb_define_method(cls_QTreeView.rb_class, "is_sorting_enabled", RUBY_METHOD_FUNC(rb_QTreeView_is_sorting_enabled), -1);
   rb_define_method(cls_QTreeView.rb_class, "isSortingEnabled", RUBY_METHOD_FUNC(rb_QTreeView_is_sorting_enabled), -1);
   rb_define_alias(cls_QTreeView.rb_class, "sorting_enabled?", "is_sorting_enabled");
@@ -83892,16 +85888,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "set_all_columns_show_focus", RUBY_METHOD_FUNC(rb_QTreeView_set_all_columns_show_focus), -1);
   rb_define_method(cls_QTreeView.rb_class, "setAllColumnsShowFocus", RUBY_METHOD_FUNC(rb_QTreeView_set_all_columns_show_focus), -1);
   rb_define_alias(cls_QTreeView.rb_class, "all_columns_show_focus=", "set_all_columns_show_focus");
+  rb_define_alias(cls_QTreeView.rb_class, "allColumnsShowFocus=", "set_all_columns_show_focus");
   rb_define_method(cls_QTreeView.rb_class, "all_columns_show_focus", RUBY_METHOD_FUNC(rb_QTreeView_all_columns_show_focus), -1);
   rb_define_method(cls_QTreeView.rb_class, "allColumnsShowFocus", RUBY_METHOD_FUNC(rb_QTreeView_all_columns_show_focus), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_word_wrap", RUBY_METHOD_FUNC(rb_QTreeView_set_word_wrap), -1);
   rb_define_method(cls_QTreeView.rb_class, "setWordWrap", RUBY_METHOD_FUNC(rb_QTreeView_set_word_wrap), -1);
   rb_define_alias(cls_QTreeView.rb_class, "word_wrap=", "set_word_wrap");
+  rb_define_alias(cls_QTreeView.rb_class, "wordWrap=", "set_word_wrap");
   rb_define_method(cls_QTreeView.rb_class, "word_wrap", RUBY_METHOD_FUNC(rb_QTreeView_word_wrap), -1);
   rb_define_method(cls_QTreeView.rb_class, "wordWrap", RUBY_METHOD_FUNC(rb_QTreeView_word_wrap), -1);
   rb_define_method(cls_QTreeView.rb_class, "set_tree_position", RUBY_METHOD_FUNC(rb_QTreeView_set_tree_position), -1);
   rb_define_method(cls_QTreeView.rb_class, "setTreePosition", RUBY_METHOD_FUNC(rb_QTreeView_set_tree_position), -1);
   rb_define_alias(cls_QTreeView.rb_class, "tree_position=", "set_tree_position");
+  rb_define_alias(cls_QTreeView.rb_class, "treePosition=", "set_tree_position");
   rb_define_method(cls_QTreeView.rb_class, "tree_position", RUBY_METHOD_FUNC(rb_QTreeView_tree_position), -1);
   rb_define_method(cls_QTreeView.rb_class, "treePosition", RUBY_METHOD_FUNC(rb_QTreeView_tree_position), -1);
   rb_define_method(cls_QTreeView.rb_class, "keyboard_search", RUBY_METHOD_FUNC(rb_QTreeView_keyboard_search), -1);
@@ -83919,6 +85918,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "do_items_layout", RUBY_METHOD_FUNC(rb_QTreeView_do_items_layout), -1);
   rb_define_method(cls_QTreeView.rb_class, "doItemsLayout", RUBY_METHOD_FUNC(rb_QTreeView_do_items_layout), -1);
   rb_define_method(cls_QTreeView.rb_class, "reset", RUBY_METHOD_FUNC(rb_QTreeView_reset), -1);
+  rb_define_method(cls_QTreeView.rb_class, "data_changed", RUBY_METHOD_FUNC(rb_QTreeView_data_changed), -1);
+  rb_define_method(cls_QTreeView.rb_class, "dataChanged", RUBY_METHOD_FUNC(rb_QTreeView_data_changed), -1);
   rb_define_method(cls_QTreeView.rb_class, "select_all", RUBY_METHOD_FUNC(rb_QTreeView_select_all), -1);
   rb_define_method(cls_QTreeView.rb_class, "selectAll", RUBY_METHOD_FUNC(rb_QTreeView_select_all), -1);
   rb_define_method(cls_QTreeView.rb_class, "hide_column", RUBY_METHOD_FUNC(rb_QTreeView_hide_column), -1);
@@ -84046,11 +86047,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCompleter.rb_class, "set_completion_mode", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_mode), -1);
   rb_define_method(cls_QCompleter.rb_class, "setCompletionMode", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_mode), -1);
   rb_define_alias(cls_QCompleter.rb_class, "completion_mode=", "set_completion_mode");
+  rb_define_alias(cls_QCompleter.rb_class, "completionMode=", "set_completion_mode");
   rb_define_method(cls_QCompleter.rb_class, "completion_mode", RUBY_METHOD_FUNC(rb_QCompleter_completion_mode), -1);
   rb_define_method(cls_QCompleter.rb_class, "completionMode", RUBY_METHOD_FUNC(rb_QCompleter_completion_mode), -1);
   rb_define_method(cls_QCompleter.rb_class, "set_filter_mode", RUBY_METHOD_FUNC(rb_QCompleter_set_filter_mode), -1);
   rb_define_method(cls_QCompleter.rb_class, "setFilterMode", RUBY_METHOD_FUNC(rb_QCompleter_set_filter_mode), -1);
   rb_define_alias(cls_QCompleter.rb_class, "filter_mode=", "set_filter_mode");
+  rb_define_alias(cls_QCompleter.rb_class, "filterMode=", "set_filter_mode");
   rb_define_method(cls_QCompleter.rb_class, "filter_mode", RUBY_METHOD_FUNC(rb_QCompleter_filter_mode), -1);
   rb_define_method(cls_QCompleter.rb_class, "filterMode", RUBY_METHOD_FUNC(rb_QCompleter_filter_mode), -1);
   rb_define_method(cls_QCompleter.rb_class, "popup", RUBY_METHOD_FUNC(rb_QCompleter_popup), -1);
@@ -84060,21 +86063,25 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCompleter.rb_class, "set_case_sensitivity", RUBY_METHOD_FUNC(rb_QCompleter_set_case_sensitivity), -1);
   rb_define_method(cls_QCompleter.rb_class, "setCaseSensitivity", RUBY_METHOD_FUNC(rb_QCompleter_set_case_sensitivity), -1);
   rb_define_alias(cls_QCompleter.rb_class, "case_sensitivity=", "set_case_sensitivity");
+  rb_define_alias(cls_QCompleter.rb_class, "caseSensitivity=", "set_case_sensitivity");
   rb_define_method(cls_QCompleter.rb_class, "case_sensitivity", RUBY_METHOD_FUNC(rb_QCompleter_case_sensitivity), -1);
   rb_define_method(cls_QCompleter.rb_class, "caseSensitivity", RUBY_METHOD_FUNC(rb_QCompleter_case_sensitivity), -1);
   rb_define_method(cls_QCompleter.rb_class, "set_model_sorting", RUBY_METHOD_FUNC(rb_QCompleter_set_model_sorting), -1);
   rb_define_method(cls_QCompleter.rb_class, "setModelSorting", RUBY_METHOD_FUNC(rb_QCompleter_set_model_sorting), -1);
   rb_define_alias(cls_QCompleter.rb_class, "model_sorting=", "set_model_sorting");
+  rb_define_alias(cls_QCompleter.rb_class, "modelSorting=", "set_model_sorting");
   rb_define_method(cls_QCompleter.rb_class, "model_sorting", RUBY_METHOD_FUNC(rb_QCompleter_model_sorting), -1);
   rb_define_method(cls_QCompleter.rb_class, "modelSorting", RUBY_METHOD_FUNC(rb_QCompleter_model_sorting), -1);
   rb_define_method(cls_QCompleter.rb_class, "set_completion_column", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_column), -1);
   rb_define_method(cls_QCompleter.rb_class, "setCompletionColumn", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_column), -1);
   rb_define_alias(cls_QCompleter.rb_class, "completion_column=", "set_completion_column");
+  rb_define_alias(cls_QCompleter.rb_class, "completionColumn=", "set_completion_column");
   rb_define_method(cls_QCompleter.rb_class, "completion_column", RUBY_METHOD_FUNC(rb_QCompleter_completion_column), -1);
   rb_define_method(cls_QCompleter.rb_class, "completionColumn", RUBY_METHOD_FUNC(rb_QCompleter_completion_column), -1);
   rb_define_method(cls_QCompleter.rb_class, "set_completion_role", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_role), -1);
   rb_define_method(cls_QCompleter.rb_class, "setCompletionRole", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_role), -1);
   rb_define_alias(cls_QCompleter.rb_class, "completion_role=", "set_completion_role");
+  rb_define_alias(cls_QCompleter.rb_class, "completionRole=", "set_completion_role");
   rb_define_method(cls_QCompleter.rb_class, "completion_role", RUBY_METHOD_FUNC(rb_QCompleter_completion_role), -1);
   rb_define_method(cls_QCompleter.rb_class, "completionRole", RUBY_METHOD_FUNC(rb_QCompleter_completion_role), -1);
   rb_define_method(cls_QCompleter.rb_class, "wrap_around", RUBY_METHOD_FUNC(rb_QCompleter_wrap_around), -1);
@@ -84084,11 +86091,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCompleter.rb_class, "set_max_visible_items", RUBY_METHOD_FUNC(rb_QCompleter_set_max_visible_items), -1);
   rb_define_method(cls_QCompleter.rb_class, "setMaxVisibleItems", RUBY_METHOD_FUNC(rb_QCompleter_set_max_visible_items), -1);
   rb_define_alias(cls_QCompleter.rb_class, "max_visible_items=", "set_max_visible_items");
+  rb_define_alias(cls_QCompleter.rb_class, "maxVisibleItems=", "set_max_visible_items");
   rb_define_method(cls_QCompleter.rb_class, "completion_count", RUBY_METHOD_FUNC(rb_QCompleter_completion_count), -1);
   rb_define_method(cls_QCompleter.rb_class, "completionCount", RUBY_METHOD_FUNC(rb_QCompleter_completion_count), -1);
   rb_define_method(cls_QCompleter.rb_class, "set_current_row", RUBY_METHOD_FUNC(rb_QCompleter_set_current_row), -1);
   rb_define_method(cls_QCompleter.rb_class, "setCurrentRow", RUBY_METHOD_FUNC(rb_QCompleter_set_current_row), -1);
   rb_define_alias(cls_QCompleter.rb_class, "current_row=", "set_current_row");
+  rb_define_alias(cls_QCompleter.rb_class, "currentRow=", "set_current_row");
   rb_define_method(cls_QCompleter.rb_class, "current_row", RUBY_METHOD_FUNC(rb_QCompleter_current_row), -1);
   rb_define_method(cls_QCompleter.rb_class, "currentRow", RUBY_METHOD_FUNC(rb_QCompleter_current_row), -1);
   rb_define_method(cls_QCompleter.rb_class, "current_index", RUBY_METHOD_FUNC(rb_QCompleter_current_index), -1);
@@ -84102,10 +86111,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCompleter.rb_class, "set_completion_prefix", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_prefix), -1);
   rb_define_method(cls_QCompleter.rb_class, "setCompletionPrefix", RUBY_METHOD_FUNC(rb_QCompleter_set_completion_prefix), -1);
   rb_define_alias(cls_QCompleter.rb_class, "completion_prefix=", "set_completion_prefix");
+  rb_define_alias(cls_QCompleter.rb_class, "completionPrefix=", "set_completion_prefix");
   rb_define_method(cls_QCompleter.rb_class, "complete", RUBY_METHOD_FUNC(rb_QCompleter_complete), -1);
   rb_define_method(cls_QCompleter.rb_class, "set_wrap_around", RUBY_METHOD_FUNC(rb_QCompleter_set_wrap_around), -1);
   rb_define_method(cls_QCompleter.rb_class, "setWrapAround", RUBY_METHOD_FUNC(rb_QCompleter_set_wrap_around), -1);
   rb_define_alias(cls_QCompleter.rb_class, "wrap_around=", "set_wrap_around");
+  rb_define_alias(cls_QCompleter.rb_class, "wrapAround=", "set_wrap_around");
   rb_define_method(cls_QCompleter.rb_class, "path_from_index", RUBY_METHOD_FUNC(rb_QCompleter_path_from_index), -1);
   rb_define_method(cls_QCompleter.rb_class, "pathFromIndex", RUBY_METHOD_FUNC(rb_QCompleter_path_from_index), -1);
   rb_define_method(cls_QCompleter.rb_class, "split_path", RUBY_METHOD_FUNC(rb_QCompleter_split_path), -1);
@@ -84163,6 +86174,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMimeData.rb_class, "set_image_data", RUBY_METHOD_FUNC(rb_QMimeData_set_image_data), -1);
   rb_define_method(cls_QMimeData.rb_class, "setImageData", RUBY_METHOD_FUNC(rb_QMimeData_set_image_data), -1);
   rb_define_alias(cls_QMimeData.rb_class, "image_data=", "set_image_data");
+  rb_define_alias(cls_QMimeData.rb_class, "imageData=", "set_image_data");
   rb_define_method(cls_QMimeData.rb_class, "has_image", RUBY_METHOD_FUNC(rb_QMimeData_has_image), -1);
   rb_define_method(cls_QMimeData.rb_class, "hasImage", RUBY_METHOD_FUNC(rb_QMimeData_has_image), -1);
   rb_define_method(cls_QMimeData.rb_class, "color_data", RUBY_METHOD_FUNC(rb_QMimeData_color_data), -1);
@@ -84170,6 +86182,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMimeData.rb_class, "set_color_data", RUBY_METHOD_FUNC(rb_QMimeData_set_color_data), -1);
   rb_define_method(cls_QMimeData.rb_class, "setColorData", RUBY_METHOD_FUNC(rb_QMimeData_set_color_data), -1);
   rb_define_alias(cls_QMimeData.rb_class, "color_data=", "set_color_data");
+  rb_define_alias(cls_QMimeData.rb_class, "colorData=", "set_color_data");
   rb_define_method(cls_QMimeData.rb_class, "has_color", RUBY_METHOD_FUNC(rb_QMimeData_has_color), -1);
   rb_define_method(cls_QMimeData.rb_class, "hasColor", RUBY_METHOD_FUNC(rb_QMimeData_has_color), -1);
   rb_define_method(cls_QMimeData.rb_class, "data", RUBY_METHOD_FUNC(rb_QMimeData_data), -1);
@@ -84195,6 +86208,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMovie.rb_class, "set_file_name", RUBY_METHOD_FUNC(rb_QMovie_set_file_name), -1);
   rb_define_method(cls_QMovie.rb_class, "setFileName", RUBY_METHOD_FUNC(rb_QMovie_set_file_name), -1);
   rb_define_alias(cls_QMovie.rb_class, "file_name=", "set_file_name");
+  rb_define_alias(cls_QMovie.rb_class, "fileName=", "set_file_name");
   rb_define_method(cls_QMovie.rb_class, "file_name", RUBY_METHOD_FUNC(rb_QMovie_file_name), -1);
   rb_define_method(cls_QMovie.rb_class, "fileName", RUBY_METHOD_FUNC(rb_QMovie_file_name), -1);
   rb_define_method(cls_QMovie.rb_class, "set_format", RUBY_METHOD_FUNC(rb_QMovie_set_format), -1);
@@ -84204,6 +86218,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMovie.rb_class, "set_background_color", RUBY_METHOD_FUNC(rb_QMovie_set_background_color), -1);
   rb_define_method(cls_QMovie.rb_class, "setBackgroundColor", RUBY_METHOD_FUNC(rb_QMovie_set_background_color), -1);
   rb_define_alias(cls_QMovie.rb_class, "background_color=", "set_background_color");
+  rb_define_alias(cls_QMovie.rb_class, "backgroundColor=", "set_background_color");
   rb_define_method(cls_QMovie.rb_class, "background_color", RUBY_METHOD_FUNC(rb_QMovie_background_color), -1);
   rb_define_method(cls_QMovie.rb_class, "backgroundColor", RUBY_METHOD_FUNC(rb_QMovie_background_color), -1);
   rb_define_method(cls_QMovie.rb_class, "state", RUBY_METHOD_FUNC(rb_QMovie_state), -1);
@@ -84236,11 +86251,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMovie.rb_class, "set_scaled_size", RUBY_METHOD_FUNC(rb_QMovie_set_scaled_size), -1);
   rb_define_method(cls_QMovie.rb_class, "setScaledSize", RUBY_METHOD_FUNC(rb_QMovie_set_scaled_size), -1);
   rb_define_alias(cls_QMovie.rb_class, "scaled_size=", "set_scaled_size");
+  rb_define_alias(cls_QMovie.rb_class, "scaledSize=", "set_scaled_size");
   rb_define_method(cls_QMovie.rb_class, "cache_mode", RUBY_METHOD_FUNC(rb_QMovie_cache_mode), -1);
   rb_define_method(cls_QMovie.rb_class, "cacheMode", RUBY_METHOD_FUNC(rb_QMovie_cache_mode), -1);
   rb_define_method(cls_QMovie.rb_class, "set_cache_mode", RUBY_METHOD_FUNC(rb_QMovie_set_cache_mode), -1);
   rb_define_method(cls_QMovie.rb_class, "setCacheMode", RUBY_METHOD_FUNC(rb_QMovie_set_cache_mode), -1);
   rb_define_alias(cls_QMovie.rb_class, "cache_mode=", "set_cache_mode");
+  rb_define_alias(cls_QMovie.rb_class, "cacheMode=", "set_cache_mode");
   rb_define_method(cls_QMovie.rb_class, "start", RUBY_METHOD_FUNC(rb_QMovie_start), -1);
   rb_define_method(cls_QMovie.rb_class, "jump_to_next_frame", RUBY_METHOD_FUNC(rb_QMovie_jump_to_next_frame), -1);
   rb_define_method(cls_QMovie.rb_class, "jumpToNextFrame", RUBY_METHOD_FUNC(rb_QMovie_jump_to_next_frame), -1);
@@ -84276,9 +86293,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyledItemDelegate.rb_class, "set_editor_data", RUBY_METHOD_FUNC(rb_QStyledItemDelegate_set_editor_data), -1);
   rb_define_method(cls_QStyledItemDelegate.rb_class, "setEditorData", RUBY_METHOD_FUNC(rb_QStyledItemDelegate_set_editor_data), -1);
   rb_define_alias(cls_QStyledItemDelegate.rb_class, "editor_data=", "set_editor_data");
+  rb_define_alias(cls_QStyledItemDelegate.rb_class, "editorData=", "set_editor_data");
   rb_define_method(cls_QStyledItemDelegate.rb_class, "set_model_data", RUBY_METHOD_FUNC(rb_QStyledItemDelegate_set_model_data), -1);
   rb_define_method(cls_QStyledItemDelegate.rb_class, "setModelData", RUBY_METHOD_FUNC(rb_QStyledItemDelegate_set_model_data), -1);
   rb_define_alias(cls_QStyledItemDelegate.rb_class, "model_data=", "set_model_data");
+  rb_define_alias(cls_QStyledItemDelegate.rb_class, "modelData=", "set_model_data");
   rb_define_method(cls_QStyledItemDelegate.rb_class, "update_editor_geometry", RUBY_METHOD_FUNC(rb_QStyledItemDelegate_update_editor_geometry), -1);
   rb_define_method(cls_QStyledItemDelegate.rb_class, "updateEditorGeometry", RUBY_METHOD_FUNC(rb_QStyledItemDelegate_update_editor_geometry), -1);
   rb_define_singleton_method(cls_QStyledItemDelegate.rb_class, "tr", RUBY_METHOD_FUNC(rb_QStyledItemDelegate_s_tr), -1);
@@ -84338,6 +86357,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFrame.rb_class, "set_frame_style", RUBY_METHOD_FUNC(rb_QFrame_set_frame_style), -1);
   rb_define_method(cls_QFrame.rb_class, "setFrameStyle", RUBY_METHOD_FUNC(rb_QFrame_set_frame_style), -1);
   rb_define_alias(cls_QFrame.rb_class, "frame_style=", "set_frame_style");
+  rb_define_alias(cls_QFrame.rb_class, "frameStyle=", "set_frame_style");
   rb_define_method(cls_QFrame.rb_class, "frame_width", RUBY_METHOD_FUNC(rb_QFrame_frame_width), -1);
   rb_define_method(cls_QFrame.rb_class, "frameWidth", RUBY_METHOD_FUNC(rb_QFrame_frame_width), -1);
   rb_define_method(cls_QFrame.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QFrame_size_hint), -1);
@@ -84347,26 +86367,31 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFrame.rb_class, "set_frame_shape", RUBY_METHOD_FUNC(rb_QFrame_set_frame_shape), -1);
   rb_define_method(cls_QFrame.rb_class, "setFrameShape", RUBY_METHOD_FUNC(rb_QFrame_set_frame_shape), -1);
   rb_define_alias(cls_QFrame.rb_class, "frame_shape=", "set_frame_shape");
+  rb_define_alias(cls_QFrame.rb_class, "frameShape=", "set_frame_shape");
   rb_define_method(cls_QFrame.rb_class, "frame_shadow", RUBY_METHOD_FUNC(rb_QFrame_frame_shadow), -1);
   rb_define_method(cls_QFrame.rb_class, "frameShadow", RUBY_METHOD_FUNC(rb_QFrame_frame_shadow), -1);
   rb_define_method(cls_QFrame.rb_class, "set_frame_shadow", RUBY_METHOD_FUNC(rb_QFrame_set_frame_shadow), -1);
   rb_define_method(cls_QFrame.rb_class, "setFrameShadow", RUBY_METHOD_FUNC(rb_QFrame_set_frame_shadow), -1);
   rb_define_alias(cls_QFrame.rb_class, "frame_shadow=", "set_frame_shadow");
+  rb_define_alias(cls_QFrame.rb_class, "frameShadow=", "set_frame_shadow");
   rb_define_method(cls_QFrame.rb_class, "line_width", RUBY_METHOD_FUNC(rb_QFrame_line_width), -1);
   rb_define_method(cls_QFrame.rb_class, "lineWidth", RUBY_METHOD_FUNC(rb_QFrame_line_width), -1);
   rb_define_method(cls_QFrame.rb_class, "set_line_width", RUBY_METHOD_FUNC(rb_QFrame_set_line_width), -1);
   rb_define_method(cls_QFrame.rb_class, "setLineWidth", RUBY_METHOD_FUNC(rb_QFrame_set_line_width), -1);
   rb_define_alias(cls_QFrame.rb_class, "line_width=", "set_line_width");
+  rb_define_alias(cls_QFrame.rb_class, "lineWidth=", "set_line_width");
   rb_define_method(cls_QFrame.rb_class, "mid_line_width", RUBY_METHOD_FUNC(rb_QFrame_mid_line_width), -1);
   rb_define_method(cls_QFrame.rb_class, "midLineWidth", RUBY_METHOD_FUNC(rb_QFrame_mid_line_width), -1);
   rb_define_method(cls_QFrame.rb_class, "set_mid_line_width", RUBY_METHOD_FUNC(rb_QFrame_set_mid_line_width), -1);
   rb_define_method(cls_QFrame.rb_class, "setMidLineWidth", RUBY_METHOD_FUNC(rb_QFrame_set_mid_line_width), -1);
   rb_define_alias(cls_QFrame.rb_class, "mid_line_width=", "set_mid_line_width");
+  rb_define_alias(cls_QFrame.rb_class, "midLineWidth=", "set_mid_line_width");
   rb_define_method(cls_QFrame.rb_class, "frame_rect", RUBY_METHOD_FUNC(rb_QFrame_frame_rect), -1);
   rb_define_method(cls_QFrame.rb_class, "frameRect", RUBY_METHOD_FUNC(rb_QFrame_frame_rect), -1);
   rb_define_method(cls_QFrame.rb_class, "set_frame_rect", RUBY_METHOD_FUNC(rb_QFrame_set_frame_rect), -1);
   rb_define_method(cls_QFrame.rb_class, "setFrameRect", RUBY_METHOD_FUNC(rb_QFrame_set_frame_rect), -1);
   rb_define_alias(cls_QFrame.rb_class, "frame_rect=", "set_frame_rect");
+  rb_define_alias(cls_QFrame.rb_class, "frameRect=", "set_frame_rect");
   rb_define_singleton_method(cls_QFrame.rb_class, "tr", RUBY_METHOD_FUNC(rb_QFrame_s_tr), -1);
   rb_define_method(cls_QFrame.rb_class, "event", RUBY_METHOD_FUNC(rb_QFrame_prot_event), -1);
   rb_define_method(cls_QFrame.rb_class, "paint_event", RUBY_METHOD_FUNC(rb_QFrame_prot_paint_event), -1);
@@ -84452,27 +86477,32 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractButton.rb_class, "set_auto_repeat", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_repeat), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "setAutoRepeat", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_repeat), -1);
   rb_define_alias(cls_QAbstractButton.rb_class, "auto_repeat=", "set_auto_repeat");
+  rb_define_alias(cls_QAbstractButton.rb_class, "autoRepeat=", "set_auto_repeat");
   rb_define_method(cls_QAbstractButton.rb_class, "auto_repeat", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_repeat), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "autoRepeat", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_repeat), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "set_auto_repeat_delay", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_repeat_delay), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "setAutoRepeatDelay", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_repeat_delay), -1);
   rb_define_alias(cls_QAbstractButton.rb_class, "auto_repeat_delay=", "set_auto_repeat_delay");
+  rb_define_alias(cls_QAbstractButton.rb_class, "autoRepeatDelay=", "set_auto_repeat_delay");
   rb_define_method(cls_QAbstractButton.rb_class, "auto_repeat_delay", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_repeat_delay), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "autoRepeatDelay", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_repeat_delay), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "set_auto_repeat_interval", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_repeat_interval), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "setAutoRepeatInterval", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_repeat_interval), -1);
   rb_define_alias(cls_QAbstractButton.rb_class, "auto_repeat_interval=", "set_auto_repeat_interval");
+  rb_define_alias(cls_QAbstractButton.rb_class, "autoRepeatInterval=", "set_auto_repeat_interval");
   rb_define_method(cls_QAbstractButton.rb_class, "auto_repeat_interval", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_repeat_interval), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "autoRepeatInterval", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_repeat_interval), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "set_auto_exclusive", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_exclusive), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "setAutoExclusive", RUBY_METHOD_FUNC(rb_QAbstractButton_set_auto_exclusive), -1);
   rb_define_alias(cls_QAbstractButton.rb_class, "auto_exclusive=", "set_auto_exclusive");
+  rb_define_alias(cls_QAbstractButton.rb_class, "autoExclusive=", "set_auto_exclusive");
   rb_define_method(cls_QAbstractButton.rb_class, "auto_exclusive", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_exclusive), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "autoExclusive", RUBY_METHOD_FUNC(rb_QAbstractButton_auto_exclusive), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "group", RUBY_METHOD_FUNC(rb_QAbstractButton_group), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "set_icon_size", RUBY_METHOD_FUNC(rb_QAbstractButton_set_icon_size), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "setIconSize", RUBY_METHOD_FUNC(rb_QAbstractButton_set_icon_size), -1);
   rb_define_alias(cls_QAbstractButton.rb_class, "icon_size=", "set_icon_size");
+  rb_define_alias(cls_QAbstractButton.rb_class, "iconSize=", "set_icon_size");
   rb_define_method(cls_QAbstractButton.rb_class, "animate_click", RUBY_METHOD_FUNC(rb_QAbstractButton_animate_click), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "animateClick", RUBY_METHOD_FUNC(rb_QAbstractButton_animate_click), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "click", RUBY_METHOD_FUNC(rb_QAbstractButton_click), -1);
@@ -84493,26 +86523,31 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_vertical_scroll_bar_policy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_vertical_scroll_bar_policy), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "setVerticalScrollBarPolicy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_vertical_scroll_bar_policy), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "vertical_scroll_bar_policy=", "set_vertical_scroll_bar_policy");
+  rb_define_alias(cls_QAbstractScrollArea.rb_class, "verticalScrollBarPolicy=", "set_vertical_scroll_bar_policy");
   rb_define_method(cls_QAbstractScrollArea.rb_class, "vertical_scroll_bar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_vertical_scroll_bar), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "verticalScrollBar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_vertical_scroll_bar), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_vertical_scroll_bar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_vertical_scroll_bar), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "setVerticalScrollBar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_vertical_scroll_bar), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "vertical_scroll_bar=", "set_vertical_scroll_bar");
+  rb_define_alias(cls_QAbstractScrollArea.rb_class, "verticalScrollBar=", "set_vertical_scroll_bar");
   rb_define_method(cls_QAbstractScrollArea.rb_class, "horizontal_scroll_bar_policy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_horizontal_scroll_bar_policy), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "horizontalScrollBarPolicy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_horizontal_scroll_bar_policy), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_horizontal_scroll_bar_policy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_horizontal_scroll_bar_policy), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "setHorizontalScrollBarPolicy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_horizontal_scroll_bar_policy), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "horizontal_scroll_bar_policy=", "set_horizontal_scroll_bar_policy");
+  rb_define_alias(cls_QAbstractScrollArea.rb_class, "horizontalScrollBarPolicy=", "set_horizontal_scroll_bar_policy");
   rb_define_method(cls_QAbstractScrollArea.rb_class, "horizontal_scroll_bar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_horizontal_scroll_bar), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "horizontalScrollBar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_horizontal_scroll_bar), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_horizontal_scroll_bar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_horizontal_scroll_bar), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "setHorizontalScrollBar", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_horizontal_scroll_bar), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "horizontal_scroll_bar=", "set_horizontal_scroll_bar");
+  rb_define_alias(cls_QAbstractScrollArea.rb_class, "horizontalScrollBar=", "set_horizontal_scroll_bar");
   rb_define_method(cls_QAbstractScrollArea.rb_class, "corner_widget", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_corner_widget), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "cornerWidget", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_corner_widget), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_corner_widget", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_corner_widget), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "setCornerWidget", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_corner_widget), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "corner_widget=", "set_corner_widget");
+  rb_define_alias(cls_QAbstractScrollArea.rb_class, "cornerWidget=", "set_corner_widget");
   rb_define_method(cls_QAbstractScrollArea.rb_class, "add_scroll_bar_widget", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_add_scroll_bar_widget), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "addScrollBarWidget", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_add_scroll_bar_widget), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "viewport", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_viewport), -1);
@@ -84532,6 +86567,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractScrollArea.rb_class, "set_size_adjust_policy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_size_adjust_policy), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "setSizeAdjustPolicy", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_set_size_adjust_policy), -1);
   rb_define_alias(cls_QAbstractScrollArea.rb_class, "size_adjust_policy=", "set_size_adjust_policy");
+  rb_define_alias(cls_QAbstractScrollArea.rb_class, "sizeAdjustPolicy=", "set_size_adjust_policy");
   rb_define_singleton_method(cls_QAbstractScrollArea.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_s_tr), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "event_filter", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_event_filter), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "eventFilter", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_event_filter), -1);
@@ -84647,6 +86683,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSinglePointEvent.rb_class, "set_exclusive_point_grabber", RUBY_METHOD_FUNC(rb_QSinglePointEvent_set_exclusive_point_grabber), -1);
   rb_define_method(cls_QSinglePointEvent.rb_class, "setExclusivePointGrabber", RUBY_METHOD_FUNC(rb_QSinglePointEvent_set_exclusive_point_grabber), -1);
   rb_define_alias(cls_QSinglePointEvent.rb_class, "exclusive_point_grabber=", "set_exclusive_point_grabber");
+  rb_define_alias(cls_QSinglePointEvent.rb_class, "exclusivePointGrabber=", "set_exclusive_point_grabber");
   rb_define_alloc_func(cls_QGradient.rb_class, rb_QGradient_alloc);
   qt6rb::register_ctor(cls_QGradient.rb_class, rb_QGradient_ctor);
   rb_include_module(cls_QGradient.rb_class, qt6rb::constructable_module());
@@ -84660,16 +86697,19 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGradient.rb_class, "set_color_at", RUBY_METHOD_FUNC(rb_QGradient_set_color_at), -1);
   rb_define_method(cls_QGradient.rb_class, "setColorAt", RUBY_METHOD_FUNC(rb_QGradient_set_color_at), -1);
   rb_define_alias(cls_QGradient.rb_class, "color_at=", "set_color_at");
+  rb_define_alias(cls_QGradient.rb_class, "colorAt=", "set_color_at");
   rb_define_method(cls_QGradient.rb_class, "coordinate_mode", RUBY_METHOD_FUNC(rb_QGradient_coordinate_mode), -1);
   rb_define_method(cls_QGradient.rb_class, "coordinateMode", RUBY_METHOD_FUNC(rb_QGradient_coordinate_mode), -1);
   rb_define_method(cls_QGradient.rb_class, "set_coordinate_mode", RUBY_METHOD_FUNC(rb_QGradient_set_coordinate_mode), -1);
   rb_define_method(cls_QGradient.rb_class, "setCoordinateMode", RUBY_METHOD_FUNC(rb_QGradient_set_coordinate_mode), -1);
   rb_define_alias(cls_QGradient.rb_class, "coordinate_mode=", "set_coordinate_mode");
+  rb_define_alias(cls_QGradient.rb_class, "coordinateMode=", "set_coordinate_mode");
   rb_define_method(cls_QGradient.rb_class, "interpolation_mode", RUBY_METHOD_FUNC(rb_QGradient_interpolation_mode), -1);
   rb_define_method(cls_QGradient.rb_class, "interpolationMode", RUBY_METHOD_FUNC(rb_QGradient_interpolation_mode), -1);
   rb_define_method(cls_QGradient.rb_class, "set_interpolation_mode", RUBY_METHOD_FUNC(rb_QGradient_set_interpolation_mode), -1);
   rb_define_method(cls_QGradient.rb_class, "setInterpolationMode", RUBY_METHOD_FUNC(rb_QGradient_set_interpolation_mode), -1);
   rb_define_alias(cls_QGradient.rb_class, "interpolation_mode=", "set_interpolation_mode");
+  rb_define_alias(cls_QGradient.rb_class, "interpolationMode=", "set_interpolation_mode");
   rb_define_alloc_func(cls_QAbstractSlider.rb_class, rb_QAbstractSlider_alloc);
   qt6rb::register_ctor(cls_QAbstractSlider.rb_class, rb_QAbstractSlider_ctor);
   rb_include_module(cls_QAbstractSlider.rb_class, qt6rb::constructable_module());
@@ -84685,11 +86725,13 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSlider.rb_class, "set_single_step", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_single_step), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "setSingleStep", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_single_step), -1);
   rb_define_alias(cls_QAbstractSlider.rb_class, "single_step=", "set_single_step");
+  rb_define_alias(cls_QAbstractSlider.rb_class, "singleStep=", "set_single_step");
   rb_define_method(cls_QAbstractSlider.rb_class, "single_step", RUBY_METHOD_FUNC(rb_QAbstractSlider_single_step), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "singleStep", RUBY_METHOD_FUNC(rb_QAbstractSlider_single_step), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "set_page_step", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_page_step), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "setPageStep", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_page_step), -1);
   rb_define_alias(cls_QAbstractSlider.rb_class, "page_step=", "set_page_step");
+  rb_define_alias(cls_QAbstractSlider.rb_class, "pageStep=", "set_page_step");
   rb_define_method(cls_QAbstractSlider.rb_class, "page_step", RUBY_METHOD_FUNC(rb_QAbstractSlider_page_step), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "pageStep", RUBY_METHOD_FUNC(rb_QAbstractSlider_page_step), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "set_tracking", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_tracking), -1);
@@ -84700,22 +86742,26 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSlider.rb_class, "set_slider_down", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_slider_down), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "setSliderDown", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_slider_down), -1);
   rb_define_alias(cls_QAbstractSlider.rb_class, "slider_down=", "set_slider_down");
+  rb_define_alias(cls_QAbstractSlider.rb_class, "sliderDown=", "set_slider_down");
   rb_define_method(cls_QAbstractSlider.rb_class, "is_slider_down", RUBY_METHOD_FUNC(rb_QAbstractSlider_is_slider_down), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "isSliderDown", RUBY_METHOD_FUNC(rb_QAbstractSlider_is_slider_down), -1);
   rb_define_alias(cls_QAbstractSlider.rb_class, "slider_down?", "is_slider_down");
   rb_define_method(cls_QAbstractSlider.rb_class, "set_slider_position", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_slider_position), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "setSliderPosition", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_slider_position), -1);
   rb_define_alias(cls_QAbstractSlider.rb_class, "slider_position=", "set_slider_position");
+  rb_define_alias(cls_QAbstractSlider.rb_class, "sliderPosition=", "set_slider_position");
   rb_define_method(cls_QAbstractSlider.rb_class, "slider_position", RUBY_METHOD_FUNC(rb_QAbstractSlider_slider_position), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "sliderPosition", RUBY_METHOD_FUNC(rb_QAbstractSlider_slider_position), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "set_inverted_appearance", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_inverted_appearance), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "setInvertedAppearance", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_inverted_appearance), -1);
   rb_define_alias(cls_QAbstractSlider.rb_class, "inverted_appearance=", "set_inverted_appearance");
+  rb_define_alias(cls_QAbstractSlider.rb_class, "invertedAppearance=", "set_inverted_appearance");
   rb_define_method(cls_QAbstractSlider.rb_class, "inverted_appearance", RUBY_METHOD_FUNC(rb_QAbstractSlider_inverted_appearance), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "invertedAppearance", RUBY_METHOD_FUNC(rb_QAbstractSlider_inverted_appearance), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "set_inverted_controls", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_inverted_controls), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "setInvertedControls", RUBY_METHOD_FUNC(rb_QAbstractSlider_set_inverted_controls), -1);
   rb_define_alias(cls_QAbstractSlider.rb_class, "inverted_controls=", "set_inverted_controls");
+  rb_define_alias(cls_QAbstractSlider.rb_class, "invertedControls=", "set_inverted_controls");
   rb_define_method(cls_QAbstractSlider.rb_class, "inverted_controls", RUBY_METHOD_FUNC(rb_QAbstractSlider_inverted_controls), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "invertedControls", RUBY_METHOD_FUNC(rb_QAbstractSlider_inverted_controls), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "value", RUBY_METHOD_FUNC(rb_QAbstractSlider_value), -1);
@@ -84796,9 +86842,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_button_symbols", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_button_symbols), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "setButtonSymbols", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_button_symbols), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "button_symbols=", "set_button_symbols");
+  rb_define_alias(cls_QAbstractSpinBox.rb_class, "buttonSymbols=", "set_button_symbols");
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_correction_mode", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_correction_mode), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "setCorrectionMode", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_correction_mode), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "correction_mode=", "set_correction_mode");
+  rb_define_alias(cls_QAbstractSpinBox.rb_class, "correctionMode=", "set_correction_mode");
   rb_define_method(cls_QAbstractSpinBox.rb_class, "correction_mode", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_correction_mode), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "correctionMode", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_correction_mode), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "has_acceptable_input", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_has_acceptable_input), -1);
@@ -84809,6 +86857,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_special_value_text", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_special_value_text), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "setSpecialValueText", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_special_value_text), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "special_value_text=", "set_special_value_text");
+  rb_define_alias(cls_QAbstractSpinBox.rb_class, "specialValueText=", "set_special_value_text");
   rb_define_method(cls_QAbstractSpinBox.rb_class, "wrapping", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_wrapping), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_wrapping", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_wrapping), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "setWrapping", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_wrapping), -1);
@@ -84816,12 +86865,14 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_read_only", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_read_only), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "setReadOnly", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_read_only), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "read_only=", "set_read_only");
+  rb_define_alias(cls_QAbstractSpinBox.rb_class, "readOnly=", "set_read_only");
   rb_define_method(cls_QAbstractSpinBox.rb_class, "is_read_only", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_is_read_only), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "isReadOnly", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_is_read_only), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "read_only?", "is_read_only");
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_keyboard_tracking", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_keyboard_tracking), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "setKeyboardTracking", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_keyboard_tracking), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "keyboard_tracking=", "set_keyboard_tracking");
+  rb_define_alias(cls_QAbstractSpinBox.rb_class, "keyboardTracking=", "set_keyboard_tracking");
   rb_define_method(cls_QAbstractSpinBox.rb_class, "keyboard_tracking", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_keyboard_tracking), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "keyboardTracking", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_keyboard_tracking), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_alignment", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_alignment), -1);
@@ -84842,6 +86893,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSpinBox.rb_class, "set_group_separator_shown", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_group_separator_shown), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "setGroupSeparatorShown", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_set_group_separator_shown), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "group_separator_shown=", "set_group_separator_shown");
+  rb_define_alias(cls_QAbstractSpinBox.rb_class, "groupSeparatorShown=", "set_group_separator_shown");
   rb_define_method(cls_QAbstractSpinBox.rb_class, "is_group_separator_shown", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_is_group_separator_shown), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "isGroupSeparatorShown", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_is_group_separator_shown), -1);
   rb_define_alias(cls_QAbstractSpinBox.rb_class, "group_separator_shown?", "is_group_separator_shown");
@@ -84927,6 +86979,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "set_root_index", RUBY_METHOD_FUNC(rb_QTableView_set_root_index), -1);
   rb_define_method(cls_QTableView.rb_class, "setRootIndex", RUBY_METHOD_FUNC(rb_QTableView_set_root_index), -1);
   rb_define_alias(cls_QTableView.rb_class, "root_index=", "set_root_index");
+  rb_define_alias(cls_QTableView.rb_class, "rootIndex=", "set_root_index");
   rb_define_method(cls_QTableView.rb_class, "do_items_layout", RUBY_METHOD_FUNC(rb_QTableView_do_items_layout), -1);
   rb_define_method(cls_QTableView.rb_class, "doItemsLayout", RUBY_METHOD_FUNC(rb_QTableView_do_items_layout), -1);
   rb_define_method(cls_QTableView.rb_class, "horizontal_header", RUBY_METHOD_FUNC(rb_QTableView_horizontal_header), -1);
@@ -84936,9 +86989,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "set_horizontal_header", RUBY_METHOD_FUNC(rb_QTableView_set_horizontal_header), -1);
   rb_define_method(cls_QTableView.rb_class, "setHorizontalHeader", RUBY_METHOD_FUNC(rb_QTableView_set_horizontal_header), -1);
   rb_define_alias(cls_QTableView.rb_class, "horizontal_header=", "set_horizontal_header");
+  rb_define_alias(cls_QTableView.rb_class, "horizontalHeader=", "set_horizontal_header");
   rb_define_method(cls_QTableView.rb_class, "set_vertical_header", RUBY_METHOD_FUNC(rb_QTableView_set_vertical_header), -1);
   rb_define_method(cls_QTableView.rb_class, "setVerticalHeader", RUBY_METHOD_FUNC(rb_QTableView_set_vertical_header), -1);
   rb_define_alias(cls_QTableView.rb_class, "vertical_header=", "set_vertical_header");
+  rb_define_alias(cls_QTableView.rb_class, "verticalHeader=", "set_vertical_header");
   rb_define_method(cls_QTableView.rb_class, "row_viewport_position", RUBY_METHOD_FUNC(rb_QTableView_row_viewport_position), -1);
   rb_define_method(cls_QTableView.rb_class, "rowViewportPosition", RUBY_METHOD_FUNC(rb_QTableView_row_viewport_position), -1);
   rb_define_method(cls_QTableView.rb_class, "row_at", RUBY_METHOD_FUNC(rb_QTableView_row_at), -1);
@@ -84946,6 +87001,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "set_row_height", RUBY_METHOD_FUNC(rb_QTableView_set_row_height), -1);
   rb_define_method(cls_QTableView.rb_class, "setRowHeight", RUBY_METHOD_FUNC(rb_QTableView_set_row_height), -1);
   rb_define_alias(cls_QTableView.rb_class, "row_height=", "set_row_height");
+  rb_define_alias(cls_QTableView.rb_class, "rowHeight=", "set_row_height");
   rb_define_method(cls_QTableView.rb_class, "row_height", RUBY_METHOD_FUNC(rb_QTableView_row_height), -1);
   rb_define_method(cls_QTableView.rb_class, "rowHeight", RUBY_METHOD_FUNC(rb_QTableView_row_height), -1);
   rb_define_method(cls_QTableView.rb_class, "column_viewport_position", RUBY_METHOD_FUNC(rb_QTableView_column_viewport_position), -1);
@@ -84955,6 +87011,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "set_column_width", RUBY_METHOD_FUNC(rb_QTableView_set_column_width), -1);
   rb_define_method(cls_QTableView.rb_class, "setColumnWidth", RUBY_METHOD_FUNC(rb_QTableView_set_column_width), -1);
   rb_define_alias(cls_QTableView.rb_class, "column_width=", "set_column_width");
+  rb_define_alias(cls_QTableView.rb_class, "columnWidth=", "set_column_width");
   rb_define_method(cls_QTableView.rb_class, "column_width", RUBY_METHOD_FUNC(rb_QTableView_column_width), -1);
   rb_define_method(cls_QTableView.rb_class, "columnWidth", RUBY_METHOD_FUNC(rb_QTableView_column_width), -1);
   rb_define_method(cls_QTableView.rb_class, "is_row_hidden", RUBY_METHOD_FUNC(rb_QTableView_is_row_hidden), -1);
@@ -84962,14 +87019,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "set_row_hidden", RUBY_METHOD_FUNC(rb_QTableView_set_row_hidden), -1);
   rb_define_method(cls_QTableView.rb_class, "setRowHidden", RUBY_METHOD_FUNC(rb_QTableView_set_row_hidden), -1);
   rb_define_alias(cls_QTableView.rb_class, "row_hidden=", "set_row_hidden");
+  rb_define_alias(cls_QTableView.rb_class, "rowHidden=", "set_row_hidden");
   rb_define_method(cls_QTableView.rb_class, "is_column_hidden", RUBY_METHOD_FUNC(rb_QTableView_is_column_hidden), -1);
   rb_define_method(cls_QTableView.rb_class, "isColumnHidden", RUBY_METHOD_FUNC(rb_QTableView_is_column_hidden), -1);
   rb_define_method(cls_QTableView.rb_class, "set_column_hidden", RUBY_METHOD_FUNC(rb_QTableView_set_column_hidden), -1);
   rb_define_method(cls_QTableView.rb_class, "setColumnHidden", RUBY_METHOD_FUNC(rb_QTableView_set_column_hidden), -1);
   rb_define_alias(cls_QTableView.rb_class, "column_hidden=", "set_column_hidden");
+  rb_define_alias(cls_QTableView.rb_class, "columnHidden=", "set_column_hidden");
   rb_define_method(cls_QTableView.rb_class, "set_sorting_enabled", RUBY_METHOD_FUNC(rb_QTableView_set_sorting_enabled), -1);
   rb_define_method(cls_QTableView.rb_class, "setSortingEnabled", RUBY_METHOD_FUNC(rb_QTableView_set_sorting_enabled), -1);
   rb_define_alias(cls_QTableView.rb_class, "sorting_enabled=", "set_sorting_enabled");
+  rb_define_alias(cls_QTableView.rb_class, "sortingEnabled=", "set_sorting_enabled");
   rb_define_method(cls_QTableView.rb_class, "is_sorting_enabled", RUBY_METHOD_FUNC(rb_QTableView_is_sorting_enabled), -1);
   rb_define_method(cls_QTableView.rb_class, "isSortingEnabled", RUBY_METHOD_FUNC(rb_QTableView_is_sorting_enabled), -1);
   rb_define_alias(cls_QTableView.rb_class, "sorting_enabled?", "is_sorting_enabled");
@@ -84980,14 +87040,17 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "set_grid_style", RUBY_METHOD_FUNC(rb_QTableView_set_grid_style), -1);
   rb_define_method(cls_QTableView.rb_class, "setGridStyle", RUBY_METHOD_FUNC(rb_QTableView_set_grid_style), -1);
   rb_define_alias(cls_QTableView.rb_class, "grid_style=", "set_grid_style");
+  rb_define_alias(cls_QTableView.rb_class, "gridStyle=", "set_grid_style");
   rb_define_method(cls_QTableView.rb_class, "set_word_wrap", RUBY_METHOD_FUNC(rb_QTableView_set_word_wrap), -1);
   rb_define_method(cls_QTableView.rb_class, "setWordWrap", RUBY_METHOD_FUNC(rb_QTableView_set_word_wrap), -1);
   rb_define_alias(cls_QTableView.rb_class, "word_wrap=", "set_word_wrap");
+  rb_define_alias(cls_QTableView.rb_class, "wordWrap=", "set_word_wrap");
   rb_define_method(cls_QTableView.rb_class, "word_wrap", RUBY_METHOD_FUNC(rb_QTableView_word_wrap), -1);
   rb_define_method(cls_QTableView.rb_class, "wordWrap", RUBY_METHOD_FUNC(rb_QTableView_word_wrap), -1);
   rb_define_method(cls_QTableView.rb_class, "set_corner_button_enabled", RUBY_METHOD_FUNC(rb_QTableView_set_corner_button_enabled), -1);
   rb_define_method(cls_QTableView.rb_class, "setCornerButtonEnabled", RUBY_METHOD_FUNC(rb_QTableView_set_corner_button_enabled), -1);
   rb_define_alias(cls_QTableView.rb_class, "corner_button_enabled=", "set_corner_button_enabled");
+  rb_define_alias(cls_QTableView.rb_class, "cornerButtonEnabled=", "set_corner_button_enabled");
   rb_define_method(cls_QTableView.rb_class, "is_corner_button_enabled", RUBY_METHOD_FUNC(rb_QTableView_is_corner_button_enabled), -1);
   rb_define_method(cls_QTableView.rb_class, "isCornerButtonEnabled", RUBY_METHOD_FUNC(rb_QTableView_is_corner_button_enabled), -1);
   rb_define_alias(cls_QTableView.rb_class, "corner_button_enabled?", "is_corner_button_enabled");
@@ -85031,6 +87094,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "set_show_grid", RUBY_METHOD_FUNC(rb_QTableView_set_show_grid), -1);
   rb_define_method(cls_QTableView.rb_class, "setShowGrid", RUBY_METHOD_FUNC(rb_QTableView_set_show_grid), -1);
   rb_define_alias(cls_QTableView.rb_class, "show_grid=", "set_show_grid");
+  rb_define_alias(cls_QTableView.rb_class, "showGrid=", "set_show_grid");
   rb_define_singleton_method(cls_QTableView.rb_class, "tr", RUBY_METHOD_FUNC(rb_QTableView_s_tr), -1);
   rb_define_method(cls_QTableView.rb_class, "scroll_contents_by", RUBY_METHOD_FUNC(rb_QTableView_prot_scroll_contents_by), -1);
   rb_define_method(cls_QTableView.rb_class, "scrollContentsBy", RUBY_METHOD_FUNC(rb_QTableView_prot_scroll_contents_by), -1);
@@ -85136,6 +87200,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextFormat.rb_class, "set_object_index", RUBY_METHOD_FUNC(rb_QTextFormat_set_object_index), -1);
   rb_define_method(cls_QTextFormat.rb_class, "setObjectIndex", RUBY_METHOD_FUNC(rb_QTextFormat_set_object_index), -1);
   rb_define_alias(cls_QTextFormat.rb_class, "object_index=", "set_object_index");
+  rb_define_alias(cls_QTextFormat.rb_class, "objectIndex=", "set_object_index");
   rb_define_method(cls_QTextFormat.rb_class, "property", RUBY_METHOD_FUNC(rb_QTextFormat_property), -1);
   rb_define_method(cls_QTextFormat.rb_class, "set_property", RUBY_METHOD_FUNC(rb_QTextFormat_set_property), -1);
   rb_define_method(cls_QTextFormat.rb_class, "setProperty", RUBY_METHOD_FUNC(rb_QTextFormat_set_property), -1);
@@ -85163,6 +87228,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextFormat.rb_class, "set_object_type", RUBY_METHOD_FUNC(rb_QTextFormat_set_object_type), -1);
   rb_define_method(cls_QTextFormat.rb_class, "setObjectType", RUBY_METHOD_FUNC(rb_QTextFormat_set_object_type), -1);
   rb_define_alias(cls_QTextFormat.rb_class, "object_type=", "set_object_type");
+  rb_define_alias(cls_QTextFormat.rb_class, "objectType=", "set_object_type");
   rb_define_method(cls_QTextFormat.rb_class, "object_type", RUBY_METHOD_FUNC(rb_QTextFormat_object_type), -1);
   rb_define_method(cls_QTextFormat.rb_class, "objectType", RUBY_METHOD_FUNC(rb_QTextFormat_object_type), -1);
   rb_define_method(cls_QTextFormat.rb_class, "is_char_format", RUBY_METHOD_FUNC(rb_QTextFormat_is_char_format), -1);
@@ -85191,6 +87257,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextFormat.rb_class, "set_layout_direction", RUBY_METHOD_FUNC(rb_QTextFormat_set_layout_direction), -1);
   rb_define_method(cls_QTextFormat.rb_class, "setLayoutDirection", RUBY_METHOD_FUNC(rb_QTextFormat_set_layout_direction), -1);
   rb_define_alias(cls_QTextFormat.rb_class, "layout_direction=", "set_layout_direction");
+  rb_define_alias(cls_QTextFormat.rb_class, "layoutDirection=", "set_layout_direction");
   rb_define_method(cls_QTextFormat.rb_class, "layout_direction", RUBY_METHOD_FUNC(rb_QTextFormat_layout_direction), -1);
   rb_define_method(cls_QTextFormat.rb_class, "layoutDirection", RUBY_METHOD_FUNC(rb_QTextFormat_layout_direction), -1);
   rb_define_method(cls_QTextFormat.rb_class, "set_background", RUBY_METHOD_FUNC(rb_QTextFormat_set_background), -1);
@@ -85220,9 +87287,11 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "set_editor_data", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_set_editor_data), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "setEditorData", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_set_editor_data), -1);
   rb_define_alias(cls_QAbstractItemDelegate.rb_class, "editor_data=", "set_editor_data");
+  rb_define_alias(cls_QAbstractItemDelegate.rb_class, "editorData=", "set_editor_data");
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "set_model_data", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_set_model_data), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "setModelData", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_set_model_data), -1);
   rb_define_alias(cls_QAbstractItemDelegate.rb_class, "model_data=", "set_model_data");
+  rb_define_alias(cls_QAbstractItemDelegate.rb_class, "modelData=", "set_model_data");
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "update_editor_geometry", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_update_editor_geometry), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "updateEditorGeometry", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_update_editor_geometry), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "editor_event", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_editor_event), -1);
@@ -86761,6 +88830,19 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QStyleOption.rb_class, "SO_ComplexCustomBase", INT2NUM(251658240));
   rb_define_const(cls_QStyleOption.rb_class, "Type", INT2NUM(0));
   rb_define_const(cls_QStyleOption.rb_class, "Version", INT2NUM(1));
+  qt6rb::register_variant_handler(QMetaType::QSize, &cls_QSize, [](void* p) { return QVariant::fromValue(*static_cast<QSize*>(p)); }, [](const QVariant& v) { return (void*)new QSize(v.value<QSize>()); });
+  qt6rb::register_variant_handler(QMetaType::QSizeF, &cls_QSizeF, [](void* p) { return QVariant::fromValue(*static_cast<QSizeF*>(p)); }, [](const QVariant& v) { return (void*)new QSizeF(v.value<QSizeF>()); });
+  qt6rb::register_variant_handler(QMetaType::QPoint, &cls_QPoint, [](void* p) { return QVariant::fromValue(*static_cast<QPoint*>(p)); }, [](const QVariant& v) { return (void*)new QPoint(v.value<QPoint>()); });
+  qt6rb::register_variant_handler(QMetaType::QPointF, &cls_QPointF, [](void* p) { return QVariant::fromValue(*static_cast<QPointF*>(p)); }, [](const QVariant& v) { return (void*)new QPointF(v.value<QPointF>()); });
+  qt6rb::register_variant_handler(QMetaType::QRect, &cls_QRect, [](void* p) { return QVariant::fromValue(*static_cast<QRect*>(p)); }, [](const QVariant& v) { return (void*)new QRect(v.value<QRect>()); });
+  qt6rb::register_variant_handler(QMetaType::QRectF, &cls_QRectF, [](void* p) { return QVariant::fromValue(*static_cast<QRectF*>(p)); }, [](const QVariant& v) { return (void*)new QRectF(v.value<QRectF>()); });
+  qt6rb::register_variant_handler(QMetaType::QColor, &cls_QColor, [](void* p) { return QVariant::fromValue(*static_cast<QColor*>(p)); }, [](const QVariant& v) { return (void*)new QColor(v.value<QColor>()); });
+  qt6rb::register_variant_handler(QMetaType::QFont, &cls_QFont, [](void* p) { return QVariant::fromValue(*static_cast<QFont*>(p)); }, [](const QVariant& v) { return (void*)new QFont(v.value<QFont>()); });
+  qt6rb::register_variant_handler(QMetaType::QKeySequence, &cls_QKeySequence, [](void* p) { return QVariant::fromValue(*static_cast<QKeySequence*>(p)); }, [](const QVariant& v) { return (void*)new QKeySequence(v.value<QKeySequence>()); });
+  qt6rb::register_variant_handler(QMetaType::QUrl, &cls_QUrl, [](void* p) { return QVariant::fromValue(*static_cast<QUrl*>(p)); }, [](const QVariant& v) { return (void*)new QUrl(v.value<QUrl>()); });
+  qt6rb::register_variant_handler(QMetaType::QDate, &cls_QDate, [](void* p) { return QVariant::fromValue(*static_cast<QDate*>(p)); }, [](const QVariant& v) { return (void*)new QDate(v.value<QDate>()); });
+  qt6rb::register_variant_handler(QMetaType::QIcon, &cls_QIcon, [](void* p) { return QVariant::fromValue(*static_cast<QIcon*>(p)); }, [](const QVariant& v) { return (void*)new QIcon(v.value<QIcon>()); });
+  qt6rb::register_variant_handler(QMetaType::QPixmap, &cls_QPixmap, [](void* p) { return QVariant::fromValue(*static_cast<QPixmap*>(p)); }, [](const QVariant& v) { return (void*)new QPixmap(v.value<QPixmap>()); });
   if (!rb_const_defined(mQt, rb_intern("Color0"))) rb_define_const(mQt, "Color0", INT2NUM(0));
   if (!rb_const_defined(mQt, rb_intern("Color1"))) rb_define_const(mQt, "Color1", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("Black"))) rb_define_const(mQt, "Black", INT2NUM(2));

@@ -74,9 +74,20 @@ VALUE from_qstringlist(const QStringList& list);
 QVariant to_qvariant(VALUE v);
 VALUE from_qvariant(const QVariant& v);
 
+// Value-class <-> QVariant bridging (QSize in QSettings values etc.).
+// Registered by generated code for each known value class.
+typedef QVariant (*ToVariantFn)(void*);
+typedef void* (*FromVariantFn)(const QVariant&);
+void register_variant_handler(int meta_id, ClassInfo* cls,
+                              ToVariantFn to, FromVariantFn from);
+
 // True when the Ruby instance's class overrides `name` below the generated
 // class cls (i.e. a user-defined virtual override). Cached per class.
 bool has_override(VALUE self, ClassInfo* cls, const char* name);
+
+// False once the Ruby VM has been finalized (Qt atexit handlers may still
+// deliver events and destroy objects after that point)
+bool ruby_alive();
 
 // Returns whichever of the two spellings (snake_case, camelCase) the user
 // overrode, or nullptr. qtbindings-era code overrides camelCase names.

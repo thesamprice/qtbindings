@@ -1,4 +1,5 @@
 #include "qt6_runtime.hpp"
+#include <QEvent>
 #include <vector>
 #include <string>
 #include <cstring>
@@ -12,6 +13,22 @@ namespace qt6rb {
 
 static VALUE s_module_qt = Qnil;
 static VALUE s_proc_registry = Qnil;
+
+// Qt's atexit handlers flush posted events (deferred deletes) after the
+// Ruby VM is finalized; shims and signal lambdas must not call into Ruby
+// once it is gone.
+static bool s_ruby_alive = true;
+static void mark_ruby_dead(VALUE) {
+  // Flush pending deferred deletes while Ruby and the platform plugin are
+  // both still alive; the atexit flush is too late (QBackingStore teardown
+  // deadlocks after the platform plugin is finalized)
+  if (QCoreApplication::instance()) {
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+  }
+  s_ruby_alive = false;
+}
+
+bool ruby_alive() { return s_ruby_alive; }
 
 static void wrapper_free(void* data) {
   Wrapper* w = static_cast<Wrapper*>(data);
@@ -38,10 +55,18 @@ VALUE module_qt() {
   return s_module_qt;
 }
 
+#include <string>
+#include <map>
+static std::map<std::string, ClassInfo*>* s_qobject_classes = nullptr;
+
 VALUE define_class(ClassInfo* info, const char* name, VALUE superclass) {
   VALUE super = NIL_P(superclass) ? rb_cObject : superclass;
   info->rb_class = rb_define_class_under(module_qt(), name, super);
   rb_gc_register_address(&info->rb_class);
+  if (info->is_qobject) {
+    if (!s_qobject_classes) s_qobject_classes = new std::map<std::string, ClassInfo*>();
+    (*s_qobject_classes)[info->cxx_name] = info;
+  }
   return info->rb_class;
 }
 
@@ -130,6 +155,10 @@ static VALUE call_method_body(VALUE arg) {
 }
 
 VALUE call_method(VALUE self, const char* name, int argc, const VALUE* argv, bool* ok) {
+  if (!s_ruby_alive || rb_during_gc()) {
+    if (ok) *ok = false;
+    return Qnil;
+  }
   MethodCall mc = { self, rb_intern(name), argc, argv };
   int state = 0;
   VALUE result = rb_protect(call_method_body, reinterpret_cast<VALUE>(&mc), &state);
@@ -163,6 +192,17 @@ void* unwrap_ref(VALUE obj, ClassInfo* cls) {
 
 VALUE wrap_qobject(QObject* obj, ClassInfo* cls) {
   if (!obj) return Qnil;
+  // Downcast to the most-derived generated class via the meta-object, so
+  // e.g. activeModalWidget returns a Qt::MessageBox, not a Qt::Widget
+  if (s_qobject_classes) {
+    for (const QMetaObject* mo = obj->metaObject(); mo; mo = mo->superClass()) {
+      auto it = s_qobject_classes->find(mo->className());
+      if (it != s_qobject_classes->end()) {
+        cls = it->second;
+        break;
+      }
+    }
+  }
   // Never owned: Qt's parent/child system (or the app teardown) deletes
   // QObjects; deleting from GC would double-free reparented objects.
   return wrap(obj, cls, false);
@@ -202,6 +242,22 @@ VALUE from_qstringlist(const QStringList& list) {
   return ary;
 }
 
+#include <map>
+struct VariantHandler { ClassInfo* cls; ToVariantFn to; FromVariantFn from; };
+static std::map<int, VariantHandler>* s_variant_by_meta = nullptr;
+static std::map<ClassInfo*, VariantHandler>* s_variant_by_cls = nullptr;
+
+void register_variant_handler(int meta_id, ClassInfo* cls,
+                              ToVariantFn to, FromVariantFn from) {
+  if (!s_variant_by_meta) {
+    s_variant_by_meta = new std::map<int, VariantHandler>();
+    s_variant_by_cls = new std::map<ClassInfo*, VariantHandler>();
+  }
+  VariantHandler h = { cls, to, from };
+  (*s_variant_by_meta)[meta_id] = h;
+  (*s_variant_by_cls)[cls] = h;
+}
+
 static int hash_to_qvariantmap_i(VALUE key, VALUE val, VALUE arg) {
   QVariantMap* map = reinterpret_cast<QVariantMap*>(arg);
   map->insert(to_qstring(rb_obj_as_string(key)), to_qvariant(val));
@@ -234,6 +290,10 @@ QVariant to_qvariant(VALUE v) {
       if (rb_typeddata_is_kind_of(v, &wrapper_type)) {
         Wrapper* w;
         TypedData_Get_Struct(v, Wrapper, &wrapper_type, w);
+        if (w->cls && s_variant_by_cls) {
+          auto it = s_variant_by_cls->find(w->cls);
+          if (it != s_variant_by_cls->end()) return it->second.to(w->ptr);
+        }
         if (w->cls && w->cls->is_qobject) {
           return QVariant::fromValue(static_cast<QObject*>(w->ptr));
         }
@@ -271,6 +331,12 @@ VALUE from_qvariant(const QVariant& v) {
       return hash;
     }
     default:
+      if (s_variant_by_meta) {
+        auto it = s_variant_by_meta->find(v.metaType().id());
+        if (it != s_variant_by_meta->end()) {
+          return wrap(it->second.from(v), it->second.cls, true);
+        }
+      }
       if (v.canConvert<QString>()) return from_qstring(v.toString());
       return Qnil;
   }
@@ -292,7 +358,7 @@ static VALUE call_proc_body(VALUE arg) {
 }
 
 VALUE call_proc(VALUE proc, int argc, const VALUE* argv) {
-  if (rb_during_gc()) return Qnil;
+  if (!s_ruby_alive || rb_during_gc()) return Qnil;
   ProcCall pc = { proc, argc, argv };
   int state = 0;
   VALUE result = rb_protect(call_proc_body, reinterpret_cast<VALUE>(&pc), &state);
@@ -311,7 +377,7 @@ const char* pick_override(VALUE self, ClassInfo* cls,
                           const char* snake_name, const char* camel_name) {
   // Virtuals fire during C++ teardown of GC-collected objects; calling into
   // Ruby (or even allocating) inside the GC phase is fatal
-  if (rb_during_gc()) return nullptr;
+  if (!s_ruby_alive || rb_during_gc()) return nullptr;
   if (has_override(self, cls, snake_name)) return snake_name;
   if (camel_name && strcmp(camel_name, snake_name) != 0 &&
       has_override(self, cls, camel_name)) return camel_name;
@@ -415,6 +481,9 @@ VALUE constructable_module() {
 }
 
 void init_core(VALUE mQt) {
+  // Registered first so it runs after all other end procs; marks the point
+  // past which no shim or signal handler may call into Ruby
+  rb_set_end_proc(mark_ruby_dead, Qnil);
   rb_define_module_function(mQt, "_dispose", RUBY_METHOD_FUNC(qt_dispose), 1);
   rb_define_module_function(mQt, "_disposed?", RUBY_METHOD_FUNC(qt_disposed_p), 1);
 }

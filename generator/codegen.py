@@ -181,6 +181,8 @@ class Method:
         self.cursor = cursor
         self.name = cursor.spelling
         is_cxx = cursor.kind == CursorKind.CXX_METHOD
+        parent = cursor.semantic_parent
+        self.owner = parent.spelling if parent is not None else None
         self.static = cursor.is_static_method() if is_cxx else False
         self.virtual = cursor.is_virtual_method() if is_cxx else False
         self.const = cursor.is_const_method() if is_cxx else False
@@ -198,7 +200,17 @@ class Method:
                 break
             self.min_args += 1
         self.dispatch_min = self.min_args
-        self.supported = all(p.kind not in ("unsupported", "void") for p in self.params) \
+        # Optional trailing params of unsupported types don't block the
+        # method: call with the supported prefix, C++ defaults fill the rest
+        self.truncated = False
+        first_bad = next((i for i, pt in enumerate(self.params)
+                          if pt.kind in ("unsupported", "void")), None)
+        if first_bad is not None and first_bad >= self.min_args:
+            self.params = self.params[:first_bad]
+            self.param_decls = self.param_decls[:first_bad]
+            self.truncated = True
+            first_bad = None
+        self.supported = first_bad is None \
             and (self.result is None or self.result.kind != "unsupported")
 
 
@@ -273,7 +285,8 @@ def collect_virtuals(klass, classes, generated):
                 sigs[key] = None
                 continue
             m = Method(child, generated)
-            sigs[key] = m if m.supported else None
+            # Truncated signatures can't be used as overrides (must match)
+            sigs[key] = m if (m.supported and not m.truncated) else None
         for b in k.bases:
             visit(b)
 
@@ -453,8 +466,13 @@ def emit_method_group(out, klass, ruby_name, overloads, static):
 
     def body(m, n, indent):
         args = conv_args(m, n)
+        qual = m.owner or klass.name
         if m.static:
-            call = f"{klass.name}::{m.name}({args})"
+            call = f"{qual}::{m.name}({args})"
+        elif qual != klass.name:
+            # Inherited overload hidden by a redeclaration in this class;
+            # only reachable with explicit qualification
+            call = f"o->{qual}::{m.name}({args})"
         elif m.virtual and klass.shim:
             # For Ruby-created objects call this class's implementation
             # non-virtually so a Ruby override calling super doesn't recurse
@@ -517,7 +535,7 @@ def emit_shim(out, klass):
     out.append(f"  using {klass.name}::{klass.name};")
     out.append("  VALUE qt6rb_self = Qnil;")
     out.append("  void qt6rb_set_self(VALUE v) { qt6rb_self = v; rb_gc_register_address(&qt6rb_self); }")
-    out.append(f"  ~{shim}() override {{ if (!NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }}")
+    out.append(f"  ~{shim}() override {{ if (qt6rb::ruby_alive() && !NIL_P(qt6rb_self)) rb_gc_unregister_address(&qt6rb_self); }}")
     # Public forwarders so protected base implementations are callable
     for m in klass.virtuals:
         if m.access != AccessSpecifier.PROTECTED:
@@ -635,6 +653,19 @@ def generate(classes, modules, ns_constants):
         if k.shim:
             emit_shim(out, k)
 
+    def ancestry(k):
+        seen, order = set(), []
+
+        def walk(kk):
+            for b in kk.bases:
+                if b not in seen:
+                    seen.add(b)
+                    order.append(classes[b])
+                    walk(classes[b])
+
+        walk(k)
+        return order
+
     registrations = []
     for k in classes.values():
         if (k.ctors or k.name in APP_CLASSES) and not k.abstract:
@@ -654,6 +685,18 @@ def generate(classes, modules, ns_constants):
                 if m.static != static:
                     continue
                 groups.setdefault(snake(m.name), []).append(m)
+            # A redeclared name hides inherited overloads in C++ (and would
+            # fully shadow them in Ruby); merge them back like a `using`
+            for rname, overloads in groups.items():
+                sigs = {(m.name, tuple(m.param_decls)) for m in overloads}
+                for anc in ancestry(k):
+                    for m in anc.methods:
+                        if m.static != static or snake(m.name) != rname:
+                            continue
+                        key = (m.name, tuple(m.param_decls))
+                        if key not in sigs:
+                            sigs.add(key)
+                            overloads.append(m)
             for rname, overloads in groups.items():
                 cname = emit_method_group(out, k, rname, overloads, static)
                 target = f"cls_{k.name}.rb_class"
@@ -666,10 +709,17 @@ def generate(classes, modules, ns_constants):
                         registrations.append(
                             f'  {define}({target}, "{camel}", RUBY_METHOD_FUNC({cname}), -1);')
                 if not static:
-                    # setter sugar: set_interval(v) also as interval=
+                    # setter sugar: set_interval(v) also as interval= and
+                    # qtbindings camelCase intervalText= style
                     if rname.startswith("set_") and any(len(m.params) >= 1 for m in overloads):
                         registrations.append(
                             f'  rb_define_alias({target}, "{rname[4:]}=", "{rname}");')
+                        for camel in sorted({m.name for m in overloads}):
+                            if camel.startswith("set") and len(camel) > 3:
+                                prop = camel[3].lower() + camel[4:]
+                                if prop != rname[4:]:
+                                    registrations.append(
+                                        f'  rb_define_alias({target}, "{prop}=", "{rname}");')
                     # predicate sugar: is_active also as active?
                     if rname.startswith("is_") and all(not m.params for m in overloads) \
                             and all(m.result.kind == "bool" for m in overloads):
@@ -719,6 +769,16 @@ def generate(classes, modules, ns_constants):
                     name = const_name(c.spelling)
                     if re.match(r'^[A-Z][A-Za-z0-9_]*$', name):
                         out.append(f'  rb_define_const(cls_{k.name}.rb_class, "{name}", INT2NUM({c.enum_value}));')
+    # QVariant bridging for value classes (QSettings values etc.)
+    variant_value_classes = ["QSize", "QSizeF", "QPoint", "QPointF", "QRect",
+                             "QRectF", "QColor", "QFont", "QKeySequence",
+                             "QUrl", "QDate", "QIcon", "QPixmap"]
+    for name in variant_value_classes:
+        if name in classes and not classes[name].is_qobject:
+            out.append(
+                f"  qt6rb::register_variant_handler(QMetaType::{name}, &cls_{name}, "
+                f"[](void* p) {{ return QVariant::fromValue(*static_cast<{name}*>(p)); }}, "
+                f"[](const QVariant& v) {{ return (void*)new {name}(v.value<{name}>()); }});")
     lowercase = {}
     for name, value in ns_constants.items():
         cname = const_name(name)

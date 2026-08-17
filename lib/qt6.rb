@@ -38,6 +38,18 @@ module Qt
 
   # Common behavior for every wrapped Qt object
   module WrapperExtensions
+    def self.included(base)
+      base.extend(ClassMethods)
+    end
+
+    # qtbindings class-level declarations. Slots need no declaration with
+    # the new bindings (connect dispatches by method name); accept and
+    # ignore them. Ruby-defined signals are not supported yet.
+    module ClassMethods
+      def slots(*_signatures); end
+      def signals(*_signatures); end
+    end
+
     def dispose
       Qt._dispose(self)
     end
@@ -130,6 +142,61 @@ module Qt
   end
 end
 
+module Qt
+  # qtbindings wrapped values in Qt::Variant; the new bindings marshal
+  # QVariant natively, so Variant.new is a passthrough
+  class Variant
+    def self.new(value = nil)
+      value
+    end
+  end
+
+  # QDesktopWidget was removed in Qt 6; emulate the small surface COSMOS
+  # uses on top of QScreen
+  class DesktopCompat
+    ScreenSize = Struct.new(:width, :height)
+
+    def screen(_index = nil)
+      geometry = Qt::GuiApplication.primaryScreen.geometry
+      # QDesktopWidget#screen returned a widget; callers use width/height
+      ScreenSize.new(geometry.width, geometry.height)
+    end
+
+    def screenGeometry(_index = nil)
+      Qt::GuiApplication.primaryScreen.geometry
+    end
+    alias screen_geometry screenGeometry
+
+    def availableGeometry(_index = nil)
+      Qt::GuiApplication.primaryScreen.availableGeometry
+    end
+    alias available_geometry availableGeometry
+
+    def width; screenGeometry.width; end
+    def height; screenGeometry.height; end
+  end
+
+  def self.qVersion
+    "6.0.0"
+  end
+end
+
+# qtbindings-era code calls Variant#toSize/toPoint/etc on values read from
+# QSettings; those now come back as the actual value classes
+{ 'Size' => 'toSize', 'SizeF' => 'toSizeF', 'Point' => 'toPoint',
+  'PointF' => 'toPointF', 'Rect' => 'toRect', 'RectF' => 'toRectF' }.each do |klass, meth|
+  Qt.const_get(klass).class_eval do
+    define_method(meth) { self }
+    define_method(Qt.underscore(meth)) { self }
+  end
+end
+
+class Qt::Application
+  def self.desktop
+    @desktop_compat ||= Qt::DesktopCompat.new
+  end
+end
+
 class Qt::CoreApplication
   # exec/quit/processEvents are static in Qt 6; qtbindings-era code calls
   # them on the instance
@@ -137,6 +204,13 @@ class Qt::CoreApplication
   def quit; self.class.quit; end
   def process_events; self.class.process_events; end
   alias processEvents process_events
+
+  # activeWindow is a QApplication static in Qt 6; qtbindings-era code
+  # calls it on the instance
+  def activeWindow
+    Qt::Application.activeWindow
+  end
+  alias active_window activeWindow
 
   alias qt6rb_original_initialize initialize
   def initialize(*args)
