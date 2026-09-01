@@ -40,15 +40,28 @@ Qt headers --(1) parse_qt.py/libclang--> qt_ir.json --(2) codegen--> C++ Ruby gl
 ## Building and trying it
 
 ```sh
-generator-venv/bin/python generator/codegen.py \
-    --qt-prefix /opt/homebrew/opt/qt \
-    --modules QtCore QtGui QtWidgets --namespace-enums \
-    --classes QObject QTimer QWidget QLabel QPushButton QCheckBox \
-              QComboBox QLineEdit QTextEdit QMainWindow QLayout QBoxLayout \
-              QVBoxLayout QHBoxLayout QGridLayout QSize QPoint QRect \
-    -o ext/qt6/qt6_generated.cpp
+generator/regen.sh                  # finds Qt and libclang, writes the glue
 cd ext/qt6 && ruby extconf.rb && make
 ruby examples/qt6_widgets_demo.rb   # headless (offscreen platform)
+```
+
+`regen.sh` locates Qt with `pkg-config` (override with `QT_PREFIX`) and
+writes `ext/qt6/generated/qt6_generated_<qt version>.cpp`. The output is
+**Qt-version-specific**: it binds exactly the API the local headers declare,
+so glue generated against a newer Qt calls methods an older Qt has not added
+yet and will not compile. `extconf.rb` therefore picks the newest generated
+file the build's Qt is new enough for -- an older file only uses API a newer
+Qt still has, so falling back is safe, while the reverse is not. Run
+`regen.sh` once per Qt version you want to ship bindings for.
+
+Calling `codegen.py` directly still works if you need to vary the class list:
+
+```sh
+python generator/codegen.py \
+    --qt-prefix "$QT_PREFIX" \
+    --modules QtCore QtGui QtWidgets --namespace-enums \
+    --classes QObject QTimer QWidget QLabel QPushButton \
+    -o ext/qt6/generated/qt6_generated_6_4_2.cpp
 ```
 
 ## Virtual override hooks
@@ -96,6 +109,11 @@ back to the base implementation instead of crashing the event loop. See
 python3 -m venv generator-venv
 generator-venv/bin/pip install libclang
 ```
+
+On systems without the venv module, `pip install --target generator-libs
+libclang` works too -- `regen.sh` looks for either. The pip wheel ships
+libclang but not its builtin headers (`stddef.h` and friends), so `regen.sh`
+borrows them from an installed clang; set `CPLUS_INCLUDE_PATH` to override.
 
 ## Usage
 

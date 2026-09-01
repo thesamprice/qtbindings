@@ -268,6 +268,16 @@ def classify(t, generated):
     return Type("unsupported", spelling)
 
 
+def is_moc_internal(name):
+    """Q_OBJECT/Q_GADGET plumbing, never part of the public API.
+
+    qt_metacall/qt_metacast/qt_static_metacall are moc's dispatch entry
+    points, and qt_check_for_QGADGET_macro is declared but never defined --
+    it exists only as a compile-time marker, so binding it leaves an
+    undefined symbol in the extension. No public Qt API starts with qt_."""
+    return name.startswith("qt_")
+
+
 def is_final(cursor):
     return any(c.kind == CursorKind.CXX_FINAL_ATTR for c in cursor.get_children())
 
@@ -386,6 +396,8 @@ def collect_virtuals(klass, classes, generated):
                 continue
             if child.spelling.startswith("operator"):
                 continue
+            if is_moc_internal(child.spelling):
+                continue
             key = (child.spelling,
                    tuple(a.type.get_canonical().spelling
                          for a in child.get_arguments()))
@@ -436,6 +448,8 @@ def collect_protected(klass, classes, generated):
             if child.kind != CursorKind.CXX_METHOD:
                 continue
             if child.spelling.startswith("operator") or child.is_deleted_method():
+                continue
+            if is_moc_internal(child.spelling):
                 continue
             if child.access_specifier == AccessSpecifier.PUBLIC:
                 public_names.add(child.spelling)
@@ -569,6 +583,8 @@ def harvest(tu, qt_prefix, wanted):
                 if child.is_deleted_method():
                     continue
                 if child.spelling.startswith("operator"):
+                    continue
+                if is_moc_internal(child.spelling):
                     continue
                 ann = collect_annotations(child)
                 m = Method(child, generated)
@@ -712,10 +728,28 @@ def emit_method_group(out, klass, ruby_name, overloads, static):
         qual = m.owner or klass.name
         if m.static:
             call = f"{qual}::{m.name}({args})"
+        elif qual != klass.name and m.pure:
+            # As above, but the pure virtual is inherited: QGridLayout hides
+            # QLayout's pure addItem(QLayoutItem*) behind its own protected
+            # override, so neither the qualified call nor the unqualified one
+            # compiles. Go through the base to dispatch virtually to whatever
+            # the concrete class actually provides.
+            call = f"static_cast<{qual}*>(o)->{m.name}({args})"
         elif qual != klass.name:
             # Inherited overload hidden by a redeclaration in this class;
             # only reachable with explicit qualification
             call = f"o->{qual}::{m.name}({args})"
+        elif m.pure and klass.shim:
+            # A pure virtual has no implementation to call non-virtually. On
+            # a Ruby-created object this binding is only reachable from the
+            # override's own super(), which would otherwise recurse straight
+            # back into the override; the shim raises for the same reason.
+            # C++-created objects still dispatch virtually to the real one.
+            out.append(f"{indent}if (dynamic_cast<Rb_{klass.name}*>(o)) {{")
+            out.append(f'{indent}  rb_raise(rb_eNotImpError, "{klass.cxx}#{ruby_name} '
+                       f'is abstract and must be overridden");')
+            out.append(f"{indent}}}")
+            call = f"o->{m.name}({args})"
         elif m.virtual and klass.shim:
             # For Ruby-created objects call this class's implementation
             # non-virtually so a Ruby override calling super doesn't recurse

@@ -374,7 +374,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QWidget::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QWidget::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QWidget::mouseReleaseEvent(a0); }
@@ -724,7 +723,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QLabel::event(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QLabel::keyPressEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QLabel::paintEvent(a0); }
@@ -1073,7 +1071,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QPushButton::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QPushButton::paintEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QPushButton::keyPressEvent(a0); }
@@ -1460,7 +1457,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QCheckBox::event(a0); }
   bool qt6rb_base_hitButton(const QPoint & a0) { return QCheckBox::hitButton(a0); }
   void qt6rb_base_checkStateSet() { QCheckBox::checkStateSet(); }
@@ -1847,7 +1843,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_focusInEvent(QFocusEvent * a0) { QComboBox::focusInEvent(a0); }
   void qt6rb_base_focusOutEvent(QFocusEvent * a0) { QComboBox::focusOutEvent(a0); }
   void qt6rb_base_changeEvent(QEvent * a0) { QComboBox::changeEvent(a0); }
@@ -2221,7 +2216,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QLineEdit::mousePressEvent(a0); }
   void qt6rb_base_mouseMoveEvent(QMouseEvent * a0) { QLineEdit::mouseMoveEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QLineEdit::mouseReleaseEvent(a0); }
@@ -2571,7 +2565,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QTextEdit::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QTextEdit::timerEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QTextEdit::keyPressEvent(a0); }
@@ -3014,7 +3007,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QPlainTextEdit::event(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QPlainTextEdit::timerEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QPlainTextEdit::keyPressEvent(a0); }
@@ -3450,7 +3442,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QMainWindow::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QMainWindow::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMainWindow::mouseReleaseEvent(a0); }
@@ -6191,7 +6182,6 @@ class Rb_QPixmap : public QPixmap, public qt6rb::RubyPeer {
 public:
   using QPixmap::QPixmap;
   Rb_QPixmap(const QPixmap& other) : QPixmap(other) {}
-  using QPaintDevice::getDecodedMetricF;
   int qt6rb_base_metric(PaintDeviceMetric a0) { return QPixmap::metric(a0); }
   void qt6rb_base_initPainter(QPainter * a0) { QPixmap::initPainter(a0); }
   QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QPixmap::redirected(a0); }
@@ -6261,7 +6251,6 @@ public:
   using QImage::rgbSwapped_helper;
   using QImage::rgbSwapped_inplace;
   using QImage::smoothScaled;
-  using QPaintDevice::getDecodedMetricF;
   int qt6rb_base_metric(PaintDeviceMetric a0) { return QImage::metric(a0); }
   void qt6rb_base_initPainter(QPainter * a0) { QImage::initPainter(a0); }
   QPaintDevice * qt6rb_base_redirected(QPoint * a0) { return QImage::redirected(a0); }
@@ -6330,7 +6319,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QMessageBox::event(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QMessageBox::resizeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QMessageBox::showEvent(a0); }
@@ -6690,7 +6678,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QDialog::keyPressEvent(a0); }
   void qt6rb_base_closeEvent(QCloseEvent * a0) { QDialog::closeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QDialog::showEvent(a0); }
@@ -7050,7 +7037,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_done(int a0) { QFileDialog::done(a0); }
   void qt6rb_base_accept() { QFileDialog::accept(); }
   void qt6rb_base_changeEvent(QEvent * a0) { QFileDialog::changeEvent(a0); }
@@ -7429,7 +7415,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QInputDialog::keyPressEvent(a0); }
   void qt6rb_base_closeEvent(QCloseEvent * a0) { QInputDialog::closeEvent(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QInputDialog::showEvent(a0); }
@@ -7797,7 +7782,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QProgressBar::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QProgressBar::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QProgressBar::mousePressEvent(a0); }
@@ -8156,7 +8140,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QSlider::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QSlider::mousePressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QSlider::mouseReleaseEvent(a0); }
@@ -8506,7 +8489,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QSpinBox::event(a0); }
   int qt6rb_base_valueFromText(const QString & a0) { return QSpinBox::valueFromText(a0); }
   QString qt6rb_base_textFromValue(int a0) { return QSpinBox::textFromValue(a0); }
@@ -8895,7 +8877,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QDoubleSpinBox::resizeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QDoubleSpinBox::keyPressEvent(a0); }
   void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QDoubleSpinBox::keyReleaseEvent(a0); }
@@ -9279,7 +9260,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QRadioButton::event(a0); }
   bool qt6rb_base_hitButton(const QPoint & a0) { return QRadioButton::hitButton(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QRadioButton::paintEvent(a0); }
@@ -9722,7 +9702,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_changeEvent(QEvent * a0) { QDialogButtonBox::changeEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QDialogButtonBox::event(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QDialogButtonBox::mousePressEvent(a0); }
@@ -10073,7 +10052,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QCalendarWidget::event(a0); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QCalendarWidget::eventFilter(a0, a1); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QCalendarWidget::mousePressEvent(a0); }
@@ -10442,7 +10420,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QTableWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QTableWidget::mimeTypes(); }
   QMimeData * qt6rb_base_mimeData(const QList<QTableWidgetItem *> & a0) { return QTableWidget::mimeData(a0); }
@@ -11119,7 +11096,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QTreeWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QTreeWidget::mimeTypes(); }
   QMimeData * qt6rb_base_mimeData(const QList<QTreeWidgetItem *> & a0) { return QTreeWidget::mimeData(a0); }
@@ -11841,7 +11817,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_tabInserted(int a0) { QTabWidget::tabInserted(a0); }
   void qt6rb_base_tabRemoved(int a0) { QTabWidget::tabRemoved(a0); }
   void qt6rb_base_showEvent(QShowEvent * a0) { QTabWidget::showEvent(a0); }
@@ -12210,7 +12185,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   QSize qt6rb_base_tabSizeHint(int a0) { return QTabBar::tabSizeHint(a0); }
   QSize qt6rb_base_minimumTabSizeHint(int a0) { return QTabBar::minimumTabSizeHint(a0); }
   void qt6rb_base_tabInserted(int a0) { QTabBar::tabInserted(a0); }
@@ -12621,7 +12595,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QListWidget::event(a0); }
   QStringList qt6rb_base_mimeTypes() { return QListWidget::mimeTypes(); }
   QMimeData * qt6rb_base_mimeData(const QList<QListWidgetItem *> & a0) { return QListWidget::mimeData(a0); }
@@ -13450,7 +13423,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_wheelEvent(QWheelEvent * a0) { QScrollBar::wheelEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QScrollBar::paintEvent(a0); }
   void qt6rb_base_mousePressEvent(QMouseEvent * a0) { QScrollBar::mousePressEvent(a0); }
@@ -13809,7 +13781,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_currentChanged(const QModelIndex & a0, const QModelIndex & a1) { QHeaderView::currentChanged(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QHeaderView::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QHeaderView::paintEvent(a0); }
@@ -14443,7 +14414,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QGroupBox::event(a0); }
   void qt6rb_base_childEvent(QChildEvent * a0) { QGroupBox::childEvent(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QGroupBox::resizeEvent(a0); }
@@ -14796,7 +14766,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_childEvent(QChildEvent * a0) { QSplitter::childEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QSplitter::event(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QSplitter::resizeEvent(a0); }
@@ -15147,7 +15116,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QScrollArea::event(a0); }
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QScrollArea::eventFilter(a0, a1); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QScrollArea::resizeEvent(a0); }
@@ -15536,7 +15504,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_showEvent(QShowEvent * a0) { QStatusBar::showEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QStatusBar::paintEvent(a0); }
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QStatusBar::resizeEvent(a0); }
@@ -15885,7 +15852,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_changeEvent(QEvent * a0) { QMenuBar::changeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QMenuBar::keyPressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMenuBar::mouseReleaseEvent(a0); }
@@ -16236,7 +16202,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_changeEvent(QEvent * a0) { QMenu::changeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QMenu::keyPressEvent(a0); }
   void qt6rb_base_mouseReleaseEvent(QMouseEvent * a0) { QMenu::mouseReleaseEvent(a0); }
@@ -16698,7 +16663,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_changeEvent(QEvent * a0) { QToolBar::changeEvent(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QToolBar::paintEvent(a0); }
   bool qt6rb_base_event(QEvent * a0) { return QToolBar::event(a0); }
@@ -18231,7 +18195,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QListView::event(a0); }
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QListView::scrollContentsBy(a0, a1); }
   void qt6rb_base_dataChanged(const QModelIndex & a0, const QModelIndex & a1, const QList<int> & a2) { QListView::dataChanged(a0, a1, a2); }
@@ -18863,7 +18826,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QTreeView::scrollContentsBy(a0, a1); }
   void qt6rb_base_rowsInserted(const QModelIndex & a0, int a1, int a2) { QTreeView::rowsInserted(a0, a1, a2); }
   void qt6rb_base_rowsAboutToBeRemoved(const QModelIndex & a0, int a1, int a2) { QTreeView::rowsAboutToBeRemoved(a0, a1, a2); }
@@ -19932,7 +19894,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QFrame::event(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QFrame::paintEvent(a0); }
   void qt6rb_base_changeEvent(QEvent * a0) { QFrame::changeEvent(a0); }
@@ -20338,7 +20299,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_hitButton(const QPoint & a0) { return QAbstractButton::hitButton(a0); }
   void qt6rb_base_checkStateSet() { QAbstractButton::checkStateSet(); }
   void qt6rb_base_nextCheckState() { QAbstractButton::nextCheckState(); }
@@ -20716,7 +20676,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_eventFilter(QObject * a0, QEvent * a1) { return QAbstractScrollArea::eventFilter(a0, a1); }
   bool qt6rb_base_event(QEvent * a0) { return QAbstractScrollArea::event(a0); }
   bool qt6rb_base_viewportEvent(QEvent * a0) { return QAbstractScrollArea::viewportEvent(a0); }
@@ -21240,7 +21199,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   bool qt6rb_base_event(QEvent * a0) { return QAbstractSlider::event(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QAbstractSlider::keyPressEvent(a0); }
   void qt6rb_base_timerEvent(QTimerEvent * a0) { QAbstractSlider::timerEvent(a0); }
@@ -21591,7 +21549,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_resizeEvent(QResizeEvent * a0) { QAbstractSpinBox::resizeEvent(a0); }
   void qt6rb_base_keyPressEvent(QKeyEvent * a0) { QAbstractSpinBox::keyPressEvent(a0); }
   void qt6rb_base_keyReleaseEvent(QKeyEvent * a0) { QAbstractSpinBox::keyReleaseEvent(a0); }
@@ -21966,7 +21923,6 @@ public:
   using QObject::receivers;
   using QObject::sender;
   using QObject::senderSignalIndex;
-  using QPaintDevice::getDecodedMetricF;
   void qt6rb_base_scrollContentsBy(int a0, int a1) { QTableView::scrollContentsBy(a0, a1); }
   void qt6rb_base_initViewItemOption(QStyleOptionViewItem * a0) { QTableView::initViewItemOption(a0); }
   void qt6rb_base_paintEvent(QPaintEvent * a0) { QTableView::paintEvent(a0); }
@@ -23096,15 +23052,6 @@ static VALUE rb_QObject_is_quick_item_type(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#is_quick_item_type (%d)", argc);
 }
 
-static VALUE rb_QObject_is_qml_exposed(int argc, VALUE* argv, VALUE self) {
-  QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return (o->isQmlExposed()) ? Qtrue : Qfalse;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QObject#is_qml_exposed (%d)", argc);
-}
-
 static VALUE rb_QObject_signals_blocked(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   (void)argv; (void)self;
@@ -23139,15 +23086,8 @@ static VALUE rb_QObject_kill_timer(int argc, VALUE* argv, VALUE self) {
   QObject* o = static_cast<QObject*>(qt6rb::unwrap(self, &cls_QObject));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      o->killTimer(NUM2INT(argv[0]));
-      return Qnil;
-    }
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      o->killTimer(static_cast<Qt::TimerId>(NUM2INT(argv[0])));
-      return Qnil;
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QObject#kill_timer for given argument types");
+    o->killTimer(NUM2INT(argv[0]));
+    return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QObject#kill_timer (%d)", argc);
 }
@@ -23424,15 +23364,6 @@ static VALUE rb_QTimer_timer_id(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(o->timerId());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTimer#timer_id (%d)", argc);
-}
-
-static VALUE rb_QTimer_id(int argc, VALUE* argv, VALUE self) {
-  QTimer* o = static_cast<QTimer*>(qt6rb::unwrap(self, &cls_QTimer));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(static_cast<int>(o->id()));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTimer#id (%d)", argc);
 }
 
 static VALUE rb_QTimer_set_interval(int argc, VALUE* argv, VALUE self) {
@@ -23771,14 +23702,6 @@ static VALUE rb_QCoreApplication_s_instance(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QCoreApplication#instance (%d)", argc);
 }
 
-static VALUE rb_QCoreApplication_s_instance_exists(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return (QCoreApplication::instanceExists()) ? Qtrue : Qfalse;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QCoreApplication#instance_exists (%d)", argc);
-}
-
 static VALUE rb_QCoreApplication_s_exec(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 0) {
@@ -24049,16 +23972,6 @@ static VALUE rb_QGuiApplication_ctor(int argc, VALUE* argv, VALUE self) {
   return self;
 }
 static VALUE rb_QGuiApplication_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QGuiApplication); }
-
-static VALUE rb_QGuiApplication_set_badge_number(int argc, VALUE* argv, VALUE self) {
-  QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setBadgeNumber(NUM2LL(argv[0]));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QGuiApplication#set_badge_number (%d)", argc);
-}
 
 static VALUE rb_QGuiApplication_device_pixel_ratio(int argc, VALUE* argv, VALUE self) {
   QGuiApplication* o = static_cast<QGuiApplication*>(qt6rb::unwrap(self, &cls_QGuiApplication));
@@ -24574,15 +24487,6 @@ static VALUE rb_QApplication_style_sheet(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QApplication#style_sheet (%d)", argc);
 }
 
-static VALUE rb_QApplication_auto_sip_enabled(int argc, VALUE* argv, VALUE self) {
-  QApplication* o = static_cast<QApplication*>(qt6rb::unwrap(self, &cls_QApplication));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return (o->autoSipEnabled()) ? Qtrue : Qfalse;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QApplication#auto_sip_enabled (%d)", argc);
-}
-
 static VALUE rb_QApplication_set_style_sheet(int argc, VALUE* argv, VALUE self) {
   QApplication* o = static_cast<QApplication*>(qt6rb::unwrap(self, &cls_QApplication));
   (void)argv; (void)self;
@@ -24601,6 +24505,15 @@ static VALUE rb_QApplication_set_auto_sip_enabled(int argc, VALUE* argv, VALUE s
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QApplication#set_auto_sip_enabled (%d)", argc);
+}
+
+static VALUE rb_QApplication_auto_sip_enabled(int argc, VALUE* argv, VALUE self) {
+  QApplication* o = static_cast<QApplication*>(qt6rb::unwrap(self, &cls_QApplication));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    return (o->autoSipEnabled()) ? Qtrue : Qfalse;
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QApplication#auto_sip_enabled (%d)", argc);
 }
 
 static VALUE rb_QApplication_s_tr(int argc, VALUE* argv, VALUE self) {
@@ -26498,25 +26411,6 @@ static VALUE rb_QWidget_set_accessible_description(int argc, VALUE* argv, VALUE 
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#set_accessible_description (%d)", argc);
 }
 
-static VALUE rb_QWidget_accessible_identifier(int argc, VALUE* argv, VALUE self) {
-  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return qt6rb::from_qstring(o->accessibleIdentifier());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#accessible_identifier (%d)", argc);
-}
-
-static VALUE rb_QWidget_set_accessible_identifier(int argc, VALUE* argv, VALUE self) {
-  QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setAccessibleIdentifier(qt6rb::to_qstring(argv[0]));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#set_accessible_identifier (%d)", argc);
-}
-
 static VALUE rb_QWidget_set_layout_direction(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
@@ -27467,13 +27361,7 @@ static VALUE rb_QWidget_child_at(int argc, VALUE* argv, VALUE self) {
   QWidget* o = static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget));
   (void)argv; (void)self;
   if (argc == 1) {
-    if (qt6rb::is_kind_of(argv[0], &cls_QPoint)) {
-      return qt6rb::wrap_qobject((QObject*)(o->childAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QWidget);
-    }
-    if (qt6rb::is_kind_of(argv[0], &cls_QPointF)) {
-      return qt6rb::wrap_qobject((QObject*)(o->childAt(*static_cast<QPointF*>(qt6rb::unwrap_ref(argv[0], &cls_QPointF)))), &cls_QWidget);
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QWidget#child_at for given argument types");
+    return qt6rb::wrap_qobject((QObject*)(o->childAt(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QWidget);
   }
   if (argc == 2) {
     return qt6rb::wrap_qobject((QObject*)(o->childAt(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QWidget);
@@ -28021,16 +27909,6 @@ static VALUE rb_QWidget_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QWidget#receivers (%d)", argc);
-}
-
-static VALUE rb_QWidget_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QWidget* shim = dynamic_cast<Rb_QWidget*>(static_cast<QWidget*>(qt6rb::unwrap(self, &cls_QWidget)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QWidget#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QWidget_on_window_title_changed(int argc, VALUE* argv, VALUE self) {
@@ -28854,16 +28732,6 @@ static VALUE rb_QLabel_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLabel#receivers (%d)", argc);
 }
 
-static VALUE rb_QLabel_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QLabel* shim = dynamic_cast<Rb_QLabel*>(static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLabel#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QLabel_on_link_activated(int argc, VALUE* argv, VALUE self) {
   QLabel* o = static_cast<QLabel*>(qt6rb::unwrap(self, &cls_QLabel));
   VALUE proc = rb_block_proc();
@@ -29475,16 +29343,6 @@ static VALUE rb_QPushButton_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#receivers (%d)", argc);
 }
 
-static VALUE rb_QPushButton_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QPushButton* shim = dynamic_cast<Rb_QPushButton*>(static_cast<QPushButton*>(qt6rb::unwrap(self, &cls_QPushButton)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPushButton#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QCheckBox_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -30013,16 +29871,6 @@ static VALUE rb_QCheckBox_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#receivers (%d)", argc);
 }
 
-static VALUE rb_QCheckBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QCheckBox* shim = dynamic_cast<Rb_QCheckBox*>(static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QCheckBox#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QCheckBox_on_state_changed(int argc, VALUE* argv, VALUE self) {
   QCheckBox* o = static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox));
   VALUE proc = rb_block_proc();
@@ -30030,18 +29878,6 @@ static VALUE rb_QCheckBox_on_state_changed(int argc, VALUE* argv, VALUE self) {
   (void)argc; (void)argv;
   QObject::connect(o, &QCheckBox::stateChanged, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
-    qt6rb::call_proc(proc, 1, args);
-  });
-  return self;
-}
-
-static VALUE rb_QCheckBox_on_check_state_changed(int argc, VALUE* argv, VALUE self) {
-  QCheckBox* o = static_cast<QCheckBox*>(qt6rb::unwrap(self, &cls_QCheckBox));
-  VALUE proc = rb_block_proc();
-  qt6rb::retain_proc(proc);
-  (void)argc; (void)argv;
-  QObject::connect(o, &QCheckBox::checkStateChanged, o, [proc](Qt::CheckState a0) {
-    VALUE args[] = { INT2NUM(static_cast<int>(a0)) };
     qt6rb::call_proc(proc, 1, args);
   });
   return self;
@@ -30422,25 +30258,6 @@ static VALUE rb_QComboBox_set_model_column(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#set_model_column (%d)", argc);
-}
-
-static VALUE rb_QComboBox_label_drawing_mode(int argc, VALUE* argv, VALUE self) {
-  QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(static_cast<int>(o->labelDrawingMode()));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#label_drawing_mode (%d)", argc);
-}
-
-static VALUE rb_QComboBox_set_label_drawing_mode(int argc, VALUE* argv, VALUE self) {
-  QComboBox* o = static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setLabelDrawingMode(static_cast<QComboBox::LabelDrawingMode>(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#set_label_drawing_mode (%d)", argc);
 }
 
 static VALUE rb_QComboBox_current_index(int argc, VALUE* argv, VALUE self) {
@@ -31135,16 +30952,6 @@ static VALUE rb_QComboBox_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#receivers (%d)", argc);
-}
-
-static VALUE rb_QComboBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QComboBox* shim = dynamic_cast<Rb_QComboBox*>(static_cast<QComboBox*>(qt6rb::unwrap(self, &cls_QComboBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QComboBox#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QComboBox_on_edit_text_changed(int argc, VALUE* argv, VALUE self) {
@@ -32342,16 +32149,6 @@ static VALUE rb_QLineEdit_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#receivers (%d)", argc);
-}
-
-static VALUE rb_QLineEdit_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QLineEdit* shim = dynamic_cast<Rb_QLineEdit*>(static_cast<QLineEdit*>(qt6rb::unwrap(self, &cls_QLineEdit)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLineEdit#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QLineEdit_on_text_changed(int argc, VALUE* argv, VALUE self) {
@@ -33814,16 +33611,6 @@ static VALUE rb_QTextEdit_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#receivers (%d)", argc);
 }
 
-static VALUE rb_QTextEdit_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QTextEdit* shim = dynamic_cast<Rb_QTextEdit*>(static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTextEdit#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QTextEdit_on_text_changed(int argc, VALUE* argv, VALUE self) {
   QTextEdit* o = static_cast<QTextEdit*>(qt6rb::unwrap(self, &cls_QTextEdit));
   VALUE proc = rb_block_proc();
@@ -35112,16 +34899,6 @@ static VALUE rb_QPlainTextEdit_prot_receivers(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QPlainTextEdit#receivers (%d)", argc);
 }
 
-static VALUE rb_QPlainTextEdit_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QPlainTextEdit* shim = dynamic_cast<Rb_QPlainTextEdit*>(static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPlainTextEdit#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QPlainTextEdit_on_text_changed(int argc, VALUE* argv, VALUE self) {
   QPlainTextEdit* o = static_cast<QPlainTextEdit*>(qt6rb::unwrap(self, &cls_QPlainTextEdit));
   VALUE proc = rb_block_proc();
@@ -36052,16 +35829,6 @@ static VALUE rb_QMainWindow_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#receivers (%d)", argc);
 }
 
-static VALUE rb_QMainWindow_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QMainWindow* shim = dynamic_cast<Rb_QMainWindow*>(static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMainWindow#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QMainWindow_on_icon_size_changed(int argc, VALUE* argv, VALUE self) {
   QMainWindow* o = static_cast<QMainWindow*>(qt6rb::unwrap(self, &cls_QMainWindow));
   VALUE proc = rb_block_proc();
@@ -36190,54 +35957,6 @@ static VALUE rb_QLayout_size_constraint(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#size_constraint (%d)", argc);
 }
 
-static VALUE rb_QLayout_set_size_constraints(int argc, VALUE* argv, VALUE self) {
-  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
-  (void)argv; (void)self;
-  if (argc == 2) {
-    o->setSizeConstraints(static_cast<QLayout::SizeConstraint>(NUM2INT(argv[0])), static_cast<QLayout::SizeConstraint>(NUM2INT(argv[1])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#set_size_constraints (%d)", argc);
-}
-
-static VALUE rb_QLayout_set_horizontal_size_constraint(int argc, VALUE* argv, VALUE self) {
-  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setHorizontalSizeConstraint(static_cast<QLayout::SizeConstraint>(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#set_horizontal_size_constraint (%d)", argc);
-}
-
-static VALUE rb_QLayout_horizontal_size_constraint(int argc, VALUE* argv, VALUE self) {
-  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(static_cast<int>(o->horizontalSizeConstraint()));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#horizontal_size_constraint (%d)", argc);
-}
-
-static VALUE rb_QLayout_set_vertical_size_constraint(int argc, VALUE* argv, VALUE self) {
-  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setVerticalSizeConstraint(static_cast<QLayout::SizeConstraint>(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#set_vertical_size_constraint (%d)", argc);
-}
-
-static VALUE rb_QLayout_vertical_size_constraint(int argc, VALUE* argv, VALUE self) {
-  QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(static_cast<int>(o->verticalSizeConstraint()));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QLayout#vertical_size_constraint (%d)", argc);
-}
-
 static VALUE rb_QLayout_set_menu_bar(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
@@ -36318,7 +36037,10 @@ static VALUE rb_QLayout_add_item(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    (dynamic_cast<Rb_QLayout*>(o) ? o->QLayout::addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem))) : o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem))));
+    if (dynamic_cast<Rb_QLayout*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayout#add_item is abstract and must be overridden");
+    }
+    o->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem)));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#add_item (%d)", argc);
@@ -36385,7 +36107,10 @@ static VALUE rb_QLayout_item_at(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap((void*)((dynamic_cast<Rb_QLayout*>(o) ? o->QLayout::itemAt(NUM2INT(argv[0])) : o->itemAt(NUM2INT(argv[0])))), &cls_QLayoutItem, false);
+    if (dynamic_cast<Rb_QLayout*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayout#item_at is abstract and must be overridden");
+    }
+    return qt6rb::wrap((void*)(o->itemAt(NUM2INT(argv[0]))), &cls_QLayoutItem, false);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#item_at (%d)", argc);
 }
@@ -36394,7 +36119,10 @@ static VALUE rb_QLayout_take_at(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::wrap((void*)((dynamic_cast<Rb_QLayout*>(o) ? o->QLayout::takeAt(NUM2INT(argv[0])) : o->takeAt(NUM2INT(argv[0])))), &cls_QLayoutItem, false);
+    if (dynamic_cast<Rb_QLayout*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayout#take_at is abstract and must be overridden");
+    }
+    return qt6rb::wrap((void*)(o->takeAt(NUM2INT(argv[0]))), &cls_QLayoutItem, false);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#take_at (%d)", argc);
 }
@@ -36418,7 +36146,10 @@ static VALUE rb_QLayout_count(int argc, VALUE* argv, VALUE self) {
   QLayout* o = static_cast<QLayout*>(qt6rb::unwrap(self, &cls_QLayout));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM((dynamic_cast<Rb_QLayout*>(o) ? o->QLayout::count() : o->count()));
+    if (dynamic_cast<Rb_QLayout*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayout#count is abstract and must be overridden");
+    }
+    return INT2NUM(o->count());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayout#count (%d)", argc);
 }
@@ -37803,7 +37534,7 @@ static VALUE rb_QGridLayout_add_item(int argc, VALUE* argv, VALUE self) {
   QGridLayout* o = static_cast<QGridLayout*>(qt6rb::unwrap(self, &cls_QGridLayout));
   (void)argv; (void)self;
   if (argc == 1) {
-    o->QLayout::addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem)));
+    static_cast<QLayout*>(o)->addItem(static_cast<QLayoutItem*>(qt6rb::unwrap_release(argv[0], &cls_QLayoutItem)));
     return Qnil;
   }
   if (argc == 3) {
@@ -38864,18 +38595,6 @@ static VALUE rb_QStackedLayout_on_current_changed(int argc, VALUE* argv, VALUE s
   qt6rb::retain_proc(proc);
   (void)argc; (void)argv;
   QObject::connect(o, &QStackedLayout::currentChanged, o, [proc](int a0) {
-    VALUE args[] = { INT2NUM(a0) };
-    qt6rb::call_proc(proc, 1, args);
-  });
-  return self;
-}
-
-static VALUE rb_QStackedLayout_on_widget_added(int argc, VALUE* argv, VALUE self) {
-  QStackedLayout* o = static_cast<QStackedLayout*>(qt6rb::unwrap(self, &cls_QStackedLayout));
-  VALUE proc = rb_block_proc();
-  qt6rb::retain_proc(proc);
-  (void)argc; (void)argv;
-  QObject::connect(o, &QStackedLayout::widgetAdded, o, [proc](int a0) {
     VALUE args[] = { INT2NUM(a0) };
     qt6rb::call_proc(proc, 1, args);
   });
@@ -40862,29 +40581,17 @@ static VALUE rb_QDate_s_from_string(int argc, VALUE* argv, VALUE self) {
     if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1])) {
       return qt6rb::wrap(new QDate(QDate::fromString(QStringView(qt6rb::to_qstring(argv[0])), static_cast<Qt::DateFormat>(NUM2INT(argv[1])))), &cls_QDate, true);
     }
-    if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1])) {
-      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), static_cast<Qt::DateFormat>(NUM2INT(argv[1])))), &cls_QDate, true);
-    }
     if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
       return qt6rb::wrap(new QDate(QDate::fromString(QStringView(qt6rb::to_qstring(argv[0])), QStringView(qt6rb::to_qstring(argv[1])))), &cls_QDate, true);
     }
     if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
       return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), QStringView(qt6rb::to_qstring(argv[1])))), &cls_QDate, true);
     }
+    if (RB_TYPE_P(argv[0], T_STRING) && RB_INTEGER_TYPE_P(argv[1])) {
+      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), static_cast<Qt::DateFormat>(NUM2INT(argv[1])))), &cls_QDate, true);
+    }
     if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING)) {
       return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), qt6rb::to_qstring(argv[1]))), &cls_QDate, true);
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QDate#from_string for given argument types");
-  }
-  if (argc == 3) {
-    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2])) {
-      return qt6rb::wrap(new QDate(QDate::fromString(QStringView(qt6rb::to_qstring(argv[0])), QStringView(qt6rb::to_qstring(argv[1])), NUM2INT(argv[2]))), &cls_QDate, true);
-    }
-    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2])) {
-      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), QStringView(qt6rb::to_qstring(argv[1])), NUM2INT(argv[2]))), &cls_QDate, true);
-    }
-    if (RB_TYPE_P(argv[0], T_STRING) && RB_TYPE_P(argv[1], T_STRING) && RB_INTEGER_TYPE_P(argv[2])) {
-      return qt6rb::wrap(new QDate(QDate::fromString(qt6rb::to_qstring(argv[0]), qt6rb::to_qstring(argv[1]), NUM2INT(argv[2]))), &cls_QDate, true);
     }
     rb_raise(rb_eTypeError, "no matching overload of QDate#from_string for given argument types");
   }
@@ -41374,6 +41081,17 @@ static VALUE rb_QUrl_is_detached(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QUrl#is_detached (%d)", argc);
 }
 
+static VALUE rb_QUrl_s_from_encoded(int argc, VALUE* argv, VALUE self) {
+  (void)argv; (void)self;
+  if (argc == 1) {
+    return qt6rb::wrap(new QUrl(QUrl::fromEncoded(qt6rb::to_qbytearray(argv[0]))), &cls_QUrl, true);
+  }
+  if (argc == 2) {
+    return qt6rb::wrap(new QUrl(QUrl::fromEncoded(qt6rb::to_qbytearray(argv[0]), static_cast<QUrl::ParsingMode>(NUM2INT(argv[1])))), &cls_QUrl, true);
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QUrl#from_encoded (%d)", argc);
+}
+
 static VALUE rb_QUrl_s_from_user_input(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
@@ -41482,6 +41200,49 @@ static VALUE rb_QChar_ctor(int argc, VALUE* argv, VALUE self) {
     QChar* p = new QChar();
     qt6rb::attach(self, p, true);
     return self;
+  }
+  if (argc == 1) {
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(NUM2USHORT(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(NUM2SHORT(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(NUM2UINT(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(NUM2INT(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(static_cast<QChar::SpecialCharacter>(NUM2INT(argv[0])));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(static_cast<char16_t>(NUM2UINT(argv[0])));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(NUM2CHR(argv[0]));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    if (RB_INTEGER_TYPE_P(argv[0])) {
+      QChar* p = new QChar(static_cast<unsigned char>(NUM2UINT(argv[0])));
+      qt6rb::attach(self, p, true);
+      return self;
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QChar#initialize for given argument types");
   }
   if (argc == 2) {
     QChar* p = new QChar(static_cast<unsigned char>(NUM2UINT(argv[0])), static_cast<unsigned char>(NUM2UINT(argv[1])));
@@ -42158,16 +41919,6 @@ static VALUE rb_QEvent_ctor(int argc, VALUE* argv, VALUE self) {
 }
 static VALUE rb_QEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QEvent); }
 
-static VALUE rb_QEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QEvent#qt_check_for_qgadget_macro (%d)", argc);
-}
-
 static VALUE rb_QEvent_type(int argc, VALUE* argv, VALUE self) {
   QEvent* o = static_cast<QEvent*>(qt6rb::unwrap(self, &cls_QEvent));
   (void)argv; (void)self;
@@ -42275,19 +42026,10 @@ static VALUE rb_QEvent_s_register_event_type(int argc, VALUE* argv, VALUE self) 
 static VALUE rb_QTimerEvent_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 1) {
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      Rb_QTimerEvent* p = new Rb_QTimerEvent(NUM2INT(argv[0]));
-      qt6rb::attach(self, p, true);
-      p->qt6rb_set_self(self);
-      return self;
-    }
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      Rb_QTimerEvent* p = new Rb_QTimerEvent(static_cast<Qt::TimerId>(NUM2INT(argv[0])));
-      qt6rb::attach(self, p, true);
-      p->qt6rb_set_self(self);
-      return self;
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QTimerEvent#initialize for given argument types");
+    Rb_QTimerEvent* p = new Rb_QTimerEvent(NUM2INT(argv[0]));
+    qt6rb::attach(self, p, true);
+    p->qt6rb_set_self(self);
+    return self;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#initialize (%d)", argc);
 }
@@ -42309,15 +42051,6 @@ static VALUE rb_QTimerEvent_timer_id(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(o->timerId());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#timer_id (%d)", argc);
-}
-
-static VALUE rb_QTimerEvent_id(int argc, VALUE* argv, VALUE self) {
-  QTimerEvent* o = static_cast<QTimerEvent*>(qt6rb::unwrap(self, &cls_QTimerEvent));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(static_cast<int>(o->id()));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTimerEvent#id (%d)", argc);
 }
 
 static VALUE rb_QChildEvent_ctor(int argc, VALUE* argv, VALUE self) {
@@ -43006,16 +42739,6 @@ static VALUE rb_QWheelEvent_ctor(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#initialize (%d)", argc);
 }
 static VALUE rb_QWheelEvent_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QWheelEvent); }
-
-static VALUE rb_QWheelEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QWheelEvent* o = static_cast<QWheelEvent*>(qt6rb::unwrap(self, &cls_QWheelEvent));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QWheelEvent#qt_check_for_qgadget_macro (%d)", argc);
-}
 
 static VALUE rb_QWheelEvent_clone(int argc, VALUE* argv, VALUE self) {
   QWheelEvent* o = static_cast<QWheelEvent*>(qt6rb::unwrap(self, &cls_QWheelEvent));
@@ -44467,16 +44190,6 @@ static VALUE rb_QPalette_ctor(int argc, VALUE* argv, VALUE self) {
 }
 static VALUE rb_QPalette_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QPalette); }
 
-static VALUE rb_QPalette_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QPalette* o = static_cast<QPalette*>(qt6rb::unwrap(self, &cls_QPalette));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPalette#qt_check_for_qgadget_macro (%d)", argc);
-}
-
 static VALUE rb_QPalette_current_color_group(int argc, VALUE* argv, VALUE self) {
   QPalette* o = static_cast<QPalette*>(qt6rb::unwrap(self, &cls_QPalette));
   (void)argv; (void)self;
@@ -44756,15 +44469,6 @@ static VALUE rb_QPalette_placeholder_text(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPalette#placeholder_text (%d)", argc);
 }
 
-static VALUE rb_QPalette_accent(int argc, VALUE* argv, VALUE self) {
-  QPalette* o = static_cast<QPalette*>(qt6rb::unwrap(self, &cls_QPalette));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return qt6rb::wrap(new QBrush(o->accent()), &cls_QBrush, true);
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPalette#accent (%d)", argc);
-}
-
 static VALUE rb_QPalette_is_copy_of(int argc, VALUE* argv, VALUE self) {
   QPalette* o = static_cast<QPalette*>(qt6rb::unwrap(self, &cls_QPalette));
   (void)argv; (void)self;
@@ -44883,16 +44587,6 @@ static VALUE rb_QFont_ctor(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QFont#initialize (%d)", argc);
 }
 static VALUE rb_QFont_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QFont); }
-
-static VALUE rb_QFont_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QFont* o = static_cast<QFont*>(qt6rb::unwrap(self, &cls_QFont));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QFont#qt_check_for_qgadget_macro (%d)", argc);
-}
 
 static VALUE rb_QFont_family(int argc, VALUE* argv, VALUE self) {
   QFont* o = static_cast<QFont*>(qt6rb::unwrap(self, &cls_QFont));
@@ -45323,26 +45017,6 @@ static VALUE rb_QFont_hinting_preference(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(static_cast<int>(o->hintingPreference()));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFont#hinting_preference (%d)", argc);
-}
-
-static VALUE rb_QFont_clear_features(int argc, VALUE* argv, VALUE self) {
-  QFont* o = static_cast<QFont*>(qt6rb::unwrap(self, &cls_QFont));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->clearFeatures();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QFont#clear_features (%d)", argc);
-}
-
-static VALUE rb_QFont_clear_variable_axes(int argc, VALUE* argv, VALUE self) {
-  QFont* o = static_cast<QFont*>(qt6rb::unwrap(self, &cls_QFont));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->clearVariableAxes();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QFont#clear_variable_axes (%d)", argc);
 }
 
 static VALUE rb_QFont_exact_match(int argc, VALUE* argv, VALUE self) {
@@ -45958,16 +45632,6 @@ static VALUE rb_QIcon_ctor(int argc, VALUE* argv, VALUE self) {
 }
 static VALUE rb_QIcon_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QIcon); }
 
-static VALUE rb_QIcon_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QIcon* o = static_cast<QIcon*>(qt6rb::unwrap(self, &cls_QIcon));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QIcon#qt_check_for_qgadget_macro (%d)", argc);
-}
-
 static VALUE rb_QIcon_pixmap(int argc, VALUE* argv, VALUE self) {
   QIcon* o = static_cast<QIcon*>(qt6rb::unwrap(self, &cls_QIcon));
   (void)argv; (void)self;
@@ -46201,22 +45865,10 @@ static VALUE rb_QIcon_is_mask(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QIcon_s_from_theme(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    if (RB_TYPE_P(argv[0], T_STRING)) {
-      return qt6rb::wrap(new QIcon(QIcon::fromTheme(qt6rb::to_qstring(argv[0]))), &cls_QIcon, true);
-    }
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      return qt6rb::wrap(new QIcon(QIcon::fromTheme(static_cast<QIcon::ThemeIcon>(NUM2INT(argv[0])))), &cls_QIcon, true);
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QIcon#from_theme for given argument types");
+    return qt6rb::wrap(new QIcon(QIcon::fromTheme(qt6rb::to_qstring(argv[0]))), &cls_QIcon, true);
   }
   if (argc == 2) {
-    if (RB_TYPE_P(argv[0], T_STRING) && qt6rb::is_kind_of(argv[1], &cls_QIcon)) {
-      return qt6rb::wrap(new QIcon(QIcon::fromTheme(qt6rb::to_qstring(argv[0]), *static_cast<QIcon*>(qt6rb::unwrap_ref(argv[1], &cls_QIcon)))), &cls_QIcon, true);
-    }
-    if (RB_INTEGER_TYPE_P(argv[0]) && qt6rb::is_kind_of(argv[1], &cls_QIcon)) {
-      return qt6rb::wrap(new QIcon(QIcon::fromTheme(static_cast<QIcon::ThemeIcon>(NUM2INT(argv[0])), *static_cast<QIcon*>(qt6rb::unwrap_ref(argv[1], &cls_QIcon)))), &cls_QIcon, true);
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QIcon#from_theme for given argument types");
+    return qt6rb::wrap(new QIcon(QIcon::fromTheme(qt6rb::to_qstring(argv[0]), *static_cast<QIcon*>(qt6rb::unwrap_ref(argv[1], &cls_QIcon)))), &cls_QIcon, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QIcon#from_theme (%d)", argc);
 }
@@ -46224,13 +45876,7 @@ static VALUE rb_QIcon_s_from_theme(int argc, VALUE* argv, VALUE self) {
 static VALUE rb_QIcon_s_has_theme_icon(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 1) {
-    if (RB_TYPE_P(argv[0], T_STRING)) {
-      return (QIcon::hasThemeIcon(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
-    }
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      return (QIcon::hasThemeIcon(static_cast<QIcon::ThemeIcon>(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QIcon#has_theme_icon for given argument types");
+    return (QIcon::hasThemeIcon(qt6rb::to_qstring(argv[0]))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QIcon#has_theme_icon (%d)", argc);
 }
@@ -46735,16 +46381,6 @@ static VALUE rb_QPixmap_prot_shared_painter(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#shared_painter (%d)", argc);
 }
 
-static VALUE rb_QPixmap_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QPixmap* shim = dynamic_cast<Rb_QPixmap*>(static_cast<QPixmap*>(qt6rb::unwrap(self, &cls_QPixmap)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPixmap#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QImage_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -46792,16 +46428,6 @@ static VALUE rb_QImage_ctor(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#initialize (%d)", argc);
 }
 static VALUE rb_QImage_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QImage); }
-
-static VALUE rb_QImage_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QImage#qt_check_for_qgadget_macro (%d)", argc);
-}
 
 static VALUE rb_QImage_is_null(int argc, VALUE* argv, VALUE self) {
   QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
@@ -47355,6 +46981,21 @@ static VALUE rb_QImage_mirrored(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#mirrored (%d)", argc);
 }
 
+static VALUE rb_QImage_rgb_swapped(int argc, VALUE* argv, VALUE self) {
+  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
+  (void)argv; (void)self;
+  if (argc == 0) {
+    if (1) {
+      return qt6rb::wrap(new QImage(o->rgbSwapped()), &cls_QImage, true);
+    }
+    if (1) {
+      return qt6rb::wrap(new QImage(o->rgbSwapped()), &cls_QImage, true);
+    }
+    rb_raise(rb_eTypeError, "no matching overload of QImage#rgb_swapped for given argument types");
+  }
+  rb_raise(rb_eArgError, "wrong number of arguments for QImage#rgb_swapped (%d)", argc);
+}
+
 static VALUE rb_QImage_mirror(int argc, VALUE* argv, VALUE self) {
   QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
   (void)argv; (void)self;
@@ -47371,59 +47012,6 @@ static VALUE rb_QImage_mirror(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#mirror (%d)", argc);
-}
-
-static VALUE rb_QImage_rgb_swapped(int argc, VALUE* argv, VALUE self) {
-  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    if (1) {
-      return qt6rb::wrap(new QImage(o->rgbSwapped()), &cls_QImage, true);
-    }
-    if (1) {
-      return qt6rb::wrap(new QImage(o->rgbSwapped()), &cls_QImage, true);
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QImage#rgb_swapped for given argument types");
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QImage#rgb_swapped (%d)", argc);
-}
-
-static VALUE rb_QImage_flipped(int argc, VALUE* argv, VALUE self) {
-  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    if (1) {
-      return qt6rb::wrap(new QImage(o->flipped()), &cls_QImage, true);
-    }
-    if (1) {
-      return qt6rb::wrap(new QImage(o->flipped()), &cls_QImage, true);
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QImage#flipped for given argument types");
-  }
-  if (argc == 1) {
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      return qt6rb::wrap(new QImage(o->flipped(QFlags<Qt::Orientation>::fromInt(NUM2INT(argv[0])))), &cls_QImage, true);
-    }
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      return qt6rb::wrap(new QImage(o->flipped(QFlags<Qt::Orientation>::fromInt(NUM2INT(argv[0])))), &cls_QImage, true);
-    }
-    rb_raise(rb_eTypeError, "no matching overload of QImage#flipped for given argument types");
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QImage#flipped (%d)", argc);
-}
-
-static VALUE rb_QImage_flip(int argc, VALUE* argv, VALUE self) {
-  QImage* o = static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->flip();
-    return Qnil;
-  }
-  if (argc == 1) {
-    o->flip(QFlags<Qt::Orientation>::fromInt(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QImage#flip (%d)", argc);
 }
 
 static VALUE rb_QImage_rgb_swap(int argc, VALUE* argv, VALUE self) {
@@ -47734,16 +47322,6 @@ static VALUE rb_QImage_prot_detach_metadata(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QImage#detach_metadata (%d)", argc);
 }
 
-static VALUE rb_QImage_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QImage* shim = dynamic_cast<Rb_QImage*>(static_cast<QImage*>(qt6rb::unwrap(self, &cls_QImage)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QImage#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QPainter_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -47759,16 +47337,6 @@ static VALUE rb_QPainter_ctor(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QPainter#initialize (%d)", argc);
 }
 static VALUE rb_QPainter_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QPainter); }
-
-static VALUE rb_QPainter_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPainter#qt_check_for_qgadget_macro (%d)", argc);
-}
 
 static VALUE rb_QPainter_device(int argc, VALUE* argv, VALUE self) {
   QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
@@ -47895,14 +47463,6 @@ static VALUE rb_QPainter_set_brush(int argc, VALUE* argv, VALUE self) {
       o->setBrush(static_cast<Qt::BrushStyle>(NUM2INT(argv[0])));
       return Qnil;
     }
-    if (qt6rb::is_kind_of(argv[0], &cls_QColor)) {
-      o->setBrush(*static_cast<QColor*>(qt6rb::unwrap_ref(argv[0], &cls_QColor)));
-      return Qnil;
-    }
-    if (RB_INTEGER_TYPE_P(argv[0])) {
-      o->setBrush(static_cast<Qt::GlobalColor>(NUM2INT(argv[0])));
-      return Qnil;
-    }
     rb_raise(rb_eTypeError, "no matching overload of QPainter#set_brush for given argument types");
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPainter#set_brush (%d)", argc);
@@ -47943,15 +47503,6 @@ static VALUE rb_QPainter_brush_origin(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap(new QPoint(o->brushOrigin()), &cls_QPoint, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QPainter#brush_origin (%d)", argc);
-}
-
-static VALUE rb_QPainter_brush_origin_f(int argc, VALUE* argv, VALUE self) {
-  QPainter* o = static_cast<QPainter*>(qt6rb::unwrap(self, &cls_QPainter));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return qt6rb::wrap(new QPointF(o->brushOriginF()), &cls_QPointF, true);
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPainter#brush_origin_f (%d)", argc);
 }
 
 static VALUE rb_QPainter_set_brush_origin(int argc, VALUE* argv, VALUE self) {
@@ -49761,48 +49312,6 @@ static VALUE rb_QMessageBox_check_box(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#check_box (%d)", argc);
 }
 
-static VALUE rb_QMessageBox_set_option(int argc, VALUE* argv, VALUE self) {
-  QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setOption(static_cast<QMessageBox::Option>(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  if (argc == 2) {
-    o->setOption(static_cast<QMessageBox::Option>(NUM2INT(argv[0])), RTEST(argv[1]));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#set_option (%d)", argc);
-}
-
-static VALUE rb_QMessageBox_test_option(int argc, VALUE* argv, VALUE self) {
-  QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    return (o->testOption(static_cast<QMessageBox::Option>(NUM2INT(argv[0])))) ? Qtrue : Qfalse;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#test_option (%d)", argc);
-}
-
-static VALUE rb_QMessageBox_set_options(int argc, VALUE* argv, VALUE self) {
-  QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setOptions(QFlags<QMessageBox::Option>::fromInt(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#set_options (%d)", argc);
-}
-
-static VALUE rb_QMessageBox_options(int argc, VALUE* argv, VALUE self) {
-  QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM((o->options()).toInt());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#options (%d)", argc);
-}
-
 static VALUE rb_QMessageBox_button_text(int argc, VALUE* argv, VALUE self) {
   QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
   (void)argv; (void)self;
@@ -50520,16 +50029,6 @@ static VALUE rb_QMessageBox_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#receivers (%d)", argc);
 }
 
-static VALUE rb_QMessageBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QMessageBox* shim = dynamic_cast<Rb_QMessageBox*>(static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMessageBox#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QMessageBox_on_button_clicked(int argc, VALUE* argv, VALUE self) {
   QMessageBox* o = static_cast<QMessageBox*>(qt6rb::unwrap(self, &cls_QMessageBox));
   VALUE proc = rb_block_proc();
@@ -51102,16 +50601,6 @@ static VALUE rb_QDialog_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QDialog#receivers (%d)", argc);
-}
-
-static VALUE rb_QDialog_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QDialog* shim = dynamic_cast<Rb_QDialog*>(static_cast<QDialog*>(qt6rb::unwrap(self, &cls_QDialog)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QDialog#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QDialog_on_finished(int argc, VALUE* argv, VALUE self) {
@@ -51793,12 +51282,12 @@ static VALUE rb_QFileDialog_s_get_open_file_urls(int argc, VALUE* argv, VALUE se
 
 static VALUE rb_QFileDialog_s_save_file_content(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
-  if (argc == 2) {
-    QFileDialog::saveFileContent(qt6rb::to_qbytearray(argv[0]), qt6rb::to_qstring(argv[1]));
+  if (argc == 1) {
+    QFileDialog::saveFileContent(qt6rb::to_qbytearray(argv[0]));
     return Qnil;
   }
-  if (argc == 3) {
-    QFileDialog::saveFileContent(qt6rb::to_qbytearray(argv[0]), qt6rb::to_qstring(argv[1]), static_cast<QWidget*>(qt6rb::unwrap_release(argv[2], &cls_QWidget)));
+  if (argc == 2) {
+    QFileDialog::saveFileContent(qt6rb::to_qbytearray(argv[0]), qt6rb::to_qstring(argv[1]));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#save_file_content (%d)", argc);
@@ -52229,16 +51718,6 @@ static VALUE rb_QFileDialog_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#receivers (%d)", argc);
-}
-
-static VALUE rb_QFileDialog_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QFileDialog* shim = dynamic_cast<Rb_QFileDialog*>(static_cast<QFileDialog*>(qt6rb::unwrap(self, &cls_QFileDialog)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QFileDialog#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QFileDialog_on_file_selected(int argc, VALUE* argv, VALUE self) {
@@ -53344,16 +52823,6 @@ static VALUE rb_QInputDialog_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#receivers (%d)", argc);
 }
 
-static VALUE rb_QInputDialog_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QInputDialog* shim = dynamic_cast<Rb_QInputDialog*>(static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QInputDialog#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QInputDialog_on_text_value_changed(int argc, VALUE* argv, VALUE self) {
   QInputDialog* o = static_cast<QInputDialog*>(qt6rb::unwrap(self, &cls_QInputDialog));
   VALUE proc = rb_block_proc();
@@ -54064,16 +53533,6 @@ static VALUE rb_QProgressBar_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QProgressBar#receivers (%d)", argc);
 }
 
-static VALUE rb_QProgressBar_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QProgressBar* shim = dynamic_cast<Rb_QProgressBar*>(static_cast<QProgressBar*>(qt6rb::unwrap(self, &cls_QProgressBar)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QProgressBar#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QProgressBar_on_value_changed(int argc, VALUE* argv, VALUE self) {
   QProgressBar* o = static_cast<QProgressBar*>(qt6rb::unwrap(self, &cls_QProgressBar));
   VALUE proc = rb_block_proc();
@@ -54593,16 +54052,6 @@ static VALUE rb_QSlider_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSlider#receivers (%d)", argc);
-}
-
-static VALUE rb_QSlider_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QSlider* shim = dynamic_cast<Rb_QSlider*>(static_cast<QSlider*>(qt6rb::unwrap(self, &cls_QSlider)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSlider#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QSpinBox_ctor(int argc, VALUE* argv, VALUE self) {
@@ -55235,16 +54684,6 @@ static VALUE rb_QSpinBox_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QSpinBox#receivers (%d)", argc);
-}
-
-static VALUE rb_QSpinBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QSpinBox* shim = dynamic_cast<Rb_QSpinBox*>(static_cast<QSpinBox*>(qt6rb::unwrap(self, &cls_QSpinBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSpinBox#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QSpinBox_on_value_changed(int argc, VALUE* argv, VALUE self) {
@@ -55891,16 +55330,6 @@ static VALUE rb_QDoubleSpinBox_prot_receivers(int argc, VALUE* argv, VALUE self)
   rb_raise(rb_eArgError, "wrong number of arguments for QDoubleSpinBox#receivers (%d)", argc);
 }
 
-static VALUE rb_QDoubleSpinBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QDoubleSpinBox* shim = dynamic_cast<Rb_QDoubleSpinBox*>(static_cast<QDoubleSpinBox*>(qt6rb::unwrap(self, &cls_QDoubleSpinBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QDoubleSpinBox#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QDoubleSpinBox_on_value_changed(int argc, VALUE* argv, VALUE self) {
   QDoubleSpinBox* o = static_cast<QDoubleSpinBox*>(qt6rb::unwrap(self, &cls_QDoubleSpinBox));
   VALUE proc = rb_block_proc();
@@ -56409,16 +55838,6 @@ static VALUE rb_QRadioButton_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QRadioButton#receivers (%d)", argc);
-}
-
-static VALUE rb_QRadioButton_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QRadioButton* shim = dynamic_cast<Rb_QRadioButton*>(static_cast<QRadioButton*>(qt6rb::unwrap(self, &cls_QRadioButton)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QRadioButton#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QButtonGroup_ctor(int argc, VALUE* argv, VALUE self) {
@@ -57288,16 +56707,6 @@ static VALUE rb_QDialogButtonBox_prot_receivers(int argc, VALUE* argv, VALUE sel
   rb_raise(rb_eArgError, "wrong number of arguments for QDialogButtonBox#receivers (%d)", argc);
 }
 
-static VALUE rb_QDialogButtonBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QDialogButtonBox* shim = dynamic_cast<Rb_QDialogButtonBox*>(static_cast<QDialogButtonBox*>(qt6rb::unwrap(self, &cls_QDialogButtonBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QDialogButtonBox#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QDialogButtonBox_on_clicked(int argc, VALUE* argv, VALUE self) {
   QDialogButtonBox* o = static_cast<QDialogButtonBox*>(qt6rb::unwrap(self, &cls_QDialogButtonBox));
   VALUE proc = rb_block_proc();
@@ -57425,16 +56834,6 @@ static VALUE rb_QCalendarWidget_set_minimum_date(int argc, VALUE* argv, VALUE se
   rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#set_minimum_date (%d)", argc);
 }
 
-static VALUE rb_QCalendarWidget_clear_minimum_date(int argc, VALUE* argv, VALUE self) {
-  QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->clearMinimumDate();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#clear_minimum_date (%d)", argc);
-}
-
 static VALUE rb_QCalendarWidget_maximum_date(int argc, VALUE* argv, VALUE self) {
   QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
   (void)argv; (void)self;
@@ -57452,16 +56851,6 @@ static VALUE rb_QCalendarWidget_set_maximum_date(int argc, VALUE* argv, VALUE se
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#set_maximum_date (%d)", argc);
-}
-
-static VALUE rb_QCalendarWidget_clear_maximum_date(int argc, VALUE* argv, VALUE self) {
-  QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->clearMaximumDate();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#clear_maximum_date (%d)", argc);
 }
 
 static VALUE rb_QCalendarWidget_first_day_of_week(int argc, VALUE* argv, VALUE self) {
@@ -58198,16 +57587,6 @@ static VALUE rb_QCalendarWidget_prot_receivers(int argc, VALUE* argv, VALUE self
   rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#receivers (%d)", argc);
 }
 
-static VALUE rb_QCalendarWidget_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QCalendarWidget* shim = dynamic_cast<Rb_QCalendarWidget*>(static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QCalendarWidget#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QCalendarWidget_on_selection_changed(int argc, VALUE* argv, VALUE self) {
   QCalendarWidget* o = static_cast<QCalendarWidget*>(qt6rb::unwrap(self, &cls_QCalendarWidget));
   VALUE proc = rb_block_proc();
@@ -58722,25 +58101,6 @@ static VALUE rb_QTableWidget_set_item_prototype(int argc, VALUE* argv, VALUE sel
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#set_item_prototype (%d)", argc);
-}
-
-static VALUE rb_QTableWidget_supported_drag_actions(int argc, VALUE* argv, VALUE self) {
-  QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM((o->supportedDragActions()).toInt());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#supported_drag_actions (%d)", argc);
-}
-
-static VALUE rb_QTableWidget_set_supported_drag_actions(int argc, VALUE* argv, VALUE self) {
-  QTableWidget* o = static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setSupportedDragActions(QFlags<Qt::DropAction>::fromInt(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#set_supported_drag_actions (%d)", argc);
 }
 
 static VALUE rb_QTableWidget_scroll_to_item(int argc, VALUE* argv, VALUE self) {
@@ -59543,16 +58903,6 @@ static VALUE rb_QTableWidget_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#receivers (%d)", argc);
-}
-
-static VALUE rb_QTableWidget_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QTableWidget* shim = dynamic_cast<Rb_QTableWidget*>(static_cast<QTableWidget*>(qt6rb::unwrap(self, &cls_QTableWidget)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTableWidget#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QTableWidget_on_item_pressed(int argc, VALUE* argv, VALUE self) {
@@ -60510,25 +59860,6 @@ static VALUE rb_QTreeWidget_item_from_index(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidget#item_from_index (%d)", argc);
 }
 
-static VALUE rb_QTreeWidget_supported_drag_actions(int argc, VALUE* argv, VALUE self) {
-  QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM((o->supportedDragActions()).toInt());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidget#supported_drag_actions (%d)", argc);
-}
-
-static VALUE rb_QTreeWidget_set_supported_drag_actions(int argc, VALUE* argv, VALUE self) {
-  QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setSupportedDragActions(QFlags<Qt::DropAction>::fromInt(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidget#set_supported_drag_actions (%d)", argc);
-}
-
 static VALUE rb_QTreeWidget_scroll_to_item(int argc, VALUE* argv, VALUE self) {
   QTreeWidget* o = static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget));
   (void)argv; (void)self;
@@ -61342,16 +60673,6 @@ static VALUE rb_QTreeWidget_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidget#receivers (%d)", argc);
-}
-
-static VALUE rb_QTreeWidget_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QTreeWidget* shim = dynamic_cast<Rb_QTreeWidget*>(static_cast<QTreeWidget*>(qt6rb::unwrap(self, &cls_QTreeWidget)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTreeWidget#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QTreeWidget_on_item_pressed(int argc, VALUE* argv, VALUE self) {
@@ -63031,16 +62352,6 @@ static VALUE rb_QTabWidget_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTabWidget#receivers (%d)", argc);
 }
 
-static VALUE rb_QTabWidget_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QTabWidget* shim = dynamic_cast<Rb_QTabWidget*>(static_cast<QTabWidget*>(qt6rb::unwrap(self, &cls_QTabWidget)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTabWidget#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QTabWidget_on_current_changed(int argc, VALUE* argv, VALUE self) {
   QTabWidget* o = static_cast<QTabWidget*>(qt6rb::unwrap(self, &cls_QTabWidget));
   VALUE proc = rb_block_proc();
@@ -64078,16 +63389,6 @@ static VALUE rb_QTabBar_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTabBar#receivers (%d)", argc);
 }
 
-static VALUE rb_QTabBar_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QTabBar* shim = dynamic_cast<Rb_QTabBar*>(static_cast<QTabBar*>(qt6rb::unwrap(self, &cls_QTabBar)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTabBar#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QTabBar_on_current_changed(int argc, VALUE* argv, VALUE self) {
   QTabBar* o = static_cast<QTabBar*>(qt6rb::unwrap(self, &cls_QTabBar));
   VALUE proc = rb_block_proc();
@@ -64487,25 +63788,6 @@ static VALUE rb_QListWidget_item_from_index(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap((void*)(o->itemFromIndex(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))), &cls_QListWidgetItem, false);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#item_from_index (%d)", argc);
-}
-
-static VALUE rb_QListWidget_set_supported_drag_actions(int argc, VALUE* argv, VALUE self) {
-  QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setSupportedDragActions(QFlags<Qt::DropAction>::fromInt(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#set_supported_drag_actions (%d)", argc);
-}
-
-static VALUE rb_QListWidget_supported_drag_actions(int argc, VALUE* argv, VALUE self) {
-  QListWidget* o = static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM((o->supportedDragActions()).toInt());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#supported_drag_actions (%d)", argc);
 }
 
 static VALUE rb_QListWidget_scroll_to_item(int argc, VALUE* argv, VALUE self) {
@@ -65291,16 +64573,6 @@ static VALUE rb_QListWidget_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#receivers (%d)", argc);
-}
-
-static VALUE rb_QListWidget_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QListWidget* shim = dynamic_cast<Rb_QListWidget*>(static_cast<QListWidget*>(qt6rb::unwrap(self, &cls_QListWidget)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QListWidget#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QListWidget_on_item_pressed(int argc, VALUE* argv, VALUE self) {
@@ -69176,15 +68448,6 @@ static VALUE rb_QScrollBar_event(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QScrollBar#event (%d)", argc);
 }
 
-static VALUE rb_QScrollBar_create_standard_context_menu(int argc, VALUE* argv, VALUE self) {
-  QScrollBar* o = static_cast<QScrollBar*>(qt6rb::unwrap(self, &cls_QScrollBar));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    return qt6rb::wrap_qobject((QObject*)(o->createStandardContextMenu(*static_cast<QPoint*>(qt6rb::unwrap_ref(argv[0], &cls_QPoint)))), &cls_QMenu);
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QScrollBar#create_standard_context_menu (%d)", argc);
-}
-
 static VALUE rb_QScrollBar_s_tr(int argc, VALUE* argv, VALUE self) {
   (void)argv; (void)self;
   if (argc == 3) {
@@ -69594,16 +68857,6 @@ static VALUE rb_QScrollBar_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QScrollBar#receivers (%d)", argc);
-}
-
-static VALUE rb_QScrollBar_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QScrollBar* shim = dynamic_cast<Rb_QScrollBar*>(static_cast<QScrollBar*>(qt6rb::unwrap(self, &cls_QScrollBar)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QScrollBar#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QAbstractItemView_set_model(int argc, VALUE* argv, VALUE self) {
@@ -70056,44 +69309,6 @@ static VALUE rb_QAbstractItemView_size_hint_for_column(int argc, VALUE* argv, VA
     return INT2NUM(o->sizeHintForColumn(NUM2INT(argv[0])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#size_hint_for_column (%d)", argc);
-}
-
-static VALUE rb_QAbstractItemView_update_threshold(int argc, VALUE* argv, VALUE self) {
-  QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM(o->updateThreshold());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#update_threshold (%d)", argc);
-}
-
-static VALUE rb_QAbstractItemView_set_update_threshold(int argc, VALUE* argv, VALUE self) {
-  QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setUpdateThreshold(NUM2INT(argv[0]));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#set_update_threshold (%d)", argc);
-}
-
-static VALUE rb_QAbstractItemView_keyboard_search_flags(int argc, VALUE* argv, VALUE self) {
-  QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    return INT2NUM((o->keyboardSearchFlags()).toInt());
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#keyboard_search_flags (%d)", argc);
-}
-
-static VALUE rb_QAbstractItemView_set_keyboard_search_flags(int argc, VALUE* argv, VALUE self) {
-  QAbstractItemView* o = static_cast<QAbstractItemView*>(qt6rb::unwrap(self, &cls_QAbstractItemView));
-  (void)argv; (void)self;
-  if (argc == 1) {
-    o->setKeyboardSearchFlags(QFlags<Qt::MatchFlag>::fromInt(NUM2INT(argv[0])));
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemView#set_keyboard_search_flags (%d)", argc);
 }
 
 static VALUE rb_QAbstractItemView_open_persistent_editor(int argc, VALUE* argv, VALUE self) {
@@ -71817,16 +71032,6 @@ static VALUE rb_QHeaderView_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QHeaderView#receivers (%d)", argc);
 }
 
-static VALUE rb_QHeaderView_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QHeaderView* shim = dynamic_cast<Rb_QHeaderView*>(static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QHeaderView#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QHeaderView_on_section_moved(int argc, VALUE* argv, VALUE self) {
   QHeaderView* o = static_cast<QHeaderView*>(qt6rb::unwrap(self, &cls_QHeaderView));
   VALUE proc = rb_block_proc();
@@ -72485,16 +71690,6 @@ static VALUE rb_QGroupBox_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QGroupBox#receivers (%d)", argc);
-}
-
-static VALUE rb_QGroupBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QGroupBox* shim = dynamic_cast<Rb_QGroupBox*>(static_cast<QGroupBox*>(qt6rb::unwrap(self, &cls_QGroupBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QGroupBox#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QGroupBox_on_clicked(int argc, VALUE* argv, VALUE self) {
@@ -73219,16 +72414,6 @@ static VALUE rb_QSplitter_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QSplitter#receivers (%d)", argc);
 }
 
-static VALUE rb_QSplitter_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QSplitter* shim = dynamic_cast<Rb_QSplitter*>(static_cast<QSplitter*>(qt6rb::unwrap(self, &cls_QSplitter)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSplitter#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QSplitter_on_splitter_moved(int argc, VALUE* argv, VALUE self) {
   QSplitter* o = static_cast<QSplitter*>(qt6rb::unwrap(self, &cls_QSplitter));
   VALUE proc = rb_block_proc();
@@ -73824,16 +73009,6 @@ static VALUE rb_QScrollArea_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QScrollArea#receivers (%d)", argc);
 }
 
-static VALUE rb_QScrollArea_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QScrollArea* shim = dynamic_cast<Rb_QScrollArea*>(static_cast<QScrollArea*>(qt6rb::unwrap(self, &cls_QScrollArea)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QScrollArea#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QStatusBar_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -74378,16 +73553,6 @@ static VALUE rb_QStatusBar_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QStatusBar#receivers (%d)", argc);
-}
-
-static VALUE rb_QStatusBar_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QStatusBar* shim = dynamic_cast<Rb_QStatusBar*>(static_cast<QStatusBar*>(qt6rb::unwrap(self, &cls_QStatusBar)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QStatusBar#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QStatusBar_on_message_changed(int argc, VALUE* argv, VALUE self) {
@@ -75015,16 +74180,6 @@ static VALUE rb_QMenuBar_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QMenuBar#receivers (%d)", argc);
 }
 
-static VALUE rb_QMenuBar_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QMenuBar* shim = dynamic_cast<Rb_QMenuBar*>(static_cast<QMenuBar*>(qt6rb::unwrap(self, &cls_QMenuBar)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMenuBar#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QMenuBar_on_triggered(int argc, VALUE* argv, VALUE self) {
   QMenuBar* o = static_cast<QMenuBar*>(qt6rb::unwrap(self, &cls_QMenuBar));
   VALUE proc = rb_block_proc();
@@ -75438,16 +74593,6 @@ static VALUE rb_QMenu_set_no_replay_for(int argc, VALUE* argv, VALUE self) {
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMenu#set_no_replay_for (%d)", argc);
-}
-
-static VALUE rb_QMenu_set_as_dock_menu(int argc, VALUE* argv, VALUE self) {
-  QMenu* o = static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->setAsDockMenu();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMenu#set_as_dock_menu (%d)", argc);
 }
 
 static VALUE rb_QMenu_separators_collapsible(int argc, VALUE* argv, VALUE self) {
@@ -75910,16 +75055,6 @@ static VALUE rb_QMenu_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QMenu#receivers (%d)", argc);
-}
-
-static VALUE rb_QMenu_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QMenu* shim = dynamic_cast<Rb_QMenu*>(static_cast<QMenu*>(qt6rb::unwrap(self, &cls_QMenu)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QMenu#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QMenu_on_about_to_show(int argc, VALUE* argv, VALUE self) {
@@ -77565,16 +76700,6 @@ static VALUE rb_QToolBar_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QToolBar#receivers (%d)", argc);
 }
 
-static VALUE rb_QToolBar_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QToolBar* shim = dynamic_cast<Rb_QToolBar*>(static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QToolBar#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QToolBar_on_action_triggered(int argc, VALUE* argv, VALUE self) {
   QToolBar* o = static_cast<QToolBar*>(qt6rb::unwrap(self, &cls_QToolBar));
   VALUE proc = rb_block_proc();
@@ -78196,16 +77321,6 @@ static VALUE rb_QKeySequence_ctor(int argc, VALUE* argv, VALUE self) {
 }
 static VALUE rb_QKeySequence_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QKeySequence); }
 
-static VALUE rb_QKeySequence_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QKeySequence* o = static_cast<QKeySequence*>(qt6rb::unwrap(self, &cls_QKeySequence));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QKeySequence#qt_check_for_qgadget_macro (%d)", argc);
-}
-
 static VALUE rb_QKeySequence_count(int argc, VALUE* argv, VALUE self) {
   QKeySequence* o = static_cast<QKeySequence*>(qt6rb::unwrap(self, &cls_QKeySequence));
   (void)argv; (void)self;
@@ -78323,16 +77438,6 @@ static VALUE rb_QSizePolicy_ctor(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QSizePolicy#initialize (%d)", argc);
 }
 static VALUE rb_QSizePolicy_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QSizePolicy); }
-
-static VALUE rb_QSizePolicy_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QSizePolicy* o = static_cast<QSizePolicy*>(qt6rb::unwrap(self, &cls_QSizePolicy));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSizePolicy#qt_check_for_qgadget_macro (%d)", argc);
-}
 
 static VALUE rb_QSizePolicy_horizontal_policy(int argc, VALUE* argv, VALUE self) {
   QSizePolicy* o = static_cast<QSizePolicy*>(qt6rb::unwrap(self, &cls_QSizePolicy));
@@ -79573,10 +78678,16 @@ static VALUE rb_QAbstractItemModel_index(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   (void)argv; (void)self;
   if (argc == 2) {
-    return qt6rb::wrap(new QModelIndex((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::index(NUM2INT(argv[0]), NUM2INT(argv[1])) : o->index(NUM2INT(argv[0]), NUM2INT(argv[1])))), &cls_QModelIndex, true);
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#index is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QModelIndex(o->index(NUM2INT(argv[0]), NUM2INT(argv[1]))), &cls_QModelIndex, true);
   }
   if (argc == 3) {
-    return qt6rb::wrap(new QModelIndex((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::index(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex))) : o->index(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex))))), &cls_QModelIndex, true);
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#index is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QModelIndex(o->index(NUM2INT(argv[0]), NUM2INT(argv[1]), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex)))), &cls_QModelIndex, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#index (%d)", argc);
 }
@@ -79588,7 +78699,10 @@ static VALUE rb_QAbstractItemModel_parent(int argc, VALUE* argv, VALUE self) {
     return qt6rb::wrap_qobject((QObject*)(o->QObject::parent()), &cls_QObject);
   }
   if (argc == 1) {
-    return qt6rb::wrap(new QModelIndex((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::parent(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))) : o->parent(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))))), &cls_QModelIndex, true);
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#parent is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QModelIndex(o->parent(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))), &cls_QModelIndex, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#parent (%d)", argc);
 }
@@ -79606,10 +78720,16 @@ static VALUE rb_QAbstractItemModel_row_count(int argc, VALUE* argv, VALUE self) 
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::rowCount() : o->rowCount()));
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#row_count is abstract and must be overridden");
+    }
+    return INT2NUM(o->rowCount());
   }
   if (argc == 1) {
-    return INT2NUM((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::rowCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))) : o->rowCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))));
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#row_count is abstract and must be overridden");
+    }
+    return INT2NUM(o->rowCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#row_count (%d)", argc);
 }
@@ -79618,10 +78738,16 @@ static VALUE rb_QAbstractItemModel_column_count(int argc, VALUE* argv, VALUE sel
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::columnCount() : o->columnCount()));
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#column_count is abstract and must be overridden");
+    }
+    return INT2NUM(o->columnCount());
   }
   if (argc == 1) {
-    return INT2NUM((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::columnCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))) : o->columnCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))));
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#column_count is abstract and must be overridden");
+    }
+    return INT2NUM(o->columnCount(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#column_count (%d)", argc);
 }
@@ -79642,10 +78768,16 @@ static VALUE rb_QAbstractItemModel_data(int argc, VALUE* argv, VALUE self) {
   QAbstractItemModel* o = static_cast<QAbstractItemModel*>(qt6rb::unwrap(self, &cls_QAbstractItemModel));
   (void)argv; (void)self;
   if (argc == 1) {
-    return qt6rb::from_qvariant((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))) : o->data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)))));
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#data is abstract and must be overridden");
+    }
+    return qt6rb::from_qvariant(o->data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex))));
   }
   if (argc == 2) {
-    return qt6rb::from_qvariant((dynamic_cast<Rb_QAbstractItemModel*>(o) ? o->QAbstractItemModel::data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), NUM2INT(argv[1])) : o->data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), NUM2INT(argv[1]))));
+    if (dynamic_cast<Rb_QAbstractItemModel*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemModel#data is abstract and must be overridden");
+    }
+    return qt6rb::from_qvariant(o->data(*static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[0], &cls_QModelIndex)), NUM2INT(argv[1])));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemModel#data (%d)", argc);
 }
@@ -82338,16 +81470,6 @@ static VALUE rb_QListView_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QListView#receivers (%d)", argc);
 }
 
-static VALUE rb_QListView_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QListView* shim = dynamic_cast<Rb_QListView*>(static_cast<QListView*>(qt6rb::unwrap(self, &cls_QListView)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QListView#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QListView_on_indexes_moved(int argc, VALUE* argv, VALUE self) {
   QListView* o = static_cast<QListView*>(qt6rb::unwrap(self, &cls_QListView));
   VALUE proc = rb_block_proc();
@@ -83705,16 +82827,6 @@ static VALUE rb_QTreeView_prot_receivers(int argc, VALUE* argv, VALUE self) {
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QTreeView#receivers (%d)", argc);
-}
-
-static VALUE rb_QTreeView_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QTreeView* shim = dynamic_cast<Rb_QTreeView*>(static_cast<QTreeView*>(qt6rb::unwrap(self, &cls_QTreeView)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTreeView#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QTreeView_on_expanded(int argc, VALUE* argv, VALUE self) {
@@ -86128,16 +85240,6 @@ static VALUE rb_QFrame_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QFrame#receivers (%d)", argc);
 }
 
-static VALUE rb_QFrame_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QFrame* shim = dynamic_cast<Rb_QFrame*>(static_cast<QFrame*>(qt6rb::unwrap(self, &cls_QFrame)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QFrame#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QShortcut_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 1) {
@@ -87184,14 +86286,6 @@ static VALUE rb_QPaintDevice_s_device_pixel_ratio_f_scale(int argc, VALUE* argv,
   rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#device_pixel_ratio_f_scale (%d)", argc);
 }
 
-static VALUE rb_QPaintDevice_s_encode_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv; (void)self;
-  if (argc == 2) {
-    return INT2NUM(QPaintDevice::encodeMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), NUM2DBL(argv[1])));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPaintDevice#encode_metric_f (%d)", argc);
-}
-
 static VALUE rb_QAbstractButton_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -87869,16 +86963,6 @@ static VALUE rb_QAbstractButton_prot_receivers(int argc, VALUE* argv, VALUE self
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractButton#receivers (%d)", argc);
-}
-
-static VALUE rb_QAbstractButton_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QAbstractButton* shim = dynamic_cast<Rb_QAbstractButton*>(static_cast<QAbstractButton*>(qt6rb::unwrap(self, &cls_QAbstractButton)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractButton#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QAbstractButton_on_pressed(int argc, VALUE* argv, VALUE self) {
@@ -88589,16 +87673,6 @@ static VALUE rb_QAbstractScrollArea_prot_receivers(int argc, VALUE* argv, VALUE 
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#receivers (%d)", argc);
 }
 
-static VALUE rb_QAbstractScrollArea_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QAbstractScrollArea* shim = dynamic_cast<Rb_QAbstractScrollArea*>(static_cast<QAbstractScrollArea*>(qt6rb::unwrap(self, &cls_QAbstractScrollArea)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractScrollArea#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QLayoutItem_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -88621,7 +87695,10 @@ static VALUE rb_QLayoutItem_size_hint(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QLayoutItem*>(o) ? o->QLayoutItem::sizeHint() : o->sizeHint())), &cls_QSize, true);
+    if (dynamic_cast<Rb_QLayoutItem*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayoutItem#size_hint is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QSize(o->sizeHint()), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#size_hint (%d)", argc);
 }
@@ -88630,7 +87707,10 @@ static VALUE rb_QLayoutItem_minimum_size(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QLayoutItem*>(o) ? o->QLayoutItem::minimumSize() : o->minimumSize())), &cls_QSize, true);
+    if (dynamic_cast<Rb_QLayoutItem*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayoutItem#minimum_size is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QSize(o->minimumSize()), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#minimum_size (%d)", argc);
 }
@@ -88639,7 +87719,10 @@ static VALUE rb_QLayoutItem_maximum_size(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QLayoutItem*>(o) ? o->QLayoutItem::maximumSize() : o->maximumSize())), &cls_QSize, true);
+    if (dynamic_cast<Rb_QLayoutItem*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayoutItem#maximum_size is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QSize(o->maximumSize()), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#maximum_size (%d)", argc);
 }
@@ -88648,7 +87731,10 @@ static VALUE rb_QLayoutItem_expanding_directions(int argc, VALUE* argv, VALUE se
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return INT2NUM(((dynamic_cast<Rb_QLayoutItem*>(o) ? o->QLayoutItem::expandingDirections() : o->expandingDirections())).toInt());
+    if (dynamic_cast<Rb_QLayoutItem*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayoutItem#expanding_directions is abstract and must be overridden");
+    }
+    return INT2NUM((o->expandingDirections()).toInt());
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#expanding_directions (%d)", argc);
 }
@@ -88657,7 +87743,10 @@ static VALUE rb_QLayoutItem_set_geometry(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 1) {
-    (dynamic_cast<Rb_QLayoutItem*>(o) ? o->QLayoutItem::setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect))) : o->setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect))));
+    if (dynamic_cast<Rb_QLayoutItem*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayoutItem#set_geometry is abstract and must be overridden");
+    }
+    o->setGeometry(*static_cast<QRect*>(qt6rb::unwrap_ref(argv[0], &cls_QRect)));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#set_geometry (%d)", argc);
@@ -88667,7 +87756,10 @@ static VALUE rb_QLayoutItem_geometry(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return qt6rb::wrap(new QRect((dynamic_cast<Rb_QLayoutItem*>(o) ? o->QLayoutItem::geometry() : o->geometry())), &cls_QRect, true);
+    if (dynamic_cast<Rb_QLayoutItem*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayoutItem#geometry is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QRect(o->geometry()), &cls_QRect, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#geometry (%d)", argc);
 }
@@ -88676,7 +87768,10 @@ static VALUE rb_QLayoutItem_is_empty(int argc, VALUE* argv, VALUE self) {
   QLayoutItem* o = static_cast<QLayoutItem*>(qt6rb::unwrap(self, &cls_QLayoutItem));
   (void)argv; (void)self;
   if (argc == 0) {
-    return ((dynamic_cast<Rb_QLayoutItem*>(o) ? o->QLayoutItem::isEmpty() : o->isEmpty())) ? Qtrue : Qfalse;
+    if (dynamic_cast<Rb_QLayoutItem*>(o)) {
+      rb_raise(rb_eNotImpError, "QLayoutItem#is_empty is abstract and must be overridden");
+    }
+    return (o->isEmpty()) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QLayoutItem#is_empty (%d)", argc);
 }
@@ -88829,16 +87924,6 @@ static VALUE rb_QInputEvent_set_timestamp(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QInputEvent#set_timestamp (%d)", argc);
 }
 
-static VALUE rb_QSinglePointEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QSinglePointEvent#qt_check_for_qgadget_macro (%d)", argc);
-}
-
 static VALUE rb_QSinglePointEvent_clone(int argc, VALUE* argv, VALUE self) {
   QSinglePointEvent* o = static_cast<QSinglePointEvent*>(qt6rb::unwrap(self, &cls_QSinglePointEvent));
   (void)argv; (void)self;
@@ -88954,16 +88039,6 @@ static VALUE rb_QGradient_ctor(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QGradient#initialize (%d)", argc);
 }
 static VALUE rb_QGradient_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QGradient); }
-
-static VALUE rb_QGradient_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QGradient* o = static_cast<QGradient*>(qt6rb::unwrap(self, &cls_QGradient));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QGradient#qt_check_for_qgadget_macro (%d)", argc);
-}
 
 static VALUE rb_QGradient_type(int argc, VALUE* argv, VALUE self) {
   QGradient* o = static_cast<QGradient*>(qt6rb::unwrap(self, &cls_QGradient));
@@ -89707,16 +88782,6 @@ static VALUE rb_QAbstractSlider_prot_receivers(int argc, VALUE* argv, VALUE self
     return INT2NUM(shim->receivers(static_cast<const char*>(StringValueCStr(argv[0]))));
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSlider#receivers (%d)", argc);
-}
-
-static VALUE rb_QAbstractSlider_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QAbstractSlider* shim = dynamic_cast<Rb_QAbstractSlider*>(static_cast<QAbstractSlider*>(qt6rb::unwrap(self, &cls_QAbstractSlider)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSlider#get_decoded_metric_f (%d)", argc);
 }
 
 static VALUE rb_QAbstractSlider_on_value_changed(int argc, VALUE* argv, VALUE self) {
@@ -90524,33 +89589,12 @@ static VALUE rb_QAbstractSpinBox_prot_receivers(int argc, VALUE* argv, VALUE sel
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSpinBox#receivers (%d)", argc);
 }
 
-static VALUE rb_QAbstractSpinBox_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QAbstractSpinBox* shim = dynamic_cast<Rb_QAbstractSpinBox*>(static_cast<QAbstractSpinBox*>(qt6rb::unwrap(self, &cls_QAbstractSpinBox)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractSpinBox#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QAbstractSpinBox_on_editing_finished(int argc, VALUE* argv, VALUE self) {
   QAbstractSpinBox* o = static_cast<QAbstractSpinBox*>(qt6rb::unwrap(self, &cls_QAbstractSpinBox));
   VALUE proc = rb_block_proc();
   qt6rb::retain_proc(proc);
   (void)argc; (void)argv;
   QObject::connect(o, &QAbstractSpinBox::editingFinished, o, [proc]() {
-    qt6rb::call_proc(proc, 0, nullptr);
-  });
-  return self;
-}
-
-static VALUE rb_QAbstractSpinBox_on_return_pressed(int argc, VALUE* argv, VALUE self) {
-  QAbstractSpinBox* o = static_cast<QAbstractSpinBox*>(qt6rb::unwrap(self, &cls_QAbstractSpinBox));
-  VALUE proc = rb_block_proc();
-  qt6rb::retain_proc(proc);
-  (void)argc; (void)argv;
-  QObject::connect(o, &QAbstractSpinBox::returnPressed, o, [proc]() {
     qt6rb::call_proc(proc, 0, nullptr);
   });
   return self;
@@ -91717,16 +90761,6 @@ static VALUE rb_QTableView_prot_receivers(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTableView#receivers (%d)", argc);
 }
 
-static VALUE rb_QTableView_prot_get_decoded_metric_f(int argc, VALUE* argv, VALUE self) {
-  (void)argv;
-  Rb_QTableView* shim = dynamic_cast<Rb_QTableView*>(static_cast<QTableView*>(qt6rb::unwrap(self, &cls_QTableView)));
-  if (!shim) rb_raise(rb_eTypeError, "get_decoded_metric_f is protected; only callable on Ruby-created instances");
-  if (argc == 2) {
-    return DBL2NUM(shim->getDecodedMetricF(static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[0])), static_cast<QPaintDevice::PaintDeviceMetric>(NUM2INT(argv[1]))));
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTableView#get_decoded_metric_f (%d)", argc);
-}
-
 static VALUE rb_QTextFormat_ctor(int argc, VALUE* argv, VALUE self) {
   (void)argv;
   if (argc == 0) {
@@ -91750,16 +90784,6 @@ static VALUE rb_QTextFormat_ctor(int argc, VALUE* argv, VALUE self) {
   rb_raise(rb_eArgError, "wrong number of arguments for QTextFormat#initialize (%d)", argc);
 }
 static VALUE rb_QTextFormat_alloc(VALUE klass) { return qt6rb::alloc_wrapper(klass, &cls_QTextFormat); }
-
-static VALUE rb_QTextFormat_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QTextFormat* o = static_cast<QTextFormat*>(qt6rb::unwrap(self, &cls_QTextFormat));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QTextFormat#qt_check_for_qgadget_macro (%d)", argc);
-}
 
 static VALUE rb_QTextFormat_merge(int argc, VALUE* argv, VALUE self) {
   QTextFormat* o = static_cast<QTextFormat*>(qt6rb::unwrap(self, &cls_QTextFormat));
@@ -92442,7 +91466,10 @@ static VALUE rb_QAbstractItemDelegate_paint(int argc, VALUE* argv, VALUE self) {
   QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
   (void)argv; (void)self;
   if (argc == 3) {
-    (dynamic_cast<Rb_QAbstractItemDelegate*>(o) ? o->QAbstractItemDelegate::paint(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[1], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex))) : o->paint(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[1], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex))));
+    if (dynamic_cast<Rb_QAbstractItemDelegate*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemDelegate#paint is abstract and must be overridden");
+    }
+    o->paint(static_cast<QPainter*>(qt6rb::unwrap_release(argv[0], &cls_QPainter)), *static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[1], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[2], &cls_QModelIndex)));
     return Qnil;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#paint (%d)", argc);
@@ -92452,7 +91479,10 @@ static VALUE rb_QAbstractItemDelegate_size_hint(int argc, VALUE* argv, VALUE sel
   QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
   (void)argv; (void)self;
   if (argc == 2) {
-    return qt6rb::wrap(new QSize((dynamic_cast<Rb_QAbstractItemDelegate*>(o) ? o->QAbstractItemDelegate::sizeHint(*static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[0], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex))) : o->sizeHint(*static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[0], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex))))), &cls_QSize, true);
+    if (dynamic_cast<Rb_QAbstractItemDelegate*>(o)) {
+      rb_raise(rb_eNotImpError, "QAbstractItemDelegate#size_hint is abstract and must be overridden");
+    }
+    return qt6rb::wrap(new QSize(o->sizeHint(*static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[0], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[1], &cls_QModelIndex)))), &cls_QSize, true);
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#size_hint (%d)", argc);
 }
@@ -92513,15 +91543,6 @@ static VALUE rb_QAbstractItemDelegate_editor_event(int argc, VALUE* argv, VALUE 
     return ((dynamic_cast<Rb_QAbstractItemDelegate*>(o) ? o->QAbstractItemDelegate::editorEvent(static_cast<QEvent*>(qt6rb::unwrap_release(argv[0], &cls_QEvent)), static_cast<QAbstractItemModel*>(qt6rb::unwrap_release(argv[1], &cls_QAbstractItemModel)), *static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[2], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[3], &cls_QModelIndex))) : o->editorEvent(static_cast<QEvent*>(qt6rb::unwrap_release(argv[0], &cls_QEvent)), static_cast<QAbstractItemModel*>(qt6rb::unwrap_release(argv[1], &cls_QAbstractItemModel)), *static_cast<QStyleOptionViewItem*>(qt6rb::unwrap_ref(argv[2], &cls_QStyleOptionViewItem)), *static_cast<QModelIndex*>(qt6rb::unwrap_ref(argv[3], &cls_QModelIndex))))) ? Qtrue : Qfalse;
   }
   rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#editor_event (%d)", argc);
-}
-
-static VALUE rb_QAbstractItemDelegate_handle_editor_event(int argc, VALUE* argv, VALUE self) {
-  QAbstractItemDelegate* o = static_cast<QAbstractItemDelegate*>(qt6rb::unwrap(self, &cls_QAbstractItemDelegate));
-  (void)argv; (void)self;
-  if (argc == 2) {
-    return (o->handleEditorEvent(static_cast<QObject*>(qt6rb::unwrap_release(argv[0], &cls_QObject)), static_cast<QEvent*>(qt6rb::unwrap_release(argv[1], &cls_QEvent)))) ? Qtrue : Qfalse;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QAbstractItemDelegate#handle_editor_event (%d)", argc);
 }
 
 static VALUE rb_QAbstractItemDelegate_painting_roles(int argc, VALUE* argv, VALUE self) {
@@ -92765,16 +91786,6 @@ static VALUE rb_QStyleOption_field_style_object_set(VALUE self, VALUE v) {
   QStyleOption* o = static_cast<QStyleOption*>(qt6rb::unwrap(self, &cls_QStyleOption));
   o->styleObject = static_cast<QObject*>(qt6rb::unwrap_release(v, &cls_QObject));
   return v;
-}
-
-static VALUE rb_QPointerEvent_qt_check_for_qgadget_macro(int argc, VALUE* argv, VALUE self) {
-  QPointerEvent* o = static_cast<QPointerEvent*>(qt6rb::unwrap(self, &cls_QPointerEvent));
-  (void)argv; (void)self;
-  if (argc == 0) {
-    o->qt_check_for_QGADGET_macro();
-    return Qnil;
-  }
-  rb_raise(rb_eArgError, "wrong number of arguments for QPointerEvent#qt_check_for_qgadget_macro (%d)", argc);
 }
 
 static VALUE rb_QPointerEvent_clone(int argc, VALUE* argv, VALUE self) {
@@ -93136,9 +92147,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QObject.rb_class, "is_quick_item_type", RUBY_METHOD_FUNC(rb_QObject_is_quick_item_type), -1);
   rb_define_method(cls_QObject.rb_class, "isQuickItemType", RUBY_METHOD_FUNC(rb_QObject_is_quick_item_type), -1);
   rb_define_alias(cls_QObject.rb_class, "quick_item_type?", "is_quick_item_type");
-  rb_define_method(cls_QObject.rb_class, "is_qml_exposed", RUBY_METHOD_FUNC(rb_QObject_is_qml_exposed), -1);
-  rb_define_method(cls_QObject.rb_class, "isQmlExposed", RUBY_METHOD_FUNC(rb_QObject_is_qml_exposed), -1);
-  rb_define_alias(cls_QObject.rb_class, "qml_exposed?", "is_qml_exposed");
   rb_define_method(cls_QObject.rb_class, "signals_blocked", RUBY_METHOD_FUNC(rb_QObject_signals_blocked), -1);
   rb_define_method(cls_QObject.rb_class, "signalsBlocked", RUBY_METHOD_FUNC(rb_QObject_signals_blocked), -1);
   rb_define_method(cls_QObject.rb_class, "block_signals", RUBY_METHOD_FUNC(rb_QObject_block_signals), -1);
@@ -93190,7 +92198,6 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QTimer.rb_class, "active?", "is_active");
   rb_define_method(cls_QTimer.rb_class, "timer_id", RUBY_METHOD_FUNC(rb_QTimer_timer_id), -1);
   rb_define_method(cls_QTimer.rb_class, "timerId", RUBY_METHOD_FUNC(rb_QTimer_timer_id), -1);
-  rb_define_method(cls_QTimer.rb_class, "id", RUBY_METHOD_FUNC(rb_QTimer_id), -1);
   rb_define_method(cls_QTimer.rb_class, "set_interval", RUBY_METHOD_FUNC(rb_QTimer_set_interval), -1);
   rb_define_method(cls_QTimer.rb_class, "setInterval", RUBY_METHOD_FUNC(rb_QTimer_set_interval), -1);
   rb_define_alias(cls_QTimer.rb_class, "interval=", "set_interval");
@@ -93257,8 +92264,6 @@ extern "C" void Init_qt6() {
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "is_setuid_allowed", RUBY_METHOD_FUNC(rb_QCoreApplication_s_is_setuid_allowed), -1);
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "isSetuidAllowed", RUBY_METHOD_FUNC(rb_QCoreApplication_s_is_setuid_allowed), -1);
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "instance", RUBY_METHOD_FUNC(rb_QCoreApplication_s_instance), -1);
-  rb_define_singleton_method(cls_QCoreApplication.rb_class, "instance_exists", RUBY_METHOD_FUNC(rb_QCoreApplication_s_instance_exists), -1);
-  rb_define_singleton_method(cls_QCoreApplication.rb_class, "instanceExists", RUBY_METHOD_FUNC(rb_QCoreApplication_s_instance_exists), -1);
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "exec", RUBY_METHOD_FUNC(rb_QCoreApplication_s_exec), -1);
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "process_events", RUBY_METHOD_FUNC(rb_QCoreApplication_s_process_events), -1);
   rb_define_singleton_method(cls_QCoreApplication.rb_class, "processEvents", RUBY_METHOD_FUNC(rb_QCoreApplication_s_process_events), -1);
@@ -93303,10 +92308,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QGuiApplication.rb_class, rb_QGuiApplication_alloc);
   qt6rb::register_ctor(cls_QGuiApplication.rb_class, rb_QGuiApplication_ctor);
   rb_include_module(cls_QGuiApplication.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QGuiApplication.rb_class, "set_badge_number", RUBY_METHOD_FUNC(rb_QGuiApplication_set_badge_number), -1);
-  rb_define_method(cls_QGuiApplication.rb_class, "setBadgeNumber", RUBY_METHOD_FUNC(rb_QGuiApplication_set_badge_number), -1);
-  rb_define_alias(cls_QGuiApplication.rb_class, "badge_number=", "set_badge_number");
-  rb_define_alias(cls_QGuiApplication.rb_class, "badgeNumber=", "set_badge_number");
   rb_define_method(cls_QGuiApplication.rb_class, "device_pixel_ratio", RUBY_METHOD_FUNC(rb_QGuiApplication_device_pixel_ratio), -1);
   rb_define_method(cls_QGuiApplication.rb_class, "devicePixelRatio", RUBY_METHOD_FUNC(rb_QGuiApplication_device_pixel_ratio), -1);
   rb_define_method(cls_QGuiApplication.rb_class, "notify", RUBY_METHOD_FUNC(rb_QGuiApplication_notify), -1);
@@ -93403,8 +92404,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QApplication.rb_class, "notify", RUBY_METHOD_FUNC(rb_QApplication_notify), -1);
   rb_define_method(cls_QApplication.rb_class, "style_sheet", RUBY_METHOD_FUNC(rb_QApplication_style_sheet), -1);
   rb_define_method(cls_QApplication.rb_class, "styleSheet", RUBY_METHOD_FUNC(rb_QApplication_style_sheet), -1);
-  rb_define_method(cls_QApplication.rb_class, "auto_sip_enabled", RUBY_METHOD_FUNC(rb_QApplication_auto_sip_enabled), -1);
-  rb_define_method(cls_QApplication.rb_class, "autoSipEnabled", RUBY_METHOD_FUNC(rb_QApplication_auto_sip_enabled), -1);
   rb_define_method(cls_QApplication.rb_class, "set_style_sheet", RUBY_METHOD_FUNC(rb_QApplication_set_style_sheet), -1);
   rb_define_method(cls_QApplication.rb_class, "setStyleSheet", RUBY_METHOD_FUNC(rb_QApplication_set_style_sheet), -1);
   rb_define_alias(cls_QApplication.rb_class, "style_sheet=", "set_style_sheet");
@@ -93413,6 +92412,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QApplication.rb_class, "setAutoSipEnabled", RUBY_METHOD_FUNC(rb_QApplication_set_auto_sip_enabled), -1);
   rb_define_alias(cls_QApplication.rb_class, "auto_sip_enabled=", "set_auto_sip_enabled");
   rb_define_alias(cls_QApplication.rb_class, "autoSipEnabled=", "set_auto_sip_enabled");
+  rb_define_method(cls_QApplication.rb_class, "auto_sip_enabled", RUBY_METHOD_FUNC(rb_QApplication_auto_sip_enabled), -1);
+  rb_define_method(cls_QApplication.rb_class, "autoSipEnabled", RUBY_METHOD_FUNC(rb_QApplication_auto_sip_enabled), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "tr", RUBY_METHOD_FUNC(rb_QApplication_s_tr), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "style", RUBY_METHOD_FUNC(rb_QApplication_s_style), -1);
   rb_define_singleton_method(cls_QApplication.rb_class, "set_style", RUBY_METHOD_FUNC(rb_QApplication_s_set_style), -1);
@@ -93818,12 +92819,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "setAccessibleDescription", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_description), -1);
   rb_define_alias(cls_QWidget.rb_class, "accessible_description=", "set_accessible_description");
   rb_define_alias(cls_QWidget.rb_class, "accessibleDescription=", "set_accessible_description");
-  rb_define_method(cls_QWidget.rb_class, "accessible_identifier", RUBY_METHOD_FUNC(rb_QWidget_accessible_identifier), -1);
-  rb_define_method(cls_QWidget.rb_class, "accessibleIdentifier", RUBY_METHOD_FUNC(rb_QWidget_accessible_identifier), -1);
-  rb_define_method(cls_QWidget.rb_class, "set_accessible_identifier", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_identifier), -1);
-  rb_define_method(cls_QWidget.rb_class, "setAccessibleIdentifier", RUBY_METHOD_FUNC(rb_QWidget_set_accessible_identifier), -1);
-  rb_define_alias(cls_QWidget.rb_class, "accessible_identifier=", "set_accessible_identifier");
-  rb_define_alias(cls_QWidget.rb_class, "accessibleIdentifier=", "set_accessible_identifier");
   rb_define_method(cls_QWidget.rb_class, "set_layout_direction", RUBY_METHOD_FUNC(rb_QWidget_set_layout_direction), -1);
   rb_define_method(cls_QWidget.rb_class, "setLayoutDirection", RUBY_METHOD_FUNC(rb_QWidget_set_layout_direction), -1);
   rb_define_alias(cls_QWidget.rb_class, "layout_direction=", "set_layout_direction");
@@ -94124,8 +93119,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QWidget.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QWidget.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QWidget.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QWidget_prot_receivers), -1);
-  rb_define_method(cls_QWidget.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QWidget_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QWidget.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QWidget_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QWidget.rb_class, "on_window_title_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_title_changed), -1);
   rb_define_method(cls_QWidget.rb_class, "on_window_icon_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_icon_changed), -1);
   rb_define_method(cls_QWidget.rb_class, "on_window_icon_text_changed", RUBY_METHOD_FUNC(rb_QWidget_on_window_icon_text_changed), -1);
@@ -94274,8 +93267,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLabel.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QLabel_prot_sender_signal_index), -1);
   rb_define_method(cls_QLabel.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QLabel_prot_sender_signal_index), -1);
   rb_define_method(cls_QLabel.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QLabel_prot_receivers), -1);
-  rb_define_method(cls_QLabel.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QLabel_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QLabel.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QLabel_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QLabel.rb_class, "on_link_activated", RUBY_METHOD_FUNC(rb_QLabel_on_link_activated), -1);
   rb_define_method(cls_QLabel.rb_class, "on_link_hovered", RUBY_METHOD_FUNC(rb_QLabel_on_link_hovered), -1);
   rb_define_alloc_func(cls_QPushButton.rb_class, rb_QPushButton_alloc);
@@ -94379,8 +93370,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPushButton.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QPushButton_prot_sender_signal_index), -1);
   rb_define_method(cls_QPushButton.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QPushButton_prot_sender_signal_index), -1);
   rb_define_method(cls_QPushButton.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QPushButton_prot_receivers), -1);
-  rb_define_method(cls_QPushButton.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QPushButton_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QPushButton.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QPushButton_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QCheckBox.rb_class, rb_QCheckBox_alloc);
   qt6rb::register_ctor(cls_QCheckBox.rb_class, rb_QCheckBox_ctor);
   rb_include_module(cls_QCheckBox.rb_class, qt6rb::constructable_module());
@@ -94470,10 +93459,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCheckBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QCheckBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QCheckBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QCheckBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QCheckBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QCheckBox_prot_receivers), -1);
-  rb_define_method(cls_QCheckBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QCheckBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QCheckBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QCheckBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QCheckBox.rb_class, "on_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_state_changed), -1);
-  rb_define_method(cls_QCheckBox.rb_class, "on_check_state_changed", RUBY_METHOD_FUNC(rb_QCheckBox_on_check_state_changed), -1);
   rb_define_alloc_func(cls_QComboBox.rb_class, rb_QComboBox_alloc);
   qt6rb::register_ctor(cls_QComboBox.rb_class, rb_QComboBox_ctor);
   rb_include_module(cls_QComboBox.rb_class, qt6rb::constructable_module());
@@ -94577,12 +93563,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "setModelColumn", RUBY_METHOD_FUNC(rb_QComboBox_set_model_column), -1);
   rb_define_alias(cls_QComboBox.rb_class, "model_column=", "set_model_column");
   rb_define_alias(cls_QComboBox.rb_class, "modelColumn=", "set_model_column");
-  rb_define_method(cls_QComboBox.rb_class, "label_drawing_mode", RUBY_METHOD_FUNC(rb_QComboBox_label_drawing_mode), -1);
-  rb_define_method(cls_QComboBox.rb_class, "labelDrawingMode", RUBY_METHOD_FUNC(rb_QComboBox_label_drawing_mode), -1);
-  rb_define_method(cls_QComboBox.rb_class, "set_label_drawing_mode", RUBY_METHOD_FUNC(rb_QComboBox_set_label_drawing_mode), -1);
-  rb_define_method(cls_QComboBox.rb_class, "setLabelDrawingMode", RUBY_METHOD_FUNC(rb_QComboBox_set_label_drawing_mode), -1);
-  rb_define_alias(cls_QComboBox.rb_class, "label_drawing_mode=", "set_label_drawing_mode");
-  rb_define_alias(cls_QComboBox.rb_class, "labelDrawingMode=", "set_label_drawing_mode");
   rb_define_method(cls_QComboBox.rb_class, "current_index", RUBY_METHOD_FUNC(rb_QComboBox_current_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "currentIndex", RUBY_METHOD_FUNC(rb_QComboBox_current_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "current_text", RUBY_METHOD_FUNC(rb_QComboBox_current_text), -1);
@@ -94710,8 +93690,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QComboBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QComboBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QComboBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QComboBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QComboBox_prot_receivers), -1);
-  rb_define_method(cls_QComboBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QComboBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QComboBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QComboBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QComboBox.rb_class, "on_edit_text_changed", RUBY_METHOD_FUNC(rb_QComboBox_on_edit_text_changed), -1);
   rb_define_method(cls_QComboBox.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_activated), -1);
   rb_define_method(cls_QComboBox.rb_class, "on_text_activated", RUBY_METHOD_FUNC(rb_QComboBox_on_text_activated), -1);
@@ -94930,8 +93908,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QLineEdit.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QLineEdit_prot_sender_signal_index), -1);
   rb_define_method(cls_QLineEdit.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QLineEdit_prot_sender_signal_index), -1);
   rb_define_method(cls_QLineEdit.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QLineEdit_prot_receivers), -1);
-  rb_define_method(cls_QLineEdit.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QLineEdit_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QLineEdit.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QLineEdit_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QLineEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_changed), -1);
   rb_define_method(cls_QLineEdit.rb_class, "on_text_edited", RUBY_METHOD_FUNC(rb_QLineEdit_on_text_edited), -1);
   rb_define_method(cls_QLineEdit.rb_class, "on_cursor_position_changed", RUBY_METHOD_FUNC(rb_QLineEdit_on_cursor_position_changed), -1);
@@ -95245,8 +94221,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTextEdit.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QTextEdit_prot_sender_signal_index), -1);
   rb_define_method(cls_QTextEdit.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QTextEdit_prot_sender_signal_index), -1);
   rb_define_method(cls_QTextEdit.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QTextEdit_prot_receivers), -1);
-  rb_define_method(cls_QTextEdit.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QTextEdit_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QTextEdit.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QTextEdit_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QTextEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QTextEdit_on_text_changed), -1);
   rb_define_method(cls_QTextEdit.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_undo_available), -1);
   rb_define_method(cls_QTextEdit.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QTextEdit_on_redo_available), -1);
@@ -95506,8 +94480,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPlainTextEdit.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_sender_signal_index), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_sender_signal_index), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_receivers), -1);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QPlainTextEdit.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QPlainTextEdit_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_text_changed), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "on_undo_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_undo_available), -1);
   rb_define_method(cls_QPlainTextEdit.rb_class, "on_redo_available", RUBY_METHOD_FUNC(rb_QPlainTextEdit_on_redo_available), -1);
@@ -95691,8 +94663,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMainWindow.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QMainWindow_prot_sender_signal_index), -1);
   rb_define_method(cls_QMainWindow.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QMainWindow_prot_sender_signal_index), -1);
   rb_define_method(cls_QMainWindow.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QMainWindow_prot_receivers), -1);
-  rb_define_method(cls_QMainWindow.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QMainWindow_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QMainWindow.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QMainWindow_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QMainWindow.rb_class, "on_icon_size_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_icon_size_changed), -1);
   rb_define_method(cls_QMainWindow.rb_class, "on_tool_button_style_changed", RUBY_METHOD_FUNC(rb_QMainWindow_on_tool_button_style_changed), -1);
   rb_define_alloc_func(cls_QLayout.rb_class, rb_QLayout_alloc);
@@ -95719,22 +94689,6 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QLayout.rb_class, "sizeConstraint=", "set_size_constraint");
   rb_define_method(cls_QLayout.rb_class, "size_constraint", RUBY_METHOD_FUNC(rb_QLayout_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "sizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_size_constraint), -1);
-  rb_define_method(cls_QLayout.rb_class, "set_size_constraints", RUBY_METHOD_FUNC(rb_QLayout_set_size_constraints), -1);
-  rb_define_method(cls_QLayout.rb_class, "setSizeConstraints", RUBY_METHOD_FUNC(rb_QLayout_set_size_constraints), -1);
-  rb_define_alias(cls_QLayout.rb_class, "size_constraints=", "set_size_constraints");
-  rb_define_alias(cls_QLayout.rb_class, "sizeConstraints=", "set_size_constraints");
-  rb_define_method(cls_QLayout.rb_class, "set_horizontal_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_set_horizontal_size_constraint), -1);
-  rb_define_method(cls_QLayout.rb_class, "setHorizontalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_set_horizontal_size_constraint), -1);
-  rb_define_alias(cls_QLayout.rb_class, "horizontal_size_constraint=", "set_horizontal_size_constraint");
-  rb_define_alias(cls_QLayout.rb_class, "horizontalSizeConstraint=", "set_horizontal_size_constraint");
-  rb_define_method(cls_QLayout.rb_class, "horizontal_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_horizontal_size_constraint), -1);
-  rb_define_method(cls_QLayout.rb_class, "horizontalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_horizontal_size_constraint), -1);
-  rb_define_method(cls_QLayout.rb_class, "set_vertical_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_set_vertical_size_constraint), -1);
-  rb_define_method(cls_QLayout.rb_class, "setVerticalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_set_vertical_size_constraint), -1);
-  rb_define_alias(cls_QLayout.rb_class, "vertical_size_constraint=", "set_vertical_size_constraint");
-  rb_define_alias(cls_QLayout.rb_class, "verticalSizeConstraint=", "set_vertical_size_constraint");
-  rb_define_method(cls_QLayout.rb_class, "vertical_size_constraint", RUBY_METHOD_FUNC(rb_QLayout_vertical_size_constraint), -1);
-  rb_define_method(cls_QLayout.rb_class, "verticalSizeConstraint", RUBY_METHOD_FUNC(rb_QLayout_vertical_size_constraint), -1);
   rb_define_method(cls_QLayout.rb_class, "set_menu_bar", RUBY_METHOD_FUNC(rb_QLayout_set_menu_bar), -1);
   rb_define_method(cls_QLayout.rb_class, "setMenuBar", RUBY_METHOD_FUNC(rb_QLayout_set_menu_bar), -1);
   rb_define_alias(cls_QLayout.rb_class, "menu_bar=", "set_menu_bar");
@@ -96243,7 +95197,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStackedLayout.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QStackedLayout_prot_receivers), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "on_widget_removed", RUBY_METHOD_FUNC(rb_QStackedLayout_on_widget_removed), -1);
   rb_define_method(cls_QStackedLayout.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QStackedLayout_on_current_changed), -1);
-  rb_define_method(cls_QStackedLayout.rb_class, "on_widget_added", RUBY_METHOD_FUNC(rb_QStackedLayout_on_widget_added), -1);
   rb_define_alloc_func(cls_QSpacerItem.rb_class, rb_QSpacerItem_alloc);
   qt6rb::register_ctor(cls_QSpacerItem.rb_class, rb_QSpacerItem_ctor);
   rb_include_module(cls_QSpacerItem.rb_class, qt6rb::constructable_module());
@@ -96729,6 +95682,8 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QUrl.rb_class, "is_detached", RUBY_METHOD_FUNC(rb_QUrl_is_detached), -1);
   rb_define_method(cls_QUrl.rb_class, "isDetached", RUBY_METHOD_FUNC(rb_QUrl_is_detached), -1);
   rb_define_alias(cls_QUrl.rb_class, "detached?", "is_detached");
+  rb_define_singleton_method(cls_QUrl.rb_class, "from_encoded", RUBY_METHOD_FUNC(rb_QUrl_s_from_encoded), -1);
+  rb_define_singleton_method(cls_QUrl.rb_class, "fromEncoded", RUBY_METHOD_FUNC(rb_QUrl_s_from_encoded), -1);
   rb_define_singleton_method(cls_QUrl.rb_class, "from_user_input", RUBY_METHOD_FUNC(rb_QUrl_s_from_user_input), -1);
   rb_define_singleton_method(cls_QUrl.rb_class, "fromUserInput", RUBY_METHOD_FUNC(rb_QUrl_s_from_user_input), -1);
   rb_define_singleton_method(cls_QUrl.rb_class, "from_local_file", RUBY_METHOD_FUNC(rb_QUrl_s_from_local_file), -1);
@@ -96915,8 +95870,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QEvent.rb_class, rb_QEvent_alloc);
   qt6rb::register_ctor(cls_QEvent.rb_class, rb_QEvent_ctor);
   rb_include_module(cls_QEvent.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QEvent_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QEvent.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QEvent_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QEvent.rb_class, "type", RUBY_METHOD_FUNC(rb_QEvent_type), -1);
   rb_define_method(cls_QEvent.rb_class, "spontaneous", RUBY_METHOD_FUNC(rb_QEvent_spontaneous), -1);
   rb_define_method(cls_QEvent.rb_class, "set_accepted", RUBY_METHOD_FUNC(rb_QEvent_set_accepted), -1);
@@ -96945,7 +95898,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTimerEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QTimerEvent_clone), -1);
   rb_define_method(cls_QTimerEvent.rb_class, "timer_id", RUBY_METHOD_FUNC(rb_QTimerEvent_timer_id), -1);
   rb_define_method(cls_QTimerEvent.rb_class, "timerId", RUBY_METHOD_FUNC(rb_QTimerEvent_timer_id), -1);
-  rb_define_method(cls_QTimerEvent.rb_class, "id", RUBY_METHOD_FUNC(rb_QTimerEvent_id), -1);
   rb_define_alloc_func(cls_QChildEvent.rb_class, rb_QChildEvent_alloc);
   qt6rb::register_ctor(cls_QChildEvent.rb_class, rb_QChildEvent_ctor);
   rb_include_module(cls_QChildEvent.rb_class, qt6rb::constructable_module());
@@ -97055,8 +96007,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QWheelEvent.rb_class, rb_QWheelEvent_alloc);
   qt6rb::register_ctor(cls_QWheelEvent.rb_class, rb_QWheelEvent_ctor);
   rb_include_module(cls_QWheelEvent.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QWheelEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QWheelEvent_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QWheelEvent.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QWheelEvent_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QWheelEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QWheelEvent_clone), -1);
   rb_define_method(cls_QWheelEvent.rb_class, "pixel_delta", RUBY_METHOD_FUNC(rb_QWheelEvent_pixel_delta), -1);
   rb_define_method(cls_QWheelEvent.rb_class, "pixelDelta", RUBY_METHOD_FUNC(rb_QWheelEvent_pixel_delta), -1);
@@ -97344,8 +96294,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QPalette.rb_class, rb_QPalette_alloc);
   qt6rb::register_ctor(cls_QPalette.rb_class, rb_QPalette_ctor);
   rb_include_module(cls_QPalette.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QPalette.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QPalette_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QPalette.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QPalette_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QPalette.rb_class, "current_color_group", RUBY_METHOD_FUNC(rb_QPalette_current_color_group), -1);
   rb_define_method(cls_QPalette.rb_class, "currentColorGroup", RUBY_METHOD_FUNC(rb_QPalette_current_color_group), -1);
   rb_define_method(cls_QPalette.rb_class, "set_current_color_group", RUBY_METHOD_FUNC(rb_QPalette_set_current_color_group), -1);
@@ -97397,7 +96345,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPalette.rb_class, "linkVisited", RUBY_METHOD_FUNC(rb_QPalette_link_visited), -1);
   rb_define_method(cls_QPalette.rb_class, "placeholder_text", RUBY_METHOD_FUNC(rb_QPalette_placeholder_text), -1);
   rb_define_method(cls_QPalette.rb_class, "placeholderText", RUBY_METHOD_FUNC(rb_QPalette_placeholder_text), -1);
-  rb_define_method(cls_QPalette.rb_class, "accent", RUBY_METHOD_FUNC(rb_QPalette_accent), -1);
   rb_define_method(cls_QPalette.rb_class, "is_copy_of", RUBY_METHOD_FUNC(rb_QPalette_is_copy_of), -1);
   rb_define_method(cls_QPalette.rb_class, "isCopyOf", RUBY_METHOD_FUNC(rb_QPalette_is_copy_of), -1);
   rb_define_method(cls_QPalette.rb_class, "cache_key", RUBY_METHOD_FUNC(rb_QPalette_cache_key), -1);
@@ -97412,8 +96359,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QFont.rb_class, rb_QFont_alloc);
   qt6rb::register_ctor(cls_QFont.rb_class, rb_QFont_ctor);
   rb_include_module(cls_QFont.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QFont.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QFont_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QFont.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QFont_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QFont.rb_class, "family", RUBY_METHOD_FUNC(rb_QFont_family), -1);
   rb_define_method(cls_QFont.rb_class, "set_family", RUBY_METHOD_FUNC(rb_QFont_set_family), -1);
   rb_define_method(cls_QFont.rb_class, "setFamily", RUBY_METHOD_FUNC(rb_QFont_set_family), -1);
@@ -97526,10 +96471,6 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QFont.rb_class, "hintingPreference=", "set_hinting_preference");
   rb_define_method(cls_QFont.rb_class, "hinting_preference", RUBY_METHOD_FUNC(rb_QFont_hinting_preference), -1);
   rb_define_method(cls_QFont.rb_class, "hintingPreference", RUBY_METHOD_FUNC(rb_QFont_hinting_preference), -1);
-  rb_define_method(cls_QFont.rb_class, "clear_features", RUBY_METHOD_FUNC(rb_QFont_clear_features), -1);
-  rb_define_method(cls_QFont.rb_class, "clearFeatures", RUBY_METHOD_FUNC(rb_QFont_clear_features), -1);
-  rb_define_method(cls_QFont.rb_class, "clear_variable_axes", RUBY_METHOD_FUNC(rb_QFont_clear_variable_axes), -1);
-  rb_define_method(cls_QFont.rb_class, "clearVariableAxes", RUBY_METHOD_FUNC(rb_QFont_clear_variable_axes), -1);
   rb_define_method(cls_QFont.rb_class, "exact_match", RUBY_METHOD_FUNC(rb_QFont_exact_match), -1);
   rb_define_method(cls_QFont.rb_class, "exactMatch", RUBY_METHOD_FUNC(rb_QFont_exact_match), -1);
   rb_define_method(cls_QFont.rb_class, "is_copy_of", RUBY_METHOD_FUNC(rb_QFont_is_copy_of), -1);
@@ -97631,8 +96572,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QIcon.rb_class, rb_QIcon_alloc);
   qt6rb::register_ctor(cls_QIcon.rb_class, rb_QIcon_ctor);
   rb_include_module(cls_QIcon.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QIcon.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QIcon_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QIcon.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QIcon_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QIcon.rb_class, "pixmap", RUBY_METHOD_FUNC(rb_QIcon_pixmap), -1);
   rb_define_method(cls_QIcon.rb_class, "actual_size", RUBY_METHOD_FUNC(rb_QIcon_actual_size), -1);
   rb_define_method(cls_QIcon.rb_class, "actualSize", RUBY_METHOD_FUNC(rb_QIcon_actual_size), -1);
@@ -97742,13 +96681,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPixmap.rb_class, "redirected", RUBY_METHOD_FUNC(rb_QPixmap_prot_redirected), -1);
   rb_define_method(cls_QPixmap.rb_class, "shared_painter", RUBY_METHOD_FUNC(rb_QPixmap_prot_shared_painter), -1);
   rb_define_method(cls_QPixmap.rb_class, "sharedPainter", RUBY_METHOD_FUNC(rb_QPixmap_prot_shared_painter), -1);
-  rb_define_method(cls_QPixmap.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QPixmap_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QPixmap.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QPixmap_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QImage.rb_class, rb_QImage_alloc);
   qt6rb::register_ctor(cls_QImage.rb_class, rb_QImage_ctor);
   rb_include_module(cls_QImage.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QImage.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QImage_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QImage.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QImage_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QImage.rb_class, "is_null", RUBY_METHOD_FUNC(rb_QImage_is_null), -1);
   rb_define_method(cls_QImage.rb_class, "isNull", RUBY_METHOD_FUNC(rb_QImage_is_null), -1);
   rb_define_alias(cls_QImage.rb_class, "null?", "is_null");
@@ -97840,11 +96775,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "scaled_to_height", RUBY_METHOD_FUNC(rb_QImage_scaled_to_height), -1);
   rb_define_method(cls_QImage.rb_class, "scaledToHeight", RUBY_METHOD_FUNC(rb_QImage_scaled_to_height), -1);
   rb_define_method(cls_QImage.rb_class, "mirrored", RUBY_METHOD_FUNC(rb_QImage_mirrored), -1);
-  rb_define_method(cls_QImage.rb_class, "mirror", RUBY_METHOD_FUNC(rb_QImage_mirror), -1);
   rb_define_method(cls_QImage.rb_class, "rgb_swapped", RUBY_METHOD_FUNC(rb_QImage_rgb_swapped), -1);
   rb_define_method(cls_QImage.rb_class, "rgbSwapped", RUBY_METHOD_FUNC(rb_QImage_rgb_swapped), -1);
-  rb_define_method(cls_QImage.rb_class, "flipped", RUBY_METHOD_FUNC(rb_QImage_flipped), -1);
-  rb_define_method(cls_QImage.rb_class, "flip", RUBY_METHOD_FUNC(rb_QImage_flip), -1);
+  rb_define_method(cls_QImage.rb_class, "mirror", RUBY_METHOD_FUNC(rb_QImage_mirror), -1);
   rb_define_method(cls_QImage.rb_class, "rgb_swap", RUBY_METHOD_FUNC(rb_QImage_rgb_swap), -1);
   rb_define_method(cls_QImage.rb_class, "rgbSwap", RUBY_METHOD_FUNC(rb_QImage_rgb_swap), -1);
   rb_define_method(cls_QImage.rb_class, "invert_pixels", RUBY_METHOD_FUNC(rb_QImage_invert_pixels), -1);
@@ -97901,13 +96834,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QImage.rb_class, "smoothScaled", RUBY_METHOD_FUNC(rb_QImage_prot_smooth_scaled), -1);
   rb_define_method(cls_QImage.rb_class, "detach_metadata", RUBY_METHOD_FUNC(rb_QImage_prot_detach_metadata), -1);
   rb_define_method(cls_QImage.rb_class, "detachMetadata", RUBY_METHOD_FUNC(rb_QImage_prot_detach_metadata), -1);
-  rb_define_method(cls_QImage.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QImage_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QImage.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QImage_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QPainter.rb_class, rb_QPainter_alloc);
   qt6rb::register_ctor(cls_QPainter.rb_class, rb_QPainter_ctor);
   rb_include_module(cls_QPainter.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QPainter.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QPainter_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QPainter.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QPainter_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QPainter.rb_class, "device", RUBY_METHOD_FUNC(rb_QPainter_device), -1);
   rb_define_method(cls_QPainter.rb_class, "begin", RUBY_METHOD_FUNC(rb_QPainter_begin), -1);
   rb_define_method(cls_QPainter.rb_class, "end", RUBY_METHOD_FUNC(rb_QPainter_end), -1);
@@ -97942,8 +96871,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPainter.rb_class, "backgroundMode", RUBY_METHOD_FUNC(rb_QPainter_background_mode), -1);
   rb_define_method(cls_QPainter.rb_class, "brush_origin", RUBY_METHOD_FUNC(rb_QPainter_brush_origin), -1);
   rb_define_method(cls_QPainter.rb_class, "brushOrigin", RUBY_METHOD_FUNC(rb_QPainter_brush_origin), -1);
-  rb_define_method(cls_QPainter.rb_class, "brush_origin_f", RUBY_METHOD_FUNC(rb_QPainter_brush_origin_f), -1);
-  rb_define_method(cls_QPainter.rb_class, "brushOriginF", RUBY_METHOD_FUNC(rb_QPainter_brush_origin_f), -1);
   rb_define_method(cls_QPainter.rb_class, "set_brush_origin", RUBY_METHOD_FUNC(rb_QPainter_set_brush_origin), -1);
   rb_define_method(cls_QPainter.rb_class, "setBrushOrigin", RUBY_METHOD_FUNC(rb_QPainter_set_brush_origin), -1);
   rb_define_alias(cls_QPainter.rb_class, "brush_origin=", "set_brush_origin");
@@ -98191,15 +97118,6 @@ extern "C" void Init_qt6() {
   rb_define_alias(cls_QMessageBox.rb_class, "checkBox=", "set_check_box");
   rb_define_method(cls_QMessageBox.rb_class, "check_box", RUBY_METHOD_FUNC(rb_QMessageBox_check_box), -1);
   rb_define_method(cls_QMessageBox.rb_class, "checkBox", RUBY_METHOD_FUNC(rb_QMessageBox_check_box), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "set_option", RUBY_METHOD_FUNC(rb_QMessageBox_set_option), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "setOption", RUBY_METHOD_FUNC(rb_QMessageBox_set_option), -1);
-  rb_define_alias(cls_QMessageBox.rb_class, "option=", "set_option");
-  rb_define_method(cls_QMessageBox.rb_class, "test_option", RUBY_METHOD_FUNC(rb_QMessageBox_test_option), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "testOption", RUBY_METHOD_FUNC(rb_QMessageBox_test_option), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "set_options", RUBY_METHOD_FUNC(rb_QMessageBox_set_options), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "setOptions", RUBY_METHOD_FUNC(rb_QMessageBox_set_options), -1);
-  rb_define_alias(cls_QMessageBox.rb_class, "options=", "set_options");
-  rb_define_method(cls_QMessageBox.rb_class, "options", RUBY_METHOD_FUNC(rb_QMessageBox_options), -1);
   rb_define_method(cls_QMessageBox.rb_class, "button_text", RUBY_METHOD_FUNC(rb_QMessageBox_button_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "buttonText", RUBY_METHOD_FUNC(rb_QMessageBox_button_text), -1);
   rb_define_method(cls_QMessageBox.rb_class, "set_button_text", RUBY_METHOD_FUNC(rb_QMessageBox_set_button_text), -1);
@@ -98301,8 +97219,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMessageBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QMessageBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QMessageBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QMessageBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QMessageBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QMessageBox_prot_receivers), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QMessageBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QMessageBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QMessageBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QMessageBox.rb_class, "on_button_clicked", RUBY_METHOD_FUNC(rb_QMessageBox_on_button_clicked), -1);
   rb_define_alloc_func(cls_QDialog.rb_class, rb_QDialog_alloc);
   qt6rb::register_ctor(cls_QDialog.rb_class, rb_QDialog_ctor);
@@ -98399,8 +97315,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDialog.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QDialog_prot_sender_signal_index), -1);
   rb_define_method(cls_QDialog.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QDialog_prot_sender_signal_index), -1);
   rb_define_method(cls_QDialog.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QDialog_prot_receivers), -1);
-  rb_define_method(cls_QDialog.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QDialog_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QDialog.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QDialog_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QDialog.rb_class, "on_finished", RUBY_METHOD_FUNC(rb_QDialog_on_finished), -1);
   rb_define_method(cls_QDialog.rb_class, "on_accepted", RUBY_METHOD_FUNC(rb_QDialog_on_accepted), -1);
   rb_define_method(cls_QDialog.rb_class, "on_rejected", RUBY_METHOD_FUNC(rb_QDialog_on_rejected), -1);
@@ -98607,8 +97521,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFileDialog.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QFileDialog_prot_sender_signal_index), -1);
   rb_define_method(cls_QFileDialog.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QFileDialog_prot_sender_signal_index), -1);
   rb_define_method(cls_QFileDialog.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QFileDialog_prot_receivers), -1);
-  rb_define_method(cls_QFileDialog.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QFileDialog_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QFileDialog.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QFileDialog_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QFileDialog.rb_class, "on_file_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_file_selected), -1);
   rb_define_method(cls_QFileDialog.rb_class, "on_files_selected", RUBY_METHOD_FUNC(rb_QFileDialog_on_files_selected), -1);
   rb_define_method(cls_QFileDialog.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QFileDialog_on_current_changed), -1);
@@ -98826,8 +97738,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QInputDialog.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QInputDialog_prot_sender_signal_index), -1);
   rb_define_method(cls_QInputDialog.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QInputDialog_prot_sender_signal_index), -1);
   rb_define_method(cls_QInputDialog.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QInputDialog_prot_receivers), -1);
-  rb_define_method(cls_QInputDialog.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QInputDialog_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QInputDialog.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QInputDialog_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QInputDialog.rb_class, "on_text_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_text_value_changed), -1);
   rb_define_method(cls_QInputDialog.rb_class, "on_text_value_selected", RUBY_METHOD_FUNC(rb_QInputDialog_on_text_value_selected), -1);
   rb_define_method(cls_QInputDialog.rb_class, "on_int_value_changed", RUBY_METHOD_FUNC(rb_QInputDialog_on_int_value_changed), -1);
@@ -98953,8 +97863,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QProgressBar.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QProgressBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QProgressBar.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QProgressBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QProgressBar.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QProgressBar_prot_receivers), -1);
-  rb_define_method(cls_QProgressBar.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QProgressBar_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QProgressBar.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QProgressBar_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QProgressBar.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QProgressBar_on_value_changed), -1);
   rb_define_alloc_func(cls_QSlider.rb_class, rb_QSlider_alloc);
   qt6rb::register_ctor(cls_QSlider.rb_class, rb_QSlider_ctor);
@@ -99041,8 +97949,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSlider.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QSlider_prot_sender_signal_index), -1);
   rb_define_method(cls_QSlider.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QSlider_prot_sender_signal_index), -1);
   rb_define_method(cls_QSlider.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QSlider_prot_receivers), -1);
-  rb_define_method(cls_QSlider.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QSlider_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QSlider.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QSlider_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QSpinBox.rb_class, rb_QSpinBox_alloc);
   qt6rb::register_ctor(cls_QSpinBox.rb_class, rb_QSpinBox_ctor);
   rb_include_module(cls_QSpinBox.rb_class, qt6rb::constructable_module());
@@ -99161,8 +98067,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSpinBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QSpinBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QSpinBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QSpinBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QSpinBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QSpinBox_prot_receivers), -1);
-  rb_define_method(cls_QSpinBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QSpinBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QSpinBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QSpinBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QSpinBox.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QSpinBox_on_value_changed), -1);
   rb_define_method(cls_QSpinBox.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QSpinBox_on_text_changed), -1);
   rb_define_alloc_func(cls_QDoubleSpinBox.rb_class, rb_QDoubleSpinBox_alloc);
@@ -99280,8 +98184,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDoubleSpinBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_receivers), -1);
-  rb_define_method(cls_QDoubleSpinBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QDoubleSpinBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_on_value_changed), -1);
   rb_define_method(cls_QDoubleSpinBox.rb_class, "on_text_changed", RUBY_METHOD_FUNC(rb_QDoubleSpinBox_on_text_changed), -1);
   rb_define_alloc_func(cls_QRadioButton.rb_class, rb_QRadioButton_alloc);
@@ -99361,8 +98263,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QRadioButton.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QRadioButton_prot_sender_signal_index), -1);
   rb_define_method(cls_QRadioButton.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QRadioButton_prot_sender_signal_index), -1);
   rb_define_method(cls_QRadioButton.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QRadioButton_prot_receivers), -1);
-  rb_define_method(cls_QRadioButton.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QRadioButton_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QRadioButton.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QRadioButton_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QButtonGroup.rb_class, rb_QButtonGroup_alloc);
   qt6rb::register_ctor(cls_QButtonGroup.rb_class, rb_QButtonGroup_ctor);
   rb_include_module(cls_QButtonGroup.rb_class, qt6rb::constructable_module());
@@ -99495,8 +98395,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QDialogButtonBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_receivers), -1);
-  rb_define_method(cls_QDialogButtonBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QDialogButtonBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QDialogButtonBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_clicked), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "on_accepted", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_accepted), -1);
   rb_define_method(cls_QDialogButtonBox.rb_class, "on_help_requested", RUBY_METHOD_FUNC(rb_QDialogButtonBox_on_help_requested), -1);
@@ -99520,16 +98418,12 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCalendarWidget.rb_class, "setMinimumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_minimum_date), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "minimum_date=", "set_minimum_date");
   rb_define_alias(cls_QCalendarWidget.rb_class, "minimumDate=", "set_minimum_date");
-  rb_define_method(cls_QCalendarWidget.rb_class, "clear_minimum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_minimum_date), -1);
-  rb_define_method(cls_QCalendarWidget.rb_class, "clearMinimumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_minimum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "maximum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_maximum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "maximumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_maximum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_maximum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_maximum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "setMaximumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_maximum_date), -1);
   rb_define_alias(cls_QCalendarWidget.rb_class, "maximum_date=", "set_maximum_date");
   rb_define_alias(cls_QCalendarWidget.rb_class, "maximumDate=", "set_maximum_date");
-  rb_define_method(cls_QCalendarWidget.rb_class, "clear_maximum_date", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_maximum_date), -1);
-  rb_define_method(cls_QCalendarWidget.rb_class, "clearMaximumDate", RUBY_METHOD_FUNC(rb_QCalendarWidget_clear_maximum_date), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "first_day_of_week", RUBY_METHOD_FUNC(rb_QCalendarWidget_first_day_of_week), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "firstDayOfWeek", RUBY_METHOD_FUNC(rb_QCalendarWidget_first_day_of_week), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "set_first_day_of_week", RUBY_METHOD_FUNC(rb_QCalendarWidget_set_first_day_of_week), -1);
@@ -99693,8 +98587,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QCalendarWidget.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_receivers), -1);
-  rb_define_method(cls_QCalendarWidget.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QCalendarWidget.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QCalendarWidget_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "on_selection_changed", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_selection_changed), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_clicked), -1);
   rb_define_method(cls_QCalendarWidget.rb_class, "on_activated", RUBY_METHOD_FUNC(rb_QCalendarWidget_on_activated), -1);
@@ -99808,12 +98700,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "setItemPrototype", RUBY_METHOD_FUNC(rb_QTableWidget_set_item_prototype), -1);
   rb_define_alias(cls_QTableWidget.rb_class, "item_prototype=", "set_item_prototype");
   rb_define_alias(cls_QTableWidget.rb_class, "itemPrototype=", "set_item_prototype");
-  rb_define_method(cls_QTableWidget.rb_class, "supported_drag_actions", RUBY_METHOD_FUNC(rb_QTableWidget_supported_drag_actions), -1);
-  rb_define_method(cls_QTableWidget.rb_class, "supportedDragActions", RUBY_METHOD_FUNC(rb_QTableWidget_supported_drag_actions), -1);
-  rb_define_method(cls_QTableWidget.rb_class, "set_supported_drag_actions", RUBY_METHOD_FUNC(rb_QTableWidget_set_supported_drag_actions), -1);
-  rb_define_method(cls_QTableWidget.rb_class, "setSupportedDragActions", RUBY_METHOD_FUNC(rb_QTableWidget_set_supported_drag_actions), -1);
-  rb_define_alias(cls_QTableWidget.rb_class, "supported_drag_actions=", "set_supported_drag_actions");
-  rb_define_alias(cls_QTableWidget.rb_class, "supportedDragActions=", "set_supported_drag_actions");
   rb_define_method(cls_QTableWidget.rb_class, "scroll_to_item", RUBY_METHOD_FUNC(rb_QTableWidget_scroll_to_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "scrollToItem", RUBY_METHOD_FUNC(rb_QTableWidget_scroll_to_item), -1);
   rb_define_method(cls_QTableWidget.rb_class, "insert_row", RUBY_METHOD_FUNC(rb_QTableWidget_insert_row), -1);
@@ -99952,8 +98838,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableWidget.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QTableWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QTableWidget.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QTableWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QTableWidget.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QTableWidget_prot_receivers), -1);
-  rb_define_method(cls_QTableWidget.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QTableWidget_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QTableWidget.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QTableWidget_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QTableWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_pressed), -1);
   rb_define_method(cls_QTableWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_clicked), -1);
   rb_define_method(cls_QTableWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QTableWidget_on_item_double_clicked), -1);
@@ -100133,12 +99017,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "indexFromItem", RUBY_METHOD_FUNC(rb_QTreeWidget_index_from_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "item_from_index", RUBY_METHOD_FUNC(rb_QTreeWidget_item_from_index), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "itemFromIndex", RUBY_METHOD_FUNC(rb_QTreeWidget_item_from_index), -1);
-  rb_define_method(cls_QTreeWidget.rb_class, "supported_drag_actions", RUBY_METHOD_FUNC(rb_QTreeWidget_supported_drag_actions), -1);
-  rb_define_method(cls_QTreeWidget.rb_class, "supportedDragActions", RUBY_METHOD_FUNC(rb_QTreeWidget_supported_drag_actions), -1);
-  rb_define_method(cls_QTreeWidget.rb_class, "set_supported_drag_actions", RUBY_METHOD_FUNC(rb_QTreeWidget_set_supported_drag_actions), -1);
-  rb_define_method(cls_QTreeWidget.rb_class, "setSupportedDragActions", RUBY_METHOD_FUNC(rb_QTreeWidget_set_supported_drag_actions), -1);
-  rb_define_alias(cls_QTreeWidget.rb_class, "supported_drag_actions=", "set_supported_drag_actions");
-  rb_define_alias(cls_QTreeWidget.rb_class, "supportedDragActions=", "set_supported_drag_actions");
   rb_define_method(cls_QTreeWidget.rb_class, "scroll_to_item", RUBY_METHOD_FUNC(rb_QTreeWidget_scroll_to_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "scrollToItem", RUBY_METHOD_FUNC(rb_QTreeWidget_scroll_to_item), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "expand_item", RUBY_METHOD_FUNC(rb_QTreeWidget_expand_item), -1);
@@ -100279,8 +99157,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeWidget.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_receivers), -1);
-  rb_define_method(cls_QTreeWidget.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QTreeWidget.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QTreeWidget_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_pressed), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_clicked), -1);
   rb_define_method(cls_QTreeWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QTreeWidget_on_item_double_clicked), -1);
@@ -100625,8 +99501,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabWidget.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QTabWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QTabWidget.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QTabWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QTabWidget.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QTabWidget_prot_receivers), -1);
-  rb_define_method(cls_QTabWidget.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QTabWidget_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QTabWidget.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QTabWidget_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QTabWidget.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QTabWidget_on_current_changed), -1);
   rb_define_method(cls_QTabWidget.rb_class, "on_tab_close_requested", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_close_requested), -1);
   rb_define_method(cls_QTabWidget.rb_class, "on_tab_bar_clicked", RUBY_METHOD_FUNC(rb_QTabWidget_on_tab_bar_clicked), -1);
@@ -100857,8 +99731,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTabBar.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QTabBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QTabBar.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QTabBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QTabBar.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QTabBar_prot_receivers), -1);
-  rb_define_method(cls_QTabBar.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QTabBar_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QTabBar.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QTabBar_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QTabBar.rb_class, "on_current_changed", RUBY_METHOD_FUNC(rb_QTabBar_on_current_changed), -1);
   rb_define_method(cls_QTabBar.rb_class, "on_tab_close_requested", RUBY_METHOD_FUNC(rb_QTabBar_on_tab_close_requested), -1);
   rb_define_method(cls_QTabBar.rb_class, "on_tab_moved", RUBY_METHOD_FUNC(rb_QTabBar_on_tab_moved), -1);
@@ -100930,12 +99802,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "indexFromItem", RUBY_METHOD_FUNC(rb_QListWidget_index_from_item), -1);
   rb_define_method(cls_QListWidget.rb_class, "item_from_index", RUBY_METHOD_FUNC(rb_QListWidget_item_from_index), -1);
   rb_define_method(cls_QListWidget.rb_class, "itemFromIndex", RUBY_METHOD_FUNC(rb_QListWidget_item_from_index), -1);
-  rb_define_method(cls_QListWidget.rb_class, "set_supported_drag_actions", RUBY_METHOD_FUNC(rb_QListWidget_set_supported_drag_actions), -1);
-  rb_define_method(cls_QListWidget.rb_class, "setSupportedDragActions", RUBY_METHOD_FUNC(rb_QListWidget_set_supported_drag_actions), -1);
-  rb_define_alias(cls_QListWidget.rb_class, "supported_drag_actions=", "set_supported_drag_actions");
-  rb_define_alias(cls_QListWidget.rb_class, "supportedDragActions=", "set_supported_drag_actions");
-  rb_define_method(cls_QListWidget.rb_class, "supported_drag_actions", RUBY_METHOD_FUNC(rb_QListWidget_supported_drag_actions), -1);
-  rb_define_method(cls_QListWidget.rb_class, "supportedDragActions", RUBY_METHOD_FUNC(rb_QListWidget_supported_drag_actions), -1);
   rb_define_method(cls_QListWidget.rb_class, "scroll_to_item", RUBY_METHOD_FUNC(rb_QListWidget_scroll_to_item), -1);
   rb_define_method(cls_QListWidget.rb_class, "scrollToItem", RUBY_METHOD_FUNC(rb_QListWidget_scroll_to_item), -1);
   rb_define_method(cls_QListWidget.rb_class, "clear", RUBY_METHOD_FUNC(rb_QListWidget_clear), -1);
@@ -101070,8 +99936,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListWidget.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QListWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QListWidget.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QListWidget_prot_sender_signal_index), -1);
   rb_define_method(cls_QListWidget.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QListWidget_prot_receivers), -1);
-  rb_define_method(cls_QListWidget.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QListWidget_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QListWidget.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QListWidget_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QListWidget.rb_class, "on_item_pressed", RUBY_METHOD_FUNC(rb_QListWidget_on_item_pressed), -1);
   rb_define_method(cls_QListWidget.rb_class, "on_item_clicked", RUBY_METHOD_FUNC(rb_QListWidget_on_item_clicked), -1);
   rb_define_method(cls_QListWidget.rb_class, "on_item_double_clicked", RUBY_METHOD_FUNC(rb_QListWidget_on_item_double_clicked), -1);
@@ -101932,8 +100796,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QScrollBar.rb_class, "size_hint", RUBY_METHOD_FUNC(rb_QScrollBar_size_hint), -1);
   rb_define_method(cls_QScrollBar.rb_class, "sizeHint", RUBY_METHOD_FUNC(rb_QScrollBar_size_hint), -1);
   rb_define_method(cls_QScrollBar.rb_class, "event", RUBY_METHOD_FUNC(rb_QScrollBar_event), -1);
-  rb_define_method(cls_QScrollBar.rb_class, "create_standard_context_menu", RUBY_METHOD_FUNC(rb_QScrollBar_create_standard_context_menu), -1);
-  rb_define_method(cls_QScrollBar.rb_class, "createStandardContextMenu", RUBY_METHOD_FUNC(rb_QScrollBar_create_standard_context_menu), -1);
   rb_define_singleton_method(cls_QScrollBar.rb_class, "tr", RUBY_METHOD_FUNC(rb_QScrollBar_s_tr), -1);
   rb_define_method(cls_QScrollBar.rb_class, "wheel_event", RUBY_METHOD_FUNC(rb_QScrollBar_prot_wheel_event), -1);
   rb_define_method(cls_QScrollBar.rb_class, "wheelEvent", RUBY_METHOD_FUNC(rb_QScrollBar_prot_wheel_event), -1);
@@ -101999,8 +100861,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QScrollBar.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QScrollBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QScrollBar.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QScrollBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QScrollBar.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QScrollBar_prot_receivers), -1);
-  rb_define_method(cls_QScrollBar.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QScrollBar_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QScrollBar.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QScrollBar_prot_get_decoded_metric_f), -1);
   rb_undef_alloc_func(cls_QAbstractItemView.rb_class);
   rb_define_method(cls_QAbstractItemView.rb_class, "set_model", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_model), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "setModel", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_model), -1);
@@ -102130,18 +100990,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemView.rb_class, "sizeHintForRow", RUBY_METHOD_FUNC(rb_QAbstractItemView_size_hint_for_row), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "size_hint_for_column", RUBY_METHOD_FUNC(rb_QAbstractItemView_size_hint_for_column), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "sizeHintForColumn", RUBY_METHOD_FUNC(rb_QAbstractItemView_size_hint_for_column), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "update_threshold", RUBY_METHOD_FUNC(rb_QAbstractItemView_update_threshold), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "updateThreshold", RUBY_METHOD_FUNC(rb_QAbstractItemView_update_threshold), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "set_update_threshold", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_update_threshold), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "setUpdateThreshold", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_update_threshold), -1);
-  rb_define_alias(cls_QAbstractItemView.rb_class, "update_threshold=", "set_update_threshold");
-  rb_define_alias(cls_QAbstractItemView.rb_class, "updateThreshold=", "set_update_threshold");
-  rb_define_method(cls_QAbstractItemView.rb_class, "keyboard_search_flags", RUBY_METHOD_FUNC(rb_QAbstractItemView_keyboard_search_flags), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "keyboardSearchFlags", RUBY_METHOD_FUNC(rb_QAbstractItemView_keyboard_search_flags), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "set_keyboard_search_flags", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_keyboard_search_flags), -1);
-  rb_define_method(cls_QAbstractItemView.rb_class, "setKeyboardSearchFlags", RUBY_METHOD_FUNC(rb_QAbstractItemView_set_keyboard_search_flags), -1);
-  rb_define_alias(cls_QAbstractItemView.rb_class, "keyboard_search_flags=", "set_keyboard_search_flags");
-  rb_define_alias(cls_QAbstractItemView.rb_class, "keyboardSearchFlags=", "set_keyboard_search_flags");
   rb_define_method(cls_QAbstractItemView.rb_class, "open_persistent_editor", RUBY_METHOD_FUNC(rb_QAbstractItemView_open_persistent_editor), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "openPersistentEditor", RUBY_METHOD_FUNC(rb_QAbstractItemView_open_persistent_editor), -1);
   rb_define_method(cls_QAbstractItemView.rb_class, "close_persistent_editor", RUBY_METHOD_FUNC(rb_QAbstractItemView_close_persistent_editor), -1);
@@ -102497,8 +101345,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QHeaderView.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QHeaderView_prot_sender_signal_index), -1);
   rb_define_method(cls_QHeaderView.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QHeaderView_prot_sender_signal_index), -1);
   rb_define_method(cls_QHeaderView.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QHeaderView_prot_receivers), -1);
-  rb_define_method(cls_QHeaderView.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QHeaderView_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QHeaderView.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QHeaderView_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QHeaderView.rb_class, "on_section_moved", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_moved), -1);
   rb_define_method(cls_QHeaderView.rb_class, "on_section_resized", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_resized), -1);
   rb_define_method(cls_QHeaderView.rb_class, "on_section_pressed", RUBY_METHOD_FUNC(rb_QHeaderView_on_section_pressed), -1);
@@ -102603,8 +101449,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QGroupBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QGroupBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QGroupBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QGroupBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QGroupBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QGroupBox_prot_receivers), -1);
-  rb_define_method(cls_QGroupBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QGroupBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QGroupBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QGroupBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QGroupBox.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QGroupBox_on_clicked), -1);
   rb_define_method(cls_QGroupBox.rb_class, "on_toggled", RUBY_METHOD_FUNC(rb_QGroupBox_on_toggled), -1);
   rb_define_alloc_func(cls_QSplitter.rb_class, rb_QSplitter_alloc);
@@ -102734,8 +101578,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QSplitter.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QSplitter_prot_sender_signal_index), -1);
   rb_define_method(cls_QSplitter.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QSplitter_prot_sender_signal_index), -1);
   rb_define_method(cls_QSplitter.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QSplitter_prot_receivers), -1);
-  rb_define_method(cls_QSplitter.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QSplitter_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QSplitter.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QSplitter_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QSplitter.rb_class, "on_splitter_moved", RUBY_METHOD_FUNC(rb_QSplitter_on_splitter_moved), -1);
   rb_define_alloc_func(cls_QScrollArea.rb_class, rb_QScrollArea_alloc);
   qt6rb::register_ctor(cls_QScrollArea.rb_class, rb_QScrollArea_ctor);
@@ -102836,8 +101678,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QScrollArea.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QScrollArea_prot_sender_signal_index), -1);
   rb_define_method(cls_QScrollArea.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QScrollArea_prot_sender_signal_index), -1);
   rb_define_method(cls_QScrollArea.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QScrollArea_prot_receivers), -1);
-  rb_define_method(cls_QScrollArea.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QScrollArea_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QScrollArea.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QScrollArea_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QStatusBar.rb_class, rb_QStatusBar_alloc);
   qt6rb::register_ctor(cls_QStatusBar.rb_class, rb_QStatusBar_ctor);
   rb_include_module(cls_QStatusBar.rb_class, qt6rb::constructable_module());
@@ -102929,8 +101769,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStatusBar.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QStatusBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QStatusBar.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QStatusBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QStatusBar.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QStatusBar_prot_receivers), -1);
-  rb_define_method(cls_QStatusBar.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QStatusBar_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QStatusBar.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QStatusBar_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QStatusBar.rb_class, "on_message_changed", RUBY_METHOD_FUNC(rb_QStatusBar_on_message_changed), -1);
   rb_define_alloc_func(cls_QMenuBar.rb_class, rb_QMenuBar_alloc);
   qt6rb::register_ctor(cls_QMenuBar.rb_class, rb_QMenuBar_ctor);
@@ -103047,8 +101885,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenuBar.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QMenuBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QMenuBar.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QMenuBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QMenuBar.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QMenuBar_prot_receivers), -1);
-  rb_define_method(cls_QMenuBar.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QMenuBar_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QMenuBar.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QMenuBar_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QMenuBar.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QMenuBar_on_triggered), -1);
   rb_define_method(cls_QMenuBar.rb_class, "on_hovered", RUBY_METHOD_FUNC(rb_QMenuBar_on_hovered), -1);
   rb_define_alloc_func(cls_QMenu.rb_class, rb_QMenu_alloc);
@@ -103120,8 +101956,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenu.rb_class, "setNoReplayFor", RUBY_METHOD_FUNC(rb_QMenu_set_no_replay_for), -1);
   rb_define_alias(cls_QMenu.rb_class, "no_replay_for=", "set_no_replay_for");
   rb_define_alias(cls_QMenu.rb_class, "noReplayFor=", "set_no_replay_for");
-  rb_define_method(cls_QMenu.rb_class, "set_as_dock_menu", RUBY_METHOD_FUNC(rb_QMenu_set_as_dock_menu), -1);
-  rb_define_method(cls_QMenu.rb_class, "setAsDockMenu", RUBY_METHOD_FUNC(rb_QMenu_set_as_dock_menu), -1);
   rb_define_method(cls_QMenu.rb_class, "separators_collapsible", RUBY_METHOD_FUNC(rb_QMenu_separators_collapsible), -1);
   rb_define_method(cls_QMenu.rb_class, "separatorsCollapsible", RUBY_METHOD_FUNC(rb_QMenu_separators_collapsible), -1);
   rb_define_method(cls_QMenu.rb_class, "set_separators_collapsible", RUBY_METHOD_FUNC(rb_QMenu_set_separators_collapsible), -1);
@@ -103201,8 +102035,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QMenu.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QMenu_prot_sender_signal_index), -1);
   rb_define_method(cls_QMenu.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QMenu_prot_sender_signal_index), -1);
   rb_define_method(cls_QMenu.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QMenu_prot_receivers), -1);
-  rb_define_method(cls_QMenu.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QMenu_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QMenu.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QMenu_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QMenu.rb_class, "on_about_to_show", RUBY_METHOD_FUNC(rb_QMenu_on_about_to_show), -1);
   rb_define_method(cls_QMenu.rb_class, "on_about_to_hide", RUBY_METHOD_FUNC(rb_QMenu_on_about_to_hide), -1);
   rb_define_method(cls_QMenu.rb_class, "on_triggered", RUBY_METHOD_FUNC(rb_QMenu_on_triggered), -1);
@@ -103533,8 +102365,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QToolBar.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QToolBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QToolBar.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QToolBar_prot_sender_signal_index), -1);
   rb_define_method(cls_QToolBar.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QToolBar_prot_receivers), -1);
-  rb_define_method(cls_QToolBar.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QToolBar_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QToolBar.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QToolBar_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QToolBar.rb_class, "on_action_triggered", RUBY_METHOD_FUNC(rb_QToolBar_on_action_triggered), -1);
   rb_define_method(cls_QToolBar.rb_class, "on_movable_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_movable_changed), -1);
   rb_define_method(cls_QToolBar.rb_class, "on_allowed_areas_changed", RUBY_METHOD_FUNC(rb_QToolBar_on_allowed_areas_changed), -1);
@@ -103622,8 +102452,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QKeySequence.rb_class, rb_QKeySequence_alloc);
   qt6rb::register_ctor(cls_QKeySequence.rb_class, rb_QKeySequence_ctor);
   rb_include_module(cls_QKeySequence.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QKeySequence.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QKeySequence_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QKeySequence.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QKeySequence_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QKeySequence.rb_class, "count", RUBY_METHOD_FUNC(rb_QKeySequence_count), -1);
   rb_define_method(cls_QKeySequence.rb_class, "is_empty", RUBY_METHOD_FUNC(rb_QKeySequence_is_empty), -1);
   rb_define_method(cls_QKeySequence.rb_class, "isEmpty", RUBY_METHOD_FUNC(rb_QKeySequence_is_empty), -1);
@@ -103646,8 +102474,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QSizePolicy.rb_class, rb_QSizePolicy_alloc);
   qt6rb::register_ctor(cls_QSizePolicy.rb_class, rb_QSizePolicy_ctor);
   rb_include_module(cls_QSizePolicy.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QSizePolicy.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QSizePolicy_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QSizePolicy.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QSizePolicy_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "horizontal_policy", RUBY_METHOD_FUNC(rb_QSizePolicy_horizontal_policy), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "horizontalPolicy", RUBY_METHOD_FUNC(rb_QSizePolicy_horizontal_policy), -1);
   rb_define_method(cls_QSizePolicy.rb_class, "vertical_policy", RUBY_METHOD_FUNC(rb_QSizePolicy_vertical_policy), -1);
@@ -104378,8 +103204,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QListView.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QListView_prot_sender_signal_index), -1);
   rb_define_method(cls_QListView.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QListView_prot_sender_signal_index), -1);
   rb_define_method(cls_QListView.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QListView_prot_receivers), -1);
-  rb_define_method(cls_QListView.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QListView_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QListView.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QListView_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QListView.rb_class, "on_indexes_moved", RUBY_METHOD_FUNC(rb_QListView_on_indexes_moved), -1);
   rb_define_alloc_func(cls_QTreeView.rb_class, rb_QTreeView_alloc);
   qt6rb::register_ctor(cls_QTreeView.rb_class, rb_QTreeView_ctor);
@@ -104664,8 +103488,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTreeView.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QTreeView_prot_sender_signal_index), -1);
   rb_define_method(cls_QTreeView.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QTreeView_prot_sender_signal_index), -1);
   rb_define_method(cls_QTreeView.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QTreeView_prot_receivers), -1);
-  rb_define_method(cls_QTreeView.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QTreeView_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QTreeView.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QTreeView_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QTreeView.rb_class, "on_expanded", RUBY_METHOD_FUNC(rb_QTreeView_on_expanded), -1);
   rb_define_method(cls_QTreeView.rb_class, "on_collapsed", RUBY_METHOD_FUNC(rb_QTreeView_on_collapsed), -1);
   rb_define_alloc_func(cls_QCompleter.rb_class, rb_QCompleter_alloc);
@@ -105164,8 +103986,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QFrame.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QFrame_prot_sender_signal_index), -1);
   rb_define_method(cls_QFrame.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QFrame_prot_sender_signal_index), -1);
   rb_define_method(cls_QFrame.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QFrame_prot_receivers), -1);
-  rb_define_method(cls_QFrame.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QFrame_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QFrame.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QFrame_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QShortcut.rb_class, rb_QShortcut_alloc);
   qt6rb::register_ctor(cls_QShortcut.rb_class, rb_QShortcut_ctor);
   rb_include_module(cls_QShortcut.rb_class, qt6rb::constructable_module());
@@ -105351,8 +104171,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPaintDevice.rb_class, "depth", RUBY_METHOD_FUNC(rb_QPaintDevice_depth), -1);
   rb_define_singleton_method(cls_QPaintDevice.rb_class, "device_pixel_ratio_f_scale", RUBY_METHOD_FUNC(rb_QPaintDevice_s_device_pixel_ratio_f_scale), -1);
   rb_define_singleton_method(cls_QPaintDevice.rb_class, "devicePixelRatioFScale", RUBY_METHOD_FUNC(rb_QPaintDevice_s_device_pixel_ratio_f_scale), -1);
-  rb_define_singleton_method(cls_QPaintDevice.rb_class, "encode_metric_f", RUBY_METHOD_FUNC(rb_QPaintDevice_s_encode_metric_f), -1);
-  rb_define_singleton_method(cls_QPaintDevice.rb_class, "encodeMetricF", RUBY_METHOD_FUNC(rb_QPaintDevice_s_encode_metric_f), -1);
   rb_define_alloc_func(cls_QAbstractButton.rb_class, rb_QAbstractButton_alloc);
   qt6rb::register_ctor(cls_QAbstractButton.rb_class, rb_QAbstractButton_ctor);
   rb_include_module(cls_QAbstractButton.rb_class, qt6rb::constructable_module());
@@ -105487,8 +104305,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractButton.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QAbstractButton_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QAbstractButton_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QAbstractButton_prot_receivers), -1);
-  rb_define_method(cls_QAbstractButton.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QAbstractButton_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QAbstractButton.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QAbstractButton_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "on_pressed", RUBY_METHOD_FUNC(rb_QAbstractButton_on_pressed), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "on_released", RUBY_METHOD_FUNC(rb_QAbstractButton_on_released), -1);
   rb_define_method(cls_QAbstractButton.rb_class, "on_clicked", RUBY_METHOD_FUNC(rb_QAbstractButton_on_clicked), -1);
@@ -105622,8 +104438,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractScrollArea.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractScrollArea.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_receivers), -1);
-  rb_define_method(cls_QAbstractScrollArea.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QAbstractScrollArea.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QAbstractScrollArea_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QLayoutItem.rb_class, rb_QLayoutItem_alloc);
   qt6rb::register_ctor(cls_QLayoutItem.rb_class, rb_QLayoutItem_ctor);
   rb_include_module(cls_QLayoutItem.rb_class, qt6rb::constructable_module());
@@ -105672,8 +104486,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QInputEvent.rb_class, "setTimestamp", RUBY_METHOD_FUNC(rb_QInputEvent_set_timestamp), -1);
   rb_define_alias(cls_QInputEvent.rb_class, "timestamp=", "set_timestamp");
   rb_undef_alloc_func(cls_QSinglePointEvent.rb_class);
-  rb_define_method(cls_QSinglePointEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QSinglePointEvent_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QSinglePointEvent.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QSinglePointEvent_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QSinglePointEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QSinglePointEvent_clone), -1);
   rb_define_method(cls_QSinglePointEvent.rb_class, "button", RUBY_METHOD_FUNC(rb_QSinglePointEvent_button), -1);
   rb_define_method(cls_QSinglePointEvent.rb_class, "buttons", RUBY_METHOD_FUNC(rb_QSinglePointEvent_buttons), -1);
@@ -105700,8 +104512,6 @@ extern "C" void Init_qt6() {
   rb_define_alloc_func(cls_QGradient.rb_class, rb_QGradient_alloc);
   qt6rb::register_ctor(cls_QGradient.rb_class, rb_QGradient_ctor);
   rb_include_module(cls_QGradient.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QGradient.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QGradient_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QGradient.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QGradient_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QGradient.rb_class, "type", RUBY_METHOD_FUNC(rb_QGradient_type), -1);
   rb_define_method(cls_QGradient.rb_class, "set_spread", RUBY_METHOD_FUNC(rb_QGradient_set_spread), -1);
   rb_define_method(cls_QGradient.rb_class, "setSpread", RUBY_METHOD_FUNC(rb_QGradient_set_spread), -1);
@@ -105855,8 +104665,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSlider.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_receivers), -1);
-  rb_define_method(cls_QAbstractSlider.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QAbstractSlider.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QAbstractSlider_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "on_value_changed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_value_changed), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_pressed", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_pressed), -1);
   rb_define_method(cls_QAbstractSlider.rb_class, "on_slider_moved", RUBY_METHOD_FUNC(rb_QAbstractSlider_on_slider_moved), -1);
@@ -106011,10 +104819,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractSpinBox.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_sender_signal_index), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_receivers), -1);
-  rb_define_method(cls_QAbstractSpinBox.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QAbstractSpinBox.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_prot_get_decoded_metric_f), -1);
   rb_define_method(cls_QAbstractSpinBox.rb_class, "on_editing_finished", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_on_editing_finished), -1);
-  rb_define_method(cls_QAbstractSpinBox.rb_class, "on_return_pressed", RUBY_METHOD_FUNC(rb_QAbstractSpinBox_on_return_pressed), -1);
   rb_define_alloc_func(cls_QTableView.rb_class, rb_QTableView_alloc);
   qt6rb::register_ctor(cls_QTableView.rb_class, rb_QTableView_ctor);
   rb_include_module(cls_QTableView.rb_class, qt6rb::constructable_module());
@@ -106257,13 +105062,9 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QTableView.rb_class, "sender_signal_index", RUBY_METHOD_FUNC(rb_QTableView_prot_sender_signal_index), -1);
   rb_define_method(cls_QTableView.rb_class, "senderSignalIndex", RUBY_METHOD_FUNC(rb_QTableView_prot_sender_signal_index), -1);
   rb_define_method(cls_QTableView.rb_class, "receivers", RUBY_METHOD_FUNC(rb_QTableView_prot_receivers), -1);
-  rb_define_method(cls_QTableView.rb_class, "get_decoded_metric_f", RUBY_METHOD_FUNC(rb_QTableView_prot_get_decoded_metric_f), -1);
-  rb_define_method(cls_QTableView.rb_class, "getDecodedMetricF", RUBY_METHOD_FUNC(rb_QTableView_prot_get_decoded_metric_f), -1);
   rb_define_alloc_func(cls_QTextFormat.rb_class, rb_QTextFormat_alloc);
   qt6rb::register_ctor(cls_QTextFormat.rb_class, rb_QTextFormat_ctor);
   rb_include_module(cls_QTextFormat.rb_class, qt6rb::constructable_module());
-  rb_define_method(cls_QTextFormat.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QTextFormat_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QTextFormat.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QTextFormat_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QTextFormat.rb_class, "merge", RUBY_METHOD_FUNC(rb_QTextFormat_merge), -1);
   rb_define_method(cls_QTextFormat.rb_class, "is_valid", RUBY_METHOD_FUNC(rb_QTextFormat_is_valid), -1);
   rb_define_method(cls_QTextFormat.rb_class, "isValid", RUBY_METHOD_FUNC(rb_QTextFormat_is_valid), -1);
@@ -106426,8 +105227,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "updateEditorGeometry", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_update_editor_geometry), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "editor_event", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_editor_event), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "editorEvent", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_editor_event), -1);
-  rb_define_method(cls_QAbstractItemDelegate.rb_class, "handle_editor_event", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_handle_editor_event), -1);
-  rb_define_method(cls_QAbstractItemDelegate.rb_class, "handleEditorEvent", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_handle_editor_event), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "painting_roles", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_painting_roles), -1);
   rb_define_method(cls_QAbstractItemDelegate.rb_class, "paintingRoles", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_painting_roles), -1);
   rb_define_singleton_method(cls_QAbstractItemDelegate.rb_class, "tr", RUBY_METHOD_FUNC(rb_QAbstractItemDelegate_s_tr), -1);
@@ -106478,8 +105277,6 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QStyleOption.rb_class, "style_object=", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
   rb_define_method(cls_QStyleOption.rb_class, "set_style_object", RUBY_METHOD_FUNC(rb_QStyleOption_field_style_object_set), 1);
   rb_undef_alloc_func(cls_QPointerEvent.rb_class);
-  rb_define_method(cls_QPointerEvent.rb_class, "qt_check_for_qgadget_macro", RUBY_METHOD_FUNC(rb_QPointerEvent_qt_check_for_qgadget_macro), -1);
-  rb_define_method(cls_QPointerEvent.rb_class, "qt_check_for_QGADGET_macro", RUBY_METHOD_FUNC(rb_QPointerEvent_qt_check_for_qgadget_macro), -1);
   rb_define_method(cls_QPointerEvent.rb_class, "clone", RUBY_METHOD_FUNC(rb_QPointerEvent_clone), -1);
   rb_define_method(cls_QPointerEvent.rb_class, "pointer_type", RUBY_METHOD_FUNC(rb_QPointerEvent_pointer_type), -1);
   rb_define_method(cls_QPointerEvent.rb_class, "pointerType", RUBY_METHOD_FUNC(rb_QPointerEvent_pointer_type), -1);
@@ -106504,7 +105301,7 @@ extern "C" void Init_qt6() {
   rb_define_method(cls_QPointerEvent.rb_class, "set_accepted", RUBY_METHOD_FUNC(rb_QPointerEvent_set_accepted), -1);
   rb_define_method(cls_QPointerEvent.rb_class, "setAccepted", RUBY_METHOD_FUNC(rb_QPointerEvent_set_accepted), -1);
   rb_define_alias(cls_QPointerEvent.rb_class, "accepted=", "set_accepted");
-  rb_define_const(cls_QCoreApplication.rb_class, "ApplicationFlags", INT2NUM(396033));
+  rb_define_const(cls_QCoreApplication.rb_class, "ApplicationFlags", INT2NUM(394242));
   rb_define_const(cls_QWidget.rb_class, "DrawWindowBackground", INT2NUM(1));
   rb_define_const(cls_QWidget.rb_class, "DrawChildren", INT2NUM(2));
   rb_define_const(cls_QWidget.rb_class, "IgnoreMask", INT2NUM(4));
@@ -106518,8 +105315,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QComboBox.rb_class, "AdjustToContents", INT2NUM(0));
   rb_define_const(cls_QComboBox.rb_class, "AdjustToContentsOnFirstShow", INT2NUM(1));
   rb_define_const(cls_QComboBox.rb_class, "AdjustToMinimumContentsLengthWithIcon", INT2NUM(2));
-  rb_define_const(cls_QComboBox.rb_class, "UseStyle", INT2NUM(0));
-  rb_define_const(cls_QComboBox.rb_class, "UseDelegate", INT2NUM(1));
   rb_define_const(cls_QLineEdit.rb_class, "LeadingPosition", INT2NUM(0));
   rb_define_const(cls_QLineEdit.rb_class, "TrailingPosition", INT2NUM(1));
   rb_define_const(cls_QLineEdit.rb_class, "Normal", INT2NUM(0));
@@ -106800,20 +105595,7 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QChar.rb_class, "Script_Tangsa", INT2NUM(159));
   rb_define_const(cls_QChar.rb_class, "Script_Toto", INT2NUM(160));
   rb_define_const(cls_QChar.rb_class, "Script_Vithkuqi", INT2NUM(161));
-  rb_define_const(cls_QChar.rb_class, "Script_Kawi", INT2NUM(162));
-  rb_define_const(cls_QChar.rb_class, "Script_NagMundari", INT2NUM(163));
-  rb_define_const(cls_QChar.rb_class, "Script_Garay", INT2NUM(164));
-  rb_define_const(cls_QChar.rb_class, "Script_GurungKhema", INT2NUM(165));
-  rb_define_const(cls_QChar.rb_class, "Script_KiratRai", INT2NUM(166));
-  rb_define_const(cls_QChar.rb_class, "Script_OlOnal", INT2NUM(167));
-  rb_define_const(cls_QChar.rb_class, "Script_Sunuwar", INT2NUM(168));
-  rb_define_const(cls_QChar.rb_class, "Script_Todhri", INT2NUM(169));
-  rb_define_const(cls_QChar.rb_class, "Script_TuluTigalari", INT2NUM(170));
-  rb_define_const(cls_QChar.rb_class, "Script_Sidetic", INT2NUM(171));
-  rb_define_const(cls_QChar.rb_class, "Script_TaiYo", INT2NUM(172));
-  rb_define_const(cls_QChar.rb_class, "Script_TolongSiki", INT2NUM(173));
-  rb_define_const(cls_QChar.rb_class, "Script_BeriaErfe", INT2NUM(174));
-  rb_define_const(cls_QChar.rb_class, "ScriptCount", INT2NUM(175));
+  rb_define_const(cls_QChar.rb_class, "ScriptCount", INT2NUM(162));
   rb_define_const(cls_QChar.rb_class, "DirL", INT2NUM(0));
   rb_define_const(cls_QChar.rb_class, "DirR", INT2NUM(1));
   rb_define_const(cls_QChar.rb_class, "DirEN", INT2NUM(2));
@@ -106905,10 +105687,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QChar.rb_class, "Unicode_12_1", INT2NUM(22));
   rb_define_const(cls_QChar.rb_class, "Unicode_13_0", INT2NUM(23));
   rb_define_const(cls_QChar.rb_class, "Unicode_14_0", INT2NUM(24));
-  rb_define_const(cls_QChar.rb_class, "Unicode_15_0", INT2NUM(25));
-  rb_define_const(cls_QChar.rb_class, "Unicode_15_1", INT2NUM(26));
-  rb_define_const(cls_QChar.rb_class, "Unicode_16_0", INT2NUM(27));
-  rb_define_const(cls_QChar.rb_class, "Unicode_17_0", INT2NUM(28));
   rb_define_const(cls_QEvent.rb_class, "None", INT2NUM(0));
   rb_define_const(cls_QEvent.rb_class, "Timer", INT2NUM(1));
   rb_define_const(cls_QEvent.rb_class, "MouseButtonPress", INT2NUM(2));
@@ -107080,12 +105858,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QEvent.rb_class, "Pointer", INT2NUM(218));
   rb_define_const(cls_QEvent.rb_class, "TabletTrackingChange", INT2NUM(219));
   rb_define_const(cls_QEvent.rb_class, "WindowAboutToChangeInternal", INT2NUM(221));
-  rb_define_const(cls_QEvent.rb_class, "DevicePixelRatioChange", INT2NUM(222));
-  rb_define_const(cls_QEvent.rb_class, "ChildWindowAdded", INT2NUM(223));
-  rb_define_const(cls_QEvent.rb_class, "ChildWindowRemoved", INT2NUM(224));
-  rb_define_const(cls_QEvent.rb_class, "ParentWindowAboutToChange", INT2NUM(225));
-  rb_define_const(cls_QEvent.rb_class, "ParentWindowChange", INT2NUM(226));
-  rb_define_const(cls_QEvent.rb_class, "SafeAreaMarginsChange", INT2NUM(227));
   rb_define_const(cls_QEvent.rb_class, "User", INT2NUM(1000));
   rb_define_const(cls_QEvent.rb_class, "MaxUser", INT2NUM(65535));
   rb_define_const(cls_QWheelEvent.rb_class, "DefaultDeltasPerStep", INT2NUM(120));
@@ -107125,8 +105897,7 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QPalette.rb_class, "ToolTipBase", INT2NUM(18));
   rb_define_const(cls_QPalette.rb_class, "ToolTipText", INT2NUM(19));
   rb_define_const(cls_QPalette.rb_class, "PlaceholderText", INT2NUM(20));
-  rb_define_const(cls_QPalette.rb_class, "Accent", INT2NUM(21));
-  rb_define_const(cls_QPalette.rb_class, "NColorRoles", INT2NUM(22));
+  rb_define_const(cls_QPalette.rb_class, "NColorRoles", INT2NUM(21));
   rb_define_const(cls_QFont.rb_class, "Helvetica", INT2NUM(0));
   rb_define_const(cls_QFont.rb_class, "SansSerif", INT2NUM(0));
   rb_define_const(cls_QFont.rb_class, "Times", INT2NUM(1));
@@ -107151,8 +105922,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QFont.rb_class, "NoAntialias", INT2NUM(256));
   rb_define_const(cls_QFont.rb_class, "NoSubpixelAntialias", INT2NUM(2048));
   rb_define_const(cls_QFont.rb_class, "PreferNoShaping", INT2NUM(4096));
-  rb_define_const(cls_QFont.rb_class, "ContextFontMerging", INT2NUM(8192));
-  rb_define_const(cls_QFont.rb_class, "PreferTypoLineMetrics", INT2NUM(16384));
   rb_define_const(cls_QFont.rb_class, "NoFontMerging", INT2NUM(32768));
   rb_define_const(cls_QFont.rb_class, "PreferDefaultHinting", INT2NUM(0));
   rb_define_const(cls_QFont.rb_class, "PreferNoHinting", INT2NUM(1));
@@ -107206,166 +105975,13 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QFont.rb_class, "HintingPreferenceResolved", INT2NUM(32768));
   rb_define_const(cls_QFont.rb_class, "StyleNameResolved", INT2NUM(65536));
   rb_define_const(cls_QFont.rb_class, "FamiliesResolved", INT2NUM(131072));
-  rb_define_const(cls_QFont.rb_class, "FeaturesResolved", INT2NUM(262144));
-  rb_define_const(cls_QFont.rb_class, "VariableAxesResolved", INT2NUM(524288));
-  rb_define_const(cls_QFont.rb_class, "AllPropertiesResolved", INT2NUM(1048575));
+  rb_define_const(cls_QFont.rb_class, "AllPropertiesResolved", INT2NUM(262143));
   rb_define_const(cls_QIcon.rb_class, "Normal", INT2NUM(0));
   rb_define_const(cls_QIcon.rb_class, "Disabled", INT2NUM(1));
   rb_define_const(cls_QIcon.rb_class, "Active", INT2NUM(2));
   rb_define_const(cls_QIcon.rb_class, "Selected", INT2NUM(3));
   rb_define_const(cls_QIcon.rb_class, "On", INT2NUM(0));
   rb_define_const(cls_QIcon.rb_class, "Off", INT2NUM(1));
-  rb_define_const(cls_QIcon.rb_class, "AddressBookNew", INT2NUM(0));
-  rb_define_const(cls_QIcon.rb_class, "ApplicationExit", INT2NUM(1));
-  rb_define_const(cls_QIcon.rb_class, "AppointmentNew", INT2NUM(2));
-  rb_define_const(cls_QIcon.rb_class, "CallStart", INT2NUM(3));
-  rb_define_const(cls_QIcon.rb_class, "CallStop", INT2NUM(4));
-  rb_define_const(cls_QIcon.rb_class, "ContactNew", INT2NUM(5));
-  rb_define_const(cls_QIcon.rb_class, "DocumentNew", INT2NUM(6));
-  rb_define_const(cls_QIcon.rb_class, "DocumentOpen", INT2NUM(7));
-  rb_define_const(cls_QIcon.rb_class, "DocumentOpenRecent", INT2NUM(8));
-  rb_define_const(cls_QIcon.rb_class, "DocumentPageSetup", INT2NUM(9));
-  rb_define_const(cls_QIcon.rb_class, "DocumentPrint", INT2NUM(10));
-  rb_define_const(cls_QIcon.rb_class, "DocumentPrintPreview", INT2NUM(11));
-  rb_define_const(cls_QIcon.rb_class, "DocumentProperties", INT2NUM(12));
-  rb_define_const(cls_QIcon.rb_class, "DocumentRevert", INT2NUM(13));
-  rb_define_const(cls_QIcon.rb_class, "DocumentSave", INT2NUM(14));
-  rb_define_const(cls_QIcon.rb_class, "DocumentSaveAs", INT2NUM(15));
-  rb_define_const(cls_QIcon.rb_class, "DocumentSend", INT2NUM(16));
-  rb_define_const(cls_QIcon.rb_class, "EditClear", INT2NUM(17));
-  rb_define_const(cls_QIcon.rb_class, "EditCopy", INT2NUM(18));
-  rb_define_const(cls_QIcon.rb_class, "EditCut", INT2NUM(19));
-  rb_define_const(cls_QIcon.rb_class, "EditDelete", INT2NUM(20));
-  rb_define_const(cls_QIcon.rb_class, "EditFind", INT2NUM(21));
-  rb_define_const(cls_QIcon.rb_class, "EditPaste", INT2NUM(22));
-  rb_define_const(cls_QIcon.rb_class, "EditRedo", INT2NUM(23));
-  rb_define_const(cls_QIcon.rb_class, "EditSelectAll", INT2NUM(24));
-  rb_define_const(cls_QIcon.rb_class, "EditUndo", INT2NUM(25));
-  rb_define_const(cls_QIcon.rb_class, "FolderNew", INT2NUM(26));
-  rb_define_const(cls_QIcon.rb_class, "FormatIndentLess", INT2NUM(27));
-  rb_define_const(cls_QIcon.rb_class, "FormatIndentMore", INT2NUM(28));
-  rb_define_const(cls_QIcon.rb_class, "FormatJustifyCenter", INT2NUM(29));
-  rb_define_const(cls_QIcon.rb_class, "FormatJustifyFill", INT2NUM(30));
-  rb_define_const(cls_QIcon.rb_class, "FormatJustifyLeft", INT2NUM(31));
-  rb_define_const(cls_QIcon.rb_class, "FormatJustifyRight", INT2NUM(32));
-  rb_define_const(cls_QIcon.rb_class, "FormatTextDirectionLtr", INT2NUM(33));
-  rb_define_const(cls_QIcon.rb_class, "FormatTextDirectionRtl", INT2NUM(34));
-  rb_define_const(cls_QIcon.rb_class, "FormatTextBold", INT2NUM(35));
-  rb_define_const(cls_QIcon.rb_class, "FormatTextItalic", INT2NUM(36));
-  rb_define_const(cls_QIcon.rb_class, "FormatTextUnderline", INT2NUM(37));
-  rb_define_const(cls_QIcon.rb_class, "FormatTextStrikethrough", INT2NUM(38));
-  rb_define_const(cls_QIcon.rb_class, "GoDown", INT2NUM(39));
-  rb_define_const(cls_QIcon.rb_class, "GoHome", INT2NUM(40));
-  rb_define_const(cls_QIcon.rb_class, "GoNext", INT2NUM(41));
-  rb_define_const(cls_QIcon.rb_class, "GoPrevious", INT2NUM(42));
-  rb_define_const(cls_QIcon.rb_class, "GoUp", INT2NUM(43));
-  rb_define_const(cls_QIcon.rb_class, "HelpAbout", INT2NUM(44));
-  rb_define_const(cls_QIcon.rb_class, "HelpFaq", INT2NUM(45));
-  rb_define_const(cls_QIcon.rb_class, "InsertImage", INT2NUM(46));
-  rb_define_const(cls_QIcon.rb_class, "InsertLink", INT2NUM(47));
-  rb_define_const(cls_QIcon.rb_class, "InsertText", INT2NUM(48));
-  rb_define_const(cls_QIcon.rb_class, "ListAdd", INT2NUM(49));
-  rb_define_const(cls_QIcon.rb_class, "ListRemove", INT2NUM(50));
-  rb_define_const(cls_QIcon.rb_class, "MailForward", INT2NUM(51));
-  rb_define_const(cls_QIcon.rb_class, "MailMarkImportant", INT2NUM(52));
-  rb_define_const(cls_QIcon.rb_class, "MailMarkRead", INT2NUM(53));
-  rb_define_const(cls_QIcon.rb_class, "MailMarkUnread", INT2NUM(54));
-  rb_define_const(cls_QIcon.rb_class, "MailMessageNew", INT2NUM(55));
-  rb_define_const(cls_QIcon.rb_class, "MailReplyAll", INT2NUM(56));
-  rb_define_const(cls_QIcon.rb_class, "MailReplySender", INT2NUM(57));
-  rb_define_const(cls_QIcon.rb_class, "MailSend", INT2NUM(58));
-  rb_define_const(cls_QIcon.rb_class, "MediaEject", INT2NUM(59));
-  rb_define_const(cls_QIcon.rb_class, "MediaPlaybackPause", INT2NUM(60));
-  rb_define_const(cls_QIcon.rb_class, "MediaPlaybackStart", INT2NUM(61));
-  rb_define_const(cls_QIcon.rb_class, "MediaPlaybackStop", INT2NUM(62));
-  rb_define_const(cls_QIcon.rb_class, "MediaRecord", INT2NUM(63));
-  rb_define_const(cls_QIcon.rb_class, "MediaSeekBackward", INT2NUM(64));
-  rb_define_const(cls_QIcon.rb_class, "MediaSeekForward", INT2NUM(65));
-  rb_define_const(cls_QIcon.rb_class, "MediaSkipBackward", INT2NUM(66));
-  rb_define_const(cls_QIcon.rb_class, "MediaSkipForward", INT2NUM(67));
-  rb_define_const(cls_QIcon.rb_class, "ObjectRotateLeft", INT2NUM(68));
-  rb_define_const(cls_QIcon.rb_class, "ObjectRotateRight", INT2NUM(69));
-  rb_define_const(cls_QIcon.rb_class, "ProcessStop", INT2NUM(70));
-  rb_define_const(cls_QIcon.rb_class, "SystemLockScreen", INT2NUM(71));
-  rb_define_const(cls_QIcon.rb_class, "SystemLogOut", INT2NUM(72));
-  rb_define_const(cls_QIcon.rb_class, "SystemSearch", INT2NUM(73));
-  rb_define_const(cls_QIcon.rb_class, "SystemReboot", INT2NUM(74));
-  rb_define_const(cls_QIcon.rb_class, "SystemShutdown", INT2NUM(75));
-  rb_define_const(cls_QIcon.rb_class, "ToolsCheckSpelling", INT2NUM(76));
-  rb_define_const(cls_QIcon.rb_class, "ViewFullscreen", INT2NUM(77));
-  rb_define_const(cls_QIcon.rb_class, "ViewRefresh", INT2NUM(78));
-  rb_define_const(cls_QIcon.rb_class, "ViewRestore", INT2NUM(79));
-  rb_define_const(cls_QIcon.rb_class, "WindowClose", INT2NUM(80));
-  rb_define_const(cls_QIcon.rb_class, "WindowNew", INT2NUM(81));
-  rb_define_const(cls_QIcon.rb_class, "ZoomFitBest", INT2NUM(82));
-  rb_define_const(cls_QIcon.rb_class, "ZoomIn", INT2NUM(83));
-  rb_define_const(cls_QIcon.rb_class, "ZoomOut", INT2NUM(84));
-  rb_define_const(cls_QIcon.rb_class, "AudioCard", INT2NUM(85));
-  rb_define_const(cls_QIcon.rb_class, "AudioInputMicrophone", INT2NUM(86));
-  rb_define_const(cls_QIcon.rb_class, "Battery", INT2NUM(87));
-  rb_define_const(cls_QIcon.rb_class, "CameraPhoto", INT2NUM(88));
-  rb_define_const(cls_QIcon.rb_class, "CameraVideo", INT2NUM(89));
-  rb_define_const(cls_QIcon.rb_class, "CameraWeb", INT2NUM(90));
-  rb_define_const(cls_QIcon.rb_class, "Computer", INT2NUM(91));
-  rb_define_const(cls_QIcon.rb_class, "DriveHarddisk", INT2NUM(92));
-  rb_define_const(cls_QIcon.rb_class, "DriveOptical", INT2NUM(93));
-  rb_define_const(cls_QIcon.rb_class, "InputGaming", INT2NUM(94));
-  rb_define_const(cls_QIcon.rb_class, "InputKeyboard", INT2NUM(95));
-  rb_define_const(cls_QIcon.rb_class, "InputMouse", INT2NUM(96));
-  rb_define_const(cls_QIcon.rb_class, "InputTablet", INT2NUM(97));
-  rb_define_const(cls_QIcon.rb_class, "MediaFlash", INT2NUM(98));
-  rb_define_const(cls_QIcon.rb_class, "MediaOptical", INT2NUM(99));
-  rb_define_const(cls_QIcon.rb_class, "MediaTape", INT2NUM(100));
-  rb_define_const(cls_QIcon.rb_class, "MultimediaPlayer", INT2NUM(101));
-  rb_define_const(cls_QIcon.rb_class, "NetworkWired", INT2NUM(102));
-  rb_define_const(cls_QIcon.rb_class, "NetworkWireless", INT2NUM(103));
-  rb_define_const(cls_QIcon.rb_class, "Phone", INT2NUM(104));
-  rb_define_const(cls_QIcon.rb_class, "Printer", INT2NUM(105));
-  rb_define_const(cls_QIcon.rb_class, "Scanner", INT2NUM(106));
-  rb_define_const(cls_QIcon.rb_class, "VideoDisplay", INT2NUM(107));
-  rb_define_const(cls_QIcon.rb_class, "AppointmentMissed", INT2NUM(108));
-  rb_define_const(cls_QIcon.rb_class, "AppointmentSoon", INT2NUM(109));
-  rb_define_const(cls_QIcon.rb_class, "AudioVolumeHigh", INT2NUM(110));
-  rb_define_const(cls_QIcon.rb_class, "AudioVolumeLow", INT2NUM(111));
-  rb_define_const(cls_QIcon.rb_class, "AudioVolumeMedium", INT2NUM(112));
-  rb_define_const(cls_QIcon.rb_class, "AudioVolumeMuted", INT2NUM(113));
-  rb_define_const(cls_QIcon.rb_class, "BatteryCaution", INT2NUM(114));
-  rb_define_const(cls_QIcon.rb_class, "BatteryLow", INT2NUM(115));
-  rb_define_const(cls_QIcon.rb_class, "DialogError", INT2NUM(116));
-  rb_define_const(cls_QIcon.rb_class, "DialogInformation", INT2NUM(117));
-  rb_define_const(cls_QIcon.rb_class, "DialogPassword", INT2NUM(118));
-  rb_define_const(cls_QIcon.rb_class, "DialogQuestion", INT2NUM(119));
-  rb_define_const(cls_QIcon.rb_class, "DialogWarning", INT2NUM(120));
-  rb_define_const(cls_QIcon.rb_class, "FolderDragAccept", INT2NUM(121));
-  rb_define_const(cls_QIcon.rb_class, "FolderOpen", INT2NUM(122));
-  rb_define_const(cls_QIcon.rb_class, "FolderVisiting", INT2NUM(123));
-  rb_define_const(cls_QIcon.rb_class, "ImageLoading", INT2NUM(124));
-  rb_define_const(cls_QIcon.rb_class, "ImageMissing", INT2NUM(125));
-  rb_define_const(cls_QIcon.rb_class, "MailAttachment", INT2NUM(126));
-  rb_define_const(cls_QIcon.rb_class, "MailUnread", INT2NUM(127));
-  rb_define_const(cls_QIcon.rb_class, "MailRead", INT2NUM(128));
-  rb_define_const(cls_QIcon.rb_class, "MailReplied", INT2NUM(129));
-  rb_define_const(cls_QIcon.rb_class, "MediaPlaylistRepeat", INT2NUM(130));
-  rb_define_const(cls_QIcon.rb_class, "MediaPlaylistShuffle", INT2NUM(131));
-  rb_define_const(cls_QIcon.rb_class, "NetworkOffline", INT2NUM(132));
-  rb_define_const(cls_QIcon.rb_class, "PrinterPrinting", INT2NUM(133));
-  rb_define_const(cls_QIcon.rb_class, "SecurityHigh", INT2NUM(134));
-  rb_define_const(cls_QIcon.rb_class, "SecurityLow", INT2NUM(135));
-  rb_define_const(cls_QIcon.rb_class, "SoftwareUpdateAvailable", INT2NUM(136));
-  rb_define_const(cls_QIcon.rb_class, "SoftwareUpdateUrgent", INT2NUM(137));
-  rb_define_const(cls_QIcon.rb_class, "SyncError", INT2NUM(138));
-  rb_define_const(cls_QIcon.rb_class, "SyncSynchronizing", INT2NUM(139));
-  rb_define_const(cls_QIcon.rb_class, "UserAvailable", INT2NUM(140));
-  rb_define_const(cls_QIcon.rb_class, "UserOffline", INT2NUM(141));
-  rb_define_const(cls_QIcon.rb_class, "WeatherClear", INT2NUM(142));
-  rb_define_const(cls_QIcon.rb_class, "WeatherClearNight", INT2NUM(143));
-  rb_define_const(cls_QIcon.rb_class, "WeatherFewClouds", INT2NUM(144));
-  rb_define_const(cls_QIcon.rb_class, "WeatherFewCloudsNight", INT2NUM(145));
-  rb_define_const(cls_QIcon.rb_class, "WeatherFog", INT2NUM(146));
-  rb_define_const(cls_QIcon.rb_class, "WeatherShowers", INT2NUM(147));
-  rb_define_const(cls_QIcon.rb_class, "WeatherSnow", INT2NUM(148));
-  rb_define_const(cls_QIcon.rb_class, "WeatherStorm", INT2NUM(149));
-  rb_define_const(cls_QIcon.rb_class, "NThemeIcons", INT2NUM(150));
   rb_define_const(cls_QImage.rb_class, "InvertRgb", INT2NUM(0));
   rb_define_const(cls_QImage.rb_class, "InvertRgba", INT2NUM(1));
   rb_define_const(cls_QImage.rb_class, "Format_Invalid", INT2NUM(0));
@@ -107404,8 +106020,7 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QImage.rb_class, "Format_RGBX32FPx4", INT2NUM(33));
   rb_define_const(cls_QImage.rb_class, "Format_RGBA32FPx4", INT2NUM(34));
   rb_define_const(cls_QImage.rb_class, "Format_RGBA32FPx4_Premultiplied", INT2NUM(35));
-  rb_define_const(cls_QImage.rb_class, "Format_CMYK8888", INT2NUM(36));
-  rb_define_const(cls_QImage.rb_class, "NImageFormats", INT2NUM(37));
+  rb_define_const(cls_QImage.rb_class, "NImageFormats", INT2NUM(36));
   rb_define_const(cls_QPainter.rb_class, "Antialiasing", INT2NUM(1));
   rb_define_const(cls_QPainter.rb_class, "TextAntialiasing", INT2NUM(2));
   rb_define_const(cls_QPainter.rb_class, "SmoothPixmapTransform", INT2NUM(4));
@@ -107451,8 +106066,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QPainter.rb_class, "RasterOp_ClearDestination", INT2NUM(35));
   rb_define_const(cls_QPainter.rb_class, "RasterOp_SetDestination", INT2NUM(36));
   rb_define_const(cls_QPainter.rb_class, "RasterOp_NotDestination", INT2NUM(37));
-  rb_define_const(cls_QPainter.rb_class, "NCompositionModes", INT2NUM(38));
-  rb_define_const(cls_QMessageBox.rb_class, "DontUseNativeDialog", INT2NUM(1));
   rb_define_const(cls_QMessageBox.rb_class, "NoIcon", INT2NUM(0));
   rb_define_const(cls_QMessageBox.rb_class, "Information", INT2NUM(1));
   rb_define_const(cls_QMessageBox.rb_class, "Warning", INT2NUM(2));
@@ -107639,10 +106252,9 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QTextDocument.rb_class, "DocumentTitle", INT2NUM(0));
   rb_define_const(cls_QTextDocument.rb_class, "DocumentUrl", INT2NUM(1));
   rb_define_const(cls_QTextDocument.rb_class, "CssMedia", INT2NUM(2));
-  rb_define_const(cls_QTextDocument.rb_class, "FrontMatter", INT2NUM(3));
   rb_define_const(cls_QTextDocument.rb_class, "MarkdownNoHTML", INT2NUM(96));
   rb_define_const(cls_QTextDocument.rb_class, "MarkdownDialectCommonMark", INT2NUM(0));
-  rb_define_const(cls_QTextDocument.rb_class, "MarkdownDialectGitHub", INT2NUM(1068812));
+  rb_define_const(cls_QTextDocument.rb_class, "MarkdownDialectGitHub", INT2NUM(20236));
   rb_define_const(cls_QTextDocument.rb_class, "FindBackward", INT2NUM(1));
   rb_define_const(cls_QTextDocument.rb_class, "FindCaseSensitively", INT2NUM(2));
   rb_define_const(cls_QTextDocument.rb_class, "FindWholeWords", INT2NUM(4));
@@ -107686,15 +106298,7 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QTextOption.rb_class, "AddSpaceForLineAndParagraphSeparators", INT2NUM(4));
   rb_define_const(cls_QTextOption.rb_class, "SuppressColors", INT2NUM(8));
   rb_define_const(cls_QTextOption.rb_class, "ShowDocumentTerminator", INT2NUM(16));
-  rb_define_const(cls_QTextOption.rb_class, "ShowDefaultIgnorables", INT2NUM(32));
-  rb_define_const(cls_QTextOption.rb_class, "DisableEmojiParsing", INT2NUM(64));
   rb_define_const(cls_QTextOption.rb_class, "IncludeTrailingSpaces", INT2NUM(2147483648));
-  rb_define_const(cls_QTextLayout.rb_class, "RetrieveGlyphIndexes", INT2NUM(1));
-  rb_define_const(cls_QTextLayout.rb_class, "RetrieveGlyphPositions", INT2NUM(2));
-  rb_define_const(cls_QTextLayout.rb_class, "RetrieveStringIndexes", INT2NUM(4));
-  rb_define_const(cls_QTextLayout.rb_class, "RetrieveString", INT2NUM(8));
-  rb_define_const(cls_QTextLayout.rb_class, "DefaultRetrievalFlags", INT2NUM(3));
-  rb_define_const(cls_QTextLayout.rb_class, "RetrieveAll", INT2NUM(-1));
   rb_define_const(cls_QTextLayout.rb_class, "SkipCharacters", INT2NUM(0));
   rb_define_const(cls_QTextLayout.rb_class, "SkipWords", INT2NUM(1));
   rb_define_const(cls_QAbstractItemView.rb_class, "NoSelection", INT2NUM(0));
@@ -107882,7 +106486,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QAbstractItemModel.rb_class, "DoNotUseParent", INT2NUM(2));
   rb_define_const(cls_QAbstractItemModel.rb_class, "ParentIsInvalid", INT2NUM(4));
   rb_define_const(cls_QFileSystemModel.rb_class, "FileIconRole", INT2NUM(1));
-  rb_define_const(cls_QFileSystemModel.rb_class, "FileInfoRole", INT2NUM(252));
   rb_define_const(cls_QFileSystemModel.rb_class, "FilePathRole", INT2NUM(257));
   rb_define_const(cls_QFileSystemModel.rb_class, "FileNameRole", INT2NUM(258));
   rb_define_const(cls_QFileSystemModel.rb_class, "FilePermissions", INT2NUM(259));
@@ -107931,8 +106534,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QStyleOptionViewItem.rb_class, "HasCheckIndicator", INT2NUM(4));
   rb_define_const(cls_QStyleOptionViewItem.rb_class, "HasDisplay", INT2NUM(8));
   rb_define_const(cls_QStyleOptionViewItem.rb_class, "HasDecoration", INT2NUM(16));
-  rb_define_const(cls_QStyleOptionViewItem.rb_class, "IsDecoratedRootColumn", INT2NUM(32));
-  rb_define_const(cls_QStyleOptionViewItem.rb_class, "IsDecorationForRootColumn", INT2NUM(64));
   rb_define_const(cls_QStyleOptionViewItem.rb_class, "Invalid", INT2NUM(0));
   rb_define_const(cls_QStyleOptionViewItem.rb_class, "Beginning", INT2NUM(1));
   rb_define_const(cls_QStyleOptionViewItem.rb_class, "Middle", INT2NUM(2));
@@ -108340,7 +106941,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QStyle.rb_class, "SH_ScrollView_FrameOnlyAroundContents", INT2NUM(17));
   rb_define_const(cls_QStyle.rb_class, "SH_MenuBar_AltKeyNavigation", INT2NUM(18));
   rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_ListMouseTracking", INT2NUM(19));
-  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_ListMouseTracking_Current", INT2NUM(19));
   rb_define_const(cls_QStyle.rb_class, "SH_Menu_MouseTracking", INT2NUM(20));
   rb_define_const(cls_QStyle.rb_class, "SH_MenuBar_MouseTracking", INT2NUM(21));
   rb_define_const(cls_QStyle.rb_class, "SH_ItemView_ChangeHighlightOnFocus", INT2NUM(22));
@@ -108441,7 +107041,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QStyle.rb_class, "SH_TabBar_AllowWheelScrolling", INT2NUM(117));
   rb_define_const(cls_QStyle.rb_class, "SH_Table_AlwaysDrawLeftTopGridLines", INT2NUM(118));
   rb_define_const(cls_QStyle.rb_class, "SH_SpinBox_SelectOnStep", INT2NUM(119));
-  rb_define_const(cls_QStyle.rb_class, "SH_ComboBox_ListMouseTracking_Active", INT2NUM(120));
   rb_define_const(cls_QStyle.rb_class, "SH_CustomBase", INT2NUM(4026531840));
   rb_define_const(cls_QStyle.rb_class, "SP_TitleBarMenuButton", INT2NUM(0));
   rb_define_const(cls_QStyle.rb_class, "SP_TitleBarMinButton", INT2NUM(1));
@@ -108593,8 +107192,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QPaintDevice.rb_class, "PdmPhysicalDpiY", INT2NUM(10));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmDevicePixelRatio", INT2NUM(11));
   rb_define_const(cls_QPaintDevice.rb_class, "PdmDevicePixelRatioScaled", INT2NUM(12));
-  rb_define_const(cls_QPaintDevice.rb_class, "PdmDevicePixelRatioF_EncodedA", INT2NUM(13));
-  rb_define_const(cls_QPaintDevice.rb_class, "PdmDevicePixelRatioF_EncodedB", INT2NUM(14));
   rb_define_const(cls_QAbstractScrollArea.rb_class, "AdjustIgnored", INT2NUM(0));
   rb_define_const(cls_QAbstractScrollArea.rb_class, "AdjustToContentsOnFirstShow", INT2NUM(1));
   rb_define_const(cls_QAbstractScrollArea.rb_class, "AdjustToContents", INT2NUM(2));
@@ -108851,9 +107448,7 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QTextFormat.rb_class, "FontStrikeOut", INT2NUM(8199));
   rb_define_const(cls_QTextFormat.rb_class, "FontFixedPitch", INT2NUM(8200));
   rb_define_const(cls_QTextFormat.rb_class, "FontPixelSize", INT2NUM(8201));
-  rb_define_const(cls_QTextFormat.rb_class, "FontFeatures", INT2NUM(8208));
-  rb_define_const(cls_QTextFormat.rb_class, "FontVariableAxes", INT2NUM(8209));
-  rb_define_const(cls_QTextFormat.rb_class, "LastFontProperty", INT2NUM(8209));
+  rb_define_const(cls_QTextFormat.rb_class, "LastFontProperty", INT2NUM(8201));
   rb_define_const(cls_QTextFormat.rb_class, "TextUnderlineColor", INT2NUM(8224));
   rb_define_const(cls_QTextFormat.rb_class, "TextVerticalAlignment", INT2NUM(8225));
   rb_define_const(cls_QTextFormat.rb_class, "TextOutline", INT2NUM(8226));
@@ -108874,7 +107469,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QTextFormat.rb_class, "ListIndent", INT2NUM(12289));
   rb_define_const(cls_QTextFormat.rb_class, "ListNumberPrefix", INT2NUM(12290));
   rb_define_const(cls_QTextFormat.rb_class, "ListNumberSuffix", INT2NUM(12291));
-  rb_define_const(cls_QTextFormat.rb_class, "ListStart", INT2NUM(12292));
   rb_define_const(cls_QTextFormat.rb_class, "FrameBorder", INT2NUM(16384));
   rb_define_const(cls_QTextFormat.rb_class, "FrameMargin", INT2NUM(16385));
   rb_define_const(cls_QTextFormat.rb_class, "FramePadding", INT2NUM(16386));
@@ -108916,7 +107510,6 @@ extern "C" void Init_qt6() {
   rb_define_const(cls_QTextFormat.rb_class, "ImageWidth", INT2NUM(20496));
   rb_define_const(cls_QTextFormat.rb_class, "ImageHeight", INT2NUM(20497));
   rb_define_const(cls_QTextFormat.rb_class, "ImageQuality", INT2NUM(20500));
-  rb_define_const(cls_QTextFormat.rb_class, "ImageMaxWidth", INT2NUM(20501));
   rb_define_const(cls_QTextFormat.rb_class, "FullWidthSelection", INT2NUM(24576));
   rb_define_const(cls_QTextFormat.rb_class, "PageBreakPolicy", INT2NUM(28672));
   rb_define_const(cls_QTextFormat.rb_class, "UserProperty", INT2NUM(1048576));
@@ -108994,11 +107587,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("DarkMagenta"))) rb_define_const(mQt, "DarkMagenta", INT2NUM(17));
   if (!rb_const_defined(mQt, rb_intern("DarkYellow"))) rb_define_const(mQt, "DarkYellow", INT2NUM(18));
   if (!rb_const_defined(mQt, rb_intern("Transparent"))) rb_define_const(mQt, "Transparent", INT2NUM(19));
-  if (!rb_const_defined(mQt, rb_intern("Unknown"))) rb_define_const(mQt, "Unknown", INT2NUM(0));
-  if (!rb_const_defined(mQt, rb_intern("Light"))) rb_define_const(mQt, "Light", INT2NUM(1));
-  if (!rb_const_defined(mQt, rb_intern("Dark"))) rb_define_const(mQt, "Dark", INT2NUM(2));
-  if (!rb_const_defined(mQt, rb_intern("NoPreference"))) rb_define_const(mQt, "NoPreference", INT2NUM(0));
-  if (!rb_const_defined(mQt, rb_intern("HighContrast"))) rb_define_const(mQt, "HighContrast", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("NoButton"))) rb_define_const(mQt, "NoButton", INT2NUM(0));
   if (!rb_const_defined(mQt, rb_intern("LeftButton"))) rb_define_const(mQt, "LeftButton", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("RightButton"))) rb_define_const(mQt, "RightButton", INT2NUM(2));
@@ -109121,8 +107709,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("WindowOverridesSystemGestures"))) rb_define_const(mQt, "WindowOverridesSystemGestures", INT2NUM(1048576));
   if (!rb_const_defined(mQt, rb_intern("WindowDoesNotAcceptFocus"))) rb_define_const(mQt, "WindowDoesNotAcceptFocus", INT2NUM(2097152));
   if (!rb_const_defined(mQt, rb_intern("MaximizeUsingFullscreenGeometryHint"))) rb_define_const(mQt, "MaximizeUsingFullscreenGeometryHint", INT2NUM(4194304));
-  if (!rb_const_defined(mQt, rb_intern("ExpandedClientAreaHint"))) rb_define_const(mQt, "ExpandedClientAreaHint", INT2NUM(4194304));
-  if (!rb_const_defined(mQt, rb_intern("NoTitleBarBackgroundHint"))) rb_define_const(mQt, "NoTitleBarBackgroundHint", INT2NUM(8388608));
   if (!rb_const_defined(mQt, rb_intern("CustomizeWindowHint"))) rb_define_const(mQt, "CustomizeWindowHint", INT2NUM(33554432));
   if (!rb_const_defined(mQt, rb_intern("WindowStaysOnBottomHint"))) rb_define_const(mQt, "WindowStaysOnBottomHint", INT2NUM(67108864));
   if (!rb_const_defined(mQt, rb_intern("WindowCloseButtonHint"))) rb_define_const(mQt, "WindowCloseButtonHint", INT2NUM(134217728));
@@ -109247,7 +107833,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("WA_ContentsMarginsRespectsSafeArea"))) rb_define_const(mQt, "WA_ContentsMarginsRespectsSafeArea", INT2NUM(130));
   if (!rb_const_defined(mQt, rb_intern("WA_StyleSheetTarget"))) rb_define_const(mQt, "WA_StyleSheetTarget", INT2NUM(131));
   if (!rb_const_defined(mQt, rb_intern("WA_AttributeCount"))) rb_define_const(mQt, "WA_AttributeCount", INT2NUM(132));
-  if (!rb_const_defined(mQt, rb_intern("AA_QtQuickUseDefaultSizePolicy"))) rb_define_const(mQt, "AA_QtQuickUseDefaultSizePolicy", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("AA_DontShowIconsInMenus"))) rb_define_const(mQt, "AA_DontShowIconsInMenus", INT2NUM(2));
   if (!rb_const_defined(mQt, rb_intern("AA_NativeWindows"))) rb_define_const(mQt, "AA_NativeWindows", INT2NUM(3));
   if (!rb_const_defined(mQt, rb_intern("AA_DontCreateNativeWidgetSiblings"))) rb_define_const(mQt, "AA_DontCreateNativeWidgetSiblings", INT2NUM(4));
@@ -109256,7 +107841,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("AA_MacDontSwapCtrlAndMeta"))) rb_define_const(mQt, "AA_MacDontSwapCtrlAndMeta", INT2NUM(7));
   if (!rb_const_defined(mQt, rb_intern("AA_Use96Dpi"))) rb_define_const(mQt, "AA_Use96Dpi", INT2NUM(8));
   if (!rb_const_defined(mQt, rb_intern("AA_DisableNativeVirtualKeyboard"))) rb_define_const(mQt, "AA_DisableNativeVirtualKeyboard", INT2NUM(9));
-  if (!rb_const_defined(mQt, rb_intern("AA_DontUseNativeMenuWindows"))) rb_define_const(mQt, "AA_DontUseNativeMenuWindows", INT2NUM(10));
   if (!rb_const_defined(mQt, rb_intern("AA_SynthesizeTouchForUnhandledMouseEvents"))) rb_define_const(mQt, "AA_SynthesizeTouchForUnhandledMouseEvents", INT2NUM(11));
   if (!rb_const_defined(mQt, rb_intern("AA_SynthesizeMouseForUnhandledTouchEvents"))) rb_define_const(mQt, "AA_SynthesizeMouseForUnhandledTouchEvents", INT2NUM(12));
   if (!rb_const_defined(mQt, rb_intern("AA_UseHighDpiPixmaps"))) rb_define_const(mQt, "AA_UseHighDpiPixmaps", INT2NUM(13));
@@ -109390,7 +107974,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("Key_twosuperior"))) rb_define_const(mQt, "Key_twosuperior", INT2NUM(178));
   if (!rb_const_defined(mQt, rb_intern("Key_threesuperior"))) rb_define_const(mQt, "Key_threesuperior", INT2NUM(179));
   if (!rb_const_defined(mQt, rb_intern("Key_acute"))) rb_define_const(mQt, "Key_acute", INT2NUM(180));
-  if (!rb_const_defined(mQt, rb_intern("Key_micro"))) rb_define_const(mQt, "Key_micro", INT2NUM(181));
   if (!rb_const_defined(mQt, rb_intern("Key_mu"))) rb_define_const(mQt, "Key_mu", INT2NUM(181));
   if (!rb_const_defined(mQt, rb_intern("Key_paragraph"))) rb_define_const(mQt, "Key_paragraph", INT2NUM(182));
   if (!rb_const_defined(mQt, rb_intern("Key_periodcentered"))) rb_define_const(mQt, "Key_periodcentered", INT2NUM(183));
@@ -109740,7 +108323,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("Key_Settings"))) rb_define_const(mQt, "Key_Settings", INT2NUM(16777500));
   if (!rb_const_defined(mQt, rb_intern("Key_MicVolumeUp"))) rb_define_const(mQt, "Key_MicVolumeUp", INT2NUM(16777501));
   if (!rb_const_defined(mQt, rb_intern("Key_MicVolumeDown"))) rb_define_const(mQt, "Key_MicVolumeDown", INT2NUM(16777502));
-  if (!rb_const_defined(mQt, rb_intern("Key_Keyboard"))) rb_define_const(mQt, "Key_Keyboard", INT2NUM(16777503));
   if (!rb_const_defined(mQt, rb_intern("Key_New"))) rb_define_const(mQt, "Key_New", INT2NUM(16777504));
   if (!rb_const_defined(mQt, rb_intern("Key_Open"))) rb_define_const(mQt, "Key_Open", INT2NUM(16777505));
   if (!rb_const_defined(mQt, rb_intern("Key_Find"))) rb_define_const(mQt, "Key_Find", INT2NUM(16777506));
@@ -109951,8 +108533,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("ActionsContextMenu"))) rb_define_const(mQt, "ActionsContextMenu", INT2NUM(2));
   if (!rb_const_defined(mQt, rb_intern("CustomContextMenu"))) rb_define_const(mQt, "CustomContextMenu", INT2NUM(3));
   if (!rb_const_defined(mQt, rb_intern("PreventContextMenu"))) rb_define_const(mQt, "PreventContextMenu", INT2NUM(4));
-  if (!rb_const_defined(mQt, rb_intern("Press"))) rb_define_const(mQt, "Press", INT2NUM(0));
-  if (!rb_const_defined(mQt, rb_intern("Release"))) rb_define_const(mQt, "Release", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("ImEnabled"))) rb_define_const(mQt, "ImEnabled", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("ImCursorRectangle"))) rb_define_const(mQt, "ImCursorRectangle", INT2NUM(2));
   if (!rb_const_defined(mQt, rb_intern("ImFont"))) rb_define_const(mQt, "ImFont", INT2NUM(4));
@@ -110049,12 +108629,7 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("ToolTipPropertyRole"))) rb_define_const(mQt, "ToolTipPropertyRole", INT2NUM(29));
   if (!rb_const_defined(mQt, rb_intern("StatusTipPropertyRole"))) rb_define_const(mQt, "StatusTipPropertyRole", INT2NUM(30));
   if (!rb_const_defined(mQt, rb_intern("WhatsThisPropertyRole"))) rb_define_const(mQt, "WhatsThisPropertyRole", INT2NUM(31));
-  if (!rb_const_defined(mQt, rb_intern("RangeModelDataRole"))) rb_define_const(mQt, "RangeModelDataRole", INT2NUM(40));
-  if (!rb_const_defined(mQt, rb_intern("RangeModelAdapterRole"))) rb_define_const(mQt, "RangeModelAdapterRole", INT2NUM(41));
   if (!rb_const_defined(mQt, rb_intern("UserRole"))) rb_define_const(mQt, "UserRole", INT2NUM(256));
-  if (!rb_const_defined(mQt, rb_intern("StandardItemFlagsRole"))) rb_define_const(mQt, "StandardItemFlagsRole", INT2NUM(255));
-  if (!rb_const_defined(mQt, rb_intern("FileInfoRole"))) rb_define_const(mQt, "FileInfoRole", INT2NUM(252));
-  if (!rb_const_defined(mQt, rb_intern("RemoteObjectsCacheRole"))) rb_define_const(mQt, "RemoteObjectsCacheRole", INT2NUM(255));
   if (!rb_const_defined(mQt, rb_intern("NoItemFlags"))) rb_define_const(mQt, "NoItemFlags", INT2NUM(0));
   if (!rb_const_defined(mQt, rb_intern("ItemIsSelectable"))) rb_define_const(mQt, "ItemIsSelectable", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("ItemIsEditable"))) rb_define_const(mQt, "ItemIsEditable", INT2NUM(2));
@@ -110145,7 +108720,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("PreciseTimer"))) rb_define_const(mQt, "PreciseTimer", INT2NUM(0));
   if (!rb_const_defined(mQt, rb_intern("CoarseTimer"))) rb_define_const(mQt, "CoarseTimer", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("VeryCoarseTimer"))) rb_define_const(mQt, "VeryCoarseTimer", INT2NUM(2));
-  if (!rb_const_defined(mQt, rb_intern("Invalid"))) rb_define_const(mQt, "Invalid", INT2NUM(0));
   if (!rb_const_defined(mQt, rb_intern("NoScrollPhase"))) rb_define_const(mQt, "NoScrollPhase", INT2NUM(0));
   if (!rb_const_defined(mQt, rb_intern("ScrollBegin"))) rb_define_const(mQt, "ScrollBegin", INT2NUM(1));
   if (!rb_const_defined(mQt, rb_intern("ScrollUpdate"))) rb_define_const(mQt, "ScrollUpdate", INT2NUM(2));
@@ -110166,9 +108740,6 @@ extern "C" void Init_qt6() {
   if (!rb_const_defined(mQt, rb_intern("Floor"))) rb_define_const(mQt, "Floor", INT2NUM(3));
   if (!rb_const_defined(mQt, rb_intern("RoundPreferFloor"))) rb_define_const(mQt, "RoundPreferFloor", INT2NUM(4));
   if (!rb_const_defined(mQt, rb_intern("PassThrough"))) rb_define_const(mQt, "PassThrough", INT2NUM(5));
-  if (!rb_const_defined(mQt, rb_intern("Undetermined"))) rb_define_const(mQt, "Undetermined", INT2NUM(0));
-  if (!rb_const_defined(mQt, rb_intern("Granted"))) rb_define_const(mQt, "Granted", INT2NUM(1));
-  if (!rb_const_defined(mQt, rb_intern("Denied"))) rb_define_const(mQt, "Denied", INT2NUM(2));
   if (!rb_const_defined(mQt, rb_intern("ReturnByValue"))) rb_define_const(mQt, "ReturnByValue", INT2NUM(0));
   VALUE lower = rb_hash_new();
   rb_hash_aset(lower, ID2SYM(rb_intern("color0")), INT2NUM(0));
