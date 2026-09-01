@@ -3,10 +3,17 @@
 # expect: SIGNAL()/connect idioms, Qt::red-style lowercase enums, dispose,
 # app.exec instance methods, and Qt.execute_in_main_thread.
 
+# Load the compiled extension. An installed layout puts it next to this file
+# on the load path (qt6.bundle on macOS, qt6.so elsewhere); an in-tree
+# checkout leaves it where extconf.rb built it.
 begin
   require 'qt6.bundle'
 rescue LoadError
-  require_relative '../ext/qt6/qt6'
+  begin
+    require 'qt6.so'
+  rescue LoadError
+    require_relative '../ext/qt6/qt6'
+  end
 end
 require 'thread'
 
@@ -205,11 +212,22 @@ module Qt
       when 4
         sender, signal, receiver, slot = args
         slot_name = slot[/\A(\w+)/, 1]
+        # The slot signature says how many of the signal's arguments to
+        # forward: SLOT('accept()') takes none even though clicked(bool)
+        # supplies one. The generated bindings are all variadic, so
+        # Method#arity reports -1 and cannot answer this.
+        slot_argc = slot_arity(slot)
         signal_connect(sender, signal) do |*sig_args|
           meth = receiver.method(resolve_method(receiver, slot_name))
-          arity = meth.arity
-          arity = sig_args.length if arity < 0
-          meth.call(*sig_args[0, arity])
+          count = if meth.arity >= 0
+                    meth.arity      # Ruby slot with a fixed signature: it knows
+                  else
+                    # Variadic: every generated binding, and Ruby slots taking
+                    # optional args. Fall back to what the signature declared.
+                    slot_argc || sig_args.length
+                  end
+          count = sig_args.length if count > sig_args.length
+          meth.call(*sig_args[0, count])
         end
       else
         Kernel.raise ArgumentError, "connect expects 1, 2, or 4 arguments (got #{args.length})"
@@ -217,6 +235,14 @@ module Qt
     end
 
     private
+
+    # Number of arguments declared by a SLOT('name(int, bool)') signature,
+    # or nil when the signature carries no parameter list to go on.
+    def slot_arity(slot)
+      params = slot[/\((.*)\)/m, 1]
+      return nil unless params
+      params.split(',').count { |p| !p.strip.empty? }
+    end
 
     # Qt slots are frequently declared under `protected` in qtbindings-era
     # classes (OverviewTabbedPlots#handle_tab_change and friends), so the
